@@ -336,6 +336,132 @@ receiver authority.
 
 ---
 
+## D-042 — HUMAN_PRIVATE v0: HLET1/HENV1, explicit recovery, and a ciphertext-only letter store
+
+Recorded under `SRC-034` (T-55) before any production code, as B-001 requires.
+
+**Backlog-policy conflict, resolved additively.** `spec/BACKLOG.md` B-001 carries
+an early planning sentence: "with a single physical token, `RECOVERABLE` is the
+only responsible default." That sentence stays in the backlog as historical
+derived planning evidence and is not rewritten. The execution contract recorded
+here is `NO_IMPLICIT_RECOVERY = true`. Recovery is never a default, never
+inferred, never derived from the primary key, never a duplicated key into two
+slots, and no server, agent or hidden recovery key is invented. If a caller
+selects `RECOVERABLE` and no cryptographically distinct recovery public key
+exists, the operation refuses. The caller explicitly chooses `STRICT` or
+`RECOVERABLE`.
+
+**Class map.** `HUMAN_PUBLIC` is today's SAINOTE; `HUMAN_PRIVATE` is this
+protocol; `HUMAN_EPHEMERAL` remains future and is not implemented.
+
+**Separate human container.** Agent-private transport (SENV2) and human-private
+transport are separate protocols. No SENV2 field, domain or byte layout is
+reused, and the human container is not called SENV3: it is `HENV1`, with the
+plaintext format `HLET1`.
+
+**Identity.** Human recipient identity is cryptographic only:
+`human-id:sha256:<64 lowercase hex>`, where the digest is `sha256` over the exact
+canonical DER SubjectPublicKeyInfo of the P-256 encryption public key. A display
+name is never authorization, and a caller-supplied identity is verified against
+the key, never trusted independently.
+
+**Crypto suite (reference v0).** P-256 ECDH, HKDF-SHA256, ChaCha20Poly1305 for
+both payload and CEK wrapping, Ed25519 for sender authentication. No hardware
+tooling is installed or called; FIDO2 proves presence and is not the encryption
+primitive (`FIDO2_IS_ENCRYPTION = false`, `FIDO2_IMPLEMENTED = false`).
+
+**Content key and slots.** One fresh random 256-bit CEK per container encrypts
+HLET1 exactly once. Every authorized slot receives a fresh ephemeral P-256
+keypair, ECDH against that slot's recipient key, an HKDF-SHA256 wrap key, a fresh
+wrap nonce and the same CEK wrapped with ChaCha20Poly1305. `STRICT` carries
+exactly one slot (`PRIMARY`); `RECOVERABLE` carries exactly two (`PRIMARY` plus
+`RECOVERY`), and the two recipient public keys must be cryptographically
+distinct.
+
+**Domain separation.** Four immutable byte domains exist and no SENV2 domain is
+reused: `SAIMAIL-HENV1-PAYLOAD\0`, `SAIMAIL-HENV1-CEK-PRIMARY\0`,
+`SAIMAIL-HENV1-CEK-RECOVERY\0`, `SAIMAIL-HENV1-SIGNATURE\0`. Exact constructions
+and the canonical grammars are normative in `spec/05-SAILETTER-v0.md`.
+
+**Binding, acyclic.** CEK wrapping binds container version, slot role, recipient
+HUMAN_ID, recipient slot key id, sender identity and mode. Payload AEAD binds
+version, `FROM`, `FROM_KID`, `TO_HUMAN`, `MODE`, `PRIMARY_KID` and
+`RECOVERY_KID` (or `NONE`). No ciphertext hash enters any binding, so no
+construction is circular.
+
+**Sender authentication before private-key work.** The signature covers the exact
+canonical unsigned HENV1 bytes under the signature domain, and signature
+verification always precedes any recipient private-key provider operation:
+`INVALID_SENDER_SIGNATURE -> ZERO_RECIPIENT_PRIVATE_KEY_CALLS`.
+
+**Visibility.** `SUBJECT` and `BODY` exist only inside encrypted HLET1. The clear
+HENV1 exposes routing and cryptographic requirements only; no clear subject, no
+body, no display name, and no plaintext hash
+(`PLAINTEXT_HASH_IN_CLEAR = false`). `LETTER_ID = sha256(exact canonical complete
+HENV1 bytes)`, never a plaintext identity.
+
+**Inertness.** Decrypted prose is data. A BODY that looks like a command executes
+nothing; opening a HUMAN_PRIVATE letter creates no SAIPEN work, calls no tool,
+writes no LEGACY, KNOWLEDGE, SAINOTE or memory object, mutates no authority, and
+performs no network or model call. I1 is unchanged.
+
+**Provider seam and opened type-state.** `HumanPrivateKeyProvider` exposes only a
+recipient key identity and a P-256 ECDH operation against a supplied ephemeral
+public key; core never requires, reads or retains private-key bytes. A
+`SoftwareP256Provider` exists for tests and is not hardware protection.
+`OpenedHumanPrivateLetter` is minted only after authenticated successful
+decryption via the constructor-only `InitVar` pattern (D-015/D-040 scope:
+normal-public-API integrity, not hostile-process security).
+
+**Store.** `HumanPrivateStore` publishes one immutable ciphertext file per
+committed letter at `human-private/<human-id-digest>/<LETTER_ID-digest>.henv1`
+under a caller-supplied root. Delivery parses, verifies the sender signature,
+matches the recipient HUMAN_ID and publishes without decryption or a recipient
+private key; an exact replay is idempotent and never overwrites. Listing reveals
+only clear HENV1 metadata. Opening is explicit, provider-driven and stateless.
+`PLAINTEXT_PERSISTENCE_BY_SAIMAIL = forbidden`: no plaintext sidecar, subject
+index, body cache, decrypted cache or sent-plaintext archive is created.
+
+**Claim boundary.** The only confidentiality claim is that HUMAN_PRIVATE
+ciphertext cannot be decrypted through SAILETTER without an authorized recipient
+private-key operation. SAIMAIL APIs do not intentionally persist decrypted
+plaintext. Nothing is claimed about process memory, swap, debuggers, core dumps,
+administrators, malware, screen capture or Python memory erasure, and the
+software reference provider is not hardware-backed. After legitimate decryption
+the normal OS and recipient process are outside the cryptographic confidentiality
+guarantee. A future hardware provider (PIV, OpenPGP, PKCS#11, FIDO2 for presence)
+is a separate unstarted target and is not implemented here.
+
+**Red state before implementation** (recorded as fact, not proof of security):
+no HLET1 parser, no HENV1 parser/container, no `HumanRecipient`, no
+`HumanPrivateKeyProvider`, and no ciphertext HUMAN_PRIVATE store existed in this
+repository before this decision.
+
+```
+PLAINTEXT_FORMAT = HLET1
+CONTAINER_FORMAT = HENV1
+HUMAN_ID = P256_SPKI_SHA256
+RECIPIENT_KEY_ALGORITHM = P-256 ECDH
+PAYLOAD_AEAD = ChaCha20Poly1305
+KDF = HKDF-SHA256
+SENDER_SIGNATURE = Ed25519
+STRICT_SLOTS = 1
+RECOVERABLE_SLOTS = 2
+NO_IMPLICIT_RECOVERY = true
+RECOVERY_KEY_MUST_DIFFER = true
+NO_HIDDEN_RECOVERY_KEY = true
+FIDO2_IS_ENCRYPTION = false
+FIDO2_IMPLEMENTED = false
+SUBJECT_VISIBILITY = encrypted
+BODY_VISIBILITY = encrypted
+PLAINTEXT_HASH_IN_CLEAR = false
+PLAINTEXT_PERSISTENCE_BY_SAIMAIL = forbidden
+COMMAND_SEMANTICS = inert
+LETTER_ID = SHA256_CANONICAL_HENV1
+```
+
+---
+
 ## D-038 — TTL expiry is receiver-owned retention: tombstone before delete, no resurrection
 
 Recorded while implementing T-7 under `SRC-026` (the T-7 execution-contract

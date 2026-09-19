@@ -43,6 +43,15 @@ named human, encrypted to that human's own cryptographic identity.
   operational boilerplate — a personal letter needs no `STATUS / ACCEPTANCE /
   EVIDENCE / NEXT ACTION` scaffolding, and may simply be prose.
 
+**DONE (D-042 / T-55).** `HUMAN_PUBLIC` remains the existing SAINOTE;
+`HUMAN_PRIVATE` is `HLET1`/`HENV1` with explicit `STRICT`/`RECOVERABLE` modes,
+recipient-bound P-256 crypto, sender authentication before any recipient
+private-key operation, and a ciphertext-only `human-private` store.
+`HUMAN_EPHEMERAL` stays unimplemented. The recovery sentence above is preserved
+as historical planning evidence; the execution contract is
+`NO_IMPLICIT_RECOVERY = true` (D-042), so `RECOVERABLE` requires an explicitly
+supplied, cryptographically distinct recovery key and refuses without one.
+
 ### B-002 — `CID` / `EID` / `LID` identity separation
 
 Provenance: `AMBIGUOUS` source, adopted `USER_ACCEPTANCE_OBSERVED` (A1: alias experiment instructed).
