@@ -1,0 +1,114 @@
+{
+  "attributions": [
+    {
+      "requirement": "B-001",
+      "receipt": "SRC-004",
+      "segment_index": 0,
+      "accepted_by": [
+        "STEWARD-ACCEPTANCE",
+        5
+      ],
+      "note": "SAILETTER / HUMAN_PRIVATE — preserved as backlog by A3"
+    },
+    {
+      "requirement": "B-002",
+      "receipt": "SRC-004",
+      "segment_index": 0,
+      "accepted_by": [
+        "STEWARD-ACCEPTANCE",
+        1
+      ],
+      "note": "CID/EID/LID — the alias experiment was instructed (A1)"
+    },
+    {
+      "requirement": "B-003",
+      "receipt": "SRC-004",
+      "segment_index": 0,
+      "accepted_by": null,
+      "note": "dynamic dictionaries — never adopted, idea only"
+    },
+    {
+      "requirement": "B-004",
+      "receipt": "SRC-004",
+      "segment_index": 0,
+      "accepted_by": [
+        "STEWARD-ACCEPTANCE",
+        1
+      ],
+      "note": "TOTAL_FRICTION as objective — instructed (A1)"
+    },
+    {
+      "requirement": "B-005",
+      "receipt": "SRC-004",
+      "segment_index": 0,
+      "accepted_by": [
+        "STEWARD-ACCEPTANCE",
+        2
+      ],
+      "note": "R0-R4 progressive decoding — instructed as a workload (A2)"
+    },
+    {
+      "requirement": "B-006",
+      "receipt": "SRC-004",
+      "segment_index": 0,
+      "accepted_by": null,
+      "note": "semantic macro cache — never adopted, idea only"
+    },
+    {
+      "requirement": "B-007",
+      "receipt": "SRC-004",
+      "segment_index": 0,
+      "accepted_by": null,
+      "note": "the six-line philosophy — never adopted, idea only"
+    },
+    {
+      "requirement": "B-008",
+      "receipt": "BENCH-ANALYSIS",
+      "segment_index": 0,
+      "accepted_by": null,
+      "note": "claim grammar gap — measurement, not intent"
+    },
+    {
+      "requirement": "B-009",
+      "receipt": "BENCH-ANALYSIS",
+      "segment_index": 0,
+      "accepted_by": null,
+      "note": "non-ASCII claim vocabulary — measurement, not intent"
+    },
+    {
+      "requirement": "B-010",
+      "receipt": "BENCH-ANALYSIS",
+      "segment_index": 0,
+      "accepted_by": null,
+      "note": "tokenizer-shaped vocabulary — measurement, not intent"
+    },
+    {
+      "requirement": "B-011",
+      "receipt": "SRC-007",
+      "segment_index": 0,
+      "accepted_by": null,
+      "note": "HUMAN_ATTENTION_BUDGET — captured user turn; backlog only"
+    },
+    {
+      "requirement": "B-012",
+      "receipt": "SRC-007",
+      "segment_index": 0,
+      "accepted_by": null,
+      "note": "ALLY_ADVICE / PERSONAL REFLECTION — captured user turn; backlog only"
+    },
+    {
+      "requirement": "B-013",
+      "receipt": "SRC-007",
+      "segment_index": 0,
+      "accepted_by": null,
+      "note": "LEGACY / SUCCESSOR COMMUNICATION — captured user turn; backlog only"
+    },
+    {
+      "requirement": "T-41",
+      "receipt": "SRC-017",
+      "segment_index": 0,
+      "accepted_by": null,
+      "note": "correction 002 (T-43): the T-42 map's HOST_USER_TURN capture naming SRC-019 as byte carrier was mechanically false, so T-41's authorization cannot rest on SRC-017 as captured operator acceptance; SRC-017 is AMBIGUOUS (no carrier, witness model_supplied) and the attribution resolves AMBIGUOUS_AUTHORSHIP. Historical T-41/T-42 closures stand as events; audit/1.md (RUN_ID acb-mu62wwu7) remains the scoping evidence."
+    }
+  ]
+}

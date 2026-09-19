@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "saimail"
+version = "0.0.1"
+description = "SAILANG claim records and triage frames, with a falsifiable proof-of-value benchmark"
+requires-python = ">=3.11"
+# The library itself has no runtime dependencies on purpose: the parser is data
+# only, and a dependency is an authority surface nobody audited.
+dependencies = []
+
+[project.optional-dependencies]
+# ONE contract (D-014): `test` installs everything `python -m pytest -q` needs,
+# tokenizer included, because four tests in the suite import it. A command
+# advertised as reproducible must not depend on an extra nobody mentioned.
+#
+# tiktoken is pinned to a minor range because a token count is evidence: a
+# different BPE table would silently change every published ratio. It ships BPE
+# data files, not model weights, and fetches them on first use of an encoding.
+# Nothing is vendored.
+test = ["pytest>=8,<9", "tiktoken>=0.12,<0.13", "cryptography>=41,<47"]
+# Kept as an alias so older instructions keep working. Same set, deliberately.
+bench = ["pytest>=8,<9", "tiktoken>=0.12,<0.13", "cryptography>=41,<47"]
+credentials = ["keyring>=24"]
+crypto = ["cryptography>=41,<47"]
+lab = ["keyring>=24"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools]
+packages = ["sailang", "saimail"]
+
+[tool.setuptools.package-data]
+sailang = ["dictionary/*.json"]

@@ -1,0 +1,928 @@
+{
+  "corpus_size": 45,
+  "classes": {
+    "verified_test_result": [
+      "verified-test-1",
+      "verified-test-2",
+      "verified-test-3"
+    ],
+    "contradicted_human_memory": [
+      "human-memory-1",
+      "human-memory-2",
+      "human-memory-3"
+    ],
+    "agent_overclaim": [
+      "overclaim-1",
+      "overclaim-2",
+      "overclaim-3"
+    ],
+    "queue_retry_duplicate_discovery": [
+      "queue-discovery-1",
+      "queue-discovery-2",
+      "queue-discovery-3"
+    ],
+    "blocker": [
+      "blocker-1",
+      "blocker-2",
+      "blocker-3"
+    ],
+    "hypothesis": [
+      "hypothesis-1",
+      "hypothesis-2",
+      "hypothesis-3"
+    ],
+    "human_goal": [
+      "goal-1",
+      "goal-2",
+      "goal-3"
+    ],
+    "human_value": [
+      "value-1",
+      "value-2",
+      "value-3"
+    ],
+    "evidence_backed_observation": [
+      "observation-1",
+      "observation-2",
+      "observation-3"
+    ],
+    "unknown_uncertain": [
+      "unknown-1",
+      "unknown-2",
+      "unknown-3"
+    ],
+    "warning": [
+      "warning-1",
+      "warning-2",
+      "warning-3"
+    ],
+    "cross_reference": [
+      "crossref-1",
+      "crossref-2",
+      "crossref-3"
+    ],
+    "unicode_content": [
+      "unicode-1",
+      "unicode-2",
+      "unicode-3"
+    ],
+    "long_path_reference": [
+      "longpath-1",
+      "longpath-2",
+      "longpath-3"
+    ],
+    "repeated_dictionary_terms": [
+      "dictterms-1",
+      "dictterms-2",
+      "dictterms-3"
+    ]
+  },
+  "required_classes": [
+    "verified_test_result",
+    "contradicted_human_memory",
+    "agent_overclaim",
+    "queue_retry_duplicate_discovery",
+    "blocker",
+    "hypothesis",
+    "human_goal",
+    "human_value",
+    "evidence_backed_observation",
+    "unknown_uncertain",
+    "warning",
+    "cross_reference",
+    "unicode_content",
+    "long_path_reference",
+    "repeated_dictionary_terms"
+  ],
+  "missing_classes": [],
+  "tokenizers": [
+    {
+      "name": "cl100k_base",
+      "family": "openai-gpt35-gpt4"
+    },
+    {
+      "name": "o200k_base",
+      "family": "openai-gpt4o"
+    },
+    {
+      "name": "p50k_base",
+      "family": "openai-codex-davinci"
+    },
+    {
+      "name": "gpt2",
+      "family": "gpt2-legacy"
+    }
+  ],
+  "thresholds": {
+    "rule": "GO: zero semantic inversions AND deterministic projection AND median(line tokens / prose tokens) < 0.60 on every tokenizer. CONDITIONAL: zero inversions and that median in [0.60, 0.95). NO_GO: any semantic inversion, or non-determinism, or that median >= 0.95 on any tokenizer.",
+    "go_below": 0.6,
+    "no_go_at_or_above": 0.95
+  },
+  "metrics": {
+    "cl100k_base": {
+      "family": "openai-gpt35-gpt4",
+      "line_over_prose": {
+        "median": 0.7027027027027027,
+        "mean": 0.7735944601490784,
+        "p90": 1.0,
+        "best": 0.3275862068965517,
+        "worst": 1.7777777777777777
+      },
+      "record_over_prose": {
+        "median": 4.5,
+        "mean": 4.6209299227503315,
+        "p90": 5.9393939393939394,
+        "best": 2.6724137931034484,
+        "worst": 10.222222222222221
+      },
+      "line_over_record": {
+        "median": 0.16201117318435754,
+        "mean": 0.16661310638922017,
+        "p90": 0.21839080459770116
+      },
+      "line_larger_than_prose_cases": [
+        "dictterms-3",
+        "unknown-1",
+        "unknown-2",
+        "unknown-3",
+        "value-2",
+        "value-3",
+        "warning-3"
+      ],
+      "record_larger_than_prose_cases": [
+        "blocker-1",
+        "blocker-2",
+        "blocker-3",
+        "crossref-1",
+        "crossref-2",
+        "crossref-3",
+        "dictterms-1",
+        "dictterms-2",
+        "dictterms-3",
+        "goal-1",
+        "goal-2",
+        "goal-3",
+        "human-memory-1",
+        "human-memory-2",
+        "human-memory-3",
+        "hypothesis-1",
+        "hypothesis-2",
+        "hypothesis-3",
+        "longpath-1",
+        "longpath-2",
+        "longpath-3",
+        "observation-1",
+        "observation-2",
+        "observation-3",
+        "overclaim-1",
+        "overclaim-2",
+        "overclaim-3",
+        "queue-discovery-1",
+        "queue-discovery-2",
+        "queue-discovery-3",
+        "unicode-1",
+        "unicode-2",
+        "unicode-3",
+        "unknown-1",
+        "unknown-2",
+        "unknown-3",
+        "value-1",
+        "value-2",
+        "value-3",
+        "verified-test-1",
+        "verified-test-2",
+        "verified-test-3",
+        "warning-1",
+        "warning-2",
+        "warning-3"
+      ]
+    },
+    "o200k_base": {
+      "family": "openai-gpt4o",
+      "line_over_prose": {
+        "median": 0.7272727272727273,
+        "mean": 0.794926439877807,
+        "p90": 1.0526315789473684,
+        "best": 0.4489795918367347,
+        "worst": 1.7777777777777777
+      },
+      "record_over_prose": {
+        "median": 4.724137931034483,
+        "mean": 4.822468106067689,
+        "p90": 6.15625,
+        "best": 2.8536585365853657,
+        "worst": 10.444444444444445
+      },
+      "line_over_record": {
+        "median": 0.16339869281045752,
+        "mean": 0.16462369446906938,
+        "p90": 0.2159090909090909
+      },
+      "line_larger_than_prose_cases": [
+        "dictterms-3",
+        "unknown-1",
+        "unknown-2",
+        "unknown-3",
+        "value-2",
+        "value-3"
+      ],
+      "record_larger_than_prose_cases": [
+        "blocker-1",
+        "blocker-2",
+        "blocker-3",
+        "crossref-1",
+        "crossref-2",
+        "crossref-3",
+        "dictterms-1",
+        "dictterms-2",
+        "dictterms-3",
+        "goal-1",
+        "goal-2",
+        "goal-3",
+        "human-memory-1",
+        "human-memory-2",
+        "human-memory-3",
+        "hypothesis-1",
+        "hypothesis-2",
+        "hypothesis-3",
+        "longpath-1",
+        "longpath-2",
+        "longpath-3",
+        "observation-1",
+        "observation-2",
+        "observation-3",
+        "overclaim-1",
+        "overclaim-2",
+        "overclaim-3",
+        "queue-discovery-1",
+        "queue-discovery-2",
+        "queue-discovery-3",
+        "unicode-1",
+        "unicode-2",
+        "unicode-3",
+        "unknown-1",
+        "unknown-2",
+        "unknown-3",
+        "value-1",
+        "value-2",
+        "value-3",
+        "verified-test-1",
+        "verified-test-2",
+        "verified-test-3",
+        "warning-1",
+        "warning-2",
+        "warning-3"
+      ]
+    },
+    "p50k_base": {
+      "family": "openai-codex-davinci",
+      "line_over_prose": {
+        "median": 0.7837837837837838,
+        "mean": 0.822174338551204,
+        "p90": 1.15,
+        "best": 0.15217391304347827,
+        "worst": 1.8666666666666667
+      },
+      "record_over_prose": {
+        "median": 4.8,
+        "mean": 4.822187073466878,
+        "p90": 6.083333333333333,
+        "best": 1.2826086956521738,
+        "worst": 9.7
+      },
+      "line_over_record": {
+        "median": 0.16447368421052633,
+        "mean": 0.16934480008802286,
+        "p90": 0.23008849557522124
+      },
+      "line_larger_than_prose_cases": [
+        "dictterms-3",
+        "human-memory-3",
+        "unknown-1",
+        "unknown-2",
+        "unknown-3",
+        "value-2",
+        "value-3",
+        "warning-3"
+      ],
+      "record_larger_than_prose_cases": [
+        "blocker-1",
+        "blocker-2",
+        "blocker-3",
+        "crossref-1",
+        "crossref-2",
+        "crossref-3",
+        "dictterms-1",
+        "dictterms-2",
+        "dictterms-3",
+        "goal-1",
+        "goal-2",
+        "goal-3",
+        "human-memory-1",
+        "human-memory-2",
+        "human-memory-3",
+        "hypothesis-1",
+        "hypothesis-2",
+        "hypothesis-3",
+        "longpath-1",
+        "longpath-2",
+        "longpath-3",
+        "observation-1",
+        "observation-2",
+        "observation-3",
+        "overclaim-1",
+        "overclaim-2",
+        "overclaim-3",
+        "queue-discovery-1",
+        "queue-discovery-2",
+        "queue-discovery-3",
+        "unicode-1",
+        "unicode-2",
+        "unicode-3",
+        "unknown-1",
+        "unknown-2",
+        "unknown-3",
+        "value-1",
+        "value-2",
+        "value-3",
+        "verified-test-1",
+        "verified-test-2",
+        "verified-test-3",
+        "warning-1",
+        "warning-2",
+        "warning-3"
+      ]
+    },
+    "gpt2": {
+      "family": "gpt2-legacy",
+      "line_over_prose": {
+        "median": 0.7837837837837838,
+        "mean": 0.822174338551204,
+        "p90": 1.15,
+        "best": 0.15217391304347827,
+        "worst": 1.8666666666666667
+      },
+      "record_over_prose": {
+        "median": 4.8,
+        "mean": 4.822187073466878,
+        "p90": 6.083333333333333,
+        "best": 1.2826086956521738,
+        "worst": 9.7
+      },
+      "line_over_record": {
+        "median": 0.16447368421052633,
+        "mean": 0.16934480008802286,
+        "p90": 0.23008849557522124
+      },
+      "line_larger_than_prose_cases": [
+        "dictterms-3",
+        "human-memory-3",
+        "unknown-1",
+        "unknown-2",
+        "unknown-3",
+        "value-2",
+        "value-3",
+        "warning-3"
+      ],
+      "record_larger_than_prose_cases": [
+        "blocker-1",
+        "blocker-2",
+        "blocker-3",
+        "crossref-1",
+        "crossref-2",
+        "crossref-3",
+        "dictterms-1",
+        "dictterms-2",
+        "dictterms-3",
+        "goal-1",
+        "goal-2",
+        "goal-3",
+        "human-memory-1",
+        "human-memory-2",
+        "human-memory-3",
+        "hypothesis-1",
+        "hypothesis-2",
+        "hypothesis-3",
+        "longpath-1",
+        "longpath-2",
+        "longpath-3",
+        "observation-1",
+        "observation-2",
+        "observation-3",
+        "overclaim-1",
+        "overclaim-2",
+        "overclaim-3",
+        "queue-discovery-1",
+        "queue-discovery-2",
+        "queue-discovery-3",
+        "unicode-1",
+        "unicode-2",
+        "unicode-3",
+        "unknown-1",
+        "unknown-2",
+        "unknown-3",
+        "value-1",
+        "value-2",
+        "value-3",
+        "verified-test-1",
+        "verified-test-2",
+        "verified-test-3",
+        "warning-1",
+        "warning-2",
+        "warning-3"
+      ]
+    }
+  },
+  "bytes": {
+    "line_over_prose_median": 0.2857142857142857,
+    "record_over_prose_median": 2.094736842105263
+  },
+  "semantic": {
+    "inversions": [],
+    "inversion_count": 0,
+    "intentional_losses": [
+      {
+        "case": "goal-1",
+        "field": "claim",
+        "expected": "reduce maintenance burden"
+      },
+      {
+        "case": "goal-2",
+        "field": "claim",
+        "expected": "delete stale OpenCode sessions"
+      },
+      {
+        "case": "goal-3",
+        "field": "claim",
+        "expected": "SAIMAIL remains removable with no effect on SAIPEN"
+      },
+      {
+        "case": "value-1",
+        "field": "claim",
+        "expected": "quality outranks speed"
+      },
+      {
+        "case": "value-2",
+        "field": "claim",
+        "expected": "reliability matters more than throughput"
+      },
+      {
+        "case": "warning-1",
+        "field": "claim",
+        "expected": "PROMOTION>EVIDENCE=REQUIRED"
+      },
+      {
+        "case": "warning-2",
+        "field": "claim",
+        "expected": "SIGNATURE>ENVELOPE=BEFORE_DECRYPT"
+      },
+      {
+        "case": "unicode-1",
+        "field": "claim",
+        "expected": "база создана 2026-08-23"
+      },
+      {
+        "case": "unicode-2",
+        "field": "claim",
+        "expected": "検証可能性が判定より重要"
+      },
+      {
+        "case": "unicode-3",
+        "field": "claim",
+        "expected": "tõenduspõhisus on ainus tee"
+      }
+    ],
+    "intentional_loss_count": 10,
+    "claim_open_record_cases": [
+      "goal-1",
+      "goal-2",
+      "goal-3",
+      "value-1",
+      "value-2",
+      "warning-1",
+      "warning-2",
+      "unicode-1",
+      "unicode-2",
+      "unicode-3"
+    ]
+  },
+  "determinism": {
+    "nondeterministic_cases": []
+  },
+  "dictionary": {
+    "path": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\sailang\\dictionary\\v0.json",
+    "file_bytes": 1038,
+    "terms": 30,
+    "bytes_saved_total": 360,
+    "bytes_saved_median": 4,
+    "line_marker_bytes": 5
+  },
+  "verdict": "CONDITIONAL",
+  "per_case": [
+    {
+      "case": "verified-test-1",
+      "class": "verified_test_result",
+      "line": "L1D0|O|queue|U4|EV+|TSUITE=574_574_PASS|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "verified-test-2",
+      "class": "verified_test_result",
+      "line": "L1D0|O|recovery|U4|EV+|TSUITE=88_88_PASS|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "verified-test-3",
+      "class": "verified_test_result",
+      "line": "L1D0|O|validate|U4|EV+|VALID=PASS|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "human-memory-1",
+      "class": "contradicted_human_memory",
+      "line": "L1D0|F|opencode.db|U1|EV0|DB_HISTORY>=2025|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "human-memory-2",
+      "class": "contradicted_human_memory",
+      "line": "L1D0|O|opencode.db|U4|EV+|DB_CREATED=2026-08-23|R",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "human-memory-3",
+      "class": "contradicted_human_memory",
+      "line": "L1D0|F|retry.cfg|U1|EV0|CFG=UNCHANGED|C",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "overclaim-1",
+      "class": "agent_overclaim",
+      "line": "L1D0|F|retry|U1|EV0|RCAUSE=CLAIMED_ON_PARTIAL_TEST|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "overclaim-2",
+      "class": "agent_overclaim",
+      "line": "L1D0|O|b03|U2|EV+|CONF>PTEST|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "overclaim-3",
+      "class": "agent_overclaim",
+      "line": "L1D0|F|fix|U0|EV0|TSUITE=CLAIMED_NOT_RUN|C",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "queue-discovery-1",
+      "class": "queue_retry_duplicate_discovery",
+      "line": "L1D0|F|queue|U2|EV+|QSTALE>RETRY>DUP_EXEC|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "queue-discovery-2",
+      "class": "queue_retry_duplicate_discovery",
+      "line": "L1D0|F|queue|U2|EV+|RECOV>QSTALE>DUP_EXEC|S",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "queue-discovery-3",
+      "class": "queue_retry_duplicate_discovery",
+      "line": "L1D0|O|queue|U3|EV+|CONC>QSTALE>DLOCK|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "blocker-1",
+      "class": "blocker",
+      "line": "L1D0|F|ship|U1|EV0|BLK=SOURCE_COVERAGE_OPEN|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "blocker-2",
+      "class": "blocker",
+      "line": "L1D0|O|release|U2|EV+|BLK>DEP|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "blocker-3",
+      "class": "blocker",
+      "line": "L1D0|F|T-1367|U2|EV+|BLK>VALID|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "hypothesis-1",
+      "class": "hypothesis",
+      "line": "L1D0|H|queue|U3|EV+|RETRY>DUP_EXEC|X",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "hypothesis-2",
+      "class": "hypothesis",
+      "line": "L1D0|H|loader|U1|EV0|CFG>REGR|X",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "hypothesis-3",
+      "class": "hypothesis",
+      "line": "L1D0|H|session|U2|EV+|CKPT>PERF|X",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "goal-1",
+      "class": "human_goal",
+      "line": "L1D0|G|maintenance|-|EV0|?|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": true
+    },
+    {
+      "case": "goal-2",
+      "class": "human_goal",
+      "line": "L1D0|G|opencode|-|EV0|?|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": true
+    },
+    {
+      "case": "goal-3",
+      "class": "human_goal",
+      "line": "L1D0|G|saimail|-|EV0|?|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": true
+    },
+    {
+      "case": "value-1",
+      "class": "human_value",
+      "line": "L1D0|V|priority|-|EV0|?|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": true
+    },
+    {
+      "case": "value-2",
+      "class": "human_value",
+      "line": "L1D0|V|tradeoff|-|EV0|?|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": true
+    },
+    {
+      "case": "value-3",
+      "class": "human_value",
+      "line": "L1D0|V|style|-|EV0|SIMPLE>CLEVER|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "observation-1",
+      "class": "evidence_backed_observation",
+      "line": "L1D0|O|STATE.md|U4|EV+|TS=2026-09-17T08:50:40Z|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "observation-2",
+      "class": "evidence_backed_observation",
+      "line": "L1D0|O|HEAD|U4|EV+|HEAD=10a2989|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "observation-3",
+      "class": "evidence_backed_observation",
+      "line": "L1D0|O|intake|U4|EV+|RECEIPTS=51|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "unknown-1",
+      "class": "unknown_uncertain",
+      "line": "L1D0|F|delivery|U0|EV0|DUP_EXEC=INTERMITTENT|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "unknown-2",
+      "class": "unknown_uncertain",
+      "line": "L1D0|F|mirror|U0|EV0|META=STALE|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "unknown-3",
+      "class": "unknown_uncertain",
+      "line": "L1D0|F|session|U1|EV0|SESS=UNBOUNDED_GROWTH|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "warning-1",
+      "class": "warning",
+      "line": "L1D0|F|promotion|U2|EV+|?|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": true
+    },
+    {
+      "case": "warning-2",
+      "class": "warning",
+      "line": "L1D0|F|envelope|U3|EV+|?|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": true
+    },
+    {
+      "case": "warning-3",
+      "class": "warning",
+      "line": "L1D0|F|recovery|U1|EV0|CKPT>RECOV|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "crossref-1",
+      "class": "cross_reference",
+      "line": "L1D0|F|queue|U2|EV+|DUP_EXEC=REPRODUCED|S",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "crossref-2",
+      "class": "cross_reference",
+      "line": "L1D0|O|LOG.md|U4|EV+|TS=2026-09-17T08:55:00Z|R",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "crossref-3",
+      "class": "cross_reference",
+      "line": "L1D0|F|b03|U2|EV+|CONF=CALIBRATED|C",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "unicode-1",
+      "class": "unicode_content",
+      "line": "L1D0|O|opencode.db|U4|EV+|?|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": true
+    },
+    {
+      "case": "unicode-2",
+      "class": "unicode_content",
+      "line": "L1D0|F|検証|U2|EV+|?|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": true
+    },
+    {
+      "case": "unicode-3",
+      "class": "unicode_content",
+      "line": "L1D0|F|tõendus|U2|EV+|?|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": true
+    },
+    {
+      "case": "longpath-1",
+      "class": "long_path_reference",
+      "line": "L1D0|O|operations.py:1860|U4|EV+|VALID=REFUSES_WITHOUT_EVIDENCE|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "longpath-2",
+      "class": "long_path_reference",
+      "line": "L1D0|O|subs/PROTOCOL.md|U4|EV+|SUBSAIPEN=NO_SECOND_WRITE_PATH|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "longpath-3",
+      "class": "long_path_reference",
+      "line": "L1D0|O|phases/verify.md|U4|EV+|VALID=RED_CONTROL_REQUIRED|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "dictterms-1",
+      "class": "repeated_dictionary_terms",
+      "line": "L1D0|F|queue|U2|EV+|RECOV>QSTALE>RETRY>DUP_EXEC>REGR|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "dictterms-2",
+      "class": "repeated_dictionary_terms",
+      "line": "L1D0|F|envelope|U2|EV+|CKPT>VALID>SIG>ENV>REGR|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    },
+    {
+      "case": "dictterms-3",
+      "class": "repeated_dictionary_terms",
+      "line": "L1D0|F|db|U2|EV+|DB>META>TS>CFG>PERF>CONC|-",
+      "triage_fields_preserved": 9,
+      "triage_fields_total": 9,
+      "inversions": 0,
+      "claim_open_record": false
+    }
+  ]
+}

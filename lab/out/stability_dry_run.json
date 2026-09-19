@@ -1,0 +1,1146 @@
+{
+  "authority": "EXPERIMENT_DATA",
+  "is_not": [
+    "CONSENSUS",
+    "TRUTH",
+    "PROTOCOL_CHANGE",
+    "USER_INTENT"
+  ],
+  "note": "Live output is experiment data. It is not consensus, not truth, not a protocol change and not user intent. Disagreement between agents is preserved per call. Reasoning traces are dropped before storage.",
+  "experiment_class": {
+    "rule": "saifren-experiment-class/1",
+    "experiment_class": "NOT_MEASURED",
+    "combo": "SAIFREN",
+    "observed_combo_members": [],
+    "participating_combo_members": [],
+    "external_comparators": [],
+    "distinct_reported_models": [],
+    "roster_status": "NOT_OBSERVABLE",
+    "roster_status_basis": "ROSTER_NOT_EXPOSED",
+    "membership_evidence_basis": "CALL_RECORDS",
+    "membership_evidence": {
+      "alias_calls": {},
+      "membership_probes": [],
+      "alias_only_answers": 0
+    },
+    "unattributed_models": [],
+    "cross_member_claim": false,
+    "note": "Membership is sampled through the combo alias, never read from a roster and never inferred from catalog eligibility. OBSERVED_COMBO_MEMBERS is what this run saw, not what SAIFREN contains. EXTERNAL_COMPARATORS are live catalog models answering beside SAIFREN for contrast; nothing in the run shows they are SAIFREN members."
+  },
+  "registration": {
+    "digest": "sha256:c60bc6ac40bf913ba6f464275736483a1ab7b2920d282bfc647b701d12402b5c",
+    "file": "stability_registration.json",
+    "registered_under": {
+      "ticket": "T-33",
+      "source_receipt": "SRC-009",
+      "decision": "D-025"
+    }
+  },
+  "dry_run": true,
+  "harness": {
+    "gateway": "9router",
+    "base_url": "http://127.0.0.1:20128",
+    "model_alias": "SAIFREN",
+    "protocol_version": "SAILANG frame v4 / SAIB4",
+    "max_tokens": 2048,
+    "timeout_s": 120,
+    "repeats": 3,
+    "cases": [
+      {
+        "case": "FACTUAL_UNVERIFIED",
+        "unit_id": "S1.evidence_absent"
+      },
+      {
+        "case": "EV0_ATTACHMENT",
+        "unit_id": "S4.ev0_is_not_weak"
+      },
+      {
+        "case": "OPEN_VERSUS_DEFER",
+        "unit_id": "S3.mailbox"
+      },
+      {
+        "case": "RELATION_CONTRADICTION",
+        "unit_id": "S1.contradiction"
+      }
+    ],
+    "participants": [
+      {
+        "role": "A",
+        "requested": "SAIFREN"
+      },
+      {
+        "role": "B",
+        "requested": "UNRESOLVED_EXTERNAL_COMPARATOR"
+      }
+    ]
+  },
+  "credential": {
+    "handle": "credential://9router/sairoute",
+    "source": "store",
+    "backend": null
+  },
+  "population": {
+    "combo": "SAIFREN",
+    "membership_observed_at": "2026-09-17T16:24:03Z",
+    "membership_source": "SAIFREN_MEMBERSHIP_NOT_OBSERVABLE",
+    "roster_status": "ROSTER_NOT_EXPOSED",
+    "observed_members": [],
+    "membership_digest": "",
+    "catalog_size": 0,
+    "catalog_digest": "",
+    "discovery": {
+      "surface": "/v1/models",
+      "queried": false
+    },
+    "selection_rule": "saifren-selection/1",
+    "replacement_policy": "saifren-replacement/1",
+    "membership_probes_used": 0,
+    "selection_probes_used": 0,
+    "participants": [],
+    "rejected_candidates": [],
+    "heterogeneous_participants": false,
+    "notes": [
+      "SAIFREN_MEMBERSHIP_NOT_OBSERVABLE: a dry run makes no call"
+    ]
+  },
+  "started": "2026-09-17T16:24:03Z",
+  "max_calls": 32,
+  "planned_experiment_calls": 24,
+  "live_calls": 0,
+  "discovery_calls": 0,
+  "experiment_calls": 0,
+  "stopped": null,
+  "distributions": [
+    {
+      "model": "(no model reported)",
+      "route": "SAIFREN",
+      "scenario": "S1.contradiction",
+      "case": "RELATION_CONTRADICTION",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 3
+      },
+      "answers": {
+        "Q1": {},
+        "Q2": {},
+        "Q3": {}
+      }
+    },
+    {
+      "model": "(no model reported)",
+      "route": "SAIFREN",
+      "scenario": "S1.evidence_absent",
+      "case": "FACTUAL_UNVERIFIED",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 3
+      },
+      "answers": {
+        "Q1": {},
+        "Q2": {},
+        "Q3": {}
+      }
+    },
+    {
+      "model": "(no model reported)",
+      "route": "SAIFREN",
+      "scenario": "S3.mailbox",
+      "case": "OPEN_VERSUS_DEFER",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 3
+      },
+      "answers": {
+        "M1": {},
+        "M2": {},
+        "M3": {},
+        "M4": {}
+      },
+      "attention": {
+        "M1": {
+          "EXACT": 0,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 3
+        },
+        "M2": {
+          "EXACT": 0,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 3
+        },
+        "M3": {
+          "EXACT": 0,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 3
+        },
+        "M4": {
+          "EXACT": 0,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 3
+        }
+      }
+    },
+    {
+      "model": "(no model reported)",
+      "route": "SAIFREN",
+      "scenario": "S4.ev0_is_not_weak",
+      "case": "EV0_ATTACHMENT",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 3
+      },
+      "answers": {
+        "ANSWER": {}
+      }
+    },
+    {
+      "model": "(no model reported)",
+      "route": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "scenario": "S1.contradiction",
+      "case": "RELATION_CONTRADICTION",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 3
+      },
+      "answers": {
+        "Q1": {},
+        "Q2": {},
+        "Q3": {}
+      }
+    },
+    {
+      "model": "(no model reported)",
+      "route": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "scenario": "S1.evidence_absent",
+      "case": "FACTUAL_UNVERIFIED",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 3
+      },
+      "answers": {
+        "Q1": {},
+        "Q2": {},
+        "Q3": {}
+      }
+    },
+    {
+      "model": "(no model reported)",
+      "route": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "scenario": "S3.mailbox",
+      "case": "OPEN_VERSUS_DEFER",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 3
+      },
+      "answers": {
+        "M1": {},
+        "M2": {},
+        "M3": {},
+        "M4": {}
+      },
+      "attention": {
+        "M1": {
+          "EXACT": 0,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 3
+        },
+        "M2": {
+          "EXACT": 0,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 3
+        },
+        "M3": {
+          "EXACT": 0,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 3
+        },
+        "M4": {
+          "EXACT": 0,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 3
+        }
+      }
+    },
+    {
+      "model": "(no model reported)",
+      "route": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "scenario": "S4.ev0_is_not_weak",
+      "case": "EV0_ATTACHMENT",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 3
+      },
+      "answers": {
+        "ANSWER": {}
+      }
+    }
+  ],
+  "fragility": {
+    "MODEL_VARIANCE": [],
+    "CROSS_MODEL_DISAGREEMENT": [],
+    "PROTOCOL_HOTSPOT": [],
+    "STIMULUS_CHANGED": []
+  },
+  "opaque_context": {
+    "visibility": "OPAQUE",
+    "per_model": {},
+    "per_call": []
+  },
+  "observations": [
+    {
+      "call_id": "57dea1c56ed4",
+      "repeat": 1,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    },
+    {
+      "call_id": "cb6a2d306652",
+      "repeat": 1,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    },
+    {
+      "call_id": "5ef49efea430",
+      "repeat": 1,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "ANSWER": null
+      }
+    },
+    {
+      "call_id": "0febb2e1e3e3",
+      "repeat": 1,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "ANSWER": null
+      }
+    },
+    {
+      "call_id": "8b7369383e72",
+      "repeat": 1,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "M1": null,
+        "M2": null,
+        "M3": null,
+        "M4": null
+      },
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": null,
+          "class": "UNANSWERED"
+        }
+      }
+    },
+    {
+      "call_id": "774a5048d712",
+      "repeat": 1,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "M1": null,
+        "M2": null,
+        "M3": null,
+        "M4": null
+      },
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": null,
+          "class": "UNANSWERED"
+        }
+      }
+    },
+    {
+      "call_id": "27a2d070469d",
+      "repeat": 1,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    },
+    {
+      "call_id": "c803a1254a69",
+      "repeat": 1,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    },
+    {
+      "call_id": "07b351f157ac",
+      "repeat": 2,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    },
+    {
+      "call_id": "4281e72ed26c",
+      "repeat": 2,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    },
+    {
+      "call_id": "82c1b2eae7f8",
+      "repeat": 2,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "ANSWER": null
+      }
+    },
+    {
+      "call_id": "9eb75a0b5dcf",
+      "repeat": 2,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "ANSWER": null
+      }
+    },
+    {
+      "call_id": "4de3539f8ec3",
+      "repeat": 2,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "M1": null,
+        "M2": null,
+        "M3": null,
+        "M4": null
+      },
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": null,
+          "class": "UNANSWERED"
+        }
+      }
+    },
+    {
+      "call_id": "79a39e22e8b5",
+      "repeat": 2,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "M1": null,
+        "M2": null,
+        "M3": null,
+        "M4": null
+      },
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": null,
+          "class": "UNANSWERED"
+        }
+      }
+    },
+    {
+      "call_id": "2eef47d06a79",
+      "repeat": 2,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    },
+    {
+      "call_id": "d70fcff88306",
+      "repeat": 2,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    },
+    {
+      "call_id": "59ae563eadad",
+      "repeat": 3,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    },
+    {
+      "call_id": "21883bc64314",
+      "repeat": 3,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    },
+    {
+      "call_id": "384c7af211d2",
+      "repeat": 3,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "ANSWER": null
+      }
+    },
+    {
+      "call_id": "1786900b3ccb",
+      "repeat": 3,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "ANSWER": null
+      }
+    },
+    {
+      "call_id": "2960469784da",
+      "repeat": 3,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "M1": null,
+        "M2": null,
+        "M3": null,
+        "M4": null
+      },
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": null,
+          "class": "UNANSWERED"
+        }
+      }
+    },
+    {
+      "call_id": "330aa7b44016",
+      "repeat": 3,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "M1": null,
+        "M2": null,
+        "M3": null,
+        "M4": null
+      },
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": null,
+          "class": "UNANSWERED"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": null,
+          "class": "UNANSWERED"
+        }
+      }
+    },
+    {
+      "call_id": "700e326a0d0b",
+      "repeat": 3,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    },
+    {
+      "call_id": "f5ba2a5890aa",
+      "repeat": 3,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": "(no model reported)",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "verdict": "NOT_RUN",
+      "answers": {
+        "Q1": null,
+        "Q2": null,
+        "Q3": null
+      }
+    }
+  ],
+  "calls": [
+    {
+      "call_id": "57dea1c56ed4",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "cb6a2d306652",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "5ef49efea430",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "0febb2e1e3e3",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "8b7369383e72",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "774a5048d712",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "27a2d070469d",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "c803a1254a69",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "07b351f157ac",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "4281e72ed26c",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "82c1b2eae7f8",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "9eb75a0b5dcf",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "4de3539f8ec3",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "79a39e22e8b5",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "2eef47d06a79",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "d70fcff88306",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "59ae563eadad",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "21883bc64314",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "384c7af211d2",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "1786900b3ccb",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "2960469784da",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "330aa7b44016",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "700e326a0d0b",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "output": null
+    },
+    {
+      "call_id": "f5ba2a5890aa",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "timestamp": "2026-09-17T16:24:03Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "NOT_RUN",
+      "output": null
+    }
+  ]
+}

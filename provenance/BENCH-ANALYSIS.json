@@ -1,0 +1,15 @@
+{
+  "receipt": "BENCH-ANALYSIS",
+  "source_path": "bench/ANALYSIS.md",
+  "body_sha256": "e2d35801234e32fed6d2d8fdc92d05a257cb2cdf25713cce7610c6cf52be5623",
+  "body_length": 12958,
+  "receipt_source_kind_scope": "TRANSPORT_INTAKE_ONLY",
+  "segments": [
+    {
+      "start": 0,
+      "end": 12958,
+      "source_class": "MEASURED_EVIDENCE",
+      "note": "Written by the implementing agent from benchmark artifacts under bench/out/. Measurement, not intent: it can support a claim and can never ask for work."
+    }
+  ]
+}

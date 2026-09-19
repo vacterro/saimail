@@ -1,0 +1,801 @@
+{
+  "corpus_size": 51,
+  "classes": [
+    "ambiguous_prose",
+    "blocked_vs_blocker",
+    "contradiction",
+    "cross_domain_discovery",
+    "goal_value",
+    "hypothesis",
+    "irrelevant_known",
+    "later_relevant",
+    "novel_discovery",
+    "operational_noise",
+    "relation_to_watched",
+    "relevant_known",
+    "repeated_topic",
+    "same_topic_relation",
+    "unknown_atom",
+    "warning"
+  ],
+  "interest": {
+    "atoms": [
+      "CONCURRENCY",
+      "DEADLOCK",
+      "DUPLICATE_EXECUTION",
+      "QUEUE_OWNERSHIP_STALE",
+      "RECOVERY",
+      "RETRY"
+    ],
+    "subjects": [
+      "queue",
+      "recovery"
+    ]
+  },
+  "rules": [
+    {
+      "id": "R0-WATCHED",
+      "reason": "a relation points at a record this reader watches, whatever the vocabulary"
+    },
+    {
+      "id": "R1-UNRESOLVED-RELATION",
+      "reason": "a relation names a target the container never declared"
+    },
+    {
+      "id": "R2-UNKNOWN",
+      "reason": "a wire token this profile has no atom for: unreadable, so never dropped"
+    },
+    {
+      "id": "R3-OPEN-RECORD",
+      "reason": "the frame could not carry the claim at all"
+    },
+    {
+      "id": "R4-NOISE",
+      "reason": "every atom is on the declared noise list for this reader"
+    },
+    {
+      "id": "R5-NOT-NOW",
+      "reason": "known, readable, not relevant right now: kept rather than discarded"
+    },
+    {
+      "id": "R6-CONTRADICTION",
+      "reason": "relevant, and it refutes or conflicts with something"
+    },
+    {
+      "id": "R7-ACTIONABLE",
+      "reason": "relevant, evidence attached, and at or above the supported rung"
+    },
+    {
+      "id": "R8-RELEVANT",
+      "reason": "relevant but not yet actionable"
+    }
+  ],
+  "error_costs": {
+    "order": "FALSE_IGNORE >> FALSE_OPEN >> EXTRA_BYTES",
+    "note": "Reported separately and never summed. A single score would need a calibrated exchange rate between a missed discovery and a wasted summary, and no such calibration exists."
+  },
+  "truth_distribution": {
+    "IGNORE": 4,
+    "DEFER": 16,
+    "OPEN_R2": 17,
+    "OPEN_R3": 14
+  },
+  "counts": {
+    "r1_scanned": 51,
+    "r2_opened": 21,
+    "r3_opened": 14,
+    "ignored": 2,
+    "deferred": 14,
+    "actual_open_rate": 0.6862745098039216,
+    "r3_rate": 0.27450980392156865,
+    "unknown_fallback": 7,
+    "open_record_fallback": 8,
+    "agreement": 0.8823529411764706
+  },
+  "errors": {
+    "false_ignore_count": 0,
+    "false_ignore": [],
+    "false_open_count": 2,
+    "false_open": [
+      {
+        "case": "irr-4",
+        "class": "operational_noise",
+        "truth": "IGNORE",
+        "verdict": "DEFER",
+        "rule": "R5-NOT-NOW",
+        "reason": "atoms ['CHECKPOINT', 'PERFORMANCE'] are readable and not relevant now",
+        "why_truth": "checkpoint performance elsewhere",
+        "agrees": false,
+        "unknown_atoms": [],
+        "claim_open_record": false
+      },
+      {
+        "case": "irr-5",
+        "class": "operational_noise",
+        "truth": "IGNORE",
+        "verdict": "DEFER",
+        "rule": "R5-NOT-NOW",
+        "reason": "atoms ['DATABASE', 'METADATA', 'TIMESTAMP'] are readable and not relevant now",
+        "why_truth": "database metadata, different area",
+        "agrees": false,
+        "unknown_atoms": [],
+        "claim_open_record": false
+      }
+    ],
+    "under_open_count": 0,
+    "under_open": []
+  },
+  "bytes": {
+    "r1_container_bytes": 1987,
+    "r1_bytes_per_message": 38.96078431372549
+  },
+  "context_cost": {
+    "cl100k_base": {
+      "emitted_tokens": 1911,
+      "eager_full_tokens": 4246,
+      "ratio_vs_eager": 0.45007065473386715
+    },
+    "o200k_base": {
+      "emitted_tokens": 1940,
+      "eager_full_tokens": 4267,
+      "ratio_vs_eager": 0.454651980314038
+    },
+    "p50k_base": {
+      "emitted_tokens": 2135,
+      "eager_full_tokens": 4552,
+      "ratio_vs_eager": 0.46902460456942
+    },
+    "gpt2": {
+      "emitted_tokens": 2135,
+      "eager_full_tokens": 4552,
+      "ratio_vs_eager": 0.46902460456942
+    }
+  },
+  "selector_ns_per_message": 1243.9156862745099,
+  "boundary_refusals": {
+    "stale_profile": "PROFILE_MISMATCH",
+    "malformed_frame_container": "BAD_BATCH",
+    "malformed_frame_decode": "BAD_FRAME",
+    "forged_frame_binding": "UNVERIFIED_BINDING",
+    "explicitly_bound_frame": "F"
+  },
+  "rules_by_verdict": {
+    "R0-WATCHED": 3,
+    "R2-UNKNOWN": 7,
+    "R3-OPEN-RECORD": 8,
+    "R4-NOISE": 2,
+    "R5-NOT-NOW": 14,
+    "R6-CONTRADICTION": 3,
+    "R7-ACTIONABLE": 8,
+    "R8-RELEVANT": 6
+  },
+  "per_case": [
+    {
+      "case": "rel-1",
+      "class": "relevant_known",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R7-ACTIONABLE",
+      "reason": "relevant, evidence attached, rung U2",
+      "why_truth": "a supported duplicate-execution finding is the reader's core topic",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "rel-2",
+      "class": "relevant_known",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R7-ACTIONABLE",
+      "reason": "relevant, evidence attached, rung U3",
+      "why_truth": "deadlock under concurrency on the queue, with evidence",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "rel-3",
+      "class": "relevant_known",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R8-RELEVANT",
+      "reason": "relevant via ['RECOVERY', 'QUEUE_OWNERSHIP_STALE'], not yet actionable",
+      "why_truth": "relevant but unverified: worth a summary, not the record yet",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "rel-4",
+      "class": "relevant_known",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R7-ACTIONABLE",
+      "reason": "relevant, evidence attached, rung U4",
+      "why_truth": "retry causing duplicates, verified",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "rel-5",
+      "class": "relevant_known",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R8-RELEVANT",
+      "reason": "relevant via ['QUEUE_OWNERSHIP_STALE', 'RECOVERY'], not yet actionable",
+      "why_truth": "relevant topic, no evidence attached",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "irr-1",
+      "class": "irrelevant_known",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['SIGNATURE', 'ENVELOPE'] are readable and not relevant now",
+      "why_truth": "signature ordering is another team's problem",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "irr-2",
+      "class": "irrelevant_known",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['CONFIGURATION', 'REGRESSION'] are readable and not relevant now",
+      "why_truth": "configuration regression, unrelated subsystem",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "irr-3",
+      "class": "irrelevant_known",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['PROMOTION', 'EVIDENCE'] are readable and not relevant now",
+      "why_truth": "promotion gate semantics, not this reader",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "irr-4",
+      "class": "operational_noise",
+      "truth": "IGNORE",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['CHECKPOINT', 'PERFORMANCE'] are readable and not relevant now",
+      "why_truth": "checkpoint performance elsewhere",
+      "agrees": false,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "irr-5",
+      "class": "operational_noise",
+      "truth": "IGNORE",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['DATABASE', 'METADATA', 'TIMESTAMP'] are readable and not relevant now",
+      "why_truth": "database metadata, different area",
+      "agrees": false,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "unk-1",
+      "class": "unknown_atom",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R2-UNKNOWN",
+      "reason": "unknown wire tokens ['WOMBAT_SUBSYSTEM']",
+      "why_truth": "an unreadable token could be anything; looking is mandatory",
+      "agrees": true,
+      "unknown_atoms": [
+        "WOMBAT_SUBSYSTEM"
+      ],
+      "claim_open_record": false
+    },
+    {
+      "case": "unk-2",
+      "class": "unknown_atom",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R2-UNKNOWN",
+      "reason": "unknown wire tokens ['ZEPHYR_LAYER', 'QUUX_STATE']",
+      "why_truth": "entirely unknown vocabulary on an unknown subject",
+      "agrees": true,
+      "unknown_atoms": [
+        "ZEPHYR_LAYER",
+        "QUUX_STATE"
+      ],
+      "claim_open_record": false
+    },
+    {
+      "case": "unk-3",
+      "class": "unknown_atom",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R2-UNKNOWN",
+      "reason": "unknown wire tokens ['CACHE_SHARD_SPLIT']",
+      "why_truth": "unknown token on the reader's own subject",
+      "agrees": true,
+      "unknown_atoms": [
+        "CACHE_SHARD_SPLIT"
+      ],
+      "claim_open_record": false
+    },
+    {
+      "case": "unk-4",
+      "class": "unknown_atom",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R2-UNKNOWN",
+      "reason": "unknown wire tokens ['GRIFFIN_MODE']",
+      "why_truth": "half known, half unknown: the unknown half decides",
+      "agrees": true,
+      "unknown_atoms": [
+        "GRIFFIN_MODE"
+      ],
+      "claim_open_record": false
+    },
+    {
+      "case": "prose-rel-1",
+      "class": "ambiguous_prose",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R3-OPEN-RECORD",
+      "reason": "claim not representable at R1",
+      "why_truth": "genuinely about the queue; the frame cannot say so",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": true
+    },
+    {
+      "case": "prose-rel-2",
+      "class": "ambiguous_prose",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R3-OPEN-RECORD",
+      "reason": "claim not representable at R1",
+      "why_truth": "a real recovery finding written as prose",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": true
+    },
+    {
+      "case": "prose-irr-1",
+      "class": "ambiguous_prose",
+      "truth": "DEFER",
+      "verdict": "OPEN_R2",
+      "rule": "R3-OPEN-RECORD",
+      "reason": "claim not representable at R1",
+      "why_truth": "prose about an unrelated area: the ideal reader skips it",
+      "agrees": false,
+      "unknown_atoms": [],
+      "claim_open_record": true
+    },
+    {
+      "case": "prose-irr-2",
+      "class": "ambiguous_prose",
+      "truth": "DEFER",
+      "verdict": "OPEN_R2",
+      "rule": "R3-OPEN-RECORD",
+      "reason": "claim not representable at R1",
+      "why_truth": "unrelated prose, no way for R1 to know",
+      "agrees": false,
+      "unknown_atoms": [],
+      "claim_open_record": true
+    },
+    {
+      "case": "con-1",
+      "class": "contradiction",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R6-CONTRADICTION",
+      "reason": "relevant and carries a refutation or a conflict",
+      "why_truth": "a refutation of a relevant claim must reach the record",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "con-2",
+      "class": "contradiction",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R6-CONTRADICTION",
+      "reason": "relevant and carries a refutation or a conflict",
+      "why_truth": "a conflict on the reader's own subject",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "con-3",
+      "class": "contradiction",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['SIGNATURE', 'VALIDATION'] are readable and not relevant now",
+      "why_truth": "a contradiction in someone else's area stays there",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "hyp-1",
+      "class": "hypothesis",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R8-RELEVANT",
+      "reason": "relevant via ['RETRY', 'DUPLICATE_EXECUTION'], not yet actionable",
+      "why_truth": "a relevant hypothesis is worth a summary, never treated as fact",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "hyp-2",
+      "class": "hypothesis",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R7-ACTIONABLE",
+      "reason": "relevant, evidence attached, rung U3",
+      "why_truth": "a relevant hypothesis with evidence at the supported rung",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "hyp-3",
+      "class": "hypothesis",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['CONFIGURATION', 'PERFORMANCE'] are readable and not relevant now",
+      "why_truth": "someone else's hypothesis about someone else's subsystem",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "goal-rel",
+      "class": "goal_value",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R3-OPEN-RECORD",
+      "reason": "claim not representable at R1",
+      "why_truth": "a goal aimed at the reader's own area changes what they work on",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": true
+    },
+    {
+      "case": "goal-irr",
+      "class": "goal_value",
+      "truth": "DEFER",
+      "verdict": "OPEN_R2",
+      "rule": "R3-OPEN-RECORD",
+      "reason": "claim not representable at R1",
+      "why_truth": "a goal about maintenance burden is not this reader's work",
+      "agrees": false,
+      "unknown_atoms": [],
+      "claim_open_record": true
+    },
+    {
+      "case": "value-irr",
+      "class": "goal_value",
+      "truth": "DEFER",
+      "verdict": "OPEN_R2",
+      "rule": "R3-OPEN-RECORD",
+      "reason": "claim not representable at R1",
+      "why_truth": "a stated preference with no bearing on the queue",
+      "agrees": false,
+      "unknown_atoms": [],
+      "claim_open_record": true
+    },
+    {
+      "case": "value-rel",
+      "class": "goal_value",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R3-OPEN-RECORD",
+      "reason": "claim not representable at R1",
+      "why_truth": "a preference that ranks reliability above throughput on this queue",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": true
+    },
+    {
+      "case": "warn-1",
+      "class": "warning",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R7-ACTIONABLE",
+      "reason": "relevant, evidence attached, rung U4",
+      "why_truth": "a verified warning about the reader's own failure mode",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "warn-2",
+      "class": "warning",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R8-RELEVANT",
+      "reason": "relevant via ['CONCURRENCY', 'RETRY'], not yet actionable",
+      "why_truth": "a relevant warning with nothing behind it yet",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "warn-3",
+      "class": "warning",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['SIGNATURE', 'ENVELOPE'] are readable and not relevant now",
+      "why_truth": "a warning about the envelope layer",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "rep-1",
+      "class": "repeated_topic",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R7-ACTIONABLE",
+      "reason": "relevant, evidence attached, rung U2",
+      "why_truth": "the same finding reproduced independently still matters",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "rep-2",
+      "class": "repeated_topic",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R8-RELEVANT",
+      "reason": "relevant via ['QUEUE_OWNERSHIP_STALE', 'RETRY', 'DUPLICATE_EXECUTION'], not yet actionable",
+      "why_truth": "a third report of the same thing, unverified",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "rep-3",
+      "class": "repeated_topic",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['CONFIGURATION', 'REGRESSION'] are readable and not relevant now",
+      "why_truth": "a repeated report from an unrelated area",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "nov-1",
+      "class": "novel_discovery",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R2-UNKNOWN",
+      "reason": "unknown wire tokens ['SHARD_REBALANCE']",
+      "why_truth": "a new mechanism nobody has vocabulary for yet",
+      "agrees": true,
+      "unknown_atoms": [
+        "SHARD_REBALANCE"
+      ],
+      "claim_open_record": false
+    },
+    {
+      "case": "nov-2",
+      "class": "novel_discovery",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R2-UNKNOWN",
+      "reason": "unknown wire tokens ['PHANTOM_LEASE']",
+      "why_truth": "novel and unreadable: the expensive one to get wrong",
+      "agrees": true,
+      "unknown_atoms": [
+        "PHANTOM_LEASE"
+      ],
+      "claim_open_record": false
+    },
+    {
+      "case": "nov-3",
+      "class": "novel_discovery",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R2-UNKNOWN",
+      "reason": "unknown wire tokens ['GLACIER_TIER']",
+      "why_truth": "novel vocabulary on an unrelated subject, still unreadable",
+      "agrees": true,
+      "unknown_atoms": [
+        "GLACIER_TIER"
+      ],
+      "claim_open_record": false
+    },
+    {
+      "case": "rel-sup",
+      "class": "same_topic_relation",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R7-ACTIONABLE",
+      "reason": "relevant, evidence attached, rung U2",
+      "why_truth": "support for a relevant claim, with evidence",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "rel-ref",
+      "class": "same_topic_relation",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R6-CONTRADICTION",
+      "reason": "relevant and carries a refutation or a conflict",
+      "why_truth": "refutation of the same relevant claim",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "rel-plain",
+      "class": "same_topic_relation",
+      "truth": "OPEN_R2",
+      "verdict": "OPEN_R2",
+      "rule": "R8-RELEVANT",
+      "reason": "relevant via ['RETRY', 'DUPLICATE_EXECUTION'], not yet actionable",
+      "why_truth": "the same topic with no relation and no evidence",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "blk-state",
+      "class": "blocked_vs_blocker",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['BLOCKED', 'DEPENDENCY'] are readable and not relevant now",
+      "why_truth": "release work is blocked by a dependency: not this reader",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "blk-cause",
+      "class": "blocked_vs_blocker",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R7-ACTIONABLE",
+      "reason": "relevant, evidence attached, rung U3",
+      "why_truth": "the retry path is what is blocking others: the reader owns it",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "watch-refute",
+      "class": "relation_to_watched",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R0-WATCHED",
+      "reason": "a relation points at watched record sha256:0f832d89fd93",
+      "why_truth": "the vocabulary is another domain entirely, and it refutes a record this reader watches",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "watch-conflict",
+      "class": "relation_to_watched",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R0-WATCHED",
+      "reason": "a relation points at watched record sha256:0f832d89fd93",
+      "why_truth": "an unrelated-looking configuration note that conflicts with the watched record",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "watch-support",
+      "class": "relation_to_watched",
+      "truth": "OPEN_R3",
+      "verdict": "OPEN_R3",
+      "rule": "R0-WATCHED",
+      "reason": "a relation points at watched record sha256:0f832d89fd93",
+      "why_truth": "support for the watched record, from a subsystem the reader never looks at",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "watch-other",
+      "class": "relation_to_watched",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['SIGNATURE', 'VALIDATION'] are readable and not relevant now",
+      "why_truth": "relevant-looking vocabulary whose relation points at a record nobody watches",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "cross-1",
+      "class": "cross_domain_discovery",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['PERFORMANCE', 'REGRESSION'] are readable and not relevant now",
+      "why_truth": "a real discovery in a neighbouring subsystem: not now, not never",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "cross-2",
+      "class": "cross_domain_discovery",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['SESSION', 'PERFORMANCE'] are readable and not relevant now",
+      "why_truth": "someone else found something about sessions that may matter later",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "later-1",
+      "class": "later_relevant",
+      "truth": "DEFER",
+      "verdict": "DEFER",
+      "rule": "R5-NOT-NOW",
+      "reason": "atoms ['VALIDATION', 'REGRESSION'] are readable and not relevant now",
+      "why_truth": "an observation about validation that becomes relevant once the queue work lands",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "noise-1",
+      "class": "operational_noise",
+      "truth": "IGNORE",
+      "verdict": "IGNORE",
+      "rule": "R4-NOISE",
+      "reason": "atoms ['CHECKPOINT', 'TIMESTAMP'] are on the declared noise list",
+      "why_truth": "a checkpoint timestamp: the reader declared this class to be noise",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    },
+    {
+      "case": "noise-2",
+      "class": "operational_noise",
+      "truth": "IGNORE",
+      "verdict": "IGNORE",
+      "rule": "R4-NOISE",
+      "reason": "atoms ['METADATA', 'TIMESTAMP'] are on the declared noise list",
+      "why_truth": "routine metadata churn, declared noise by this reader",
+      "agrees": true,
+      "unknown_atoms": [],
+      "claim_open_record": false
+    }
+  ]
+}

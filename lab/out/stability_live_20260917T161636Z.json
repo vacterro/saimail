@@ -1,0 +1,1959 @@
+{
+  "authority": "EXPERIMENT_DATA",
+  "is_not": [
+    "CONSENSUS",
+    "TRUTH",
+    "PROTOCOL_CHANGE",
+    "USER_INTENT"
+  ],
+  "note": "Live output is experiment data. It is not consensus, not truth, not a protocol change and not user intent. Disagreement between agents is preserved per call. Reasoning traces are dropped before storage.",
+  "experiment_class": {
+    "rule": "saifren-experiment-class/1",
+    "experiment_class": "SAIFREN_EXTERNAL_COMPARATOR",
+    "combo": "SAIFREN",
+    "observed_combo_members": [
+      "deepseek/deepseek-v4-flash"
+    ],
+    "participating_combo_members": [
+      "deepseek/deepseek-v4-flash"
+    ],
+    "external_comparators": [
+      "MiniMaxAI/MiniMax-M3"
+    ],
+    "distinct_reported_models": [
+      "MiniMaxAI/MiniMax-M3",
+      "deepseek/deepseek-v4-flash"
+    ],
+    "roster_status": "NOT_OBSERVABLE",
+    "roster_status_basis": "ROSTER_NOT_EXPOSED",
+    "membership_evidence_basis": "CALL_RECORDS",
+    "membership_evidence": {
+      "alias_calls": {
+        "deepseek/deepseek-v4-flash": [
+          "45149ebe2a9f",
+          "81052ff98929",
+          "fdf387b30f12",
+          "dba812a7f943",
+          "edfefced6085",
+          "41e067a114a0",
+          "a492fa1fdc31",
+          "c9a56531f9cc",
+          "e7607fb1c4f3",
+          "11278cc6d6de",
+          "bcc6d2dd8efe",
+          "69a4064e9449"
+        ]
+      },
+      "membership_probes": [
+        "deepseek/deepseek-v4-flash"
+      ],
+      "alias_only_answers": 0
+    },
+    "unattributed_models": [],
+    "cross_member_claim": false,
+    "note": "Membership is sampled through the combo alias, never read from a roster and never inferred from catalog eligibility. OBSERVED_COMBO_MEMBERS is what this run saw, not what SAIFREN contains. EXTERNAL_COMPARATORS are live catalog models answering beside SAIFREN for contrast; nothing in the run shows they are SAIFREN members."
+  },
+  "registration": {
+    "digest": "sha256:c60bc6ac40bf913ba6f464275736483a1ab7b2920d282bfc647b701d12402b5c",
+    "file": "stability_registration.json",
+    "registered_under": {
+      "ticket": "T-33",
+      "source_receipt": "SRC-009",
+      "decision": "D-025"
+    }
+  },
+  "dry_run": false,
+  "harness": {
+    "gateway": "9router",
+    "base_url": "http://127.0.0.1:20128",
+    "model_alias": "SAIFREN",
+    "protocol_version": "SAILANG frame v4 / SAIB4",
+    "max_tokens": 2048,
+    "timeout_s": 120,
+    "repeats": 3,
+    "cases": [
+      {
+        "case": "FACTUAL_UNVERIFIED",
+        "unit_id": "S1.evidence_absent"
+      },
+      {
+        "case": "EV0_ATTACHMENT",
+        "unit_id": "S4.ev0_is_not_weak"
+      },
+      {
+        "case": "OPEN_VERSUS_DEFER",
+        "unit_id": "S3.mailbox"
+      },
+      {
+        "case": "RELATION_CONTRADICTION",
+        "unit_id": "S1.contradiction"
+      }
+    ],
+    "participants": [
+      {
+        "role": "A",
+        "requested": "SAIFREN"
+      },
+      {
+        "role": "B",
+        "requested": "goat/MiniMaxAI/MiniMax-M3"
+      }
+    ]
+  },
+  "credential": {
+    "handle": "credential://9router/sairoute",
+    "source": "store",
+    "backend": "keyring.backends.Windows.WinVaultKeyring"
+  },
+  "population": {
+    "combo": "SAIFREN",
+    "membership_observed_at": "2026-09-17T16:15:48Z",
+    "membership_source": "COMBO_ALIAS_SAMPLE",
+    "roster_status": "ROSTER_NOT_EXPOSED",
+    "observed_members": [
+      "deepseek/deepseek-v4-flash"
+    ],
+    "membership_digest": "sha256:6d0dcdfbe2d7fa1891744b4d7cb01c9523959bd052f9866984a7020c6f422f68",
+    "catalog_size": 1558,
+    "catalog_digest": "sha256:850fd9646f0225a57a9be998c3dd98d9ccda0ee0ef757a877178d6000271906b",
+    "discovery": {
+      "surface": "/v1/models",
+      "combos_listed": [
+        "SAIFREN",
+        "SAIOPP"
+      ],
+      "roster_field_present": false,
+      "alias_transport_errors": []
+    },
+    "selection_rule": "saifren-selection/1",
+    "replacement_policy": "saifren-replacement/1",
+    "membership_probes_used": 2,
+    "selection_probes_used": 4,
+    "participants": [
+      {
+        "role": "A",
+        "requested": "SAIFREN",
+        "reported_model": "deepseek/deepseek-v4-flash",
+        "member_status": "OBSERVED_COMBO_MEMBER",
+        "source": "COMBO_ALIAS",
+        "provider": null,
+        "catalog_namespace": null
+      },
+      {
+        "role": "B",
+        "requested": "goat/MiniMaxAI/MiniMax-M3",
+        "reported_model": "MiniMaxAI/MiniMax-M3",
+        "member_status": "NOT_PROVEN_COMBO_MEMBER",
+        "source": "CATALOG_ELIGIBLE",
+        "provider": null,
+        "catalog_namespace": "goat"
+      }
+    ],
+    "rejected_candidates": [
+      {
+        "requested": "ag/gemini-3-flash",
+        "namespace": "ag",
+        "reason": "TRANSPORT",
+        "error_class": "EmptyOutput",
+        "error": "no content; finish_reason=max_tokens"
+      },
+      {
+        "requested": "bai/gemini-3-flash",
+        "namespace": "bai",
+        "reason": "TRANSPORT",
+        "error_class": "HTTPError",
+        "error": "HTTP 503 {\"error\":{\"message\":\"[openai-compatible-chat-d628e270-17dc-4f52-b220-9fe83f38dc66/gemini-3-flash] [403]: {\\\"error\\\":{\\\"code\\\":\\\"access_denied\\\",\\\"message\\\":\\\"Access restricted. Deposit required to unlock premium models. (request id"
+      },
+      {
+        "requested": "cl/cline-free/muse-spark-1.3-contributor",
+        "namespace": "cl",
+        "reason": "TRANSPORT",
+        "error_class": "HTTPError",
+        "error": "HTTP 503 {\"error\":{\"message\":\"[cline/cline-free/muse-spark-1.3-contributor] [500]: {\\\"error\\\":\\\"empty response content\\\",\\\"success\\\":false}\\n (reset after 25s)\"}}"
+      }
+    ],
+    "heterogeneous_participants": true,
+    "notes": [
+      "ALIAS_SAMPLE_IS_NOT_A_ROSTER: 2 call(s) to the alias observed 1 distinct member(s); a sample of this size cannot tell a one-member combo from a combo with a deterministic primary"
+    ]
+  },
+  "started": "2026-09-17T16:16:36Z",
+  "max_calls": 32,
+  "planned_experiment_calls": 24,
+  "live_calls": 30,
+  "discovery_calls": 6,
+  "experiment_calls": 24,
+  "stopped": null,
+  "distributions": [
+    {
+      "model": "MiniMaxAI/MiniMax-M3",
+      "route": "goat/MiniMaxAI/MiniMax-M3",
+      "scenario": "S1.contradiction",
+      "case": "RELATION_CONTRADICTION",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 3,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 0
+      },
+      "answers": {
+        "Q1": {
+          "YES": 3
+        },
+        "Q2": {
+          "NO": 3
+        },
+        "Q3": {
+          "YES": 3
+        }
+      }
+    },
+    {
+      "model": "MiniMaxAI/MiniMax-M3",
+      "route": "goat/MiniMaxAI/MiniMax-M3",
+      "scenario": "S1.evidence_absent",
+      "case": "FACTUAL_UNVERIFIED",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 3,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 0
+      },
+      "answers": {
+        "Q1": {
+          "NO": 3
+        },
+        "Q2": {
+          "NO": 3
+        },
+        "Q3": {
+          "NO": 3
+        }
+      }
+    },
+    {
+      "model": "MiniMaxAI/MiniMax-M3",
+      "route": "goat/MiniMaxAI/MiniMax-M3",
+      "scenario": "S3.mailbox",
+      "case": "OPEN_VERSUS_DEFER",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 0,
+        "FAIL": 3,
+        "ERROR": 0,
+        "NOT_RUN": 0
+      },
+      "answers": {
+        "M1": {
+          "DEFER": 1,
+          "OPEN": 2
+        },
+        "M2": {
+          "OPEN": 1,
+          "DEFER": 2
+        },
+        "M3": {
+          "IGNORE": 3
+        },
+        "M4": {
+          "DEFER": 1,
+          "IGNORE": 2
+        }
+      },
+      "attention": {
+        "M1": {
+          "EXACT": 2,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 1,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 0
+        },
+        "M2": {
+          "EXACT": 2,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 1,
+          "OTHER": 0,
+          "UNANSWERED": 0
+        },
+        "M3": {
+          "EXACT": 0,
+          "FALSE_IGNORE": 3,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 0
+        },
+        "M4": {
+          "EXACT": 2,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 1,
+          "UNANSWERED": 0
+        }
+      }
+    },
+    {
+      "model": "MiniMaxAI/MiniMax-M3",
+      "route": "goat/MiniMaxAI/MiniMax-M3",
+      "scenario": "S4.ev0_is_not_weak",
+      "case": "EV0_ATTACHMENT",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 3,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 0
+      },
+      "answers": {
+        "ANSWER": {
+          "NO": 3
+        }
+      }
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "route": "SAIFREN",
+      "scenario": "S1.contradiction",
+      "case": "RELATION_CONTRADICTION",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 3,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 0
+      },
+      "answers": {
+        "Q1": {
+          "YES": 3
+        },
+        "Q2": {
+          "NO": 3
+        },
+        "Q3": {
+          "YES": 3
+        }
+      }
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "route": "SAIFREN",
+      "scenario": "S1.evidence_absent",
+      "case": "FACTUAL_UNVERIFIED",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 3,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 0
+      },
+      "answers": {
+        "Q1": {
+          "NO": 3
+        },
+        "Q2": {
+          "NO": 3
+        },
+        "Q3": {
+          "NO": 3
+        }
+      }
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "route": "SAIFREN",
+      "scenario": "S3.mailbox",
+      "case": "OPEN_VERSUS_DEFER",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 3,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 0
+      },
+      "answers": {
+        "M1": {
+          "OPEN": 3
+        },
+        "M2": {
+          "DEFER": 3
+        },
+        "M3": {
+          "DEFER": 2,
+          "OPEN": 1
+        },
+        "M4": {
+          "IGNORE": 3
+        }
+      },
+      "attention": {
+        "M1": {
+          "EXACT": 3,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 0
+        },
+        "M2": {
+          "EXACT": 3,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 0
+        },
+        "M3": {
+          "EXACT": 1,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 2,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 0
+        },
+        "M4": {
+          "EXACT": 3,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 0
+        }
+      }
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "route": "SAIFREN",
+      "scenario": "S4.ev0_is_not_weak",
+      "case": "EV0_ATTACHMENT",
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "repeats": 3,
+      "verdicts": {
+        "PASS": 3,
+        "FAIL": 0,
+        "ERROR": 0,
+        "NOT_RUN": 0
+      },
+      "answers": {
+        "ANSWER": {
+          "NO": 3
+        }
+      }
+    }
+  ],
+  "fragility": {
+    "MODEL_VARIANCE": [
+      {
+        "finding": "MODEL_VARIANCE",
+        "model": "deepseek/deepseek-v4-flash",
+        "route": "SAIFREN",
+        "scenario": "S3.mailbox",
+        "boundary": "M3",
+        "answers": {
+          "DEFER": 2,
+          "OPEN": 1
+        },
+        "answered_repeats": 3,
+        "stimulus_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee"
+      },
+      {
+        "finding": "MODEL_VARIANCE",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "route": "goat/MiniMaxAI/MiniMax-M3",
+        "scenario": "S3.mailbox",
+        "boundary": "M1",
+        "answers": {
+          "DEFER": 1,
+          "OPEN": 2
+        },
+        "answered_repeats": 3,
+        "stimulus_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee"
+      },
+      {
+        "finding": "MODEL_VARIANCE",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "route": "goat/MiniMaxAI/MiniMax-M3",
+        "scenario": "S3.mailbox",
+        "boundary": "M2",
+        "answers": {
+          "DEFER": 2,
+          "OPEN": 1
+        },
+        "answered_repeats": 3,
+        "stimulus_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee"
+      },
+      {
+        "finding": "MODEL_VARIANCE",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "route": "goat/MiniMaxAI/MiniMax-M3",
+        "scenario": "S3.mailbox",
+        "boundary": "M4",
+        "answers": {
+          "DEFER": 1,
+          "IGNORE": 2
+        },
+        "answered_repeats": 3,
+        "stimulus_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee"
+      }
+    ],
+    "CROSS_MODEL_DISAGREEMENT": [],
+    "PROTOCOL_HOTSPOT": [],
+    "STIMULUS_CHANGED": []
+  },
+  "opaque_context": {
+    "visibility": "OPAQUE",
+    "per_model": {
+      "MiniMaxAI/MiniMax-M3": {
+        "calls": 12,
+        "measured": 12,
+        "delta_min": 2879,
+        "delta_max": 2889
+      },
+      "deepseek/deepseek-v4-flash": {
+        "calls": 12,
+        "measured": 12,
+        "delta_min": 2781,
+        "delta_max": 2796
+      }
+    },
+    "per_call": [
+      {
+        "call_id": "45149ebe2a9f",
+        "unit_id": "S1.evidence_absent",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 177,
+        "gateway_reported_input": 2960,
+        "delta": 2783
+      },
+      {
+        "call_id": "fd8f3d1b66d8",
+        "unit_id": "S1.evidence_absent",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 177,
+        "gateway_reported_input": 3064,
+        "delta": 2887
+      },
+      {
+        "call_id": "81052ff98929",
+        "unit_id": "S4.ev0_is_not_weak",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 65,
+        "gateway_reported_input": 2846,
+        "delta": 2781
+      },
+      {
+        "call_id": "76d9fb45fd5b",
+        "unit_id": "S4.ev0_is_not_weak",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 65,
+        "gateway_reported_input": 2954,
+        "delta": 2889
+      },
+      {
+        "call_id": "fdf387b30f12",
+        "unit_id": "S3.mailbox",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 411,
+        "gateway_reported_input": 3207,
+        "delta": 2796
+      },
+      {
+        "call_id": "b943e0c75704",
+        "unit_id": "S3.mailbox",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 411,
+        "gateway_reported_input": 3290,
+        "delta": 2879
+      },
+      {
+        "call_id": "dba812a7f943",
+        "unit_id": "S1.contradiction",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 167,
+        "gateway_reported_input": 2954,
+        "delta": 2787
+      },
+      {
+        "call_id": "f8f901eb21e8",
+        "unit_id": "S1.contradiction",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 167,
+        "gateway_reported_input": 3054,
+        "delta": 2887
+      },
+      {
+        "call_id": "edfefced6085",
+        "unit_id": "S1.evidence_absent",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 177,
+        "gateway_reported_input": 2960,
+        "delta": 2783
+      },
+      {
+        "call_id": "2fcfbc5fe03e",
+        "unit_id": "S1.evidence_absent",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 177,
+        "gateway_reported_input": 3064,
+        "delta": 2887
+      },
+      {
+        "call_id": "41e067a114a0",
+        "unit_id": "S4.ev0_is_not_weak",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 65,
+        "gateway_reported_input": 2846,
+        "delta": 2781
+      },
+      {
+        "call_id": "78cc601d30ed",
+        "unit_id": "S4.ev0_is_not_weak",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 65,
+        "gateway_reported_input": 2954,
+        "delta": 2889
+      },
+      {
+        "call_id": "a492fa1fdc31",
+        "unit_id": "S3.mailbox",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 411,
+        "gateway_reported_input": 3207,
+        "delta": 2796
+      },
+      {
+        "call_id": "eaa8db637966",
+        "unit_id": "S3.mailbox",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 411,
+        "gateway_reported_input": 3290,
+        "delta": 2879
+      },
+      {
+        "call_id": "c9a56531f9cc",
+        "unit_id": "S1.contradiction",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 167,
+        "gateway_reported_input": 2954,
+        "delta": 2787
+      },
+      {
+        "call_id": "27a88b8f0aab",
+        "unit_id": "S1.contradiction",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 167,
+        "gateway_reported_input": 3054,
+        "delta": 2887
+      },
+      {
+        "call_id": "e7607fb1c4f3",
+        "unit_id": "S1.evidence_absent",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 177,
+        "gateway_reported_input": 2960,
+        "delta": 2783
+      },
+      {
+        "call_id": "ec2a656aa145",
+        "unit_id": "S1.evidence_absent",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 177,
+        "gateway_reported_input": 3064,
+        "delta": 2887
+      },
+      {
+        "call_id": "11278cc6d6de",
+        "unit_id": "S4.ev0_is_not_weak",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 65,
+        "gateway_reported_input": 2846,
+        "delta": 2781
+      },
+      {
+        "call_id": "96f6b7aa21fb",
+        "unit_id": "S4.ev0_is_not_weak",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 65,
+        "gateway_reported_input": 2954,
+        "delta": 2889
+      },
+      {
+        "call_id": "bcc6d2dd8efe",
+        "unit_id": "S3.mailbox",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 411,
+        "gateway_reported_input": 3207,
+        "delta": 2796
+      },
+      {
+        "call_id": "d56aca46a4bc",
+        "unit_id": "S3.mailbox",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 411,
+        "gateway_reported_input": 3290,
+        "delta": 2879
+      },
+      {
+        "call_id": "69a4064e9449",
+        "unit_id": "S1.contradiction",
+        "model": "deepseek/deepseek-v4-flash",
+        "local_estimated_input": 167,
+        "gateway_reported_input": 2954,
+        "delta": 2787
+      },
+      {
+        "call_id": "e8db2f43dcbb",
+        "unit_id": "S1.contradiction",
+        "model": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input": 167,
+        "gateway_reported_input": 3054,
+        "delta": 2887
+      }
+    ]
+  },
+  "observations": [
+    {
+      "call_id": "45149ebe2a9f",
+      "repeat": 1,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "NO",
+        "Q2": "NO",
+        "Q3": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "fd8f3d1b66d8",
+      "repeat": 1,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "NO",
+        "Q2": "NO",
+        "Q3": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "81052ff98929",
+      "repeat": 1,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "ANSWER": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "76d9fb45fd5b",
+      "repeat": 1,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "ANSWER": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "fdf387b30f12",
+      "repeat": 1,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "M1": "OPEN",
+        "M2": "DEFER",
+        "M3": "DEFER",
+        "M4": "IGNORE"
+      },
+      "violations": [],
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": "OPEN",
+          "class": "EXACT"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": "DEFER",
+          "class": "EXACT"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": "DEFER",
+          "class": "UNDER_OPEN"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": "IGNORE",
+          "class": "EXACT"
+        }
+      }
+    },
+    {
+      "call_id": "b943e0c75704",
+      "repeat": 1,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "OK",
+      "verdict": "FAIL",
+      "answers": {
+        "M1": "DEFER",
+        "M2": "OPEN",
+        "M3": "IGNORE",
+        "M4": "DEFER"
+      },
+      "violations": [],
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": "DEFER",
+          "class": "UNDER_OPEN"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": "OPEN",
+          "class": "OVER_OPEN"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": "IGNORE",
+          "class": "FALSE_IGNORE"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": "DEFER",
+          "class": "OTHER"
+        }
+      }
+    },
+    {
+      "call_id": "dba812a7f943",
+      "repeat": 1,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "YES",
+        "Q2": "NO",
+        "Q3": "YES"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "f8f901eb21e8",
+      "repeat": 1,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "YES",
+        "Q2": "NO",
+        "Q3": "YES"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "edfefced6085",
+      "repeat": 2,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "NO",
+        "Q2": "NO",
+        "Q3": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "2fcfbc5fe03e",
+      "repeat": 2,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "NO",
+        "Q2": "NO",
+        "Q3": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "41e067a114a0",
+      "repeat": 2,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "ANSWER": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "78cc601d30ed",
+      "repeat": 2,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "ANSWER": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "a492fa1fdc31",
+      "repeat": 2,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "M1": "OPEN",
+        "M2": "DEFER",
+        "M3": "OPEN",
+        "M4": "IGNORE"
+      },
+      "violations": [],
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": "OPEN",
+          "class": "EXACT"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": "DEFER",
+          "class": "EXACT"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": "OPEN",
+          "class": "EXACT"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": "IGNORE",
+          "class": "EXACT"
+        }
+      }
+    },
+    {
+      "call_id": "eaa8db637966",
+      "repeat": 2,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "OK",
+      "verdict": "FAIL",
+      "answers": {
+        "M1": "OPEN",
+        "M2": "DEFER",
+        "M3": "IGNORE",
+        "M4": "IGNORE"
+      },
+      "violations": [],
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": "OPEN",
+          "class": "EXACT"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": "DEFER",
+          "class": "EXACT"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": "IGNORE",
+          "class": "FALSE_IGNORE"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": "IGNORE",
+          "class": "EXACT"
+        }
+      }
+    },
+    {
+      "call_id": "c9a56531f9cc",
+      "repeat": 2,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "YES",
+        "Q2": "NO",
+        "Q3": "YES"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "27a88b8f0aab",
+      "repeat": 2,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "YES",
+        "Q2": "NO",
+        "Q3": "YES"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "e7607fb1c4f3",
+      "repeat": 3,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "NO",
+        "Q2": "NO",
+        "Q3": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "ec2a656aa145",
+      "repeat": 3,
+      "case": "FACTUAL_UNVERIFIED",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "NO",
+        "Q2": "NO",
+        "Q3": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "11278cc6d6de",
+      "repeat": 3,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "ANSWER": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "96f6b7aa21fb",
+      "repeat": 3,
+      "case": "EV0_ATTACHMENT",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "ANSWER": "NO"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "bcc6d2dd8efe",
+      "repeat": 3,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "M1": "OPEN",
+        "M2": "DEFER",
+        "M3": "DEFER",
+        "M4": "IGNORE"
+      },
+      "violations": [],
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": "OPEN",
+          "class": "EXACT"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": "DEFER",
+          "class": "EXACT"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": "DEFER",
+          "class": "UNDER_OPEN"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": "IGNORE",
+          "class": "EXACT"
+        }
+      }
+    },
+    {
+      "call_id": "d56aca46a4bc",
+      "repeat": 3,
+      "case": "OPEN_VERSUS_DEFER",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "status": "OK",
+      "verdict": "FAIL",
+      "answers": {
+        "M1": "OPEN",
+        "M2": "DEFER",
+        "M3": "IGNORE",
+        "M4": "IGNORE"
+      },
+      "violations": [],
+      "attention": {
+        "M1": {
+          "selector": "OPEN",
+          "agent": "OPEN",
+          "class": "EXACT"
+        },
+        "M2": {
+          "selector": "DEFER",
+          "agent": "DEFER",
+          "class": "EXACT"
+        },
+        "M3": {
+          "selector": "OPEN",
+          "agent": "IGNORE",
+          "class": "FALSE_IGNORE"
+        },
+        "M4": {
+          "selector": "IGNORE",
+          "agent": "IGNORE",
+          "class": "EXACT"
+        }
+      }
+    },
+    {
+      "call_id": "69a4064e9449",
+      "repeat": 3,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "YES",
+        "Q2": "NO",
+        "Q3": "YES"
+      },
+      "violations": []
+    },
+    {
+      "call_id": "e8db2f43dcbb",
+      "repeat": 3,
+      "case": "RELATION_CONTRADICTION",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "status": "OK",
+      "verdict": "PASS",
+      "answers": {
+        "Q1": "YES",
+        "Q2": "NO",
+        "Q3": "YES"
+      },
+      "violations": []
+    }
+  ],
+  "calls": [
+    {
+      "call_id": "45149ebe2a9f",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:16:36Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "output": "Q1: NO\nQ2: NO\nQ3: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2FBSQ4QSQXVVMGJWCKWXG",
+      "usage": {
+        "prompt_tokens": 2960,
+        "completion_tokens": 63,
+        "total_tokens": 3023
+      },
+      "http_status": 200,
+      "latency_s": 1.2,
+      "status": "OK"
+    },
+    {
+      "call_id": "fd8f3d1b66d8",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:16:37Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "output": "Q1: NO\nQ2: NO\nQ3: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2FCZVAY2GSQMEE3S58S7M",
+      "usage": {
+        "prompt_tokens": 3064,
+        "completion_tokens": 15,
+        "total_tokens": 3079
+      },
+      "http_status": 200,
+      "latency_s": 2.15,
+      "status": "OK"
+    },
+    {
+      "call_id": "81052ff98929",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:16:39Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "output": "ANSWER: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2FF1B09V727ZP3MBAQ00S",
+      "usage": {
+        "prompt_tokens": 2846,
+        "completion_tokens": 45,
+        "total_tokens": 2891
+      },
+      "http_status": 200,
+      "latency_s": 1.01,
+      "status": "OK"
+    },
+    {
+      "call_id": "76d9fb45fd5b",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:16:40Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "output": "ANSWER: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2FG38HEZM0EDHFD5R0WT8",
+      "usage": {
+        "prompt_tokens": 2954,
+        "completion_tokens": 5,
+        "total_tokens": 2959
+      },
+      "http_status": 200,
+      "latency_s": 0.83,
+      "status": "OK"
+    },
+    {
+      "call_id": "fdf387b30f12",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:16:41Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "output": "M1: OPEN\nM2: DEFER\nM3: DEFER\nM4: IGNORE",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2FGTJN7STJ569SBV44TB3",
+      "usage": {
+        "prompt_tokens": 3207,
+        "completion_tokens": 232,
+        "total_tokens": 3439
+      },
+      "http_status": 200,
+      "latency_s": 1.92,
+      "status": "OK"
+    },
+    {
+      "call_id": "b943e0c75704",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:16:43Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "output": "M1: DEFER\nM2: OPEN\nM3: IGNORE\nM4: DEFER",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2G7BKDDMN0G8624221MRC",
+      "usage": {
+        "prompt_tokens": 3290,
+        "completion_tokens": 23,
+        "total_tokens": 3313
+      },
+      "http_status": 200,
+      "latency_s": 22.27,
+      "status": "OK"
+    },
+    {
+      "call_id": "dba812a7f943",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:17:05Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "output": "Q1: YES\nQ2: NO\nQ3: YES",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2G8FGG1ZCM7MXJFFCKQJM",
+      "usage": {
+        "prompt_tokens": 2954,
+        "completion_tokens": 103,
+        "total_tokens": 3057
+      },
+      "http_status": 200,
+      "latency_s": 1.14,
+      "status": "OK"
+    },
+    {
+      "call_id": "f8f901eb21e8",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:17:06Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "output": "Q1: YES\nQ2: NO\nQ3: YES",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2G9JDGSR1J3RDFMJ6RY3A",
+      "usage": {
+        "prompt_tokens": 3054,
+        "completion_tokens": 15,
+        "total_tokens": 3069
+      },
+      "http_status": 200,
+      "latency_s": 1.64,
+      "status": "OK"
+    },
+    {
+      "call_id": "edfefced6085",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:17:08Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "output": "Q1: NO\nQ2: NO\nQ3: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GB6JCJMD0NF4H6HMS30K",
+      "usage": {
+        "prompt_tokens": 2960,
+        "completion_tokens": 158,
+        "total_tokens": 3118
+      },
+      "http_status": 200,
+      "latency_s": 1.52,
+      "status": "OK"
+    },
+    {
+      "call_id": "2fcfbc5fe03e",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:17:09Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "output": "Q1: NO\nQ2: NO\nQ3: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GCPC2YNAXHE6CPZV42EC",
+      "usage": {
+        "prompt_tokens": 3064,
+        "completion_tokens": 15,
+        "total_tokens": 3079
+      },
+      "http_status": 200,
+      "latency_s": 0.83,
+      "status": "OK"
+    },
+    {
+      "call_id": "41e067a114a0",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:17:10Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "output": "ANSWER: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GDF4Z2V44XXM9SFC2733",
+      "usage": {
+        "prompt_tokens": 2846,
+        "completion_tokens": 59,
+        "total_tokens": 2905
+      },
+      "http_status": 200,
+      "latency_s": 1.13,
+      "status": "OK"
+    },
+    {
+      "call_id": "78cc601d30ed",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:17:11Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "output": "ANSWER: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GEK8VZ53EFYTY5SV3VFG",
+      "usage": {
+        "prompt_tokens": 2954,
+        "completion_tokens": 5,
+        "total_tokens": 2959
+      },
+      "http_status": 200,
+      "latency_s": 1.11,
+      "status": "OK"
+    },
+    {
+      "call_id": "a492fa1fdc31",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:17:12Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "output": "M1: OPEN\nM2: DEFER\nM3: OPEN\nM4: IGNORE",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GFN6GZ4ZDS0VZVWEMCPB",
+      "usage": {
+        "prompt_tokens": 3207,
+        "completion_tokens": 225,
+        "total_tokens": 3432
+      },
+      "http_status": 200,
+      "latency_s": 1.77,
+      "status": "OK"
+    },
+    {
+      "call_id": "eaa8db637966",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:17:14Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "output": "M1: OPEN\nM2: DEFER\nM3: IGNORE\nM4: IGNORE",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GHHSBPR5HXZP0EDYP5RH",
+      "usage": {
+        "prompt_tokens": 3290,
+        "completion_tokens": 23,
+        "total_tokens": 3313
+      },
+      "http_status": 200,
+      "latency_s": 1.0,
+      "status": "OK"
+    },
+    {
+      "call_id": "c9a56531f9cc",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:17:15Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "output": "Q1: YES\nQ2: NO\nQ3: YES",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GJBSTX7YP91MXJAAENQW",
+      "usage": {
+        "prompt_tokens": 2954,
+        "completion_tokens": 135,
+        "total_tokens": 3089
+      },
+      "http_status": 200,
+      "latency_s": 1.47,
+      "status": "OK"
+    },
+    {
+      "call_id": "27a88b8f0aab",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:17:17Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "output": "Q1: YES\nQ2: NO\nQ3: YES",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GKV0NXBXWSCT7H26S31A",
+      "usage": {
+        "prompt_tokens": 3054,
+        "completion_tokens": 15,
+        "total_tokens": 3069
+      },
+      "http_status": 200,
+      "latency_s": 0.83,
+      "status": "OK"
+    },
+    {
+      "call_id": "e7607fb1c4f3",
+      "unit_id": "S1.evidence_absent",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:17:17Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "output": "Q1: NO\nQ2: NO\nQ3: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GMMH32B29FGHHA7ETNMV",
+      "usage": {
+        "prompt_tokens": 2960,
+        "completion_tokens": 59,
+        "total_tokens": 3019
+      },
+      "http_status": 200,
+      "latency_s": 1.39,
+      "status": "OK"
+    },
+    {
+      "call_id": "ec2a656aa145",
+      "unit_id": "S1.evidence_absent",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:17:19Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+      "output": "Q1: NO\nQ2: NO\nQ3: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GNZMAPGV3KWK6YH98E00",
+      "usage": {
+        "prompt_tokens": 3064,
+        "completion_tokens": 15,
+        "total_tokens": 3079
+      },
+      "http_status": 200,
+      "latency_s": 0.82,
+      "status": "OK"
+    },
+    {
+      "call_id": "11278cc6d6de",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:17:20Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "output": "ANSWER: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GQGQ38465TF7NNHSAA16",
+      "usage": {
+        "prompt_tokens": 2846,
+        "completion_tokens": 38,
+        "total_tokens": 2884
+      },
+      "http_status": 200,
+      "latency_s": 1.91,
+      "status": "OK"
+    },
+    {
+      "call_id": "96f6b7aa21fb",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:17:22Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "output": "ANSWER: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GRNK8PQH5YSRS9Q6ADXC",
+      "usage": {
+        "prompt_tokens": 2954,
+        "completion_tokens": 5,
+        "total_tokens": 2959
+      },
+      "http_status": 200,
+      "latency_s": 1.18,
+      "status": "OK"
+    },
+    {
+      "call_id": "bcc6d2dd8efe",
+      "unit_id": "S3.mailbox",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:17:23Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "output": "M1: OPEN\nM2: DEFER\nM3: DEFER\nM4: IGNORE",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GSTJT54V5RD10C94VTSS",
+      "usage": {
+        "prompt_tokens": 3207,
+        "completion_tokens": 292,
+        "total_tokens": 3499
+      },
+      "http_status": 200,
+      "latency_s": 2.13,
+      "status": "OK"
+    },
+    {
+      "call_id": "d56aca46a4bc",
+      "unit_id": "S3.mailbox",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:17:25Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "output": "M1: OPEN\nM2: DEFER\nM3: IGNORE\nM4: IGNORE",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GVW9VF9DCCFV0BD2RRFG",
+      "usage": {
+        "prompt_tokens": 3290,
+        "completion_tokens": 23,
+        "total_tokens": 3313
+      },
+      "http_status": 200,
+      "latency_s": 0.83,
+      "status": "OK"
+    },
+    {
+      "call_id": "69a4064e9449",
+      "unit_id": "S1.contradiction",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-17T16:17:26Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "output": "Q1: YES\nQ2: NO\nQ3: YES",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GWRQB21J37GHMYD0MMD4",
+      "usage": {
+        "prompt_tokens": 2954,
+        "completion_tokens": 196,
+        "total_tokens": 3150
+      },
+      "http_status": 200,
+      "latency_s": 2.06,
+      "status": "OK"
+    },
+    {
+      "call_id": "e8db2f43dcbb",
+      "unit_id": "S1.contradiction",
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "timestamp": "2026-09-17T16:17:28Z",
+      "prompt": "kind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: verified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: refutes sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+      "output": "Q1: YES\nQ2: NO\nQ3: YES",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2R2GYQ14S0BFRGSRK0JN71Q",
+      "usage": {
+        "prompt_tokens": 3054,
+        "completion_tokens": 15,
+        "total_tokens": 3069
+      },
+      "http_status": 200,
+      "latency_s": 0.92,
+      "status": "OK"
+    }
+  ]
+}

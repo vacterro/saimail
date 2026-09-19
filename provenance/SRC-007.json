@@ -1,0 +1,23 @@
+{
+  "receipt": "SRC-007",
+  "source_path": ".saipen/intake/active/SRC-007.md",
+  "body_sha256": "0f9a68d3938bb50eab43a2b65f8b4b19c3cd559104b1f2a6aec219f613da846b",
+  "body_length": 14740,
+  "receipt_source_kind_scope": "TRANSPORT_INTAKE_ONLY",
+  "capture": {
+    "channel": "HOST_USER_TURN",
+    "host_session": "3e028aa5-aacf-447e-a896-041173a7c8f1",
+    "host_record": "c21ffd04-d4ea-471e-8d08-55af389fa347",
+    "host_timestamp": "2026-09-17T11:29:38.000Z",
+    "extracted_sha256": "0f9a68d3938bb50eab43a2b65f8b4b19c3cd559104b1f2a6aec219f613da846b",
+    "method": "The string content of exactly one user record in the host session transcript."
+  },
+  "segments": [
+    {
+      "start": 0,
+      "end": 14740,
+      "source_class": "USER_ACCEPTANCE",
+      "note": "The whole body is one operator turn from the host user channel."
+    }
+  ]
+}

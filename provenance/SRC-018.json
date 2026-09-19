@@ -1,0 +1,15 @@
+{
+  "receipt": "SRC-018",
+  "source_path": ".saipen/intake/active/SRC-018.md",
+  "body_sha256": "f09238f1a602e95832ff1a653134329c2022b3235737dc840cbf37fe71f78d9d",
+  "body_length": 406,
+  "receipt_source_kind_scope": "TRANSPORT_INTAKE_ONLY",
+  "segments": [
+    {
+      "start": 0,
+      "end": 406,
+      "source_class": "ASSISTANT_PROPOSAL",
+      "note": "Model-generated expansion, not operator bytes. The '# User request' heading and the 'per operator' phrasing are formatting the session wrote while interpreting SRC-017's 'продолжай по смыслу' (continue by meaning); the intake metadata records witness model_supplied, and no operator carrier ever compared these bytes with anything the operator wrote. Its usefulness as an execution plan does not convert it into operator authorship: the authority for the work it described is SRC-017, and the scoping evidence is audit/1.md (RUN_ID acb-mu62wwu7). Declared under T-42's provenance correction; the receipt bytes and their intake metadata are untouched."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "receipt": "SRC-006",
+  "source_path": ".saipen/intake/active/SRC-006.md",
+  "body_sha256": "616721e2705a7f467601f15ef9f08fd363a34ea626d4d5e12d5cf921548d761a",
+  "body_length": 5054,
+  "receipt_source_kind_scope": "TRANSPORT_INTAKE_ONLY",
+  "capture": {
+    "channel": "HOST_USER_TURN",
+    "host_session": "8aabba10-f268-4d17-b28b-fd8f9b85e9d1",
+    "host_record": "c21ffd04-d4ea-471e-8d08-55af389fa346",
+    "host_timestamp": "2026-09-17T10:14:13.342Z",
+    "extracted_sha256": "616721e2705a7f467601f15ef9f08fd363a34ea626d4d5e12d5cf921548d761a",
+    "method": "The string content of exactly one user record in the host session transcript, written to a file by a script and captured with saipen source capture --file. Nothing was retyped and no assistant text was involved. SAIPEN records the witness as model_supplied because no operator carrier declared a digest; this block is the comparison that witness field does not have."
+  },
+  "segments": [
+    {
+      "start": 0,
+      "end": 5054,
+      "source_class": "USER_ACCEPTANCE",
+      "note": "The whole body is one operator turn from the host user channel and nothing else, so the classes rest on the channel, not on style. The channel proves the operator sent this instruction, and sending an instruction adopts it: USER_ACCEPTANCE, a captured act rather than an agent's note about one. USER_INTENT is not declared because it would also claim who drafted the words, which the bytes cannot show and earlier steward testimony about drafted handoffs makes a real question."
+    }
+  ]
+}

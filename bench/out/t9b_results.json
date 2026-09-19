@@ -1,0 +1,561 @@
+{
+  "corpus_size": 45,
+  "classes": {
+    "verified_test_result": [
+      "verified-test-1",
+      "verified-test-2",
+      "verified-test-3"
+    ],
+    "contradicted_human_memory": [
+      "human-memory-1",
+      "human-memory-2",
+      "human-memory-3"
+    ],
+    "agent_overclaim": [
+      "overclaim-1",
+      "overclaim-2",
+      "overclaim-3"
+    ],
+    "queue_retry_duplicate_discovery": [
+      "queue-discovery-1",
+      "queue-discovery-2",
+      "queue-discovery-3"
+    ],
+    "blocker": [
+      "blocker-1",
+      "blocker-2",
+      "blocker-3"
+    ],
+    "hypothesis": [
+      "hypothesis-1",
+      "hypothesis-2",
+      "hypothesis-3"
+    ],
+    "human_goal": [
+      "goal-1",
+      "goal-2",
+      "goal-3"
+    ],
+    "human_value": [
+      "value-1",
+      "value-2",
+      "value-3"
+    ],
+    "evidence_backed_observation": [
+      "observation-1",
+      "observation-2",
+      "observation-3"
+    ],
+    "unknown_uncertain": [
+      "unknown-1",
+      "unknown-2",
+      "unknown-3"
+    ],
+    "warning": [
+      "warning-1",
+      "warning-2",
+      "warning-3"
+    ],
+    "cross_reference": [
+      "crossref-1",
+      "crossref-2",
+      "crossref-3"
+    ],
+    "unicode_content": [
+      "unicode-1",
+      "unicode-2",
+      "unicode-3"
+    ],
+    "long_path_reference": [
+      "longpath-1",
+      "longpath-2",
+      "longpath-3"
+    ],
+    "repeated_dictionary_terms": [
+      "dictterms-1",
+      "dictterms-2",
+      "dictterms-3"
+    ]
+  },
+  "missing_classes": [],
+  "tokenizers": [
+    {
+      "name": "cl100k_base",
+      "family": "openai-gpt35-gpt4"
+    },
+    {
+      "name": "o200k_base",
+      "family": "openai-gpt4o"
+    },
+    {
+      "name": "p50k_base",
+      "family": "openai-codex-davinci"
+    },
+    {
+      "name": "gpt2",
+      "family": "gpt2-legacy"
+    }
+  ],
+  "thresholds": {
+    "rule": "GO requires ALL of: zero semantic inversions; decode of every frame reproduces the declared triage ground truth; zero non-deterministic cases; at a 20% open rate the progressive workload costs below 0.70 of the eager full-prose baseline on every tokenizer; the local-alias break-even is at most 4 repeats on every tokenizer; and the v0.1 frame shows no p90 regression above 1.10x against triage prose. CONDITIONAL: semantics are clean and deterministic but at least one quantitative bar is missed. NO_GO: any semantic inversion, any decode mismatch, any non-determinism, or the progressive workload failing to beat eager loading at a 20% open rate.",
+    "workload_open_rate_for_gate": 0.2,
+    "workload_go_below": 0.7,
+    "alias_break_even_max": 4,
+    "p90_regression_ceiling": 1.1
+  },
+  "workload_declaration": {
+    "messages": 100,
+    "open_rates": [
+      0.05,
+      0.2,
+      0.5
+    ],
+    "escalation_to_record": 0.4,
+    "note": "Of the messages opened to a summary, a declared 40% escalate to the canonical record. R4 (attached evidence) is excluded: no real evidence artifacts exist yet, and inventing a size would be fabricated evidence. Including it would only widen the gap, since fewer than half the opened messages ever reach it."
+  },
+  "templates": {
+    "triage": "[rung] [kind] on [subject], [evidence][, relations]: [claim | open the record]",
+    "full": "On [created], [source] recorded a [rung] [kind] about [subject]: [claim]. [Type]. Evidence: [full 64-hex ids | none]. [Grades]. [Relations with full ids]. [Falsification condition]."
+  },
+  "profile": {
+    "id": "sha256:35b279aaba8c3c564499907b034af7e890ad4cfae48829a02c19b56a78ed115c",
+    "dictionary_version": "1",
+    "dictionary_digest": "sha256:8a1e48b1170be100da9e6147f3c7fdf5fd54efadf7c6305528defc4d40426f78",
+    "atoms": 30
+  },
+  "metrics": {
+    "cl100k_base": {
+      "family": "openai-gpt35-gpt4",
+      "q1_triage": {
+        "C1_line_v0": {
+          "median": 1.4615384615384615,
+          "mean": 1.4807043733890999,
+          "p90": 1.7272727272727273,
+          "best": 1.0666666666666667,
+          "worst": 2.0,
+          "cases_not_cheaper": 45
+        },
+        "C2_frame_v01": {
+          "median": 1.16,
+          "mean": 1.1513179593215714,
+          "p90": 1.3333333333333333,
+          "best": 0.8947368421052632,
+          "worst": 1.5454545454545454,
+          "cases_not_cheaper": 40
+        },
+        "C3_frame_lowercase_claim": {
+          "median": 1.0909090909090908,
+          "mean": 1.0945064688207102,
+          "p90": 1.25,
+          "best": 0.8947368421052632,
+          "worst": 1.3636363636363635,
+          "cases_not_cheaper": 37
+        },
+        "C4_frame_no_dictionary": {
+          "median": 1.2,
+          "mean": 1.2023911057409509,
+          "p90": 1.4444444444444444,
+          "best": 0.9090909090909091,
+          "worst": 1.625,
+          "cases_not_cheaper": 40
+        }
+      },
+      "q2_full_transfer": {
+        "B_record_over_A2_full_prose": {
+          "median": 1.6666666666666667,
+          "mean": 1.839561380021442,
+          "p90": 2.5294117647058822,
+          "best": 1.40625,
+          "worst": 2.7419354838709675,
+          "cases_not_cheaper": 45
+        }
+      },
+      "totals": {
+        "A1_triage_prose": 713,
+        "A2_full_prose": 3751,
+        "A3_human_prose": 1492,
+        "B_record": 6394,
+        "C1_line_v0": 1034,
+        "C2_frame_v01": 816,
+        "C2_frame_v01_plus_batch_header": 865,
+        "C3_frame_lowercase_claim": 775,
+        "C4_frame_no_dictionary": 855
+      },
+      "batch_header_tokens": 49,
+      "v0_marker_saving": 218
+    },
+    "o200k_base": {
+      "family": "openai-gpt4o",
+      "q1_triage": {
+        "C1_line_v0": {
+          "median": 1.4705882352941178,
+          "mean": 1.4825707818344556,
+          "p90": 1.7142857142857142,
+          "best": 1.1,
+          "worst": 2.090909090909091,
+          "cases_not_cheaper": 45
+        },
+        "C2_frame_v01": {
+          "median": 1.16,
+          "mean": 1.1450133224570789,
+          "p90": 1.2857142857142858,
+          "best": 0.8947368421052632,
+          "worst": 1.6363636363636365,
+          "cases_not_cheaper": 40
+        },
+        "C3_frame_lowercase_claim": {
+          "median": 1.1363636363636365,
+          "mean": 1.1042538591821358,
+          "p90": 1.25,
+          "best": 0.8947368421052632,
+          "worst": 1.4545454545454546,
+          "cases_not_cheaper": 37
+        },
+        "C4_frame_no_dictionary": {
+          "median": 1.263157894736842,
+          "mean": 1.2260116693305547,
+          "p90": 1.4615384615384615,
+          "best": 0.9090909090909091,
+          "worst": 1.6875,
+          "cases_not_cheaper": 39
+        }
+      },
+      "q2_full_transfer": {
+        "B_record_over_A2_full_prose": {
+          "median": 1.6888888888888889,
+          "mean": 1.8683573080265747,
+          "p90": 2.6363636363636362,
+          "best": 1.4246575342465753,
+          "worst": 2.8666666666666667,
+          "cases_not_cheaper": 45
+        }
+      },
+      "totals": {
+        "A1_triage_prose": 710,
+        "A2_full_prose": 3735,
+        "A3_human_prose": 1422,
+        "B_record": 6436,
+        "C1_line_v0": 1031,
+        "C2_frame_v01": 808,
+        "C2_frame_v01_plus_batch_header": 857,
+        "C3_frame_lowercase_claim": 779,
+        "C4_frame_no_dictionary": 870
+      },
+      "batch_header_tokens": 49,
+      "v0_marker_saving": 223
+    },
+    "p50k_base": {
+      "family": "openai-codex-davinci",
+      "q1_triage": {
+        "C1_line_v0": {
+          "median": 1.6153846153846154,
+          "mean": 1.6098550314060178,
+          "p90": 1.9473684210526316,
+          "best": 1.0625,
+          "worst": 2.1818181818181817,
+          "cases_not_cheaper": 45
+        },
+        "C2_frame_v01": {
+          "median": 1.2727272727272727,
+          "mean": 1.2767546093855415,
+          "p90": 1.5454545454545454,
+          "best": 0.9545454545454546,
+          "worst": 1.7272727272727273,
+          "cases_not_cheaper": 43
+        },
+        "C3_frame_lowercase_claim": {
+          "median": 1.2222222222222223,
+          "mean": 1.2006158886001208,
+          "p90": 1.4,
+          "best": 0.8636363636363636,
+          "worst": 1.7272727272727273,
+          "cases_not_cheaper": 40
+        },
+        "C4_frame_no_dictionary": {
+          "median": 1.4375,
+          "mean": 1.4192569511890267,
+          "p90": 1.7857142857142858,
+          "best": 1.0,
+          "worst": 2.0588235294117645,
+          "cases_not_cheaper": 45
+        }
+      },
+      "q2_full_transfer": {
+        "B_record_over_A2_full_prose": {
+          "median": 1.7083333333333333,
+          "mean": 1.9027894136056747,
+          "p90": 2.787878787878788,
+          "best": 1.4197530864197532,
+          "worst": 3.096774193548387,
+          "cases_not_cheaper": 45
+        }
+      },
+      "totals": {
+        "A1_triage_prose": 745,
+        "A2_full_prose": 4079,
+        "A3_human_prose": 1657,
+        "B_record": 7095,
+        "C1_line_v0": 1171,
+        "C2_frame_v01": 941,
+        "C2_frame_v01_plus_batch_header": 991,
+        "C3_frame_lowercase_claim": 881,
+        "C4_frame_no_dictionary": 1057
+      },
+      "batch_header_tokens": 50,
+      "v0_marker_saving": 230
+    },
+    "gpt2": {
+      "family": "gpt2-legacy",
+      "q1_triage": {
+        "C1_line_v0": {
+          "median": 1.6153846153846154,
+          "mean": 1.6098550314060178,
+          "p90": 1.9473684210526316,
+          "best": 1.0625,
+          "worst": 2.1818181818181817,
+          "cases_not_cheaper": 45
+        },
+        "C2_frame_v01": {
+          "median": 1.2727272727272727,
+          "mean": 1.2767546093855415,
+          "p90": 1.5454545454545454,
+          "best": 0.9545454545454546,
+          "worst": 1.7272727272727273,
+          "cases_not_cheaper": 43
+        },
+        "C3_frame_lowercase_claim": {
+          "median": 1.2222222222222223,
+          "mean": 1.2006158886001208,
+          "p90": 1.4,
+          "best": 0.8636363636363636,
+          "worst": 1.7272727272727273,
+          "cases_not_cheaper": 40
+        },
+        "C4_frame_no_dictionary": {
+          "median": 1.4375,
+          "mean": 1.4192569511890267,
+          "p90": 1.7857142857142858,
+          "best": 1.0,
+          "worst": 2.0588235294117645,
+          "cases_not_cheaper": 45
+        }
+      },
+      "q2_full_transfer": {
+        "B_record_over_A2_full_prose": {
+          "median": 1.7083333333333333,
+          "mean": 1.9027894136056747,
+          "p90": 2.787878787878788,
+          "best": 1.4197530864197532,
+          "worst": 3.096774193548387,
+          "cases_not_cheaper": 45
+        }
+      },
+      "totals": {
+        "A1_triage_prose": 745,
+        "A2_full_prose": 4079,
+        "A3_human_prose": 1657,
+        "B_record": 7095,
+        "C1_line_v0": 1171,
+        "C2_frame_v01": 941,
+        "C2_frame_v01_plus_batch_header": 991,
+        "C3_frame_lowercase_claim": 881,
+        "C4_frame_no_dictionary": 1057
+      },
+      "batch_header_tokens": 50,
+      "v0_marker_saving": 230
+    }
+  },
+  "workload": {
+    "cl100k_base": {
+      "5pct": {
+        "opened": 5,
+        "escalated_to_record": 2,
+        "progressive_tokens": 2212,
+        "eager_full_prose_tokens": 8387,
+        "eager_record_tokens": 14265,
+        "ratio_vs_eager_full_prose": 0.2637415047096697,
+        "ratio_vs_eager_record": 0.15506484402383455
+      },
+      "20pct": {
+        "opened": 20,
+        "escalated_to_record": 8,
+        "progressive_tokens": 3243,
+        "eager_full_prose_tokens": 8387,
+        "eager_record_tokens": 14265,
+        "ratio_vs_eager_full_prose": 0.38666984619053296,
+        "ratio_vs_eager_record": 0.22733964248159833
+      },
+      "50pct": {
+        "opened": 50,
+        "escalated_to_record": 20,
+        "progressive_tokens": 5225,
+        "eager_full_prose_tokens": 8387,
+        "eager_record_tokens": 14265,
+        "ratio_vs_eager_full_prose": 0.6229879575533563,
+        "ratio_vs_eager_record": 0.3662811076060287
+      }
+    },
+    "o200k_base": {
+      "5pct": {
+        "opened": 5,
+        "escalated_to_record": 2,
+        "progressive_tokens": 2204,
+        "eager_full_prose_tokens": 8360,
+        "eager_record_tokens": 14365,
+        "ratio_vs_eager_full_prose": 0.2636363636363636,
+        "ratio_vs_eager_record": 0.15342847198050819
+      },
+      "20pct": {
+        "opened": 20,
+        "escalated_to_record": 8,
+        "progressive_tokens": 3251,
+        "eager_full_prose_tokens": 8360,
+        "eager_record_tokens": 14365,
+        "ratio_vs_eager_full_prose": 0.3888755980861244,
+        "ratio_vs_eager_record": 0.22631395753567699
+      },
+      "50pct": {
+        "opened": 50,
+        "escalated_to_record": 20,
+        "progressive_tokens": 5252,
+        "eager_full_prose_tokens": 8360,
+        "eager_record_tokens": 14365,
+        "ratio_vs_eager_full_prose": 0.6282296650717704,
+        "ratio_vs_eager_record": 0.36561085972850677
+      }
+    },
+    "p50k_base": {
+      "5pct": {
+        "opened": 5,
+        "escalated_to_record": 2,
+        "progressive_tokens": 2545,
+        "eager_full_prose_tokens": 9119,
+        "eager_record_tokens": 15834,
+        "ratio_vs_eager_full_prose": 0.27908761925649744,
+        "ratio_vs_eager_record": 0.16073007452317797
+      },
+      "20pct": {
+        "opened": 20,
+        "escalated_to_record": 8,
+        "progressive_tokens": 3740,
+        "eager_full_prose_tokens": 9119,
+        "eager_record_tokens": 15834,
+        "ratio_vs_eager_full_prose": 0.4101326899879373,
+        "ratio_vs_eager_record": 0.23620058102816724
+      },
+      "50pct": {
+        "opened": 50,
+        "escalated_to_record": 20,
+        "progressive_tokens": 6031,
+        "eager_full_prose_tokens": 9119,
+        "eager_record_tokens": 15834,
+        "ratio_vs_eager_full_prose": 0.6613663778923128,
+        "ratio_vs_eager_record": 0.38088922571681194
+      }
+    },
+    "gpt2": {
+      "5pct": {
+        "opened": 5,
+        "escalated_to_record": 2,
+        "progressive_tokens": 2545,
+        "eager_full_prose_tokens": 9119,
+        "eager_record_tokens": 15834,
+        "ratio_vs_eager_full_prose": 0.27908761925649744,
+        "ratio_vs_eager_record": 0.16073007452317797
+      },
+      "20pct": {
+        "opened": 20,
+        "escalated_to_record": 8,
+        "progressive_tokens": 3740,
+        "eager_full_prose_tokens": 9119,
+        "eager_record_tokens": 15834,
+        "ratio_vs_eager_full_prose": 0.4101326899879373,
+        "ratio_vs_eager_record": 0.23620058102816724
+      },
+      "50pct": {
+        "opened": 50,
+        "escalated_to_record": 20,
+        "progressive_tokens": 6031,
+        "eager_full_prose_tokens": 9119,
+        "eager_record_tokens": 15834,
+        "ratio_vs_eager_full_prose": 0.6613663778923128,
+        "ratio_vs_eager_record": 0.38088922571681194
+      }
+    }
+  },
+  "aliases": {
+    "cl100k_base": {
+      "cid_tokens": 39,
+      "alias_tokens": 2,
+      "declaration_tokens": 43,
+      "break_even_repeats": 1.162162162162162,
+      "break_even_repeats_ceiling": 2,
+      "corpus_distinct_refs": 30,
+      "corpus_total_refs": 36,
+      "corpus_repeated_refs": 10,
+      "corpus_naive_tokens": 1404,
+      "corpus_aliased_tokens": 1362,
+      "corpus_saving_tokens": 42
+    },
+    "o200k_base": {
+      "cid_tokens": 39,
+      "alias_tokens": 2,
+      "declaration_tokens": 43,
+      "break_even_repeats": 1.162162162162162,
+      "break_even_repeats_ceiling": 2,
+      "corpus_distinct_refs": 30,
+      "corpus_total_refs": 36,
+      "corpus_repeated_refs": 10,
+      "corpus_naive_tokens": 1404,
+      "corpus_aliased_tokens": 1362,
+      "corpus_saving_tokens": 42
+    },
+    "p50k_base": {
+      "cid_tokens": 38,
+      "alias_tokens": 2,
+      "declaration_tokens": 42,
+      "break_even_repeats": 1.1666666666666667,
+      "break_even_repeats_ceiling": 2,
+      "corpus_distinct_refs": 30,
+      "corpus_total_refs": 36,
+      "corpus_repeated_refs": 10,
+      "corpus_naive_tokens": 1368,
+      "corpus_aliased_tokens": 1332,
+      "corpus_saving_tokens": 36
+    },
+    "gpt2": {
+      "cid_tokens": 38,
+      "alias_tokens": 2,
+      "declaration_tokens": 42,
+      "break_even_repeats": 1.1666666666666667,
+      "break_even_repeats_ceiling": 2,
+      "corpus_distinct_refs": 30,
+      "corpus_total_refs": 36,
+      "corpus_repeated_refs": 10,
+      "corpus_naive_tokens": 1368,
+      "corpus_aliased_tokens": 1332,
+      "corpus_saving_tokens": 36
+    }
+  },
+  "semantic": {
+    "inversions": [],
+    "inversion_count": 0,
+    "decode_mismatches": [],
+    "open_record_cases": [
+      "goal-1",
+      "goal-2",
+      "goal-3",
+      "value-1",
+      "value-2",
+      "warning-1",
+      "warning-2",
+      "unicode-1",
+      "unicode-2",
+      "unicode-3"
+    ]
+  },
+  "determinism": {
+    "nondeterministic_cases": []
+  },
+  "verdict": "CONDITIONAL"
+}

@@ -1,0 +1,204 @@
+{
+  "corpus_size": 45,
+  "variants": {
+    "shipped": "the line exactly as SAILANG v0 emits it",
+    "no_version_marker": "shipped, minus the per-line L1D<v>| prefix",
+    "no_dictionary": "shipped, minus the prefix and with substitution disabled",
+    "lowercase_claim": "shipped, minus the prefix, claim segments lowercased",
+    "no_claim_slot": "shipped, minus the prefix, claim always OPEN RECORD"
+  },
+  "tokenizers": {
+    "cl100k_base": {
+      "family": "openai-gpt35-gpt4",
+      "prose_total_tokens": 1492,
+      "variants": {
+        "shipped": {
+          "total_tokens": 1034,
+          "median_over_prose": 0.7027027027027027,
+          "mean_over_prose": 0.7735944601490784,
+          "worst_over_prose": 1.7777777777777777,
+          "cases_not_cheaper_than_prose": 7,
+          "total_bytes": 1728
+        },
+        "no_version_marker": {
+          "total_tokens": 809,
+          "median_over_prose": 0.55,
+          "mean_over_prose": 0.5986090069772376,
+          "worst_over_prose": 1.2727272727272727,
+          "cases_not_cheaper_than_prose": 4,
+          "total_bytes": 1503
+        },
+        "no_dictionary": {
+          "total_tokens": 855,
+          "median_over_prose": 0.5945945945945946,
+          "mean_over_prose": 0.6301029027993176,
+          "worst_over_prose": 1.3333333333333333,
+          "cases_not_cheaper_than_prose": 4,
+          "total_bytes": 1863
+        },
+        "lowercase_claim": {
+          "total_tokens": 761,
+          "median_over_prose": 0.53125,
+          "mean_over_prose": 0.56295954879413,
+          "worst_over_prose": 1.2222222222222223,
+          "cases_not_cheaper_than_prose": 3,
+          "total_bytes": 1503
+        },
+        "no_claim_slot": {
+          "total_tokens": 579,
+          "median_over_prose": 0.3939393939393939,
+          "mean_over_prose": 0.43651144653579166,
+          "worst_over_prose": 1.2222222222222223,
+          "cases_not_cheaper_than_prose": 1,
+          "total_bytes": 907
+        }
+      },
+      "version_marker_token_cost": 225,
+      "dictionary_token_saving": 46
+    },
+    "o200k_base": {
+      "family": "openai-gpt4o",
+      "prose_total_tokens": 1422,
+      "variants": {
+        "shipped": {
+          "total_tokens": 1031,
+          "median_over_prose": 0.7272727272727273,
+          "mean_over_prose": 0.794926439877807,
+          "worst_over_prose": 1.7777777777777777,
+          "cases_not_cheaper_than_prose": 6,
+          "total_bytes": 1728
+        },
+        "no_version_marker": {
+          "total_tokens": 806,
+          "median_over_prose": 0.5666666666666667,
+          "mean_over_prose": 0.6147328718100639,
+          "worst_over_prose": 1.2727272727272727,
+          "cases_not_cheaper_than_prose": 4,
+          "total_bytes": 1503
+        },
+        "no_dictionary": {
+          "total_tokens": 870,
+          "median_over_prose": 0.6333333333333333,
+          "mean_over_prose": 0.6610681887604498,
+          "worst_over_prose": 1.4666666666666666,
+          "cases_not_cheaper_than_prose": 6,
+          "total_bytes": 1863
+        },
+        "lowercase_claim": {
+          "total_tokens": 768,
+          "median_over_prose": 0.5609756097560976,
+          "mean_over_prose": 0.5854036029515733,
+          "worst_over_prose": 1.2222222222222223,
+          "cases_not_cheaper_than_prose": 3,
+          "total_bytes": 1503
+        },
+        "no_claim_slot": {
+          "total_tokens": 566,
+          "median_over_prose": 0.3939393939393939,
+          "mean_over_prose": 0.4419704808524977,
+          "worst_over_prose": 1.2222222222222223,
+          "cases_not_cheaper_than_prose": 1,
+          "total_bytes": 907
+        }
+      },
+      "version_marker_token_cost": 225,
+      "dictionary_token_saving": 64
+    },
+    "p50k_base": {
+      "family": "openai-codex-davinci",
+      "prose_total_tokens": 1657,
+      "variants": {
+        "shipped": {
+          "total_tokens": 1171,
+          "median_over_prose": 0.7837837837837838,
+          "mean_over_prose": 0.822174338551204,
+          "worst_over_prose": 1.8666666666666667,
+          "cases_not_cheaper_than_prose": 8,
+          "total_bytes": 1728
+        },
+        "no_version_marker": {
+          "total_tokens": 946,
+          "median_over_prose": 0.6190476190476191,
+          "mean_over_prose": 0.6562022443647375,
+          "worst_over_prose": 1.5333333333333334,
+          "cases_not_cheaper_than_prose": 4,
+          "total_bytes": 1503
+        },
+        "no_dictionary": {
+          "total_tokens": 1057,
+          "median_over_prose": 0.6666666666666666,
+          "mean_over_prose": 0.7288271047360183,
+          "worst_over_prose": 1.7333333333333334,
+          "cases_not_cheaper_than_prose": 8,
+          "total_bytes": 1863
+        },
+        "lowercase_claim": {
+          "total_tokens": 886,
+          "median_over_prose": 0.5952380952380952,
+          "mean_over_prose": 0.6174503468735347,
+          "worst_over_prose": 1.4,
+          "cases_not_cheaper_than_prose": 4,
+          "total_bytes": 1503
+        },
+        "no_claim_slot": {
+          "total_tokens": 642,
+          "median_over_prose": 0.40625,
+          "mean_over_prose": 0.4569448700685937,
+          "worst_over_prose": 1.2,
+          "cases_not_cheaper_than_prose": 1,
+          "total_bytes": 907
+        }
+      },
+      "version_marker_token_cost": 225,
+      "dictionary_token_saving": 111
+    },
+    "gpt2": {
+      "family": "gpt2-legacy",
+      "prose_total_tokens": 1657,
+      "variants": {
+        "shipped": {
+          "total_tokens": 1171,
+          "median_over_prose": 0.7837837837837838,
+          "mean_over_prose": 0.822174338551204,
+          "worst_over_prose": 1.8666666666666667,
+          "cases_not_cheaper_than_prose": 8,
+          "total_bytes": 1728
+        },
+        "no_version_marker": {
+          "total_tokens": 946,
+          "median_over_prose": 0.6190476190476191,
+          "mean_over_prose": 0.6562022443647375,
+          "worst_over_prose": 1.5333333333333334,
+          "cases_not_cheaper_than_prose": 4,
+          "total_bytes": 1503
+        },
+        "no_dictionary": {
+          "total_tokens": 1057,
+          "median_over_prose": 0.6666666666666666,
+          "mean_over_prose": 0.7288271047360183,
+          "worst_over_prose": 1.7333333333333334,
+          "cases_not_cheaper_than_prose": 8,
+          "total_bytes": 1863
+        },
+        "lowercase_claim": {
+          "total_tokens": 886,
+          "median_over_prose": 0.5952380952380952,
+          "mean_over_prose": 0.6174503468735347,
+          "worst_over_prose": 1.4,
+          "cases_not_cheaper_than_prose": 4,
+          "total_bytes": 1503
+        },
+        "no_claim_slot": {
+          "total_tokens": 642,
+          "median_over_prose": 0.40625,
+          "mean_over_prose": 0.4569448700685937,
+          "worst_over_prose": 1.2,
+          "cases_not_cheaper_than_prose": 1,
+          "total_bytes": 907
+        }
+      },
+      "version_marker_token_cost": 225,
+      "dictionary_token_saving": 111
+    }
+  }
+}

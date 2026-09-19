@@ -1,0 +1,78 @@
+{
+  "schema": "saimail-receipt-quarantine/1",
+  "receipt": "SRC-007",
+  "distribution_state": "SENSITIVE_QUARANTINED",
+  "original": {
+    "path": ".saipen/intake/active/SRC-007.md",
+    "sha256": "0f9a68d3938bb50eab43a2b65f8b4b19c3cd559104b1f2a6aec219f613da846b",
+    "length": 14740,
+    "intake_metadata_at_quarantine": {
+      "status": "ACTIVE",
+      "sensitive": false,
+      "redaction_applied": false
+    },
+    "plaintext_in_normal_distribution": false,
+    "protected_location": "NOT_AVAILABLE",
+    "protected_location_blocker": "the original remains in the SAIPEN hot intake, which SAIPEN's own export contract ships; a protected local location needs the SAIPEN core change in spec/PROPOSAL-SAIPEN-RECEIPT-QUARANTINE.md"
+  },
+  "reason": {
+    "category": "CREDENTIAL_BEARING_FILENAME",
+    "detector": "saimail-credential-scan/1",
+    "findings": [
+      {
+        "category": "CREDENTIAL_LABELLED_FILENAME",
+        "line": 3,
+        "start": 60,
+        "end": 93
+      }
+    ],
+    "metadata_disagreement": "SENSITIVITY_METADATA_UNDERSTATED",
+    "credential_rotation": "UNKNOWN_CONFIRMED_BY_OPERATOR_ONLY",
+    "operator_statement": {
+      "receipt": "SRC-009",
+      "says": "its immutable body contains a historical path whose filename embeds a credential value"
+    }
+  },
+  "derivative": {
+    "id": "SRC-007/sanitized/1",
+    "distribution_state": "SANITIZED_DERIVATIVE",
+    "path": "provenance/quarantine/SRC-007.sanitized.md",
+    "sha256": "c01c09de5798c9b3913daf91ec66d9bfb7c98245fdbf6c00328dad9e27883b44",
+    "length": 14765,
+    "redaction_version": "saimail-redaction/1",
+    "redactions": [
+      {
+        "original_start": 60,
+        "original_end": 93,
+        "sanitized_start": 60,
+        "sanitized_end": 118,
+        "category": "CREDENTIAL_BEARING_FILENAME",
+        "marker": "[REDACTED:CREDENTIAL_BEARING_FILENAME:saimail-redaction/1]"
+      }
+    ],
+    "authority": {
+      "represents": "SRC-007",
+      "authoritative": false,
+      "newly_authored": false,
+      "authority_source": "SEGMENT_MAP_OF_ORIGINAL_RECEIPT"
+    },
+    "unresolved": [
+      {
+        "clause": "line 3",
+        "original_start": 60,
+        "original_end": 93,
+        "reason": "the exact name of a file this receipt references is withheld; anything that depends on reading or naming that file cannot be interpreted exactly from this representation"
+      }
+    ]
+  },
+  "quarantined_under": {
+    "source_receipt": "SRC-009",
+    "ticket": "T-32",
+    "decision": "D-023"
+  },
+  "saipen_export": {
+    "status": "NOT_HONOURED",
+    "manifest": ".saipen/MANIFEST.json",
+    "proposal": "spec/PROPOSAL-SAIPEN-RECEIPT-QUARANTINE.md"
+  }
+}

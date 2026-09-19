@@ -1,0 +1,348 @@
+{
+  "corpus_size": 51,
+  "atom_order": [
+    "RETRY",
+    "DUPLICATE_EXECUTION",
+    "QUEUE_OWNERSHIP_STALE",
+    "REGRESSION",
+    "SIGNATURE",
+    "CONFIGURATION",
+    "METADATA",
+    "PERFORMANCE",
+    "RECOVERY",
+    "ENVELOPE",
+    "TIMESTAMP",
+    "VALIDATION",
+    "CHECKPOINT",
+    "CONCURRENCY",
+    "DATABASE",
+    "DEADLOCK",
+    "BLOCKED",
+    "BLOCKER",
+    "DEPENDENCY",
+    "EVIDENCE",
+    "PROMOTION",
+    "SESSION",
+    "CONFIDENCE",
+    "FILESYSTEM",
+    "MAINTENANCE",
+    "OBSERVATION",
+    "OVERCLAIM",
+    "PARTIAL_TEST",
+    "ROOT_CAUSE",
+    "TEST_SUITE"
+  ],
+  "atom_usage": {
+    "QUEUE_OWNERSHIP_STALE": 7,
+    "RETRY": 15,
+    "DUPLICATE_EXECUTION": 11,
+    "CONCURRENCY": 2,
+    "DEADLOCK": 2,
+    "RECOVERY": 4,
+    "SIGNATURE": 5,
+    "ENVELOPE": 3,
+    "CONFIGURATION": 4,
+    "REGRESSION": 5,
+    "PROMOTION": 1,
+    "EVIDENCE": 1,
+    "CHECKPOINT": 2,
+    "PERFORMANCE": 4,
+    "DATABASE": 2,
+    "METADATA": 4,
+    "TIMESTAMP": 3,
+    "VALIDATION": 3,
+    "BLOCKED": 1,
+    "DEPENDENCY": 1,
+    "BLOCKER": 1,
+    "SESSION": 1
+  },
+  "stopping_rule": "Stop adding atoms when the marginal atom saves fewer emitted R2 tokens than it costs to define and carry. Reported as marginal tokens saved per atom added; a negative or near-zero tail is the signal to stop.",
+  "tokenizers": [
+    "cl100k_base",
+    "o200k_base",
+    "p50k_base",
+    "gpt2"
+  ],
+  "steps": [
+    {
+      "atoms": 0,
+      "coverage_of_used_atoms": 0.0,
+      "wire_bytes": 2509,
+      "fallback_opens": 48,
+      "ignored": 0,
+      "deferred": 0,
+      "opened": 51,
+      "open_rate": 1.0,
+      "emitted_tokens": {
+        "cl100k_base": 1021,
+        "o200k_base": 1048,
+        "p50k_base": 1223,
+        "gpt2": 1223
+      },
+      "dictionary_bytes": 2
+    },
+    {
+      "atoms": 2,
+      "coverage_of_used_atoms": 0.09090909090909091,
+      "wire_bytes": 2355,
+      "fallback_opens": 41,
+      "ignored": 0,
+      "deferred": 0,
+      "opened": 51,
+      "open_rate": 1.0,
+      "emitted_tokens": {
+        "cl100k_base": 1846,
+        "o200k_base": 1889,
+        "p50k_base": 2129,
+        "gpt2": 2129
+      },
+      "dictionary_bytes": 124
+    },
+    {
+      "atoms": 4,
+      "coverage_of_used_atoms": 0.18181818181818182,
+      "wire_bytes": 2220,
+      "fallback_opens": 38,
+      "ignored": 0,
+      "deferred": 0,
+      "opened": 51,
+      "open_rate": 1.0,
+      "emitted_tokens": {
+        "cl100k_base": 2197,
+        "o200k_base": 2246,
+        "p50k_base": 2512,
+        "gpt2": 2512
+      },
+      "dictionary_bytes": 267
+    },
+    {
+      "atoms": 6,
+      "coverage_of_used_atoms": 0.2727272727272727,
+      "wire_bytes": 2150,
+      "fallback_opens": 36,
+      "ignored": 0,
+      "deferred": 2,
+      "opened": 49,
+      "open_rate": 0.9607843137254902,
+      "emitted_tokens": {
+        "cl100k_base": 2183,
+        "o200k_base": 2230,
+        "p50k_base": 2494,
+        "gpt2": 2494
+      },
+      "dictionary_bytes": 383
+    },
+    {
+      "atoms": 8,
+      "coverage_of_used_atoms": 0.36363636363636365,
+      "wire_bytes": 2106,
+      "fallback_opens": 34,
+      "ignored": 0,
+      "deferred": 4,
+      "opened": 47,
+      "open_rate": 0.9215686274509803,
+      "emitted_tokens": {
+        "cl100k_base": 2170,
+        "o200k_base": 2216,
+        "p50k_base": 2474,
+        "gpt2": 2474
+      },
+      "dictionary_bytes": 493
+    },
+    {
+      "atoms": 10,
+      "coverage_of_used_atoms": 0.45454545454545453,
+      "wire_bytes": 2082,
+      "fallback_opens": 29,
+      "ignored": 0,
+      "deferred": 6,
+      "opened": 45,
+      "open_rate": 0.8823529411764706,
+      "emitted_tokens": {
+        "cl100k_base": 2347,
+        "o200k_base": 2396,
+        "p50k_base": 2666,
+        "gpt2": 2666
+      },
+      "dictionary_bytes": 608
+    },
+    {
+      "atoms": 13,
+      "coverage_of_used_atoms": 0.5909090909090909,
+      "wire_bytes": 2043,
+      "fallback_opens": 23,
+      "ignored": 2,
+      "deferred": 10,
+      "opened": 39,
+      "open_rate": 0.7647058823529411,
+      "emitted_tokens": {
+        "cl100k_base": 2303,
+        "o200k_base": 2351,
+        "p50k_base": 2604,
+        "gpt2": 2604
+      },
+      "dictionary_bytes": 780
+    },
+    {
+      "atoms": 16,
+      "coverage_of_used_atoms": 0.7272727272727273,
+      "wire_bytes": 2011,
+      "fallback_opens": 19,
+      "ignored": 2,
+      "deferred": 11,
+      "opened": 38,
+      "open_rate": 0.7450980392156863,
+      "emitted_tokens": {
+        "cl100k_base": 2588,
+        "o200k_base": 2640,
+        "p50k_base": 2913,
+        "gpt2": 2913
+      },
+      "dictionary_bytes": 954
+    },
+    {
+      "atoms": 20,
+      "coverage_of_used_atoms": 0.9090909090909091,
+      "wire_bytes": 1994,
+      "fallback_opens": 17,
+      "ignored": 2,
+      "deferred": 12,
+      "opened": 37,
+      "open_rate": 0.7254901960784313,
+      "emitted_tokens": {
+        "cl100k_base": 2719,
+        "o200k_base": 2773,
+        "p50k_base": 3053,
+        "gpt2": 3053
+      },
+      "dictionary_bytes": 1192
+    },
+    {
+      "atoms": 25,
+      "coverage_of_used_atoms": 1.0,
+      "wire_bytes": 1987,
+      "fallback_opens": 15,
+      "ignored": 2,
+      "deferred": 14,
+      "opened": 35,
+      "open_rate": 0.6862745098039216,
+      "emitted_tokens": {
+        "cl100k_base": 2706,
+        "o200k_base": 2760,
+        "p50k_base": 3033,
+        "gpt2": 3033
+      },
+      "dictionary_bytes": 1508
+    },
+    {
+      "atoms": 30,
+      "coverage_of_used_atoms": 1.0,
+      "wire_bytes": 1987,
+      "fallback_opens": 15,
+      "ignored": 2,
+      "deferred": 14,
+      "opened": 35,
+      "open_rate": 0.6862745098039216,
+      "emitted_tokens": {
+        "cl100k_base": 2706,
+        "o200k_base": 2760,
+        "p50k_base": 3033,
+        "gpt2": 3033
+      },
+      "dictionary_bytes": 1828
+    }
+  ],
+  "marginal": [
+    {
+      "from_atoms": 0,
+      "to_atoms": 2,
+      "atoms_added": 2,
+      "tokens_saved": -825,
+      "tokens_saved_per_atom": -412.5,
+      "fallback_delta": -7,
+      "wire_bytes_delta": -154
+    },
+    {
+      "from_atoms": 2,
+      "to_atoms": 4,
+      "atoms_added": 2,
+      "tokens_saved": -351,
+      "tokens_saved_per_atom": -175.5,
+      "fallback_delta": -3,
+      "wire_bytes_delta": -135
+    },
+    {
+      "from_atoms": 4,
+      "to_atoms": 6,
+      "atoms_added": 2,
+      "tokens_saved": 14,
+      "tokens_saved_per_atom": 7.0,
+      "fallback_delta": -2,
+      "wire_bytes_delta": -70
+    },
+    {
+      "from_atoms": 6,
+      "to_atoms": 8,
+      "atoms_added": 2,
+      "tokens_saved": 13,
+      "tokens_saved_per_atom": 6.5,
+      "fallback_delta": -2,
+      "wire_bytes_delta": -44
+    },
+    {
+      "from_atoms": 8,
+      "to_atoms": 10,
+      "atoms_added": 2,
+      "tokens_saved": -177,
+      "tokens_saved_per_atom": -88.5,
+      "fallback_delta": -5,
+      "wire_bytes_delta": -24
+    },
+    {
+      "from_atoms": 10,
+      "to_atoms": 13,
+      "atoms_added": 3,
+      "tokens_saved": 44,
+      "tokens_saved_per_atom": 14.666666666666666,
+      "fallback_delta": -6,
+      "wire_bytes_delta": -39
+    },
+    {
+      "from_atoms": 13,
+      "to_atoms": 16,
+      "atoms_added": 3,
+      "tokens_saved": -285,
+      "tokens_saved_per_atom": -95.0,
+      "fallback_delta": -4,
+      "wire_bytes_delta": -32
+    },
+    {
+      "from_atoms": 16,
+      "to_atoms": 20,
+      "atoms_added": 4,
+      "tokens_saved": -131,
+      "tokens_saved_per_atom": -32.75,
+      "fallback_delta": -2,
+      "wire_bytes_delta": -17
+    },
+    {
+      "from_atoms": 20,
+      "to_atoms": 25,
+      "atoms_added": 5,
+      "tokens_saved": 13,
+      "tokens_saved_per_atom": 2.6,
+      "fallback_delta": -2,
+      "wire_bytes_delta": -7
+    },
+    {
+      "from_atoms": 25,
+      "to_atoms": 30,
+      "atoms_added": 5,
+      "tokens_saved": 0,
+      "tokens_saved_per_atom": 0.0,
+      "fallback_delta": 0,
+      "wire_bytes_delta": 0
+    }
+  ],
+  "note": "Coverage is measured against the atoms this corpus actually uses. A dictionary can always be made to look better by adding atoms nobody writes; that is why the curve is plotted against observed usage and why arbitrary English vocabulary is not added."
+}

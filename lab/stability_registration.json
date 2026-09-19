@@ -1,0 +1,138 @@
+{
+  "registration": {
+    "rules": "saimail-stability/1",
+    "repeats": 3,
+    "order": "round, then case, then participant role",
+    "cases": [
+      {
+        "case": "FACTUAL_UNVERIFIED",
+        "unit_id": "S1.evidence_absent",
+        "scenario": "S1_semantic_agreement",
+        "prompt_sha256": "b038331c7bc80d522d6c967d06e554b73efd125cec7105e3808ae971d820e00c",
+        "boundaries": [
+          "Q1",
+          "Q2",
+          "Q3"
+        ],
+        "expect": {
+          "Q1": [
+            "NO"
+          ],
+          "Q2": [
+            "NO"
+          ],
+          "Q3": [
+            "NO"
+          ]
+        },
+        "reference": {}
+      },
+      {
+        "case": "EV0_ATTACHMENT",
+        "unit_id": "S4.ev0_is_not_weak",
+        "scenario": "S4_adversarial",
+        "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+        "boundaries": [
+          "ANSWER"
+        ],
+        "expect": {
+          "ANSWER": [
+            "NO"
+          ]
+        },
+        "reference": {}
+      },
+      {
+        "case": "OPEN_VERSUS_DEFER",
+        "unit_id": "S3.mailbox",
+        "scenario": "S3_deferred_discovery",
+        "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+        "boundaries": [
+          "M1",
+          "M2",
+          "M3",
+          "M4"
+        ],
+        "expect": {
+          "M1": [
+            "OPEN",
+            "DEFER"
+          ],
+          "M3": [
+            "OPEN",
+            "DEFER"
+          ]
+        },
+        "reference": {
+          "M1": "OPEN",
+          "M2": "DEFER",
+          "M3": "OPEN",
+          "M4": "IGNORE"
+        }
+      },
+      {
+        "case": "RELATION_CONTRADICTION",
+        "unit_id": "S1.contradiction",
+        "scenario": "S1_semantic_agreement",
+        "prompt_sha256": "172bf501589911a0ef99d3fa5d1104d683d7aefdaedbf3e4a36aa4bfd058a430",
+        "boundaries": [
+          "Q1",
+          "Q2",
+          "Q3"
+        ],
+        "expect": {
+          "Q1": [
+            "YES"
+          ],
+          "Q2": [
+            "NO"
+          ],
+          "Q3": [
+            "YES"
+          ]
+        },
+        "reference": {}
+      }
+    ],
+    "participants": {
+      "max": 2,
+      "selection_rule": "saifren-selection/1",
+      "replacement_policy": "saifren-replacement/1",
+      "roles": {
+        "A": "the SAIFREN combo alias",
+        "B": "one external catalog comparator, when one answers"
+      }
+    },
+    "budget": {
+      "experiment_calls": 24,
+      "discovery_reserve": 8,
+      "max_calls": 32
+    },
+    "request": {
+      "protocol_version": "SAILANG frame v4 / SAIB4",
+      "max_tokens": 2048,
+      "temperature": "NOT_SENT"
+    },
+    "analysis": {
+      "repeated_failure": 2,
+      "hotspot_participants": 2,
+      "unanimity_min_answers": 2,
+      "findings": [
+        "MODEL_VARIANCE",
+        "CROSS_MODEL_DISAGREEMENT",
+        "PROTOCOL_HOTSPOT"
+      ],
+      "not_counted_as_semantic": [
+        "UNPARSED",
+        "ERROR",
+        "NOT_RUN"
+      ]
+    }
+  },
+  "digest": "sha256:c60bc6ac40bf913ba6f464275736483a1ab7b2920d282bfc647b701d12402b5c",
+  "registered_under": {
+    "ticket": "T-33",
+    "source_receipt": "SRC-009",
+    "decision": "D-025"
+  }
+}

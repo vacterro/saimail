@@ -1,0 +1,111 @@
+{
+  "corpus_size": 45,
+  "profile": {
+    "id": "sha256:35b279aaba8c3c564499907b034af7e890ad4cfae48829a02c19b56a78ed115c",
+    "dictionary_version": "1"
+  },
+  "criteria": {
+    "rule": "Correctness gates first, and they disqualify: a codec must round-trip every fixture to an identical TriageView, refuse every malformed input, refuse an unknown field, and refuse a container whose profile differs. A codec that fails any of those is out regardless of its numbers. Among the survivors: KEEP_CUSTOM_WIRE only if the SAILANG wire is at most 0.85x the bytes of the best standard codec AND at most 1.25x its decode latency AND at most 1.50x its code surface. Otherwise DROP_CUSTOM_WIRE while keeping the semantic schema. REDESIGN_R1 if no codec passes the correctness gates.",
+    "bytes_advantage_required": 0.85,
+    "decode_latency_ceiling": 1.25,
+    "code_surface_ceiling": 1.5,
+    "latency_repeats": 7,
+    "latency_iterations": 200
+  },
+  "codecs": {
+    "A_sailang_wire": {
+      "bytes_total": 1624,
+      "bytes_body": 1538,
+      "bytes_header": 84,
+      "bytes_per_frame": 34.17777777777778,
+      "encode_ns_per_batch": 236800.0,
+      "decode_ns_per_batch": 217885.0,
+      "encode_peak_bytes": 11017,
+      "decode_peak_bytes": 32896,
+      "code_surface_statements": 29,
+      "round_trip_identical_view": true,
+      "malformed_refusals": {
+        "truncated_container": "SailangError",
+        "count_mismatch": "SailangError",
+        "garbage_body": "SailangError",
+        "empty": "SailangError",
+        "header_only_garbage": "SailangError"
+      },
+      "malformed_all_refused": true,
+      "unknown_field_behaviour": "BAD_FRAME",
+      "wrong_profile_behaviour": "PROFILE_MISMATCH",
+      "correctness_ok": true,
+      "tokens_cl100k_base": 911,
+      "tokens_o200k_base": 893,
+      "tokens_p50k_base": 1037,
+      "tokens_gpt2": 1037
+    },
+    "B_compact_json": {
+      "bytes_total": 3391,
+      "bytes_body": 3303,
+      "bytes_header": 86,
+      "bytes_per_frame": 73.4,
+      "encode_ns_per_batch": 404630.0,
+      "decode_ns_per_batch": 391290.0,
+      "encode_peak_bytes": 13830,
+      "decode_peak_bytes": 33178,
+      "code_surface_statements": 39,
+      "round_trip_identical_view": true,
+      "malformed_refusals": {
+        "truncated_container": "SailangError",
+        "count_mismatch": "SailangError",
+        "garbage_body": "SailangError",
+        "empty": "SailangError",
+        "header_only_garbage": "SailangError"
+      },
+      "malformed_all_refused": true,
+      "unknown_field_behaviour": "UNKNOWN_FIELD",
+      "wrong_profile_behaviour": "PROFILE_MISMATCH",
+      "correctness_ok": true,
+      "tokens_cl100k_base": 1545,
+      "tokens_o200k_base": 1536,
+      "tokens_p50k_base": 1678,
+      "tokens_gpt2": 1678
+    },
+    "C_typed_kv": {
+      "bytes_total": 2203,
+      "bytes_body": 2123,
+      "bytes_header": 78,
+      "bytes_per_frame": 47.17777777777778,
+      "encode_ns_per_batch": 308765.0,
+      "decode_ns_per_batch": 368455.0,
+      "encode_peak_bytes": 13941,
+      "decode_peak_bytes": 32697,
+      "code_surface_statements": 41,
+      "round_trip_identical_view": true,
+      "malformed_refusals": {
+        "truncated_container": "SailangError",
+        "count_mismatch": "SailangError",
+        "garbage_body": "SailangError",
+        "empty": "SailangError",
+        "header_only_garbage": "SailangError"
+      },
+      "malformed_all_refused": true,
+      "unknown_field_behaviour": "UNKNOWN_FIELD",
+      "wrong_profile_behaviour": "PROFILE_MISMATCH",
+      "correctness_ok": true,
+      "tokens_cl100k_base": 1327,
+      "tokens_o200k_base": 1304,
+      "tokens_p50k_base": 1538,
+      "tokens_gpt2": 1538
+    }
+  },
+  "verdict": "KEEP_CUSTOM_WIRE",
+  "reasoning": [
+    "custom/best-standard bytes 0.724 (needs <= 0.85)",
+    "custom/best-standard decode latency 0.591 (needs <= 1.25)",
+    "custom/best-standard code surface 0.744 (needs <= 1.5)"
+  ],
+  "tokenizers": [
+    "cl100k_base",
+    "o200k_base",
+    "p50k_base",
+    "gpt2"
+  ],
+  "note": "Latency is wall-clock on one machine and one interpreter; it ranks codecs against each other on the same run, and is not an absolute figure. Token counts are a secondary diagnostic: R1 is not meant to enter model context during ordinary scanning."
+}

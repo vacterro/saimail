@@ -1,0 +1,20 @@
+{
+  "rule": "RECEIPT-KIND-SCOPE-01",
+  "decision": "D-017",
+  "field": "source_kind",
+  "field_location": "intake receipt metadata, <receipt>.meta.json",
+  "scope": "TRANSPORT_INTAKE_ONLY",
+  "authorship_authority": "SEGMENT_PROVENANCE",
+  "when_segment_map_exists": "the declared segments decide authorship; source_kind is not consulted",
+  "when_segment_map_absent": "authorship is unexamined and carries no authority; source_kind does not fill the gap",
+  "forbidden_derivations": [
+    {"from": "source_kind", "to": "USER_INTENT"},
+    {"from": "source_kind", "to": "USER_ACCEPTANCE"}
+  ],
+  "enforced_by": [
+    "saimail.provenance.receipt_intent_authority",
+    "saimail.provenance.intent_authority",
+    "saimail.provenance.load_maps"
+  ],
+  "detected_by": "saimail.provenance.source_kind_conflicts"
+}

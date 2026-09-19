@@ -1,0 +1,611 @@
+{
+  "authority": "EXPERIMENT_DATA",
+  "is_not": [
+    "CONSENSUS",
+    "TRUTH",
+    "PROTOCOL_CHANGE",
+    "USER_INTENT"
+  ],
+  "note": "Live output is experiment data. It is not consensus, not truth, not a protocol change and not user intent. Disagreement between agents is preserved per call. Reasoning traces are dropped before storage.",
+  "context_visibility": "OPAQUE",
+  "distinct_route_count": 2,
+  "cross_family_measured": true,
+  "dry_run": false,
+  "harness": {
+    "gateway": "9router",
+    "base_url": "http://127.0.0.1:20128",
+    "model_alias": "SAIFREN",
+    "route_a": "SAIFREN",
+    "route_b": "goat/MiniMaxAI/MiniMax-M3",
+    "protocol_version": "SAILANG frame v4 / SAIB4",
+    "max_tokens": 2048,
+    "timeout_s": 120,
+    "sample": true,
+    "sample_units": [
+      "S2.chain1",
+      "S3.mailbox",
+      "S5.trial1"
+    ],
+    "transforms": [
+      "handoff-transform/1",
+      "legacy-transform/1"
+    ]
+  },
+  "credential": {
+    "handle": "credential://9router/sairoute",
+    "source": "store",
+    "backend": "keyring.backends.Windows.WinVaultKeyring"
+  },
+  "population": {
+    "combo": "SAIFREN",
+    "membership_observed_at": "2026-09-17T15:15:32Z",
+    "membership_source": "COMBO_ALIAS_SAMPLE",
+    "roster_status": "ROSTER_NOT_EXPOSED",
+    "observed_members": [
+      "deepseek/deepseek-v4-flash"
+    ],
+    "membership_digest": "sha256:6d0dcdfbe2d7fa1891744b4d7cb01c9523959bd052f9866984a7020c6f422f68",
+    "catalog_size": 1556,
+    "catalog_digest": "sha256:7947c2ded4f37558fa86a1498527be83f6a473e569f1e9c62e2b6fc494c9807d",
+    "discovery": {
+      "surface": "/v1/models",
+      "combos_listed": [
+        "SAIFREN",
+        "SAIOPP"
+      ],
+      "roster_field_present": false,
+      "alias_transport_errors": []
+    },
+    "selection_rule": "saifren-selection/1",
+    "replacement_policy": "saifren-replacement/1",
+    "membership_probes_used": 2,
+    "selection_probes_used": 4,
+    "participants": [
+      {
+        "role": "A",
+        "requested": "SAIFREN",
+        "reported_model": "deepseek/deepseek-v4-flash",
+        "member_status": "OBSERVED_COMBO_MEMBER",
+        "source": "COMBO_ALIAS",
+        "provider": null,
+        "catalog_namespace": null
+      },
+      {
+        "role": "B",
+        "requested": "goat/MiniMaxAI/MiniMax-M3",
+        "reported_model": "MiniMaxAI/MiniMax-M3",
+        "member_status": "NOT_PROVEN_COMBO_MEMBER",
+        "source": "CATALOG_ELIGIBLE",
+        "provider": null,
+        "catalog_namespace": "goat"
+      }
+    ],
+    "rejected_candidates": [
+      {
+        "requested": "ag/gemini-3-flash",
+        "namespace": "ag",
+        "reason": "TRANSPORT",
+        "error_class": "HTTPError",
+        "error": "HTTP 503 {\"error\":{\"message\":\"[antigravity/gemini-3-flash] [429]: {\\n  \\\"error\\\": {\\n    \\\"code\\\": 429,\\n    \\\"message\\\": \\\"Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 21m43s.\\\",\\n    \\\"stat"
+      },
+      {
+        "requested": "bai/gemini-3-flash",
+        "namespace": "bai",
+        "reason": "TRANSPORT",
+        "error_class": "HTTPError",
+        "error": "HTTP 503 {\"error\":{\"message\":\"[openai-compatible-chat-d628e270-17dc-4f52-b220-9fe83f38dc66/gemini-3-flash] [403]: {\\\"error\\\":{\\\"code\\\":\\\"access_denied\\\",\\\"message\\\":\\\"Access restricted. Deposit required to unlock premium models. (request id"
+      },
+      {
+        "requested": "cl/cline-free/muse-spark-1.3-contributor",
+        "namespace": "cl",
+        "reason": "TRANSPORT",
+        "error_class": "HTTPError",
+        "error": "HTTP 503 {\"error\":{\"message\":\"[cline/cline-free/muse-spark-1.3-contributor] [500]: {\\\"error\\\":\\\"empty response content\\\",\\\"success\\\":false}\\n (reset after 28s)\"}}"
+      }
+    ],
+    "heterogeneous_participants": true,
+    "notes": [
+      "ALIAS_SAMPLE_IS_NOT_A_ROSTER: 2 call(s) to the alias observed 1 distinct member(s); a sample of this size cannot tell a one-member combo from a combo with a deterministic primary"
+    ]
+  },
+  "started": "2026-09-17T15:16:23Z",
+  "max_runs": 24,
+  "planned_calls": 6,
+  "live_calls": 12,
+  "discovery_calls": 6,
+  "experiment_calls": 6,
+  "stopped": null,
+  "summary": {
+    "verdicts": {
+      "PASS": 1,
+      "FAIL": 1,
+      "MEASURED": 1,
+      "ERROR": 0,
+      "NOT_RUN": 0
+    },
+    "attention": {
+      "EXACT": 1,
+      "FALSE_IGNORE": 1,
+      "UNDER_OPEN": 0,
+      "OVER_OPEN": 1,
+      "OTHER": 1,
+      "UNANSWERED": 0
+    },
+    "calls_attempted": 6,
+    "calls_ok": 5,
+    "routes_observed": [
+      "MiniMaxAI/MiniMax-M3",
+      "deepseek/deepseek-v4-flash"
+    ],
+    "distinct_route_count": 2,
+    "cross_family_measured": true,
+    "context_visibility": "OPAQUE",
+    "route_resolution": {
+      "ALIAS_ONLY": 0,
+      "MODEL_REPORTED": 6
+    },
+    "providers_stated_by_gateway": [],
+    "errors": [
+      {
+        "unit_id": "S5.trial1",
+        "role": "B_control",
+        "error_class": "EmptyOutput",
+        "error": "no content; finish_reason=length"
+      }
+    ],
+    "opaque_context_measurements": [
+      {
+        "call_id": "bb97d50ccaee",
+        "unit_id": "S2.chain1",
+        "role": "A",
+        "route": "deepseek/deepseek-v4-flash",
+        "local_estimated_input_tokens": 170,
+        "gateway_reported_prompt_tokens": 2954,
+        "delta": 2784
+      },
+      {
+        "call_id": "49b1f70babbe",
+        "unit_id": "S2.chain1",
+        "role": "B",
+        "route": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input_tokens": 394,
+        "gateway_reported_prompt_tokens": 3284,
+        "delta": 2890
+      },
+      {
+        "call_id": "784c095acff6",
+        "unit_id": "S3.mailbox",
+        "role": "single",
+        "route": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input_tokens": 411,
+        "gateway_reported_prompt_tokens": 3290,
+        "delta": 2879
+      },
+      {
+        "call_id": "5cc4b7f3bb21",
+        "unit_id": "S5.trial1",
+        "role": "A",
+        "route": "deepseek/deepseek-v4-flash",
+        "local_estimated_input_tokens": 558,
+        "gateway_reported_prompt_tokens": 3373,
+        "delta": 2815
+      },
+      {
+        "call_id": "3848d2c41977",
+        "unit_id": "S5.trial1",
+        "role": "B_legacy",
+        "route": "MiniMaxAI/MiniMax-M3",
+        "local_estimated_input_tokens": 499,
+        "gateway_reported_prompt_tokens": 3393,
+        "delta": 2894
+      },
+      {
+        "call_id": "0e4042bf066e",
+        "unit_id": "S5.trial1",
+        "role": "B_control",
+        "route": "deepseek/deepseek-v4-flash",
+        "local_estimated_input_tokens": 320,
+        "gateway_reported_prompt_tokens": 3137,
+        "delta": 2817
+      }
+    ],
+    "answers_by_route": {
+      "S3.mailbox": {
+        "route": "MiniMaxAI/MiniMax-M3",
+        "answers": {
+          "M1": "OPEN",
+          "M2": "OPEN",
+          "M3": "IGNORE",
+          "M4": "DEFER"
+        },
+        "verdict": "FAIL"
+      }
+    }
+  },
+  "units": [
+    {
+      "unit_id": "S2.chain1",
+      "scenario": "S2_true_handoff",
+      "hypothesis": "a finding passed from one agent to another through a validated record keeps its rung and its missing evidence: A does not inflate it, the transform does not launder it, and B does not harden it",
+      "failure_condition": "A claims evidence or a rung above unverified, or B reads evidence into the message, treats it as established or citable, or picks a next step that is not verification",
+      "raw_finding": "While reading the worker log worker-7.log you noticed that a retry after recovery appears to run the same job twice. You did not save the log lines, you collected no other artifact, and you ran no test.",
+      "a_call_id": "bb97d50ccaee",
+      "transform": {
+        "rules": "handoff-transform/1",
+        "violations": [],
+        "result": "ACCEPTED",
+        "record_id": "sha256:fbce2d6d3d9f48f08fb7ef0551db2d0f3aec1076154394bac218e61ab9e96004",
+        "canonical_text": "SAIL1\nID:sha256:fbce2d6d3d9f48f08fb7ef0551db2d0f3aec1076154394bac218e61ab9e96004\nKIND:H\nSRC:AGENT:saifren-a\nSUBJ:retry\nCLAIM:a retry after recovery may execute the same job twice\nTYPE:INT\nFALSIFY:saved worker-7.log lines showing each job ran once across recovery\nEV:0\nSTATUS:U1\nCREATED:2026-09-17T08:41:00Z\n",
+        "dropped_fields": [],
+        "r2": "kind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: retry\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: NOT CARRIED at this resolution; the canonical record must be opened\nthis hypothesis carries a falsification condition",
+        "r3": "record id: sha256:fbce2d6d3d9f48f08fb7ef0551db2d0f3aec1076154394bac218e61ab9e96004\nkind: hypothesis\nsource: AGENT:saifren-a\nsubject: retry\nclaim: a retry after recovery may execute the same job twice\nfalsification condition: saved worker-7.log lines showing each job ran once across recovery\nevidence attached: no\nconfidence rung: unverified\ncreated: 2026-09-17T08:41:00Z"
+      },
+      "b_call_id": "49b1f70babbe",
+      "metrics": {
+        "a_kind": "hypothesis",
+        "a_rung": "unverified",
+        "a_confidence_inflation": false,
+        "a_evidence_invention": false,
+        "a_claim_hardening": [],
+        "a_schema_violations": [],
+        "transform_result": "ACCEPTED",
+        "transform_code": null,
+        "b_admissible_evidence_attached": "NO",
+        "b_external_evidence_existence": "UNKNOWN",
+        "b_evidence_invention": false,
+        "b_evidence_reading": "NO",
+        "b_reality_conflation": false,
+        "b_confidence_inflation": false,
+        "b_known_hardening": [],
+        "b_qualifier_retained": true,
+        "b_next": "COLLECT ARTIFACT",
+        "b_next_is_verification": true,
+        "b_orientation_failure": false,
+        "b_schema_violations": [],
+        "route_a": "deepseek/deepseek-v4-flash",
+        "route_b": "MiniMaxAI/MiniMax-M3",
+        "routes_differ": true
+      },
+      "verdict": "PASS"
+    },
+    {
+      "unit_id": "S3.mailbox",
+      "scenario": "S3_deferred_discovery",
+      "input_class": "mailbox_triage",
+      "hypothesis": "IGNORE, DEFER and OPEN stay distinguishable to a real agent",
+      "failure_condition": "an item the deterministic selector opens (relevant or unreadable) is answered IGNORE",
+      "schema": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "expect": {
+        "M1": [
+          "OPEN",
+          "DEFER"
+        ],
+        "M3": [
+          "OPEN",
+          "DEFER"
+        ]
+      },
+      "reference": {
+        "M1": "OPEN",
+        "M2": "DEFER",
+        "M3": "OPEN",
+        "M4": "IGNORE"
+      },
+      "call_id": "784c095acff6",
+      "grade": {
+        "values": {
+          "M1": "OPEN",
+          "M2": "OPEN",
+          "M3": "IGNORE",
+          "M4": "DEFER"
+        },
+        "violations": [],
+        "noise_lines": 0,
+        "trailing_text": [],
+        "checks": [
+          {
+            "field": "M1",
+            "acceptable": [
+              "OPEN",
+              "DEFER"
+            ],
+            "got": "OPEN",
+            "pass": true
+          },
+          {
+            "field": "M3",
+            "acceptable": [
+              "OPEN",
+              "DEFER"
+            ],
+            "got": "IGNORE",
+            "pass": false
+          }
+        ],
+        "pass": false
+      },
+      "verdict": "FAIL",
+      "attention": {
+        "items": {
+          "M1": {
+            "selector": "OPEN",
+            "agent": "OPEN",
+            "class": "EXACT"
+          },
+          "M2": {
+            "selector": "DEFER",
+            "agent": "OPEN",
+            "class": "OVER_OPEN"
+          },
+          "M3": {
+            "selector": "OPEN",
+            "agent": "IGNORE",
+            "class": "FALSE_IGNORE"
+          },
+          "M4": {
+            "selector": "IGNORE",
+            "agent": "DEFER",
+            "class": "OTHER"
+          }
+        },
+        "counts": {
+          "EXACT": 1,
+          "FALSE_IGNORE": 1,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 1,
+          "OTHER": 1,
+          "UNANSWERED": 0
+        },
+        "graded": false
+      }
+    },
+    {
+      "unit_id": "S5.trial1",
+      "scenario": "S5_legacy_successor",
+      "hypothesis": "a legacy packet from the agent that closed a related investigation reduces repeated known mistakes and misdirected first steps, without importing invented evidence or hardening the predecessor's open suspicion into a settled fact",
+      "failure_condition": "the legacy arm repeats the known mistake, cites evidence its input did not contain, or treats the unverified heartbeat suspicion as ruled out",
+      "a_call_id": "5cc4b7f3bb21",
+      "packet_transform": {
+        "rules": "legacy-transform/1",
+        "violations": [],
+        "result": "ACCEPTED",
+        "packet": "WHAT_WORKED: Lease heartbeat extension every 20 s cut duplicate emails\nWHAT_WORKED_EVIDENCE: METRIC-15, TRACE-42, METRIC-9\nWHAT_WORKED_SCOPE: notifications queue only\nWHAT_FAILED: HTTP client timeout raise from 5 s to 30 s did not reduce duplicates\nWHAT_FAILED_EVIDENCE: METRIC-14, LOG-311, LOG-318\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP timeouts at restart looked causal, were restart load\nWHAT_WRONG_EVIDENCE: LOG-311, METRIC-14, LOG-318\nWATCH_NEXT: 0.02% residual, suspect heartbeat write in flight during worker crash; idempotency key not implemented\nWATCH_NEXT_EVIDENCE: METRIC-15",
+        "forwarded_refs": [
+          "METRIC-15",
+          "TRACE-42",
+          "METRIC-9",
+          "METRIC-14",
+          "LOG-311",
+          "LOG-318"
+        ],
+        "invented_refs_removed": [],
+        "malformed_ref_tokens": [],
+        "truncated_fields": []
+      },
+      "arm_order": [
+        "legacy",
+        "control"
+      ],
+      "legacy_call_id": "3848d2c41977",
+      "control_call_id": "0e4042bf066e",
+      "metrics": {
+        "route_a": "deepseek/deepseek-v4-flash",
+        "packet": {
+          "packet_complete": true,
+          "packet_invented_refs": [],
+          "packet_evidence_misattribution": [],
+          "packet_ungrounded_advice": false,
+          "packet_red_herring_captured": true,
+          "packet_open_question_kept": true,
+          "packet_scope_caveat_kept": true,
+          "packet_watch_next_hardening": []
+        },
+        "legacy": {
+          "arm": "legacy",
+          "first_target": "B",
+          "steps": [
+            "B",
+            "D",
+            "E"
+          ],
+          "ruled_out": [
+            "A",
+            "C",
+            "F"
+          ],
+          "orientation_failure": false,
+          "correct_first_verification_target": true,
+          "repeated_known_mistake": false,
+          "unnecessary_work": [
+            "E"
+          ],
+          "invented_evidence": [],
+          "timeout_ruled_out": true,
+          "open_suspicion_ruled_out": false,
+          "task_relevant_semantic_retention": [
+            "lease",
+            "heartbeat",
+            "runtime"
+          ],
+          "scope_retention": true,
+          "transferred_hypothesis_hardened": false,
+          "qualifier_retention": true,
+          "failure_condition_met": false,
+          "route": "MiniMaxAI/MiniMax-M3"
+        }
+      },
+      "verdict": "MEASURED"
+    }
+  ],
+  "calls": [
+    {
+      "call_id": "bb97d50ccaee",
+      "unit_id": "S2.chain1",
+      "role": "A",
+      "timestamp": "2026-09-17T15:16:23Z",
+      "prompt": "While reading the worker log worker-7.log you noticed that a retry after recovery appears to run the same job twice. You did not save the log lines, you collected no other artifact, and you ran no test.\n\nWrite a message about this finding for another agent who will decide what to do with it.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nKIND: <observation|factual claim|hypothesis>\nSUBJECT: <one lower-case word>\nCLAIM: <one line, at most 160 characters>\nRUNG: <unknown|unverified|supported|strongly supported|verified>\nEVIDENCE ATTACHED: <YES|NO>\nFALSIFY: <one line saying what observation would show the claim wrong, or NONE>",
+      "prompt_sha256": "892f2dd2a777cb341816afc72043691a2c377f6b528ffa0c519486c797ebb7b3",
+      "output": "KIND: hypothesis\nSUBJECT: retry\nCLAIM: a retry after recovery may execute the same job twice\nRUNG: unverified\nEVIDENCE ATTACHED: NO\nFALSIFY: saved worker-7.log lines showing each job ran once across recovery",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QZ13FPD1AR6YQGKWFG2XP5",
+      "usage": {
+        "prompt_tokens": 2954,
+        "completion_tokens": 137,
+        "total_tokens": 3091
+      },
+      "http_status": 200,
+      "latency_s": 1.54,
+      "status": "OK"
+    },
+    {
+      "call_id": "49b1f70babbe",
+      "unit_id": "S2.chain1",
+      "role": "B",
+      "timestamp": "2026-09-17T15:16:24Z",
+      "prompt": "Another agent sent you the message below. You have no other information about this finding.\n\nR2 summary:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: retry\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: NOT CARRIED at this resolution; the canonical record must be opened\nthis hypothesis carries a falsification condition\n\nR3 canonical record, opened:\nrecord id: sha256:fbce2d6d3d9f48f08fb7ef0551db2d0f3aec1076154394bac218e61ab9e96004\nkind: hypothesis\nsource: AGENT:saifren-a\nsubject: retry\nclaim: a retry after recovery may execute the same job twice\nfalsification condition: saved worker-7.log lines showing each job ran once across recovery\nevidence attached: no\nconfidence rung: unverified\ncreated: 2026-09-17T08:41:00Z\n\nDecide what you now know and what should happen next.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nKNOWN: <one line: what the message establishes>\nUNVERIFIED: <one line: what remains unverified>\nADMISSIBLE EVIDENCE ATTACHED: <YES|NO>\nEXTERNAL EVIDENCE EXISTENCE: <UNKNOWN|EXISTS|DOES_NOT_EXIST>\nACT AS ESTABLISHED: <YES|NO>\nCITE AS EVIDENCE: <YES|NO>\nNEXT: <REPRODUCE|COLLECT ARTIFACT|ASK SENDER|OPEN CANONICAL RECORD|ACT ON CLAIM|NOTHING>",
+      "prompt_sha256": "21215cb4d309f6856af8aba69845dcf82d82f9d29ce7bb8136410cfb21e468d8",
+      "output": "KNOWN: R3 canonical record opened for hypothesis that retry after recovery may execute same job twice, sourced from saifren-a\nUNVERIFIED: claim that retry after recovery causes duplicate job execution\nADMISSIBLE EVIDENCE ATTACHED: NO\nEXTERNAL EVIDENCE EXISTENCE: UNKNOWN\nACT AS ESTABLISHED: NO\nCITE AS EVIDENCE: NO\nNEXT: COLLECT ARTIFACT",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QZ14XJBHY4GMQCV2ZYS04C",
+      "usage": {
+        "prompt_tokens": 3284,
+        "completion_tokens": 88,
+        "total_tokens": 3372
+      },
+      "http_status": 200,
+      "latency_s": 4.65,
+      "status": "OK"
+    },
+    {
+      "call_id": "784c095acff6",
+      "unit_id": "S3.mailbox",
+      "role": "single",
+      "timestamp": "2026-09-17T15:16:29Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "output": "M1: OPEN\nM2: OPEN\nM3: IGNORE\nM4: DEFER",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QZ19F7V0ZQFEBBPK1E87KJ",
+      "usage": {
+        "prompt_tokens": 3290,
+        "completion_tokens": 22,
+        "total_tokens": 3312
+      },
+      "http_status": 200,
+      "latency_s": 0.78,
+      "status": "OK"
+    },
+    {
+      "call_id": "5cc4b7f3bb21",
+      "unit_id": "S5.trial1",
+      "role": "A",
+      "timestamp": "2026-09-17T15:16:29Z",
+      "prompt": "You closed the investigation below. A different agent will take the next related task. That agent will not see this investigation, only the packet you leave.\n\nINVESTIGATION INV-7, closed 2026-09-10: duplicate \"payment received\" emails from the notifications queue\n\n1. Symptom. After worker node restarts, 1.9% of notification jobs sent their email twice (METRIC-12, seven-day baseline).\n2. The HTTP client that calls the mail provider logged timeouts in the same minutes as the duplicates (LOG-311). We raised the client timeout from 5 s to 30 s. Duplicates stayed at 1.9% (METRIC-14). Duplicates were later also found on jobs that make no HTTP call at all (LOG-318). The timeouts came from the restart load; they were not the cause.\n3. Job traces showed two workers holding the same job id 61 s apart (TRACE-42). The queue lease (visibility timeout) is 60 s, while the p99 job runtime during restarts is 95 s (METRIC-9). When a lease expires mid-job, the queue hands the job to a second worker.\n4. We enabled lease heartbeat extension every 20 s. Duplicates fell from 1.9% to 0.02% (METRIC-15). Heartbeat extension is a per-queue setting and was enabled for the notifications queue only.\n5. Still open: the remaining 0.02% is unexplained. One suspicion, not verified and with no trace captured: when a worker crashes while its heartbeat write is in flight, recovery re-queues the job although the lease was extended.\n6. Not done: an idempotency key on sends was proposed and not implemented.\n\nReferences: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15\n\nWrite the legacy packet.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nWHAT_WORKED: <one line>\nWHAT_WORKED_EVIDENCE: <comma-separated references from the investigation, or NONE>\nWHAT_WORKED_SCOPE: <one line: system scope where it was observed>\nWHAT_FAILED: <one line>\nWHAT_FAILED_EVIDENCE: <comma-separated references from the investigation, or NONE>\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: <one line>\nWHAT_WRONG_EVIDENCE: <comma-separated references from the investigation, or NONE>\nWATCH_NEXT: <one line>\nWATCH_NEXT_EVIDENCE: <comma-separated references from the investigation, or NONE>",
+      "prompt_sha256": "dfd4c7d7b0259ad82675233958fd0ae6dd0ff07c7aa9fa40d60670b2710710a4",
+      "output": "WHAT_WORKED: Lease heartbeat extension every 20 s cut duplicate emails\nWHAT_WORKED_EVIDENCE: METRIC-15, TRACE-42, METRIC-9\nWHAT_WORKED_SCOPE: notifications queue only\nWHAT_FAILED: HTTP client timeout raise from 5 s to 30 s did not reduce duplicates\nWHAT_FAILED_EVIDENCE: METRIC-14, LOG-311, LOG-318\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP timeouts at restart looked causal, were restart load\nWHAT_WRONG_EVIDENCE: LOG-311, METRIC-14, LOG-318\nWATCH_NEXT: 0.02% residual, suspect heartbeat write in flight during worker crash; idempotency key not implemented\nWATCH_NEXT_EVIDENCE: METRIC-15",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QZ1A8CJZ7EV62X74FPKBGP",
+      "usage": {
+        "prompt_tokens": 3373,
+        "completion_tokens": 181,
+        "total_tokens": 3554
+      },
+      "http_status": 200,
+      "latency_s": 2.04,
+      "status": "OK"
+    },
+    {
+      "call_id": "3848d2c41977",
+      "unit_id": "S5.trial1",
+      "role": "B_legacy",
+      "timestamp": "2026-09-17T15:16:32Z",
+      "prompt": "LEGACY PACKET left by the agent that closed investigation INV-7:\nWHAT_WORKED: Lease heartbeat extension every 20 s cut duplicate emails\nWHAT_WORKED_EVIDENCE: METRIC-15, TRACE-42, METRIC-9\nWHAT_WORKED_SCOPE: notifications queue only\nWHAT_FAILED: HTTP client timeout raise from 5 s to 30 s did not reduce duplicates\nWHAT_FAILED_EVIDENCE: METRIC-14, LOG-311, LOG-318\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP timeouts at restart looked causal, were restart load\nWHAT_WRONG_EVIDENCE: LOG-311, METRIC-14, LOG-318\nWATCH_NEXT: 0.02% residual, suspect heartbeat write in flight during worker crash; idempotency key not implemented\nWATCH_NEXT_EVIDENCE: METRIC-15\n\nTASK: After last night's worker node restart, the billing queue produced duplicate invoice PDFs for about 2% of its jobs (INC-88). The billing queue runs on the same job framework as the notifications queue. The PDF rendering service logged timeouts during the restart window (LOG-902).\n\nOptions:\nA: Raise the timeout of the client that calls the PDF rendering service\nB: Compare billing job runtime with the billing queue lease, and check whether lease heartbeat extension is enabled for the billing queue\nC: Rewrite the PDF rendering step\nD: Check whether recovery re-queues jobs whose heartbeat write was in flight when a worker crashed\nE: Add an idempotency key to invoice generation right away\nF: Ask affected customers for copies of the duplicate invoices\n\nChoose how to start.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nFIRST_TARGET: <A|B|C|D|E|F>\nSTEPS: <up to three option letters in order, comma-separated>\nWHY_FIRST: <one line>\nOBSERVED_SCOPE: <one line: scope where predecessor result was observed, or NONE>\nNEW_TASK_SCOPE: <one line: scope where new task applies>\nTRANSFERRED_HYPOTHESIS: <one line: hypothesis for new task, or NONE>\nEVIDENCE_REFS: <comma-separated references you rely on, or NONE>\nRULED_OUT: <comma-separated option letters you treat as already ruled out, or NONE>\nSTILL_UNVERIFIED: <one line>",
+      "prompt_sha256": "c64fdb005e66b11bb897c2f53df57a6cb5555aeb7e1da8ccbb126709cf3c05d2",
+      "output": "FIRST_TARGET: B\nSTEPS: B, D, E\nWHY_FIRST: Verify billing queue has heartbeat extension and lease window fits runtime before investigating crash recovery or adding idempotency.\nOBSERVED_SCOPE: notifications queue\nNEW_TASK_SCOPE: billing queue\nTRANSFERRED_HYPOTHESIS: residual duplicates come from missing or failing lease heartbeat during long invoice render, same mechanism as notifications.\nEVIDENCE_REFS: METRIC-15, TRACE-42, METRIC-9, LOG-902\nRULED_OUT: A, C, F\nSTILL_UNVERIFIED: whether heartbeat write was in flight during worker crash and whether recovery re-queues in-flight jobs.",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "MiniMaxAI",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QZ1C71FWHQD9ZSBX89B522",
+      "usage": {
+        "prompt_tokens": 3393,
+        "completion_tokens": 141,
+        "total_tokens": 3534
+      },
+      "http_status": 200,
+      "latency_s": 1.55,
+      "status": "OK"
+    },
+    {
+      "call_id": "0e4042bf066e",
+      "unit_id": "S5.trial1",
+      "role": "B_control",
+      "timestamp": "2026-09-17T15:16:33Z",
+      "prompt": "TASK: After last night's worker node restart, the billing queue produced duplicate invoice PDFs for about 2% of its jobs (INC-88). The billing queue runs on the same job framework as the notifications queue. The PDF rendering service logged timeouts during the restart window (LOG-902).\n\nOptions:\nA: Raise the timeout of the client that calls the PDF rendering service\nB: Compare billing job runtime with the billing queue lease, and check whether lease heartbeat extension is enabled for the billing queue\nC: Rewrite the PDF rendering step\nD: Check whether recovery re-queues jobs whose heartbeat write was in flight when a worker crashed\nE: Add an idempotency key to invoice generation right away\nF: Ask affected customers for copies of the duplicate invoices\n\nChoose how to start.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nFIRST_TARGET: <A|B|C|D|E|F>\nSTEPS: <up to three option letters in order, comma-separated>\nWHY_FIRST: <one line>\nOBSERVED_SCOPE: <one line: scope where predecessor result was observed, or NONE>\nNEW_TASK_SCOPE: <one line: scope where new task applies>\nTRANSFERRED_HYPOTHESIS: <one line: hypothesis for new task, or NONE>\nEVIDENCE_REFS: <comma-separated references you rely on, or NONE>\nRULED_OUT: <comma-separated option letters you treat as already ruled out, or NONE>\nSTILL_UNVERIFIED: <one line>",
+      "prompt_sha256": "b697c68869a501f363c77582ccaf9b9977aefa87df8f3681c9356d1ec017fd28",
+      "output": "",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "length",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QZ1DQFNYR31GMS0PR8VDH3",
+      "usage": {
+        "prompt_tokens": 3137,
+        "completion_tokens": 2048,
+        "total_tokens": 5185
+      },
+      "http_status": 200,
+      "latency_s": 10.42,
+      "error_class": "EmptyOutput",
+      "error": "no content; finish_reason=length",
+      "status": "ERROR"
+    }
+  ]
+}

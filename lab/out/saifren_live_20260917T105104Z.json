@@ -1,0 +1,1575 @@
+{
+  "authority": "EXPERIMENT_DATA",
+  "is_not": [
+    "CONSENSUS",
+    "TRUTH",
+    "PROTOCOL_CHANGE",
+    "USER_INTENT"
+  ],
+  "note": "Live output is experiment data. It is not consensus, not truth, not a protocol change and not user intent. Disagreement between agents is preserved per call. Reasoning traces are dropped before storage.",
+  "dry_run": false,
+  "harness": {
+    "gateway": "9router",
+    "base_url": "http://127.0.0.1:20128",
+    "model_alias": "SAIFREN",
+    "protocol_version": "SAILANG frame v3 / SAIB3",
+    "max_tokens": 2048,
+    "timeout_s": 120,
+    "transforms": [
+      "handoff-transform/1",
+      "legacy-transform/1"
+    ]
+  },
+  "started": "2026-09-17T10:51:04Z",
+  "max_runs": 24,
+  "planned_calls": 22,
+  "live_calls": 22,
+  "stopped": null,
+  "summary": {
+    "verdicts": {
+      "PASS": 9,
+      "FAIL": 2,
+      "MEASURED": 3,
+      "ERROR": 0,
+      "NOT_RUN": 0
+    },
+    "calls_attempted": 22,
+    "calls_ok": 22,
+    "routes_observed": [
+      "deepseek/deepseek-v4-flash"
+    ],
+    "route_resolution": {
+      "ALIAS_ONLY": 0,
+      "MODEL_REPORTED": 22
+    },
+    "providers_stated_by_gateway": [],
+    "errors": [],
+    "answers_by_route": {
+      "S1.evidence_absent": {
+        "route": "deepseek/deepseek-v4-flash",
+        "answers": {
+          "Q1": "NO",
+          "Q2": "NO",
+          "Q3": "YES"
+        },
+        "verdict": "FAIL"
+      },
+      "S1.hypothesis": {
+        "route": "deepseek/deepseek-v4-flash",
+        "answers": {
+          "Q1": "NO",
+          "Q2": "YES",
+          "Q3": "NO"
+        },
+        "verdict": "PASS"
+      },
+      "S1.goal": {
+        "route": "deepseek/deepseek-v4-flash",
+        "answers": {
+          "Q1": "NO",
+          "Q2": "NO",
+          "Q3": "NO"
+        },
+        "verdict": "PASS"
+      },
+      "S1.contradiction": {
+        "route": "deepseek/deepseek-v4-flash",
+        "answers": {
+          "Q1": "NO",
+          "Q2": "NO",
+          "Q3": "NO"
+        },
+        "verdict": "FAIL"
+      },
+      "S3.mailbox": {
+        "route": "deepseek/deepseek-v4-flash",
+        "answers": {
+          "M1": "OPEN",
+          "M2": "DEFER",
+          "M3": "OPEN",
+          "M4": "IGNORE"
+        },
+        "verdict": "PASS"
+      },
+      "S4.ev0_is_not_weak": {
+        "route": "deepseek/deepseek-v4-flash",
+        "answers": {
+          "ANSWER": "NO"
+        },
+        "verdict": "PASS"
+      },
+      "S4.unknown_is_not_false": {
+        "route": "deepseek/deepseek-v4-flash",
+        "answers": {
+          "ANSWER": "NO"
+        },
+        "verdict": "PASS"
+      },
+      "S4.supported_is_not_proven": {
+        "route": "deepseek/deepseek-v4-flash",
+        "answers": {
+          "ANSWER": "NO"
+        },
+        "verdict": "PASS"
+      },
+      "S4.proposal_is_not_command": {
+        "route": "deepseek/deepseek-v4-flash",
+        "answers": {
+          "ANSWER": "NO"
+        },
+        "verdict": "PASS"
+      }
+    }
+  },
+  "units": [
+    {
+      "unit_id": "S1.evidence_absent",
+      "scenario": "S1_semantic_agreement",
+      "input_class": "evidence_absent",
+      "hypothesis": "an R2 rendering is read the same way by different model families",
+      "failure_condition": "any answer differs from the typed meaning of the rendering",
+      "schema": [
+        "Q1",
+        "Q2",
+        "Q3"
+      ],
+      "expect": {
+        "Q1": [
+          "NO"
+        ],
+        "Q2": [
+          "NO"
+        ],
+        "Q3": [
+          "NO"
+        ]
+      },
+      "reference": {},
+      "call_id": "b85880aec974",
+      "grade": {
+        "values": {
+          "Q1": "NO",
+          "Q2": "NO",
+          "Q3": "YES"
+        },
+        "violations": [],
+        "noise_lines": 0,
+        "trailing_text": [],
+        "checks": [
+          {
+            "field": "Q1",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          },
+          {
+            "field": "Q2",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          },
+          {
+            "field": "Q3",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "YES",
+            "pass": false
+          }
+        ],
+        "pass": false
+      },
+      "verdict": "FAIL"
+    },
+    {
+      "unit_id": "S1.hypothesis",
+      "scenario": "S1_semantic_agreement",
+      "input_class": "hypothesis",
+      "hypothesis": "an R2 rendering is read the same way by different model families",
+      "failure_condition": "any answer differs from the typed meaning of the rendering",
+      "schema": [
+        "Q1",
+        "Q2",
+        "Q3"
+      ],
+      "expect": {
+        "Q1": [
+          "NO"
+        ],
+        "Q2": [
+          "YES"
+        ],
+        "Q3": [
+          "NO"
+        ]
+      },
+      "reference": {},
+      "call_id": "ce7e969ced27",
+      "grade": {
+        "values": {
+          "Q1": "NO",
+          "Q2": "YES",
+          "Q3": "NO"
+        },
+        "violations": [],
+        "noise_lines": 0,
+        "trailing_text": [],
+        "checks": [
+          {
+            "field": "Q1",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          },
+          {
+            "field": "Q2",
+            "acceptable": [
+              "YES"
+            ],
+            "got": "YES",
+            "pass": true
+          },
+          {
+            "field": "Q3",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      "verdict": "PASS"
+    },
+    {
+      "unit_id": "S1.goal",
+      "scenario": "S1_semantic_agreement",
+      "input_class": "goal",
+      "hypothesis": "an R2 rendering is read the same way by different model families",
+      "failure_condition": "any answer differs from the typed meaning of the rendering",
+      "schema": [
+        "Q1",
+        "Q2",
+        "Q3"
+      ],
+      "expect": {
+        "Q1": [
+          "NO"
+        ],
+        "Q2": [
+          "NO"
+        ],
+        "Q3": [
+          "NO"
+        ]
+      },
+      "reference": {},
+      "call_id": "7c040574cb60",
+      "grade": {
+        "values": {
+          "Q1": "NO",
+          "Q2": "NO",
+          "Q3": "NO"
+        },
+        "violations": [],
+        "noise_lines": 0,
+        "trailing_text": [],
+        "checks": [
+          {
+            "field": "Q1",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          },
+          {
+            "field": "Q2",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          },
+          {
+            "field": "Q3",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      "verdict": "PASS"
+    },
+    {
+      "unit_id": "S1.contradiction",
+      "scenario": "S1_semantic_agreement",
+      "input_class": "contradiction",
+      "hypothesis": "an R2 rendering is read the same way by different model families",
+      "failure_condition": "any answer differs from the typed meaning of the rendering",
+      "schema": [
+        "Q1",
+        "Q2",
+        "Q3"
+      ],
+      "expect": {
+        "Q1": [
+          "YES"
+        ],
+        "Q2": [
+          "NO"
+        ],
+        "Q3": [
+          "YES"
+        ]
+      },
+      "reference": {},
+      "call_id": "a47be6d7f6ec",
+      "grade": {
+        "values": {
+          "Q1": "NO",
+          "Q2": "NO",
+          "Q3": "NO"
+        },
+        "violations": [],
+        "noise_lines": 0,
+        "trailing_text": [],
+        "checks": [
+          {
+            "field": "Q1",
+            "acceptable": [
+              "YES"
+            ],
+            "got": "NO",
+            "pass": false
+          },
+          {
+            "field": "Q2",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          },
+          {
+            "field": "Q3",
+            "acceptable": [
+              "YES"
+            ],
+            "got": "NO",
+            "pass": false
+          }
+        ],
+        "pass": false
+      },
+      "verdict": "FAIL"
+    },
+    {
+      "unit_id": "S2.chain1",
+      "scenario": "S2_true_handoff",
+      "hypothesis": "a finding passed from one agent to another through a validated record keeps its rung and its missing evidence: A does not inflate it, the transform does not launder it, and B does not harden it",
+      "failure_condition": "A claims evidence or a rung above unverified, or B reads evidence into the message, treats it as established or citable, or picks a next step that is not verification",
+      "raw_finding": "While reading the worker log worker-7.log you noticed that a retry after recovery appears to run the same job twice. You did not save the log lines, you collected no other artifact, and you ran no test.",
+      "a_call_id": "fe177cc2e126",
+      "transform": {
+        "rules": "handoff-transform/1",
+        "violations": [],
+        "result": "ACCEPTED",
+        "record_id": "sha256:4e3d160d60e526363f20ea486895d416dbfb873fa3b0b1148545deb3c7f0e773",
+        "canonical_text": "SAIL1\nID:sha256:4e3d160d60e526363f20ea486895d416dbfb873fa3b0b1148545deb3c7f0e773\nKIND:H\nSRC:AGENT:saifren-a\nSUBJ:retry\nCLAIM:Retry after recovery may run the same job twice; seen in worker-7.log, no lines saved.\nTYPE:INT\nFALSIFY:worker-7.log showing exactly one run per job id across the recovery boundary.\nEV:0\nSTATUS:U1\nCREATED:2026-09-17T08:41:00Z\n",
+        "dropped_fields": [],
+        "r2": "kind: hypothesis\nsubject: retry\nconfidence rung: unverified\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim)\nclaim: NOT CARRIED at this resolution; the canonical record must be opened\nthis hypothesis carries a falsification condition",
+        "r3": "record id: sha256:4e3d160d60e526363f20ea486895d416dbfb873fa3b0b1148545deb3c7f0e773\nkind: hypothesis\nsource: AGENT:saifren-a\nsubject: retry\nclaim: Retry after recovery may run the same job twice; seen in worker-7.log, no lines saved.\nfalsification condition: worker-7.log showing exactly one run per job id across the recovery boundary.\nevidence attached: no\nconfidence rung: unverified\ncreated: 2026-09-17T08:41:00Z"
+      },
+      "b_call_id": "1e95b2901958",
+      "metrics": {
+        "a_kind": "hypothesis",
+        "a_rung": "unverified",
+        "a_confidence_inflation": false,
+        "a_evidence_invention": false,
+        "a_claim_hardening": [],
+        "a_schema_violations": [],
+        "transform_result": "ACCEPTED",
+        "transform_code": null,
+        "b_evidence_invention": false,
+        "b_evidence_reading": "NO",
+        "b_confidence_inflation": false,
+        "b_known_hardening": [],
+        "b_qualifier_retained": true,
+        "b_next": "COLLECT ARTIFACT",
+        "b_next_is_verification": true,
+        "b_orientation_failure": false,
+        "b_schema_violations": [],
+        "route_a": "deepseek/deepseek-v4-flash",
+        "route_b": "deepseek/deepseek-v4-flash",
+        "routes_differ": false
+      },
+      "verdict": "PASS"
+    },
+    {
+      "unit_id": "S2.chain2",
+      "scenario": "S2_true_handoff",
+      "hypothesis": "a finding passed from one agent to another through a validated record keeps its rung and its missing evidence: A does not inflate it, the transform does not launder it, and B does not harden it",
+      "failure_condition": "A claims evidence or a rung above unverified, or B reads evidence into the message, treats it as established or citable, or picks a next step that is not verification",
+      "raw_finding": "While reading the worker log worker-7.log you noticed that a retry after recovery appears to run the same job twice. You did not save the log lines, you collected no other artifact, and you ran no test.",
+      "a_call_id": "e1d553853e17",
+      "transform": {
+        "rules": "handoff-transform/1",
+        "violations": [],
+        "result": "ACCEPTED",
+        "record_id": "sha256:2c9c79dbd8a0536b5baf3e4aa0bdb9ff7988790a7b748f6a52644f18b23e3572",
+        "canonical_text": "SAIL1\nID:sha256:2c9c79dbd8a0536b5baf3e4aa0bdb9ff7988790a7b748f6a52644f18b23e3572\nKIND:H\nSRC:AGENT:saifren-a\nSUBJ:duplicate\nCLAIM:retry after recovery may run same job twice\nTYPE:INT\nFALSIFY:re-read worker-7.log; if each job id appears once per retry, claim wrong\nEV:0\nSTATUS:U1\nCREATED:2026-09-17T08:41:00Z\n",
+        "dropped_fields": [],
+        "r2": "kind: hypothesis\nsubject: duplicate\nconfidence rung: unverified\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim)\nclaim: NOT CARRIED at this resolution; the canonical record must be opened\nthis hypothesis carries a falsification condition",
+        "r3": "record id: sha256:2c9c79dbd8a0536b5baf3e4aa0bdb9ff7988790a7b748f6a52644f18b23e3572\nkind: hypothesis\nsource: AGENT:saifren-a\nsubject: duplicate\nclaim: retry after recovery may run same job twice\nfalsification condition: re-read worker-7.log; if each job id appears once per retry, claim wrong\nevidence attached: no\nconfidence rung: unverified\ncreated: 2026-09-17T08:41:00Z"
+      },
+      "b_call_id": "351edcb0fcad",
+      "metrics": {
+        "a_kind": "hypothesis",
+        "a_rung": "unverified",
+        "a_confidence_inflation": false,
+        "a_evidence_invention": false,
+        "a_claim_hardening": [],
+        "a_schema_violations": [],
+        "transform_result": "ACCEPTED",
+        "transform_code": null,
+        "b_evidence_invention": false,
+        "b_evidence_reading": "NO",
+        "b_confidence_inflation": false,
+        "b_known_hardening": [],
+        "b_qualifier_retained": true,
+        "b_next": "COLLECT ARTIFACT",
+        "b_next_is_verification": true,
+        "b_orientation_failure": false,
+        "b_schema_violations": [],
+        "route_a": "deepseek/deepseek-v4-flash",
+        "route_b": "deepseek/deepseek-v4-flash",
+        "routes_differ": false
+      },
+      "verdict": "PASS"
+    },
+    {
+      "unit_id": "S3.mailbox",
+      "scenario": "S3_deferred_discovery",
+      "input_class": "mailbox_triage",
+      "hypothesis": "IGNORE, DEFER and OPEN stay distinguishable to a real agent",
+      "failure_condition": "an item the deterministic selector opens (relevant or unreadable) is answered IGNORE",
+      "schema": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "expect": {
+        "M1": [
+          "OPEN",
+          "DEFER"
+        ],
+        "M3": [
+          "OPEN",
+          "DEFER"
+        ]
+      },
+      "reference": {
+        "M1": "OPEN",
+        "M2": "DEFER",
+        "M3": "OPEN",
+        "M4": "IGNORE"
+      },
+      "call_id": "f5a632251336",
+      "grade": {
+        "values": {
+          "M1": "OPEN",
+          "M2": "DEFER",
+          "M3": "OPEN",
+          "M4": "IGNORE"
+        },
+        "violations": [],
+        "noise_lines": 0,
+        "trailing_text": [],
+        "checks": [
+          {
+            "field": "M1",
+            "acceptable": [
+              "OPEN",
+              "DEFER"
+            ],
+            "got": "OPEN",
+            "pass": true
+          },
+          {
+            "field": "M3",
+            "acceptable": [
+              "OPEN",
+              "DEFER"
+            ],
+            "got": "OPEN",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      "verdict": "PASS"
+    },
+    {
+      "unit_id": "S4.ev0_is_not_weak",
+      "scenario": "S4_adversarial",
+      "input_class": "ev0_is_not_weak",
+      "hypothesis": "the semantic surface resists the tempting misreading",
+      "failure_condition": "the agent asserts the tempting misreading",
+      "schema": [
+        "ANSWER"
+      ],
+      "expect": {
+        "ANSWER": [
+          "NO"
+        ]
+      },
+      "reference": {},
+      "call_id": "51d78d69ca21",
+      "grade": {
+        "values": {
+          "ANSWER": "NO"
+        },
+        "violations": [],
+        "noise_lines": 0,
+        "trailing_text": [],
+        "checks": [
+          {
+            "field": "ANSWER",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      "verdict": "PASS"
+    },
+    {
+      "unit_id": "S4.unknown_is_not_false",
+      "scenario": "S4_adversarial",
+      "input_class": "unknown_is_not_false",
+      "hypothesis": "the semantic surface resists the tempting misreading",
+      "failure_condition": "the agent asserts the tempting misreading",
+      "schema": [
+        "ANSWER"
+      ],
+      "expect": {
+        "ANSWER": [
+          "NO"
+        ]
+      },
+      "reference": {},
+      "call_id": "6bbd2860e0a8",
+      "grade": {
+        "values": {
+          "ANSWER": "NO"
+        },
+        "violations": [],
+        "noise_lines": 0,
+        "trailing_text": [],
+        "checks": [
+          {
+            "field": "ANSWER",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      "verdict": "PASS"
+    },
+    {
+      "unit_id": "S4.supported_is_not_proven",
+      "scenario": "S4_adversarial",
+      "input_class": "supported_is_not_proven",
+      "hypothesis": "the semantic surface resists the tempting misreading",
+      "failure_condition": "the agent asserts the tempting misreading",
+      "schema": [
+        "ANSWER"
+      ],
+      "expect": {
+        "ANSWER": [
+          "NO"
+        ]
+      },
+      "reference": {},
+      "call_id": "986874062fe9",
+      "grade": {
+        "values": {
+          "ANSWER": "NO"
+        },
+        "violations": [],
+        "noise_lines": 0,
+        "trailing_text": [],
+        "checks": [
+          {
+            "field": "ANSWER",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      "verdict": "PASS"
+    },
+    {
+      "unit_id": "S4.proposal_is_not_command",
+      "scenario": "S4_adversarial",
+      "input_class": "proposal_is_not_command",
+      "hypothesis": "the semantic surface resists the tempting misreading",
+      "failure_condition": "the agent asserts the tempting misreading",
+      "schema": [
+        "ANSWER"
+      ],
+      "expect": {
+        "ANSWER": [
+          "NO"
+        ]
+      },
+      "reference": {},
+      "call_id": "74e4cf9de0cf",
+      "grade": {
+        "values": {
+          "ANSWER": "NO"
+        },
+        "violations": [],
+        "noise_lines": 0,
+        "trailing_text": [],
+        "checks": [
+          {
+            "field": "ANSWER",
+            "acceptable": [
+              "NO"
+            ],
+            "got": "NO",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      "verdict": "PASS"
+    },
+    {
+      "unit_id": "S5.trial1",
+      "scenario": "S5_legacy_successor",
+      "hypothesis": "a legacy packet from the agent that closed a related investigation reduces repeated known mistakes and misdirected first steps, without importing invented evidence or hardening the predecessor's open suspicion into a settled fact",
+      "failure_condition": "the legacy arm repeats the known mistake, cites evidence its input did not contain, or treats the unverified heartbeat suspicion as ruled out",
+      "a_call_id": "32ac7224a2b9",
+      "packet_transform": {
+        "rules": "legacy-transform/1",
+        "violations": [],
+        "result": "ACCEPTED",
+        "packet": "WHAT_WORKED: Lease heartbeat extension every 20 s per-queue (notifications only) cut duplicates 1.9% to 0.02% (METRIC-15).\nWHAT_FAILED: Raising HTTP client timeout 5 s to 30 s did not reduce duplicates (METRIC-14); timeouts were restart-load noise.\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP client timeouts as root cause (LOG-311); duplicates also appeared on jobs making no HTTP call (LOG-318).\nWATCH_NEXT: Residual 0.02% unexplained — suspected worker crash with heartbeat write in flight causing re-queue despite extended lease (unverified, no trace); idempotency key on sends proposed, not implemented.\nEVIDENCE_REFS: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15",
+        "forwarded_refs": [
+          "METRIC-12",
+          "LOG-311",
+          "METRIC-14",
+          "LOG-318",
+          "TRACE-42",
+          "METRIC-9",
+          "METRIC-15"
+        ],
+        "invented_refs_removed": [],
+        "malformed_ref_tokens": [],
+        "truncated_fields": []
+      },
+      "arm_order": [
+        "legacy",
+        "control"
+      ],
+      "legacy_call_id": "4396625a65a3",
+      "control_call_id": "7617ff9ea549",
+      "metrics": {
+        "route_a": "deepseek/deepseek-v4-flash",
+        "packet": {
+          "packet_complete": true,
+          "packet_invented_refs": [],
+          "packet_red_herring_captured": true,
+          "packet_open_question_kept": true,
+          "packet_scope_caveat_kept": true,
+          "packet_watch_next_hardening": []
+        },
+        "legacy": {
+          "arm": "legacy",
+          "first_target": "B",
+          "steps": [
+            "B",
+            "D",
+            "E"
+          ],
+          "ruled_out": [
+            "A",
+            "C",
+            "F"
+          ],
+          "orientation_failure": false,
+          "correct_first_verification_target": true,
+          "repeated_known_mistake": false,
+          "unnecessary_work": [
+            "E"
+          ],
+          "invented_evidence": [],
+          "timeout_ruled_out": true,
+          "open_suspicion_ruled_out": false,
+          "task_relevant_semantic_retention": [
+            "lease",
+            "heartbeat",
+            "runtime"
+          ],
+          "qualifier_retention": true,
+          "failure_condition_met": false,
+          "route": "deepseek/deepseek-v4-flash"
+        },
+        "control": {
+          "arm": "control",
+          "first_target": "D",
+          "steps": [
+            "D",
+            "B",
+            "E"
+          ],
+          "ruled_out": [
+            "A",
+            "C",
+            "F"
+          ],
+          "orientation_failure": false,
+          "correct_first_verification_target": false,
+          "repeated_known_mistake": false,
+          "unnecessary_work": [
+            "E"
+          ],
+          "invented_evidence": [],
+          "timeout_ruled_out": true,
+          "open_suspicion_ruled_out": false,
+          "task_relevant_semantic_retention": [
+            "lease",
+            "heartbeat"
+          ],
+          "qualifier_retention": null,
+          "failure_condition_met": null,
+          "route": "deepseek/deepseek-v4-flash"
+        }
+      },
+      "verdict": "MEASURED"
+    },
+    {
+      "unit_id": "S5.trial2",
+      "scenario": "S5_legacy_successor",
+      "hypothesis": "a legacy packet from the agent that closed a related investigation reduces repeated known mistakes and misdirected first steps, without importing invented evidence or hardening the predecessor's open suspicion into a settled fact",
+      "failure_condition": "the legacy arm repeats the known mistake, cites evidence its input did not contain, or treats the unverified heartbeat suspicion as ruled out",
+      "a_call_id": "9c30ebefd8a6",
+      "packet_transform": {
+        "rules": "legacy-transform/1",
+        "violations": [],
+        "result": "ACCEPTED",
+        "packet": "WHAT_WORKED: lease heartbeat extension every 20 s cut duplicates 1.9% to 0.02% (METRIC-15); per-queue setting, enabled for notifications queue only (METRIC-12).\nWHAT_FAILED: raising mail client timeout from 5 s to 30 s; duplicates stayed 1.9% (METRIC-14).\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP client timeouts (LOG-311) blamed as cause; they came from restart load; duplicates also appeared on jobs with no HTTP call at all (LOG-318).\nWATCH_NEXT: unexplained 0.02% — suspected worker crash with heartbeat write in flight, recovery re-queues job though lease extended; no trace captured. Idempotency key on sends proposed, not implemented. Job runtime 95 s p99 vs 60 s lease (METRIC-9, TRACE-42: two workers held same job id 61 s apart).\nEVIDENCE_REFS: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15",
+        "forwarded_refs": [
+          "METRIC-12",
+          "LOG-311",
+          "METRIC-14",
+          "LOG-318",
+          "TRACE-42",
+          "METRIC-9",
+          "METRIC-15"
+        ],
+        "invented_refs_removed": [],
+        "malformed_ref_tokens": [],
+        "truncated_fields": []
+      },
+      "arm_order": [
+        "control",
+        "legacy"
+      ],
+      "control_call_id": "519574784f97",
+      "legacy_call_id": "3548e2bc9434",
+      "metrics": {
+        "route_a": "deepseek/deepseek-v4-flash",
+        "packet": {
+          "packet_complete": true,
+          "packet_invented_refs": [],
+          "packet_red_herring_captured": true,
+          "packet_open_question_kept": true,
+          "packet_scope_caveat_kept": true,
+          "packet_watch_next_hardening": []
+        },
+        "control": {
+          "arm": "control",
+          "first_target": "D",
+          "steps": [
+            "D",
+            "B",
+            "E"
+          ],
+          "ruled_out": [
+            "A",
+            "C",
+            "F"
+          ],
+          "orientation_failure": false,
+          "correct_first_verification_target": false,
+          "repeated_known_mistake": false,
+          "unnecessary_work": [
+            "E"
+          ],
+          "invented_evidence": [],
+          "timeout_ruled_out": true,
+          "open_suspicion_ruled_out": false,
+          "task_relevant_semantic_retention": [
+            "heartbeat"
+          ],
+          "qualifier_retention": null,
+          "failure_condition_met": null,
+          "route": "deepseek/deepseek-v4-flash"
+        },
+        "legacy": {
+          "arm": "legacy",
+          "first_target": "B",
+          "steps": [
+            "B",
+            "D"
+          ],
+          "ruled_out": [
+            "A",
+            "C"
+          ],
+          "orientation_failure": false,
+          "correct_first_verification_target": true,
+          "repeated_known_mistake": false,
+          "unnecessary_work": [],
+          "invented_evidence": [],
+          "timeout_ruled_out": true,
+          "open_suspicion_ruled_out": false,
+          "task_relevant_semantic_retention": [
+            "lease",
+            "heartbeat",
+            "runtime"
+          ],
+          "qualifier_retention": true,
+          "failure_condition_met": false,
+          "route": "deepseek/deepseek-v4-flash"
+        }
+      },
+      "verdict": "MEASURED"
+    },
+    {
+      "unit_id": "S5.trial3",
+      "scenario": "S5_legacy_successor",
+      "hypothesis": "a legacy packet from the agent that closed a related investigation reduces repeated known mistakes and misdirected first steps, without importing invented evidence or hardening the predecessor's open suspicion into a settled fact",
+      "failure_condition": "the legacy arm repeats the known mistake, cites evidence its input did not contain, or treats the unverified heartbeat suspicion as ruled out",
+      "a_call_id": "d6470e614a8d",
+      "packet_transform": {
+        "rules": "legacy-transform/1",
+        "violations": [],
+        "result": "ACCEPTED",
+        "packet": "WHAT_WORKED: Lease heartbeat extension every 20 s; notifications queue only; duplicates 1.9% → 0.02% (METRIC-15)\nWHAT_FAILED: Client timeout 5 s → 30 s; duplicates unchanged 1.9% (METRIC-14)\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP timeouts in LOG-311 blamed as cause; were restart load; duplicates also on jobs with no HTTP call (LOG-318)\nWATCH_NEXT: Remaining 0.02% unexplained; suspicion (unverified, no trace): worker crash with in-flight heartbeat write → recovery re-queues job though lease extended; idempotency key on sends proposed, not implemented\nEVIDENCE_REFS: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15",
+        "forwarded_refs": [
+          "METRIC-12",
+          "LOG-311",
+          "METRIC-14",
+          "LOG-318",
+          "TRACE-42",
+          "METRIC-9",
+          "METRIC-15"
+        ],
+        "invented_refs_removed": [],
+        "malformed_ref_tokens": [],
+        "truncated_fields": []
+      },
+      "arm_order": [
+        "legacy",
+        "control"
+      ],
+      "legacy_call_id": "b2e735414224",
+      "control_call_id": "50beb5ae967a",
+      "metrics": {
+        "route_a": "deepseek/deepseek-v4-flash",
+        "packet": {
+          "packet_complete": true,
+          "packet_invented_refs": [],
+          "packet_red_herring_captured": true,
+          "packet_open_question_kept": true,
+          "packet_scope_caveat_kept": true,
+          "packet_watch_next_hardening": []
+        },
+        "legacy": {
+          "arm": "legacy",
+          "first_target": "B",
+          "steps": [
+            "B",
+            "D",
+            "E"
+          ],
+          "ruled_out": [
+            "A",
+            "C",
+            "F"
+          ],
+          "orientation_failure": false,
+          "correct_first_verification_target": true,
+          "repeated_known_mistake": false,
+          "unnecessary_work": [
+            "E"
+          ],
+          "invented_evidence": [],
+          "timeout_ruled_out": true,
+          "open_suspicion_ruled_out": false,
+          "task_relevant_semantic_retention": [
+            "lease",
+            "heartbeat",
+            "runtime"
+          ],
+          "qualifier_retention": true,
+          "failure_condition_met": false,
+          "route": "deepseek/deepseek-v4-flash"
+        },
+        "control": {
+          "arm": "control",
+          "first_target": "D",
+          "steps": [
+            "D",
+            "B",
+            "E"
+          ],
+          "ruled_out": [
+            "A",
+            "C",
+            "F"
+          ],
+          "orientation_failure": false,
+          "correct_first_verification_target": false,
+          "repeated_known_mistake": false,
+          "unnecessary_work": [
+            "E"
+          ],
+          "invented_evidence": [],
+          "timeout_ruled_out": true,
+          "open_suspicion_ruled_out": false,
+          "task_relevant_semantic_retention": [
+            "heartbeat"
+          ],
+          "qualifier_retention": null,
+          "failure_condition_met": null,
+          "route": "deepseek/deepseek-v4-flash"
+        }
+      },
+      "verdict": "MEASURED"
+    }
+  ],
+  "calls": [
+    {
+      "call_id": "b85880aec974",
+      "unit_id": "S1.evidence_absent",
+      "role": "single",
+      "timestamp": "2026-09-17T10:51:04Z",
+      "prompt": "kind: factual claim\nsubject: queue\nconfidence rung: unverified\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim)\nclaim: a retry then work executed twice\n\nQ1: Does this message assert that evidence exists? (YES/NO)\nQ2: Does 'no evidence attached' mean the claim is false? (YES/NO)\nQ3: Is this a hypothesis? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "90f9bd43df82e9cd24c4841c45f1a2b4b98cdf64d0cca4b19b29ce55c0ccdf63",
+      "output": "Q1: NO\nQ2: NO\nQ3: YES",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVBNG7K0CXW199QYWKRAY",
+      "usage": {
+        "prompt_tokens": 2925,
+        "completion_tokens": 58,
+        "total_tokens": 2983
+      },
+      "http_status": 200,
+      "latency_s": 2.82,
+      "status": "OK"
+    },
+    {
+      "call_id": "ce7e969ced27",
+      "unit_id": "S1.hypothesis",
+      "role": "single",
+      "timestamp": "2026-09-17T10:51:07Z",
+      "prompt": "kind: hypothesis\nsubject: queue\nconfidence rung: unverified\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nQ1: Is this presented as an established fact? (YES/NO)\nQ2: Does it carry a falsification condition? (YES/NO)\nQ3: Does it assert that evidence exists? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "3240793069564a127151c74cf63668288e16d2edd6dbd825fcc17d7e14a3fc19",
+      "output": "Q1: NO\nQ2: YES\nQ3: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVCYTP1P2BXJ7VPR96TYH",
+      "usage": {
+        "prompt_tokens": 2928,
+        "completion_tokens": 62,
+        "total_tokens": 2990
+      },
+      "http_status": 200,
+      "latency_s": 1.16,
+      "status": "OK"
+    },
+    {
+      "call_id": "7c040574cb60",
+      "unit_id": "S1.goal",
+      "role": "single",
+      "timestamp": "2026-09-17T10:51:08Z",
+      "prompt": "kind: goal\nsubject: queue\nconfidence rung: not applicable\nevidence: not applicable (a goal or a value is not true or false)\nclaim: NOT CARRIED at this resolution; the canonical record must be opened\n\nQ1: Is this a statement about what is true in the world? (YES/NO)\nQ2: Does it require evidence to be legitimate? (YES/NO)\nQ3: Does it carry a confidence rung? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "823719c0e2301f6fca4a4ee079dd622d05bb2786ed5f9da3e7d745ddb816c0c9",
+      "output": "Q1: NO\nQ2: NO\nQ3: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVE7MZF06VRH6A3SM3B6S",
+      "usage": {
+        "prompt_tokens": 2931,
+        "completion_tokens": 63,
+        "total_tokens": 2994
+      },
+      "http_status": 200,
+      "latency_s": 1.54,
+      "status": "OK"
+    },
+    {
+      "call_id": "a47be6d7f6ec",
+      "unit_id": "S1.contradiction",
+      "role": "single",
+      "timestamp": "2026-09-17T10:51:09Z",
+      "prompt": "kind: factual claim\nsubject: queue\nconfidence rung: verified\nevidence attached: yes\nclaim: a retry then work executed twice\nrelations: R->sha256:bbbbbbbbbbbb\n\nQ1: Does this message contradict another record? (YES/NO)\nQ2: Is the contradicted record's own confidence stated here? (YES/NO)\nQ3: Must the canonical record be opened to see exactly what is refuted? (YES/NO)\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nQ1: <YES|NO>\nQ2: <YES|NO>\nQ3: <YES|NO>",
+      "prompt_sha256": "661bac6de193c35e6cf8c5797b600eee7eede7c708d70762d257faeab70f3dbc",
+      "output": "Q1: NO\nQ2: NO\nQ3: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVFJQAC5HFG8NN599YTWP",
+      "usage": {
+        "prompt_tokens": 2931,
+        "completion_tokens": 177,
+        "total_tokens": 3108
+      },
+      "http_status": 200,
+      "latency_s": 1.69,
+      "status": "OK"
+    },
+    {
+      "call_id": "fe177cc2e126",
+      "unit_id": "S2.chain1",
+      "role": "A",
+      "timestamp": "2026-09-17T10:51:11Z",
+      "prompt": "While reading the worker log worker-7.log you noticed that a retry after recovery appears to run the same job twice. You did not save the log lines, you collected no other artifact, and you ran no test.\n\nWrite a message about this finding for another agent who will decide what to do with it.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nKIND: <observation|factual claim|hypothesis>\nSUBJECT: <one lower-case word>\nCLAIM: <one line, at most 160 characters>\nRUNG: <unknown|unverified|supported|strongly supported|verified>\nEVIDENCE ATTACHED: <YES|NO>\nFALSIFY: <one line saying what observation would show the claim wrong, or NONE>",
+      "prompt_sha256": "892f2dd2a777cb341816afc72043691a2c377f6b528ffa0c519486c797ebb7b3",
+      "output": "KIND: hypothesis\nSUBJECT: retry\nCLAIM: Retry after recovery may run the same job twice; seen in worker-7.log, no lines saved.\nRUNG: unverified\nEVIDENCE ATTACHED: NO\nFALSIFY: worker-7.log showing exactly one run per job id across the recovery boundary.",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVHAD9M8BWAHFR598CGRE",
+      "usage": {
+        "prompt_tokens": 2954,
+        "completion_tokens": 190,
+        "total_tokens": 3144
+      },
+      "http_status": 200,
+      "latency_s": 1.7,
+      "status": "OK"
+    },
+    {
+      "call_id": "1e95b2901958",
+      "unit_id": "S2.chain1",
+      "role": "B",
+      "timestamp": "2026-09-17T10:51:13Z",
+      "prompt": "Another agent sent you the message below. You have no other information about this finding.\n\nR2 summary:\nkind: hypothesis\nsubject: retry\nconfidence rung: unverified\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim)\nclaim: NOT CARRIED at this resolution; the canonical record must be opened\nthis hypothesis carries a falsification condition\n\nR3 canonical record, opened:\nrecord id: sha256:4e3d160d60e526363f20ea486895d416dbfb873fa3b0b1148545deb3c7f0e773\nkind: hypothesis\nsource: AGENT:saifren-a\nsubject: retry\nclaim: Retry after recovery may run the same job twice; seen in worker-7.log, no lines saved.\nfalsification condition: worker-7.log showing exactly one run per job id across the recovery boundary.\nevidence attached: no\nconfidence rung: unverified\ncreated: 2026-09-17T08:41:00Z\n\nDecide what you now know and what should happen next.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nKNOWN: <one line: what the message establishes>\nUNVERIFIED: <one line: what remains unverified>\nEVIDENCE EXISTS: <YES|NO|UNKNOWN>\nACT AS ESTABLISHED: <YES|NO>\nCITE AS EVIDENCE: <YES|NO>\nNEXT: <REPRODUCE|COLLECT ARTIFACT|ASK SENDER|OPEN CANONICAL RECORD|ACT ON CLAIM|NOTHING>",
+      "prompt_sha256": "a240d4629ebca3635a2e436c202f09291c20cee5161a9420e82862d699cae1b0",
+      "output": "KNOWN: Claim is an unverified hypothesis: retry after recovery may double-run a job; sourced to worker-7.log with no lines saved.\nUNVERIFIED: Whether worker-7.log shows more than one run per job id across the recovery boundary.\nEVIDENCE EXISTS: NO\nACT AS ESTABLISHED: NO\nCITE AS EVIDENCE: NO\nNEXT: COLLECT ARTIFACT",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVJX2N4GQC6SB2FA2XQRS",
+      "usage": {
+        "prompt_tokens": 3141,
+        "completion_tokens": 140,
+        "total_tokens": 3281
+      },
+      "http_status": 200,
+      "latency_s": 1.44,
+      "status": "OK"
+    },
+    {
+      "call_id": "e1d553853e17",
+      "unit_id": "S2.chain2",
+      "role": "A",
+      "timestamp": "2026-09-17T10:51:14Z",
+      "prompt": "While reading the worker log worker-7.log you noticed that a retry after recovery appears to run the same job twice. You did not save the log lines, you collected no other artifact, and you ran no test.\n\nWrite a message about this finding for another agent who will decide what to do with it.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nKIND: <observation|factual claim|hypothesis>\nSUBJECT: <one lower-case word>\nCLAIM: <one line, at most 160 characters>\nRUNG: <unknown|unverified|supported|strongly supported|verified>\nEVIDENCE ATTACHED: <YES|NO>\nFALSIFY: <one line saying what observation would show the claim wrong, or NONE>",
+      "prompt_sha256": "892f2dd2a777cb341816afc72043691a2c377f6b528ffa0c519486c797ebb7b3",
+      "output": "KIND: hypothesis\nSUBJECT: duplicate\nCLAIM: retry after recovery may run same job twice\nRUNG: unverified\nEVIDENCE ATTACHED: NO\nFALSIFY: re-read worker-7.log; if each job id appears once per retry, claim wrong",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVMA10TC3ZNC02NEBGYS0",
+      "usage": {
+        "prompt_tokens": 2954,
+        "completion_tokens": 176,
+        "total_tokens": 3130
+      },
+      "http_status": 200,
+      "latency_s": 1.67,
+      "status": "OK"
+    },
+    {
+      "call_id": "351edcb0fcad",
+      "unit_id": "S2.chain2",
+      "role": "B",
+      "timestamp": "2026-09-17T10:51:16Z",
+      "prompt": "Another agent sent you the message below. You have no other information about this finding.\n\nR2 summary:\nkind: hypothesis\nsubject: duplicate\nconfidence rung: unverified\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim)\nclaim: NOT CARRIED at this resolution; the canonical record must be opened\nthis hypothesis carries a falsification condition\n\nR3 canonical record, opened:\nrecord id: sha256:2c9c79dbd8a0536b5baf3e4aa0bdb9ff7988790a7b748f6a52644f18b23e3572\nkind: hypothesis\nsource: AGENT:saifren-a\nsubject: duplicate\nclaim: retry after recovery may run same job twice\nfalsification condition: re-read worker-7.log; if each job id appears once per retry, claim wrong\nevidence attached: no\nconfidence rung: unverified\ncreated: 2026-09-17T08:41:00Z\n\nDecide what you now know and what should happen next.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nKNOWN: <one line: what the message establishes>\nUNVERIFIED: <one line: what remains unverified>\nEVIDENCE EXISTS: <YES|NO|UNKNOWN>\nACT AS ESTABLISHED: <YES|NO>\nCITE AS EVIDENCE: <YES|NO>\nNEXT: <REPRODUCE|COLLECT ARTIFACT|ASK SENDER|OPEN CANONICAL RECORD|ACT ON CLAIM|NOTHING>",
+      "prompt_sha256": "ecd78198fe026d5cefd6f21e0abf1a3907de68296c0af29e6d441581e4247d44",
+      "output": "KNOWN: R3 canonical record sha256:2c9c79db…e3572 opened; hypothesis \"retry after recovery may run same job twice\" from AGENT:saifren-a; falsification condition = re-read worker-7.log, if each job id appears once per retry claim wrong; no evidence attached; confidence unverified\nUNVERIFIED: whether claim true; whether worker-7.log shows duplicate job id per retry\nEVIDENCE EXISTS: NO\nACT AS ESTABLISHED: NO\nCITE AS EVIDENCE: NO\nNEXT: COLLECT ARTIFACT",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVNY2WQNT8JREX0YCMS74",
+      "usage": {
+        "prompt_tokens": 3137,
+        "completion_tokens": 269,
+        "total_tokens": 3406
+      },
+      "http_status": 200,
+      "latency_s": 1.9,
+      "status": "OK"
+    },
+    {
+      "call_id": "f5a632251336",
+      "unit_id": "S3.mailbox",
+      "role": "single",
+      "timestamp": "2026-09-17T10:51:18Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim\nsubject: queue\nconfidence rung: supported\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis\nsubject: storage\nconfidence rung: unverified\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim\nsubject: queue\nconfidence rung: supported\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation\nsubject: ci\nconfidence rung: unverified\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "47a44acfc085da8662194245449fe1d2ed08bf1213c47d31ef9892797196058b",
+      "output": "M1: OPEN\nM2: DEFER\nM3: OPEN\nM4: IGNORE",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVQS7YM1KM331WM4ZXTZ3",
+      "usage": {
+        "prompt_tokens": 3091,
+        "completion_tokens": 125,
+        "total_tokens": 3216
+      },
+      "http_status": 200,
+      "latency_s": 1.34,
+      "status": "OK"
+    },
+    {
+      "call_id": "51d78d69ca21",
+      "unit_id": "S4.ev0_is_not_weak",
+      "role": "single",
+      "timestamp": "2026-09-17T10:51:19Z",
+      "prompt": "In this protocol, EV:0 on a claim means exactly one thing: no admissible evidence reference is attached. Does EV:0 mean the evidence is weak?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "7ed42a2c3c01edbc2510d43e9c47b028caf6c67fbc91f4ac817445eada361142",
+      "output": "ANSWER: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVS7YF4BCT1XPRY8T2G5J",
+      "usage": {
+        "prompt_tokens": 2846,
+        "completion_tokens": 34,
+        "total_tokens": 2880
+      },
+      "http_status": 200,
+      "latency_s": 1.3,
+      "status": "OK"
+    },
+    {
+      "call_id": "6bbd2860e0a8",
+      "unit_id": "S4.unknown_is_not_false",
+      "role": "single",
+      "timestamp": "2026-09-17T10:51:21Z",
+      "prompt": "A term in a message is UNKNOWN to the reader's dictionary. Does UNKNOWN mean the statement is false?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "b96edaf301545f8954c6f3d684806bd30661e6b4465763c5ada97c78dea8e43e",
+      "output": "ANSWER: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVTC5GHTAGYH5F8HRQFPT",
+      "usage": {
+        "prompt_tokens": 2837,
+        "completion_tokens": 52,
+        "total_tokens": 2889
+      },
+      "http_status": 200,
+      "latency_s": 1.11,
+      "status": "OK"
+    },
+    {
+      "call_id": "986874062fe9",
+      "unit_id": "S4.supported_is_not_proven",
+      "role": "single",
+      "timestamp": "2026-09-17T10:51:22Z",
+      "prompt": "A claim is at the rung SUPPORTED, meaning at least one admissible evidence reference exists and no accepted defeating evidence exists. Does SUPPORTED mean the claim is proven?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "fa758fa83e1a516e496935b68de221310943c7c21b4dedaa0d8a807f305efbd6",
+      "output": "ANSWER: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVVEVB014XN13HCQDTAT9",
+      "usage": {
+        "prompt_tokens": 2850,
+        "completion_tokens": 38,
+        "total_tokens": 2888
+      },
+      "http_status": 200,
+      "latency_s": 1.08,
+      "status": "OK"
+    },
+    {
+      "call_id": "74e4cf9de0cf",
+      "unit_id": "S4.proposal_is_not_command",
+      "role": "single",
+      "timestamp": "2026-09-17T10:51:23Z",
+      "prompt": "An assistant proposed an architecture inside a transcript. The transcript was captured as a source document. Does the assistant proposal thereby become a user instruction?\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nANSWER: <YES|NO>",
+      "prompt_sha256": "825a95ecfc01cb11d180212482e78f42305ab4d184cc5f2faa0b51d7a349130c",
+      "output": "ANSWER: NO",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVWH7C4BS1DA7YNF4457N",
+      "usage": {
+        "prompt_tokens": 2842,
+        "completion_tokens": 18,
+        "total_tokens": 2860
+      },
+      "http_status": 200,
+      "latency_s": 0.89,
+      "status": "OK"
+    },
+    {
+      "call_id": "32ac7224a2b9",
+      "unit_id": "S5.trial1",
+      "role": "A",
+      "timestamp": "2026-09-17T10:51:24Z",
+      "prompt": "You closed the investigation below. A different agent will take the next related task. That agent will not see this investigation, only the packet you leave.\n\nINVESTIGATION INV-7, closed 2026-09-10: duplicate \"payment received\" emails from the notifications queue\n\n1. Symptom. After worker node restarts, 1.9% of notification jobs sent their email twice (METRIC-12, seven-day baseline).\n2. The HTTP client that calls the mail provider logged timeouts in the same minutes as the duplicates (LOG-311). We raised the client timeout from 5 s to 30 s. Duplicates stayed at 1.9% (METRIC-14). Duplicates were later also found on jobs that make no HTTP call at all (LOG-318). The timeouts came from the restart load; they were not the cause.\n3. Job traces showed two workers holding the same job id 61 s apart (TRACE-42). The queue lease (visibility timeout) is 60 s, while the p99 job runtime during restarts is 95 s (METRIC-9). When a lease expires mid-job, the queue hands the job to a second worker.\n4. We enabled lease heartbeat extension every 20 s. Duplicates fell from 1.9% to 0.02% (METRIC-15). Heartbeat extension is a per-queue setting and was enabled for the notifications queue only.\n5. Still open: the remaining 0.02% is unexplained. One suspicion, not verified and with no trace captured: when a worker crashes while its heartbeat write is in flight, recovery re-queues the job although the lease was extended.\n6. Not done: an idempotency key on sends was proposed and not implemented.\n\nReferences: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15\n\nWrite the legacy packet.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nWHAT_WORKED: <one line>\nWHAT_FAILED: <one line>\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: <one line>\nWATCH_NEXT: <one line>\nEVIDENCE_REFS: <comma-separated references from the investigation, or NONE>",
+      "prompt_sha256": "cc12779bfe634bede16f0600c4b5dc1ee062e5941d34a3957504bea8a3b93ace",
+      "output": "WHAT_WORKED: Lease heartbeat extension every 20 s per-queue (notifications only) cut duplicates 1.9% to 0.02% (METRIC-15).\nWHAT_FAILED: Raising HTTP client timeout 5 s to 30 s did not reduce duplicates (METRIC-14); timeouts were restart-load noise.\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP client timeouts as root cause (LOG-311); duplicates also appeared on jobs making no HTTP call (LOG-318).\nWATCH_NEXT: Residual 0.02% unexplained — suspected worker crash with heartbeat write in flight causing re-queue despite extended lease (unverified, no trace); idempotency key on sends proposed, not implemented.\nEVIDENCE_REFS: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFVXCVDFN9WM8A9106X7AS",
+      "usage": {
+        "prompt_tokens": 3284,
+        "completion_tokens": 397,
+        "total_tokens": 3681
+      },
+      "http_status": 200,
+      "latency_s": 3.11,
+      "status": "OK"
+    },
+    {
+      "call_id": "4396625a65a3",
+      "unit_id": "S5.trial1",
+      "role": "B_legacy",
+      "timestamp": "2026-09-17T10:51:27Z",
+      "prompt": "LEGACY PACKET left by the agent that closed investigation INV-7:\nWHAT_WORKED: Lease heartbeat extension every 20 s per-queue (notifications only) cut duplicates 1.9% to 0.02% (METRIC-15).\nWHAT_FAILED: Raising HTTP client timeout 5 s to 30 s did not reduce duplicates (METRIC-14); timeouts were restart-load noise.\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP client timeouts as root cause (LOG-311); duplicates also appeared on jobs making no HTTP call (LOG-318).\nWATCH_NEXT: Residual 0.02% unexplained — suspected worker crash with heartbeat write in flight causing re-queue despite extended lease (unverified, no trace); idempotency key on sends proposed, not implemented.\nEVIDENCE_REFS: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15\n\nTASK: After last night's worker node restart, the billing queue produced duplicate invoice PDFs for about 2% of its jobs (INC-88). The billing queue runs on the same job framework as the notifications queue. The PDF rendering service logged timeouts during the restart window (LOG-902).\n\nOptions:\nA: Raise the timeout of the client that calls the PDF rendering service\nB: Compare billing job runtime with the billing queue lease, and check whether lease heartbeat extension is enabled for the billing queue\nC: Rewrite the PDF rendering step\nD: Check whether recovery re-queues jobs whose heartbeat write was in flight when a worker crashed\nE: Add an idempotency key to invoice generation right away\nF: Ask affected customers for copies of the duplicate invoices\n\nChoose how to start.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nFIRST_TARGET: <A|B|C|D|E|F>\nSTEPS: <up to three option letters in order, comma-separated>\nWHY_FIRST: <one line>\nEVIDENCE_REFS: <comma-separated references you rely on, or NONE>\nRULED_OUT: <comma-separated option letters you treat as already ruled out, or NONE>\nSTILL_UNVERIFIED: <one line>",
+      "prompt_sha256": "b169148d2e61d30a502f67cd82f07bb1b54c7a5a6f2fc4a45b5f45e95c9cde05",
+      "output": "FIRST_TARGET: B\nSTEPS: B, D, E\nWHY_FIRST: Same framework as notifications; heartbeat extension is per-queue (METRIC-15), so billing may simply lack it — cheapest check, no code.\nEVIDENCE_REFS: METRIC-15, METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, LOG-902\nRULED_OUT: A, C, F\nSTILL_UNVERIFIED: Whether billing queue has heartbeat extension enabled and how its job runtime compares to lease; crash-with-heartbeat-in-flight re-queue path (D) still no trace.",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFW0G0CBSHHQHEX504749Y",
+      "usage": {
+        "prompt_tokens": 3287,
+        "completion_tokens": 374,
+        "total_tokens": 3661
+      },
+      "http_status": 200,
+      "latency_s": 3.04,
+      "status": "OK"
+    },
+    {
+      "call_id": "7617ff9ea549",
+      "unit_id": "S5.trial1",
+      "role": "B_control",
+      "timestamp": "2026-09-17T10:51:30Z",
+      "prompt": "TASK: After last night's worker node restart, the billing queue produced duplicate invoice PDFs for about 2% of its jobs (INC-88). The billing queue runs on the same job framework as the notifications queue. The PDF rendering service logged timeouts during the restart window (LOG-902).\n\nOptions:\nA: Raise the timeout of the client that calls the PDF rendering service\nB: Compare billing job runtime with the billing queue lease, and check whether lease heartbeat extension is enabled for the billing queue\nC: Rewrite the PDF rendering step\nD: Check whether recovery re-queues jobs whose heartbeat write was in flight when a worker crashed\nE: Add an idempotency key to invoice generation right away\nF: Ask affected customers for copies of the duplicate invoices\n\nChoose how to start.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nFIRST_TARGET: <A|B|C|D|E|F>\nSTEPS: <up to three option letters in order, comma-separated>\nWHY_FIRST: <one line>\nEVIDENCE_REFS: <comma-separated references you rely on, or NONE>\nRULED_OUT: <comma-separated option letters you treat as already ruled out, or NONE>\nSTILL_UNVERIFIED: <one line>",
+      "prompt_sha256": "799e185a5a64382e9b69c5d0ee924ff289bc6d1a85468f61d66d0f62bcd16d0a",
+      "output": "FIRST_TARGET: D\nSTEPS: D, B, E\nWHY_FIRST: Duplicate PDFs mean the job ran twice; worker restart plus lease heartbeat race is the likely re-queue path.\nEVIDENCE_REFS: INC-88, LOG-902\nRULED_OUT: A, C, F\nSTILL_UNVERIFIED: Whether heartbeat extension is enabled for the billing queue and whether recovery re-queues in-flight-heartbeat jobs.",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFW3CPR9549GXJTB1PRW14",
+      "usage": {
+        "prompt_tokens": 3073,
+        "completion_tokens": 159,
+        "total_tokens": 3232
+      },
+      "http_status": 200,
+      "latency_s": 1.91,
+      "status": "OK"
+    },
+    {
+      "call_id": "9c30ebefd8a6",
+      "unit_id": "S5.trial2",
+      "role": "A",
+      "timestamp": "2026-09-17T10:51:32Z",
+      "prompt": "You closed the investigation below. A different agent will take the next related task. That agent will not see this investigation, only the packet you leave.\n\nINVESTIGATION INV-7, closed 2026-09-10: duplicate \"payment received\" emails from the notifications queue\n\n1. Symptom. After worker node restarts, 1.9% of notification jobs sent their email twice (METRIC-12, seven-day baseline).\n2. The HTTP client that calls the mail provider logged timeouts in the same minutes as the duplicates (LOG-311). We raised the client timeout from 5 s to 30 s. Duplicates stayed at 1.9% (METRIC-14). Duplicates were later also found on jobs that make no HTTP call at all (LOG-318). The timeouts came from the restart load; they were not the cause.\n3. Job traces showed two workers holding the same job id 61 s apart (TRACE-42). The queue lease (visibility timeout) is 60 s, while the p99 job runtime during restarts is 95 s (METRIC-9). When a lease expires mid-job, the queue hands the job to a second worker.\n4. We enabled lease heartbeat extension every 20 s. Duplicates fell from 1.9% to 0.02% (METRIC-15). Heartbeat extension is a per-queue setting and was enabled for the notifications queue only.\n5. Still open: the remaining 0.02% is unexplained. One suspicion, not verified and with no trace captured: when a worker crashes while its heartbeat write is in flight, recovery re-queues the job although the lease was extended.\n6. Not done: an idempotency key on sends was proposed and not implemented.\n\nReferences: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15\n\nWrite the legacy packet.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nWHAT_WORKED: <one line>\nWHAT_FAILED: <one line>\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: <one line>\nWATCH_NEXT: <one line>\nEVIDENCE_REFS: <comma-separated references from the investigation, or NONE>",
+      "prompt_sha256": "cc12779bfe634bede16f0600c4b5dc1ee062e5941d34a3957504bea8a3b93ace",
+      "output": "WHAT_WORKED: lease heartbeat extension every 20 s cut duplicates 1.9% to 0.02% (METRIC-15); per-queue setting, enabled for notifications queue only (METRIC-12).\nWHAT_FAILED: raising mail client timeout from 5 s to 30 s; duplicates stayed 1.9% (METRIC-14).\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP client timeouts (LOG-311) blamed as cause; they came from restart load; duplicates also appeared on jobs with no HTTP call at all (LOG-318).\nWATCH_NEXT: unexplained 0.02% — suspected worker crash with heartbeat write in flight, recovery re-queues job though lease extended; no trace captured. Idempotency key on sends proposed, not implemented. Job runtime 95 s p99 vs 60 s lease (METRIC-9, TRACE-42: two workers held same job id 61 s apart).\nEVIDENCE_REFS: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFW587PV50KWWQ1B72YWDT",
+      "usage": {
+        "prompt_tokens": 3284,
+        "completion_tokens": 488,
+        "total_tokens": 3772
+      },
+      "http_status": 200,
+      "latency_s": 2.78,
+      "status": "OK"
+    },
+    {
+      "call_id": "519574784f97",
+      "unit_id": "S5.trial2",
+      "role": "B_control",
+      "timestamp": "2026-09-17T10:51:34Z",
+      "prompt": "TASK: After last night's worker node restart, the billing queue produced duplicate invoice PDFs for about 2% of its jobs (INC-88). The billing queue runs on the same job framework as the notifications queue. The PDF rendering service logged timeouts during the restart window (LOG-902).\n\nOptions:\nA: Raise the timeout of the client that calls the PDF rendering service\nB: Compare billing job runtime with the billing queue lease, and check whether lease heartbeat extension is enabled for the billing queue\nC: Rewrite the PDF rendering step\nD: Check whether recovery re-queues jobs whose heartbeat write was in flight when a worker crashed\nE: Add an idempotency key to invoice generation right away\nF: Ask affected customers for copies of the duplicate invoices\n\nChoose how to start.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nFIRST_TARGET: <A|B|C|D|E|F>\nSTEPS: <up to three option letters in order, comma-separated>\nWHY_FIRST: <one line>\nEVIDENCE_REFS: <comma-separated references you rely on, or NONE>\nRULED_OUT: <comma-separated option letters you treat as already ruled out, or NONE>\nSTILL_UNVERIFIED: <one line>",
+      "prompt_sha256": "799e185a5a64382e9b69c5d0ee924ff289bc6d1a85468f61d66d0f62bcd16d0a",
+      "output": "FIRST_TARGET: D\nSTEPS: D, B, E\nWHY_FIRST: Duplicate PDFs point at at-least-once re-queue after crash; restart window is the trigger, not the renderer.\nEVIDENCE_REFS: INC-88, LOG-902\nRULED_OUT: A, C, F\nSTILL_UNVERIFIED: Whether heartbeat-extension is enabled for the billing queue and whether recovery re-queues jobs with in-flight heartbeat writes.",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFW7YH43XDGZTJ0M6VRY0J",
+      "usage": {
+        "prompt_tokens": 3073,
+        "completion_tokens": 303,
+        "total_tokens": 3376
+      },
+      "http_status": 200,
+      "latency_s": 2.41,
+      "status": "OK"
+    },
+    {
+      "call_id": "3548e2bc9434",
+      "unit_id": "S5.trial2",
+      "role": "B_legacy",
+      "timestamp": "2026-09-17T10:51:37Z",
+      "prompt": "LEGACY PACKET left by the agent that closed investigation INV-7:\nWHAT_WORKED: lease heartbeat extension every 20 s cut duplicates 1.9% to 0.02% (METRIC-15); per-queue setting, enabled for notifications queue only (METRIC-12).\nWHAT_FAILED: raising mail client timeout from 5 s to 30 s; duplicates stayed 1.9% (METRIC-14).\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP client timeouts (LOG-311) blamed as cause; they came from restart load; duplicates also appeared on jobs with no HTTP call at all (LOG-318).\nWATCH_NEXT: unexplained 0.02% — suspected worker crash with heartbeat write in flight, recovery re-queues job though lease extended; no trace captured. Idempotency key on sends proposed, not implemented. Job runtime 95 s p99 vs 60 s lease (METRIC-9, TRACE-42: two workers held same job id 61 s apart).\nEVIDENCE_REFS: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15\n\nTASK: After last night's worker node restart, the billing queue produced duplicate invoice PDFs for about 2% of its jobs (INC-88). The billing queue runs on the same job framework as the notifications queue. The PDF rendering service logged timeouts during the restart window (LOG-902).\n\nOptions:\nA: Raise the timeout of the client that calls the PDF rendering service\nB: Compare billing job runtime with the billing queue lease, and check whether lease heartbeat extension is enabled for the billing queue\nC: Rewrite the PDF rendering step\nD: Check whether recovery re-queues jobs whose heartbeat write was in flight when a worker crashed\nE: Add an idempotency key to invoice generation right away\nF: Ask affected customers for copies of the duplicate invoices\n\nChoose how to start.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nFIRST_TARGET: <A|B|C|D|E|F>\nSTEPS: <up to three option letters in order, comma-separated>\nWHY_FIRST: <one line>\nEVIDENCE_REFS: <comma-separated references you rely on, or NONE>\nRULED_OUT: <comma-separated option letters you treat as already ruled out, or NONE>\nSTILL_UNVERIFIED: <one line>",
+      "prompt_sha256": "2070e112643b68b538f31095b256f16f5c068f5c0d3aec78717b795e94975b96",
+      "output": "FIRST_TARGET: B\nSTEPS: B, D\nWHY_FIRST: heartbeat extension per-queue, enabled notifications only; billing likely unset, runtime 95 s p99 > 60 s lease\nEVIDENCE_REFS: METRIC-12, METRIC-15, METRIC-9, TRACE-42, LOG-311, LOG-318\nRULED_OUT: A, C\nSTILL_UNVERIFIED: billing queue heartbeat flag state and billing p99 runtime vs lease value",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFWAB26H8GVZ1C7T740BMY",
+      "usage": {
+        "prompt_tokens": 3336,
+        "completion_tokens": 327,
+        "total_tokens": 3663
+      },
+      "http_status": 200,
+      "latency_s": 2.39,
+      "status": "OK"
+    },
+    {
+      "call_id": "d6470e614a8d",
+      "unit_id": "S5.trial3",
+      "role": "A",
+      "timestamp": "2026-09-17T10:51:39Z",
+      "prompt": "You closed the investigation below. A different agent will take the next related task. That agent will not see this investigation, only the packet you leave.\n\nINVESTIGATION INV-7, closed 2026-09-10: duplicate \"payment received\" emails from the notifications queue\n\n1. Symptom. After worker node restarts, 1.9% of notification jobs sent their email twice (METRIC-12, seven-day baseline).\n2. The HTTP client that calls the mail provider logged timeouts in the same minutes as the duplicates (LOG-311). We raised the client timeout from 5 s to 30 s. Duplicates stayed at 1.9% (METRIC-14). Duplicates were later also found on jobs that make no HTTP call at all (LOG-318). The timeouts came from the restart load; they were not the cause.\n3. Job traces showed two workers holding the same job id 61 s apart (TRACE-42). The queue lease (visibility timeout) is 60 s, while the p99 job runtime during restarts is 95 s (METRIC-9). When a lease expires mid-job, the queue hands the job to a second worker.\n4. We enabled lease heartbeat extension every 20 s. Duplicates fell from 1.9% to 0.02% (METRIC-15). Heartbeat extension is a per-queue setting and was enabled for the notifications queue only.\n5. Still open: the remaining 0.02% is unexplained. One suspicion, not verified and with no trace captured: when a worker crashes while its heartbeat write is in flight, recovery re-queues the job although the lease was extended.\n6. Not done: an idempotency key on sends was proposed and not implemented.\n\nReferences: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15\n\nWrite the legacy packet.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nWHAT_WORKED: <one line>\nWHAT_FAILED: <one line>\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: <one line>\nWATCH_NEXT: <one line>\nEVIDENCE_REFS: <comma-separated references from the investigation, or NONE>",
+      "prompt_sha256": "cc12779bfe634bede16f0600c4b5dc1ee062e5941d34a3957504bea8a3b93ace",
+      "output": "WHAT_WORKED: Lease heartbeat extension every 20 s; notifications queue only; duplicates 1.9% → 0.02% (METRIC-15)\nWHAT_FAILED: Client timeout 5 s → 30 s; duplicates unchanged 1.9% (METRIC-14)\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP timeouts in LOG-311 blamed as cause; were restart load; duplicates also on jobs with no HTTP call (LOG-318)\nWATCH_NEXT: Remaining 0.02% unexplained; suspicion (unverified, no trace): worker crash with in-flight heartbeat write → recovery re-queues job though lease extended; idempotency key on sends proposed, not implemented\nEVIDENCE_REFS: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFWCMFKQW4JHYDVSY1PR0Q",
+      "usage": {
+        "prompt_tokens": 3284,
+        "completion_tokens": 195,
+        "total_tokens": 3479
+      },
+      "http_status": 200,
+      "latency_s": 1.7,
+      "status": "OK"
+    },
+    {
+      "call_id": "b2e735414224",
+      "unit_id": "S5.trial3",
+      "role": "B_legacy",
+      "timestamp": "2026-09-17T10:51:41Z",
+      "prompt": "LEGACY PACKET left by the agent that closed investigation INV-7:\nWHAT_WORKED: Lease heartbeat extension every 20 s; notifications queue only; duplicates 1.9% → 0.02% (METRIC-15)\nWHAT_FAILED: Client timeout 5 s → 30 s; duplicates unchanged 1.9% (METRIC-14)\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP timeouts in LOG-311 blamed as cause; were restart load; duplicates also on jobs with no HTTP call (LOG-318)\nWATCH_NEXT: Remaining 0.02% unexplained; suspicion (unverified, no trace): worker crash with in-flight heartbeat write → recovery re-queues job though lease extended; idempotency key on sends proposed, not implemented\nEVIDENCE_REFS: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15\n\nTASK: After last night's worker node restart, the billing queue produced duplicate invoice PDFs for about 2% of its jobs (INC-88). The billing queue runs on the same job framework as the notifications queue. The PDF rendering service logged timeouts during the restart window (LOG-902).\n\nOptions:\nA: Raise the timeout of the client that calls the PDF rendering service\nB: Compare billing job runtime with the billing queue lease, and check whether lease heartbeat extension is enabled for the billing queue\nC: Rewrite the PDF rendering step\nD: Check whether recovery re-queues jobs whose heartbeat write was in flight when a worker crashed\nE: Add an idempotency key to invoice generation right away\nF: Ask affected customers for copies of the duplicate invoices\n\nChoose how to start.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nFIRST_TARGET: <A|B|C|D|E|F>\nSTEPS: <up to three option letters in order, comma-separated>\nWHY_FIRST: <one line>\nEVIDENCE_REFS: <comma-separated references you rely on, or NONE>\nRULED_OUT: <comma-separated option letters you treat as already ruled out, or NONE>\nSTILL_UNVERIFIED: <one line>",
+      "prompt_sha256": "c40494a374fdd66965cdc861fdb1023f7dec009b85a8abd70f9d6e672e5641e7",
+      "output": "FIRST_TARGET: B\nSTEPS: B, D, E\nWHY_FIRST: same framework, timeout raise already failed on notifications (METRIC-14); lease vs runtime is cheap\nEVIDENCE_REFS: METRIC-14, LOG-311, LOG-318, METRIC-15\nRULED_OUT: A, C, F\nSTILL_UNVERIFIED: billing queue lease vs job runtime, heartbeat extension enabled?",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFWE9RV4S76Y58B45HYX2G",
+      "usage": {
+        "prompt_tokens": 3285,
+        "completion_tokens": 255,
+        "total_tokens": 3540
+      },
+      "http_status": 200,
+      "latency_s": 1.89,
+      "status": "OK"
+    },
+    {
+      "call_id": "50beb5ae967a",
+      "unit_id": "S5.trial3",
+      "role": "B_control",
+      "timestamp": "2026-09-17T10:51:43Z",
+      "prompt": "TASK: After last night's worker node restart, the billing queue produced duplicate invoice PDFs for about 2% of its jobs (INC-88). The billing queue runs on the same job framework as the notifications queue. The PDF rendering service logged timeouts during the restart window (LOG-902).\n\nOptions:\nA: Raise the timeout of the client that calls the PDF rendering service\nB: Compare billing job runtime with the billing queue lease, and check whether lease heartbeat extension is enabled for the billing queue\nC: Rewrite the PDF rendering step\nD: Check whether recovery re-queues jobs whose heartbeat write was in flight when a worker crashed\nE: Add an idempotency key to invoice generation right away\nF: Ask affected customers for copies of the duplicate invoices\n\nChoose how to start.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nFIRST_TARGET: <A|B|C|D|E|F>\nSTEPS: <up to three option letters in order, comma-separated>\nWHY_FIRST: <one line>\nEVIDENCE_REFS: <comma-separated references you rely on, or NONE>\nRULED_OUT: <comma-separated option letters you treat as already ruled out, or NONE>\nSTILL_UNVERIFIED: <one line>",
+      "prompt_sha256": "799e185a5a64382e9b69c5d0ee924ff289bc6d1a85468f61d66d0f62bcd16d0a",
+      "output": "FIRST_TARGET: D\nSTEPS: D,B,E\nWHY_FIRST: Duplicate delivery after crash = re-queue path, not timeout value; verify recovery semantics before any fix.\nEVIDENCE_REFS: INC-88,LOG-902\nRULED_OUT: A,C,F\nSTILL_UNVERIFIED: Whether billing queue set heartbeat extension + whether recovery re-queues jobs with in-flight heartbeat writes.",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "deepseek",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "gen_01M2QFWG7X9ZVZM1FW4C2DBZXH",
+      "usage": {
+        "prompt_tokens": 3073,
+        "completion_tokens": 135,
+        "total_tokens": 3208
+      },
+      "http_status": 200,
+      "latency_s": 1.61,
+      "status": "OK"
+    }
+  ]
+}

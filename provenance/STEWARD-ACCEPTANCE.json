@@ -1,0 +1,63 @@
+{
+  "receipt": "STEWARD-ACCEPTANCE",
+  "source_path": "provenance/ACCEPTANCES.md",
+  "body_sha256": "f71e2fa8f57cf1b853bdf3de4b839e2fc75fc82c0c94db156198eb925bf66f76",
+  "body_length": 2075,
+  "receipt_source_kind_scope": "TRANSPORT_INTAKE_ONLY",
+  "segments": [
+    {
+      "start": 0,
+      "end": 814,
+      "source_class": "SYSTEM_OBSERVATION",
+      "note": "preamble written by the implementing agent"
+    },
+    {
+      "start": 814,
+      "end": 1033,
+      "source_class": "SYSTEM_OBSERVATION",
+      "note": "observed steward acceptance A1"
+    },
+    {
+      "start": 1033,
+      "end": 1035,
+      "source_class": "SYSTEM_OBSERVATION",
+      "note": "preamble written by the implementing agent"
+    },
+    {
+      "start": 1035,
+      "end": 1233,
+      "source_class": "SYSTEM_OBSERVATION",
+      "note": "observed steward acceptance A2"
+    },
+    {
+      "start": 1233,
+      "end": 1235,
+      "source_class": "SYSTEM_OBSERVATION",
+      "note": "preamble written by the implementing agent"
+    },
+    {
+      "start": 1235,
+      "end": 1444,
+      "source_class": "SYSTEM_OBSERVATION",
+      "note": "observed steward acceptance A3"
+    },
+    {
+      "start": 1444,
+      "end": 1446,
+      "source_class": "SYSTEM_OBSERVATION",
+      "note": "preamble written by the implementing agent"
+    },
+    {
+      "start": 1446,
+      "end": 1648,
+      "source_class": "SYSTEM_OBSERVATION",
+      "note": "observed steward acceptance A4"
+    },
+    {
+      "start": 1648,
+      "end": 2075,
+      "source_class": "SYSTEM_OBSERVATION",
+      "note": "observed steward acceptance A5"
+    }
+  ]
+}

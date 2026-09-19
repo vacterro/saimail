@@ -1,0 +1,15 @@
+{
+  "receipt": "SRC-005",
+  "source_path": ".saipen/intake/active/SRC-005.md",
+  "body_sha256": "2239e04c85a9d7a56b882994997ef7bee56bfad9c2e93db79e3f15a229ee2f65",
+  "body_length": 32428,
+  "receipt_source_kind_scope": "TRANSPORT_INTAKE_ONLY",
+  "segments": [
+    {
+      "start": 0,
+      "end": 32428,
+      "source_class": "AMBIGUOUS",
+      "note": "The body is a transcribed dialogue with NO authorship markers in the bytes: a human voice and an assistant voice alternate with nothing separating them but style. Authorship may not be inferred from style, so every span is AMBIGUOUS and carries no authority. External testimony exists (the steward said in chat that the answering voice is another model), but testimony about an artifact is not a marker inside it."
+    }
+  ]
+}

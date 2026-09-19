@@ -1,0 +1,15 @@
+{
+  "receipt": "SRC-017",
+  "source_path": ".saipen/intake/active/SRC-017.md",
+  "body_sha256": "ff7f7fd4159e7ab0c3ef60f46adf5e453e2dc550c1d5b9f8a732447d764bbe8e",
+  "body_length": 86,
+  "receipt_source_kind_scope": "TRANSPORT_INTAKE_ONLY",
+  "segments": [
+    {
+      "start": 0,
+      "end": 86,
+      "source_class": "AMBIGUOUS",
+      "note": "Correction 002 (T-43): the T-42 map classed this body USER_ACCEPTANCE on a HOST_USER_TURN capture naming SRC-019 as the byte carrier. That claim is false -- SRC-019 does not contain these bytes, and no file in this repository does outside SRC-017 itself and the maps written about it. No carrier is mechanically available, the intake witness is model_supplied, and the Russian wording of the body is not authorship evidence. Authorship is therefore undetermined: AMBIGUOUS, carrying no authority, until a real operator carrier is verifiable under CAPTURE-PROOF-01."
+    }
+  ]
+}
