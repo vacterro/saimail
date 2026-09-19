@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-026:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-7-verify-PASS-full-suite-969-passed-focused-110-validate-VALID-red-controls-on-pre-T-7-subject",
+      "text": "Execute T-7 SAIHANDOFF: record the T-7 execution contract (TARGET A), implement crash-safe receiver-owned TTL sweep with immutable tombstones (TARGET B), close expired scan/open/redelivery/recovery semantics and prove concurrency safety (TARGET C); close T-7 and STOP, do not continue T-34",
+      "verification": "the-Work-this-request-created-reached-its-own-VERIFY-gate-see-T-7-cycle",
+      "work": "T-7"
+    }
+  },
+  "schema_version": 1
+}

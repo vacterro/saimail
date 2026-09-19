@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-021:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "T-5 FINAL PREFLIGHT: close EXTERNAL_CAPTURE_ASSERTION authority bypass (TARGET A) and remove remaining T-5 contract ambiguities (TARGET B) from SAIMAIL capture; STOP before T-5 implementation"
+    }
+  },
+  "derived_at": "2026-09-18T19:20:36Z",
+  "derived_from": "SRC-021",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "2b5d1bc1deca9c5244c753d2d9817a8b5049b36193b3991fe5be6332301ff266"
+}

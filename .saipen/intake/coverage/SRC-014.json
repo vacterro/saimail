@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-014:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-39 closed with verification evidence in LOG: verify -> PASS [target: T-39] conf: high -- python -m pytest -q reported 763 passed, 0 failed, 0 errors, 0 skipped in 6.633s (junitxml) under pip install -e .[test]; the 8 new regressions each ran red against the pre-fix subject and green after; pre-fix reproductions now refused (ACCEPTED_PROFILE_REQUIRED, UNVERIFIED_ENVELOPE, DUPLICATE_SEGMENT_MAP, MAP_NAME_MISMATCH, DERIVATIVE_CHANGED); saipen v",
+      "text": "SAIMAIL handoff V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260918_1348.md: close CORE-001 profile acceptance bypass, CORE-002 VerifiedEnvelope forgery, CORE-003 provenance duplicate maps, CORE-004 read_span derivative integrity; targets A/B/C; stop after Target C",
+      "verification": "the Work this request created reached its own verification gate; see the T-39 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-39"
+    }
+  },
+  "schema_version": 1
+}

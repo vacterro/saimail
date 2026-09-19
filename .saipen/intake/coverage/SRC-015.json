@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-015:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-40 closed with verification evidence in LOG: verify -> PASS [target: T-40] conf: high -- python -m pytest -q (junitxml) reported 769 passed, 0 failed, 0 errors, 0 skipped in 6.261s; the 6 new capability-transfer regressions each ran red against the pre-fix subject and green after; the six-case reproduction script shows every transfer path refused (UNVERIFIED_BINDING/UNVERIFIED_ACCEPTANCE/UNVERIFIED_ENVELOPE) while project, project_batch, Bat",
+      "text": "SAIMAIL handoff V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260918_1417.md: close the transferable mint-token defect across TriageFrame, AcceptedProfile and VerifiedEnvelope as a corrective follow-up to T-39 (Targets A+B); stop after closure; do not start T-38 or T-5",
+      "verification": "the Work this request created reached its own verification gate; see the T-40 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-40"
+    }
+  },
+  "schema_version": 1
+}

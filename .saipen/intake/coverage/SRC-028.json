@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-028:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-49-verify-PASS-full-suite-991-passed-focused-153-validate-VALID-red-controls-on-reconstructed-pre-T-49-subject",
+      "text": "Execute T-7 tombstone-authority and expiry-recovery closure: make an expiry tombstone mechanically prove the exact transport object and index state it represents (TARGET A), and make every expiry crash/BOTH state converge to one coherent EXPIRED state in one successful maintenance pass (TARGET B); stop after closure, do not start LEGACY/SAILETTER/promotion ledger/T-34",
+      "verification": "the-Work-this-request-created-reached-its-own-VERIFY-gate-see-T-49-cycle",
+      "work": "T-49"
+    }
+  },
+  "schema_version": 1
+}

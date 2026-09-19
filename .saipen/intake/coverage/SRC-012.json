@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-012:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-36 closed with verification evidence in LOG: verify -> PASS [target: T-36] conf: high -- A/B/C acceptance clauses all demonstrated: 56 container tests (domain-required red control, marker variants, determinism, field tamper, cases 1-7), 95 i1 checks, 15 repo-consistency checks, full suite 750 passed in 7.46s, saipen validate VALID, private-key scan 0 findings; wave stopped exactly after Target C per SRC-012",
+      "text": "Execute SAIMAIL SAIHANDOFF 20260917_2301: Target A (remove false forward-secrecy claim, sign SENV1 protocol domain), Target B (receiver-owned recipient key registry, seat+fingerprint+key binding, hostile cases), Target C (ENVELOPE_ID, CREATED vs RECEIVED_AT, duplicate semantics, attention-floor carry-forward; no Post Office implementation). Handoff: V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260917_2301.md",
+      "verification": "the Work this request created reached its own verification gate; see the T-36 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-36"
+    }
+  },
+  "schema_version": 1
+}

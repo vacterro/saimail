@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-012:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute SAIMAIL SAIHANDOFF 20260917_2301: Target A (remove false forward-secrecy claim, sign SENV1 protocol domain), Target B (receiver-owned recipient key registry, seat+fingerprint+key binding, hostile cases), Target C (ENVELOPE_ID, CREATED vs RECEIVED_AT, duplicate semantics, attention-floor carry-forward; no Post Office implementation). Handoff: V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260917_2301.md"
+    }
+  },
+  "derived_at": "2026-09-17T20:18:33Z",
+  "derived_from": "SRC-012",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "d210d33378eaaa1c174836db2f7c8822e01366c977b3f7af047bb0fefc0c8e5d"
+}

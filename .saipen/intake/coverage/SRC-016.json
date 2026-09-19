@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-016:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-38 closed with verification evidence in LOG: verify -> PASS [target: T-38] conf: high -- python -m pytest -q --junitxml reported 772 passed, 0 failed, 0 errors, 0 skipped in 6.230s; D-034 recorded in spec/DECISIONS.md with the exact SENV2 binding contract; the D-033 red control deliberately rewritten (verify passes, open refuses DECRYPTION_FAILED), same-key different-seat control added, all 4 new controls red against the reverted SENV1-era module and green after restore; STOP after T-38 honoured, T-5 not started",
+      "text": "T-38 SAIHANDOFF: decide the exact SENV2 sender-binding contract (Target A: migration check, reject unsigned-full-header AAD and FROM_KID-only binding, minimal FROM+FROM_KID AEAD AAD under a version-separated HKDF domain and SENV2 signature domain, precise property statement, SENV2-only downgrade policy, recorded decision) then implement SENV2 (Target B: seal/open order, deliberate rewrite of the D-033 red control, same-key different-seat control, hostile cases, canonicalization, type-state regression); stop after T-38; do not start T-5/T-10/T-7/T-8/performance/SAIFREN tickets",
+      "verification": "the Work this request created reached its own verification gate; see the T-38 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-38"
+    }
+  },
+  "schema_version": 1
+}

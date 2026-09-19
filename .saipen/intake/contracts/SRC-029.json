@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-029:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Implement B-013 LEGACY / SUCCESSOR COMMUNICATION exactly as the current SAIHANDOFF specifies; create/adopt exactly one implementation ticket, execute Targets A-B-C sequentially, close B-013, then stop."
+    }
+  },
+  "derived_at": "2026-09-19T11:31:26Z",
+  "derived_from": "SRC-029",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "e64408e9886aee6a221c81e1dec3e88ed4d2cc947deedce4c07dfe8d83b02a05"
+}

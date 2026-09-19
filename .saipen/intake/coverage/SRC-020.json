@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-020:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-43 closed with verification evidence in LOG: verify -> PASS [target: T-43] conf: high -- python -m pytest -> 851 passed 0 skipped; saipen validate -> VALID; review verdict DEC: SHIP stands (independent re-run E-432)",
+      "text": "SAIHANDOFF pre-impl gate T-5: fix SRC-017 false carrier proof additively, harden Capture evidence fail-closed with regression tests, record B-014 attention floor decision, remove header PROMOTE from T-5 pre-open semantics, make T-7 mechanically depend on T-5, stop before Post Office implementation",
+      "verification": "the Work this request created reached its own verification gate; see the T-43 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-43"
+    }
+  },
+  "schema_version": 1
+}

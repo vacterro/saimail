@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-027:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute T-7 corrective SAIHANDOFF: tombstone proves exact transport object + index state; all expiry crash/BOTH states converge to EXPIRED in one recover pass; per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260919_0524.md"
+    }
+  },
+  "derived_at": "2026-09-19T02:33:12Z",
+  "derived_from": "SRC-027",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "b8b5b07d4472463ed5c96ae665a04fd60b1ee5a309c999bc93ae8597f19f9b67"
+}

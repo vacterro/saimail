@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-019:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIMAIL corrective handoff: Target A authority continuity SRC-017/SRC-018 plus immutable Profile semantics; Target B promotion bound to decrypted payload; Target C shared alias lookup plus no-overwrite immutable evidence publication; then stop"
+    }
+  },
+  "derived_at": "2026-09-18T16:49:27Z",
+  "derived_from": "SRC-019",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "0c84ac0c283d3c77bd9b12eef9a9338ccce71076b19e1de09fc3f0be30575c15"
+}

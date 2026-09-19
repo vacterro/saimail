@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-030:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Correct T-50/B-013 successor provenance, receiver-owned ordering, and stable progress-guaranteed keyset pagination; record P2 partial-adoption recovery; stop after closure."
+    }
+  },
+  "derived_at": "2026-09-19T11:57:16Z",
+  "derived_from": "SRC-030",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "d3da3d22e0a9ed579ae3e8973cdf1f7f5c1e94a1db512fe1e9eaaf786f4e4175"
+}

@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-024:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-47 closed with verification evidence in LOG: verify -> PASS [target: T-47] conf: high -- python -m pytest -q focused 62 passed; the inherited T-46 patch is present and demonstrably green; no delta introduced by this cycle",
+      "text": "\"continue T-46 SHIP\" --dry-run --json 2>&1",
+      "verification": "the Work this request created reached its own verification gate; see the T-47 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-47"
+    }
+  },
+  "schema_version": 1
+}

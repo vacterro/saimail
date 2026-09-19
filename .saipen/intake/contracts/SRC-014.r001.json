@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-014:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIMAIL handoff V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260918_1348.md: close CORE-001 profile acceptance bypass, CORE-002 VerifiedEnvelope forgery, CORE-003 provenance duplicate maps, CORE-004 read_span derivative integrity; targets A/B/C; stop after Target C"
+    }
+  },
+  "derived_at": "2026-09-18T10:59:30Z",
+  "derived_from": "SRC-014",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "6f40a30b7b39d3aaf24d9d0c0584ea29c3c4aff065044fd25b80dd629b4a7eb5"
+}

@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-031:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-52 closed with verification evidence in LOG: verify -> PASS [target: T-52] conf: high -- python -m pytest -q exit 0, 1049 collected (two full runs); focused oracle tests/test_lab_contract.py::test_an_immutable_artifact_is_never_silently_replaced 3 consecutive runs exit 0; release parity VERSION=pyproject=CHANGELOG=installed=0.0.1 and 4/4 README badges exactly once; prospective publication set 304 files = 145 reviewed scope + 159 memory/metad",
+      "text": "\u041f\u0443\u0448\u043d\u0438\u043a \u043f\u043e\u043a\u0430 0.0.1 \u0432\u0435\u0440\u0441\u0438\u044e \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u043f\u0440\u043e\u043f\u0430\u043b\u043e https://github.com/vacterro/saimail",
+      "verification": "the Work this request created reached its own verification gate; see the T-52 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-52"
+    }
+  },
+  "schema_version": 1
+}

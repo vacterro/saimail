@@ -1,0 +1,15 @@
+{
+  "next_id": 2,
+  "operations": {
+    "audapack 037596cf-20b1-522e-b116-4aba58453778": {
+      "created_at": "2026-09-17T22:30:06Z",
+      "layer": 1,
+      "producer": "audapack",
+      "producer_item_id": "037596cf-20b1-522e-b116-4aba58453778",
+      "producer_operation_id": "037596cf-20b1-522e-b116-4aba58453778",
+      "sha256": "aacdb343e0b9ae5d21a6783e10e54ddacb6448081d6ec06ca937a6a7990ba028",
+      "state": "COMMITTED"
+    }
+  },
+  "schema_version": 1
+}

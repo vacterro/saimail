@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-021:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-44 closed with verification evidence in LOG: verify -> PASS [target: T-44] conf: high -- python -m pytest -> 857 passed 0 skipped; saipen validate -> VALID; oracle pair re-run on the same selection: pre-fix subject went red, post-fix green; no mail/postoffice/store artifacts",
+      "text": "T-5 FINAL PREFLIGHT: close EXTERNAL_CAPTURE_ASSERTION authority bypass (TARGET A) and remove remaining T-5 contract ambiguities (TARGET B) from SAIMAIL capture; STOP before T-5 implementation",
+      "verification": "the Work this request created reached its own verification gate; see the T-44 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-44"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-022:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-45 closed with verification evidence in LOG: verify -> PASS [target: T-45] conf: high -- python -m pytest -q --junitxml = 907 passed, 0 failed, 0 errors, 0 skipped on the restored production tree; saipen validate VALID; red controls (deliberately reverted local postoffice.py, production restored after each, sha256 683FD628... throughout): (1) module absent -> both postoffice suites collection-error red; (2) duplicate-index guard removed -> d",
+      "text": "SAIMAIL T-5 POST OFFICE: freeze Post Office v0 execution contract (A), implement durable delivery + canonical index + dedup + crash recovery (B), implement header-only scan + attention floor + scan/open budgets + authenticated open transition (C); close T-5 and STOP, do not start T-7",
+      "verification": "the Work this request created reached its own verification gate; see the T-45 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-45"
+    }
+  },
+  "schema_version": 1
+}

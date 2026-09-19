@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-015:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIMAIL handoff V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260918_1417.md: close the transferable mint-token defect across TriageFrame, AcceptedProfile and VerifiedEnvelope as a corrective follow-up to T-39 (Targets A+B); stop after closure; do not start T-38 or T-5"
+    }
+  },
+  "derived_at": "2026-09-18T11:21:41Z",
+  "derived_from": "SRC-015",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "e2bd6bd148428215fc6944b5e4d8f9175d2a6f1f963de4e7ec0a48b39ae01838"
+}

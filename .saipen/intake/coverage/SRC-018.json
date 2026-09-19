@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-018:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-41 closed with verification evidence in LOG: verify -> PASS [target: T-41] conf: high -- python -m pytest -q --junitxml reported 800 passed, 0 failed, 0 errors, 0 skipped after both audit waves",
+      "text": "Continue SAIMAIL by meaning to the end per operator: ingest pending audit/1.md (RUN_ID acb-mu62wwu7), repair open findings W2-001..006 and PERF-001..006 (CORE-001..004 already closed by T-39), full validation each wave; T-5 stays unstarted per explicit operator order",
+      "verification": "the Work this request created reached its own verification gate; see the T-41 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-41"
+    }
+  },
+  "schema_version": 1
+}

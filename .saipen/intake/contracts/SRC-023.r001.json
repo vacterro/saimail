@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-023:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute SAIHANDOFF T-5 post-office correctness closure, 3 sequential targets A/B/C, source V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260919_0304.md"
+    }
+  },
+  "derived_at": "2026-09-19T00:22:15Z",
+  "derived_from": "SRC-023",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "247ac5bb1ac32dca071cb9cf4e69eed15cb6814ab50485192e3da890ce5ac62e"
+}

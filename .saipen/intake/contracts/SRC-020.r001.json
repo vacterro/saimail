@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-020:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIHANDOFF pre-impl gate T-5: fix SRC-017 false carrier proof additively, harden Capture evidence fail-closed with regression tests, record B-014 attention floor decision, remove header PROMOTE from T-5 pre-open semantics, make T-7 mechanically depend on T-5, stop before Post Office implementation"
+    }
+  },
+  "derived_at": "2026-09-18T17:20:55Z",
+  "derived_from": "SRC-020",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "3d19dc0e48f5c8578d79f8332a28968df77f00fc10be296ef077a748778f3749"
+}

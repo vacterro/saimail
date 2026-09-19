@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-029:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-50 closed with verification evidence in LOG: verify -> PASS [target: B-013/T-50] conf: high -- pre-change red control exit 1 proved no production module/parser/auth store/scope+uncertainty renderer; focused 42 passed; relevant integration 394 passed; pip install -e .[test] succeeded; final full suite 1035 collected and 100 percent exit 0; compileall/import green; authority grep: no production promotion/lab/network/SAIPEN mutation; saipen val",
+      "text": "Implement B-013 LEGACY / SUCCESSOR COMMUNICATION exactly as the current SAIHANDOFF specifies; create/adopt exactly one implementation ticket, execute Targets A-B-C sequentially, close B-013, then stop.",
+      "verification": "the Work this request created reached its own verification gate; see the T-50 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-50"
+    }
+  },
+  "schema_version": 1
+}

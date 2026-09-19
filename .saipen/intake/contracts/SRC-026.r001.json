@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-026:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute T-7 SAIHANDOFF: record the T-7 execution contract (TARGET A), implement crash-safe receiver-owned TTL sweep with immutable tombstones (TARGET B), close expired scan/open/redelivery/recovery semantics and prove concurrency safety (TARGET C); close T-7 and STOP, do not continue T-34"
+    }
+  },
+  "derived_at": "2026-09-19T01:27:24Z",
+  "derived_from": "SRC-026",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "4c14be9c64e71ac7fd2934f2bdb42d01dffaf1485ba80bb25806892886f62638"
+}

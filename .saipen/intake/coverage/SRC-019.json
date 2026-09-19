@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-019:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-42 closed with verification evidence in LOG: VERIFY PASS -- python -m pytest -q -> 841 passed, 0 skipped, tiktoken 0.12.0 present; saipen validate -> VALID; labs dry-run green on fresh out dir; red controls: all four defects reproduced RED on the pre-fix tree at E-411 (Profile mapping mutation accepted, unrelated record promoted, 10/10 alias map clones, overwrite winner), same oracles green post-fix; conf: high",
+      "text": "SAIMAIL corrective handoff: Target A authority continuity SRC-017/SRC-018 plus immutable Profile semantics; Target B promotion bound to decrypted payload; Target C shared alias lookup plus no-overwrite immutable evidence publication; then stop",
+      "verification": "the Work this request created reached its own verification gate; see the T-42 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-42"
+    }
+  },
+  "schema_version": 1
+}

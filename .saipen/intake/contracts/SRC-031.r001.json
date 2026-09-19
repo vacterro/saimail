@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-031:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "\u041f\u0443\u0448\u043d\u0438\u043a \u043f\u043e\u043a\u0430 0.0.1 \u0432\u0435\u0440\u0441\u0438\u044e \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u043f\u0440\u043e\u043f\u0430\u043b\u043e https://github.com/vacterro/saimail"
+    }
+  },
+  "derived_at": "2026-09-19T12:57:37Z",
+  "derived_from": "SRC-031",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "51c16f519f73f2260b2a08f24aa0e8d1afbb12ed27eb8e3ca34aefdbf1c810f3"
+}

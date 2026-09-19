@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-027:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-49 closed with verification evidence in LOG: verify -> PASS [target: T-49] conf: high -- full suite 991 passed 0 failed 0 errors 0 skipped; focused expiry_authority+ttl_sweep+delivery+scan+repo_consistency 153 passed; saipen validate VALID; red controls on reconstructed pre-T-49 subject: 15/21 expiry_authority fail and probe red-half shows notjson->NO_REFUSAL wrong-eid->NO_REFUSAL sender/kind redelivery->DUPLICATE recover-leaves-read BOTH-sw",
+      "text": "Execute T-7 corrective SAIHANDOFF: tombstone proves exact transport object + index state; all expiry crash/BOTH states converge to EXPIRED in one recover pass; per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260919_0524.md",
+      "verification": "the Work this request created reached its own verification gate; see the T-49 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-49"
+    }
+  },
+  "schema_version": 1
+}

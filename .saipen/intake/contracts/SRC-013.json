@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-013:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIHANDOFF T-36 independent closure review (Targets A/B/C, SENV1) then continue to the end by meaning, reading idea_.md files to hold course"
+    }
+  },
+  "derived_at": "2026-09-17T20:49:36Z",
+  "derived_from": "SRC-013",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "62863cfdf96d02ad68c09577e340e0ea7b5fdc09af5c51dba9d8a50255d6d211"
+}

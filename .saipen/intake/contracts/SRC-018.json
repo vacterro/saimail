@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-018:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Continue SAIMAIL by meaning to the end per operator: ingest pending audit/1.md (RUN_ID acb-mu62wwu7), repair open findings W2-001..006 and PERF-001..006 (CORE-001..004 already closed by T-39), full validation each wave; T-5 stays unstarted per explicit operator order"
+    }
+  },
+  "derived_at": "2026-09-18T12:27:13Z",
+  "derived_from": "SRC-018",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "f09238f1a602e95832ff1a653134329c2022b3235737dc840cbf37fe71f78d9d"
+}

@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-024:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "\"continue T-46 SHIP\" --dry-run --json 2>&1"
+    }
+  },
+  "derived_at": "2026-09-19T00:20:33Z",
+  "derived_from": "SRC-024",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "906a54ddc737035019de938c87e50be200528d26bd115b4c7c741260e37a16d9"
+}

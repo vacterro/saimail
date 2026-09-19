@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-028:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute T-7 tombstone-authority and expiry-recovery closure: make an expiry tombstone mechanically prove the exact transport object and index state it represents (TARGET A), and make every expiry crash/BOTH state converge to one coherent EXPIRED state in one successful maintenance pass (TARGET B); stop after closure, do not start LEGACY/SAILETTER/promotion ledger/T-34"
+    }
+  },
+  "derived_at": "2026-09-19T02:33:17Z",
+  "derived_from": "SRC-028",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "51aa777beb03f326d45f4bf47694f71aa30602f9144ae83f46db2a503208e029"
+}
