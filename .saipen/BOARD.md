@@ -1,12 +1,13 @@
 # Board
 
 ## DOING
-- [/] T-53 [P1] Complete the v0.0.1 first-publish release shape after T-52: commit the canonical closure set (BOARD, STATE, LOG, kitchen digest, sealed LOG segment) and push... | verify: the requested change is present and demonstrated against the user own description of it | user_explicit: true | source_receipts: SRC-032 | owner: glm-5.3 | claim_time: 2026-09-19T12:58:45Z | claim_session: 785312ddbe7885030e0214c64868f294
+- [/] T-54 [P1] Оформи получше GitHub репо, теги и всё остальное отсутствующее, красиво: описание репо, topics, GitHub Release v0.0.1, исправить tag v0.0.1, LICENSE и недост... | verify: the requested change is present and demonstrated against the user own description of it | user_explicit: true | source_receipts: SRC-033 | owner: glm-5.3 | claim_time: 2026-09-19T13:06:03Z | claim_session: 785312ddbe7885030e0214c64868f294
 
 
 ## TODO
 
 ## DONE
+- [x] T-53 [P1] Complete the v0.0.1 first-publish release shape after T-52: commit the canonical closure set (BOARD, STATE, LOG, kitchen digest, sealed LOG segment) and push... | verify: the requested change is present and demonstrated against the user own description of it | user_explicit: true | source_receipts: SRC-032 | owner: glm-5.3 | claim_time: 2026-09-19T13:01:30Z | claim_session: 785312ddbe7885030e0214c64868f294 | closure_mode: own_patch
 - [x] T-52 [P1] Пушник пока 0.0.1 версию чтобы не пропало https://github.com/vacterro/saimail | verify: the requested change is present and demonstrated against the user own description of it | user_explicit: true | source_receipts: SRC-031 | owner: glm-5.3 | claim_time: 2026-09-19T12:57:30Z | claim_session: 785312ddbe7885030e0214c64868f294 | closure_mode: own_patch
 - [x] T-51 [P1] Correct T-50/B-013 successor provenance, receiver-owned ordering, and stable progress-guaranteed keyset pagination; record P2 partial-adoption recovery; stop... | verify: the requested change is present and demonstrated against the user own description of it | user_explicit: true | source_receipts: SRC-030 | owner: glm-5.3 | claim_time: 2026-09-19T11:57:11Z | closure_mode: own_patch
 - [x] T-50 [P1] Implement B-013 LEGACY / SUCCESSOR COMMUNICATION exactly as the current SAIHANDOFF specifies; create/adopt exactly one implementation ticket, execute Targets... | verify: the requested change is present and demonstrated against the user own description of it | user_explicit: true | source_receipts: SRC-029 | owner: glm-5.3 | claim_time: 2026-09-19T11:31:21Z | closure_mode: own_patch
