@@ -1,0 +1,73 @@
+{
+  "manifest_version": "EXPERIMENT-MANIFEST-1",
+  "experiment_id": "U1-WATCHED-COVERAGE",
+  "authority": "HISTORICAL_ONLY",
+  "inputs": [
+    {
+      "INPUT_ID": "U1_FIXTURES",
+      "SENSITIVITY": "PUBLIC_ARCHIVABLE",
+      "SOURCE_KIND": "TEXT_FILE",
+      "EXTRACTION_KIND": "WHOLE_FILE",
+      "EXTRACTOR_VERSION": "WHOLE-FILE-1",
+      "EXTRACTED_SHA256": "ab11da7a9f51d4d9716d4f94c27b374412977d5c675deaf17f47053bf447cd9f",
+      "REQUIRED_FOR_LIVE": true,
+      "SOURCE_PATH": "lab/watched_coverage_fixtures.json",
+      "ARCHIVED_FIXTURE": "lab/history/u1-watched-coverage/watched_coverage_fixtures.json",
+      "CONTAINER_SHA256_AT_REGISTRATION": "ab11da7a9f51d4d9716d4f94c27b374412977d5c675deaf17f47053bf447cd9f"
+    },
+    {
+      "INPUT_ID": "U1_REGISTRATION",
+      "SENSITIVITY": "PUBLIC_ARCHIVABLE",
+      "SOURCE_KIND": "TEXT_FILE",
+      "EXTRACTION_KIND": "WHOLE_FILE",
+      "EXTRACTOR_VERSION": "WHOLE-FILE-1",
+      "EXTRACTED_SHA256": "42ed1767da2eb198787d995704821176b3dd4574ca080a81b39321e2de5ab512",
+      "REQUIRED_FOR_LIVE": true,
+      "SOURCE_PATH": "lab/watched_coverage_registration.json",
+      "ARCHIVED_FIXTURE": "lab/history/u1-watched-coverage/watched_coverage_registration.json",
+      "CONTAINER_SHA256_AT_REGISTRATION": "42ed1767da2eb198787d995704821176b3dd4574ca080a81b39321e2de5ab512"
+    }
+  ],
+  "implementation": [
+    {
+      "PATH": "lab/watched_coverage.py",
+      "SHA256": "854ed5813140d34db3b4634635b27475f71a58491cf684cd849cf604e37d1ee4",
+      "ROLE": "RUNNER"
+    },
+    {
+      "PATH": "tools/watched_coverage_experiment.py",
+      "SHA256": "e5900f044fb0aff52993f8a16da8415cad9da1e4b0e6a55b647d7e6a20e759a3",
+      "ROLE": "RUNNER"
+    },
+    {
+      "PATH": "saimail/selector.py",
+      "SHA256": "2d06e994a2abfba80d24597f601a608bf337ed4e2450f73dce9d05f765d41cd0",
+      "ROLE": "PARSER"
+    },
+    {
+      "PATH": "sailang/frame.py",
+      "SHA256": "cdd9062f359ad43cbb778cc3e9bdd9942d9b1e89915496cb394031d44b154d51",
+      "ROLE": "PARSER"
+    },
+    {
+      "PATH": "sailang/record.py",
+      "SHA256": "082fb69ac6754abebf66564af081b85ac5860f5ad78bd47c6bb8fdecdd93b4c7",
+      "ROLE": "PARSER"
+    },
+    {
+      "PATH": "sailang/dictionary/v1.json",
+      "SHA256": "8a1e48b1170be100da9e6147f3c7fdf5fd54efadf7c6305528defc4d40426f78",
+      "ROLE": "PARSER"
+    },
+    {
+      "PATH": "lab/experiment_manifest.py",
+      "SHA256": "fce731a27f8d316d18c569245ba21bd685dc8671b260c3188a7d3b58bfd76cf2",
+      "ROLE": "RUNNER"
+    },
+    {
+      "PATH": "bench/selector_corpus.py",
+      "SHA256": "56efba535d57922ee74e1b453ca13dd4cd0de8afbe1a3ec5c6f0ddf3d1a42b13",
+      "ROLE": "PARSER"
+    }
+  ]
+}

@@ -404,8 +404,22 @@ def test_the_naive_consumer_hazard_is_real_and_machine_detected(maps):
         assert rows[receipt]["source_kind"] == "user_instruction"
         assert rows[receipt]["segment_classes"] == {AMBIGUOUS: maps[receipt].body_length}
         assert rows[receipt]["rule"] == "RECEIPT-KIND-SCOPE-01"
-    for receipt in ("SRC-001", "SRC-002"):
+    # A receipt the layer holds no map for keeps NO authority: the rule answers
+    # UNEXAMINED_NO_AUTHORITY, never the intake label. The set is read from the
+    # live intake instead of a snapshot of names, so the check covers every
+    # unmapped receipt rather than the two that happened to exist on 2026-09-17
+    # (SRC-001/SRC-002 were retired 2026-09-21, E-1294/E-1295; their bytes are
+    # in .saipen/archive/retired/ and test_repo_consistency pins them there).
+    unexamined = sorted(r for r, meta in intake.items()
+                        if naive_consumer_authority(meta) == USER_INTENT and r not in maps)
+    assert unexamined, "the hazard must stay visible: kinds keep outrunning maps"
+    for receipt in unexamined:
         assert rows[receipt]["verdict"] == UNEXAMINED_NO_AUTHORITY
+        assert rows[receipt]["segment_classes"] is None
+        assert rows[receipt]["rule"] == "RECEIPT-KIND-SCOPE-01"
+    # Retirement removes a receipt from the conflict surface; it must never be
+    # silently re-labelled into some other verdict.
+    assert "SRC-001" not in rows and "SRC-002" not in rows
     assert "SRC-006" not in rows, "a clean captured turn is not a conflict"
 
 
@@ -418,7 +432,7 @@ def test_the_authority_api_refuses_what_the_naive_consumer_grants(maps):
             real = exc.code
         if receipt in ("SRC-003", "SRC-004", "SRC-005"):
             assert naive == USER_INTENT and real == "AMBIGUOUS_AUTHORSHIP", receipt
-        elif receipt in ("SRC-001", "SRC-002"):
+        elif receipt not in maps:
             assert real == "NO_SEGMENT_MAP", receipt
         assert real != USER_INTENT, f"{receipt}: nothing shipped is plain user intent"
 

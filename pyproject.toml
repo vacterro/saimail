@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "saimail"
-version = "0.0.1"
+version = "0.0.2a3"
 description = "SAILANG claim records and triage frames, with a falsifiable proof-of-value benchmark"
 requires-python = ">=3.11"
 # The library itself has no runtime dependencies on purpose: the parser is data
@@ -26,13 +26,33 @@ bench = ["pytest>=8,<9", "tiktoken>=0.12,<0.13", "cryptography>=41,<47"]
 credentials = ["keyring>=24"]
 crypto = ["cryptography>=41,<47"]
 lab = ["keyring>=24"]
+# V5-01: the desktop client is a presentation layer over the same public API.
+# Qt stays OUT of `dependencies` on purpose: the core install and the canonical
+# zero-dependency suite must never need it, and `saimail-local` keeps working
+# without it. `saimail-gui` exits with one actionable line when this extra is
+# absent instead of raising a traceback.
+gui = ["PySide6>=6.7,<7"]
+# Hardware custody (D-043) is optional and lazy; the distribution that ships
+# the supported `yubikit` API is yubikey-manager. The core install and the
+# canonical suite never need it, and nothing installs at runtime.
+hardware-yubikey = ["yubikey-manager>=5.9,<6"]
+
+[project.scripts]
+# The supported local entrypoint. It ships the bounded LAB scenario/utility
+# engine deliberately, so a fresh user can run the documented demo from an
+# installed package rather than only from the checkout.
+saimail-local = "saimail_local:main"
+# V5-01 desktop client (spec/25). Optional dependency, lazy Qt import.
+saimail-gui = "saimail.gui_app:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
 
 [tool.setuptools]
-packages = ["sailang", "saimail"]
+packages = ["sailang", "saimail", "lab"]
+py-modules = ["saimail_local"]
 
 [tool.setuptools.package-data]
 sailang = ["dictionary/*.json"]
+lab = ["stable_local_api.json"]

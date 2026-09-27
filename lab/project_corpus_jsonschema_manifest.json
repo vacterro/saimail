@@ -1,0 +1,74 @@
+{
+  "manifest_version": "EXPERIMENT-MANIFEST-1",
+  "experiment_id": "FG-04B-PROJECT-CORPUS-JSONSCHEMA-1",
+  "authority": "LIVE_ELIGIBLE",
+  "inputs": [
+    {
+      "INPUT_ID": "REGISTERED_JSON_SCHEMA",
+      "SENSITIVITY": "PUBLIC_ARCHIVABLE",
+      "SOURCE_KIND": "TEXT_FILE",
+      "EXTRACTION_KIND": "WHOLE_FILE",
+      "EXTRACTOR_VERSION": "WHOLE-FILE-1",
+      "EXTRACTED_SHA256": "84304f73399c35f3dc755a1cf19780e4b66ba1a93308c8a81e04d95f8ca285ef",
+      "REQUIRED_FOR_LIVE": true,
+      "SOURCE_PATH": "lab/project_corpus_jsonschema_schema.json"
+    },
+    {
+      "INPUT_ID": "B018_CORPUS_REGISTRATION",
+      "SENSITIVITY": "PUBLIC_ARCHIVABLE",
+      "SOURCE_KIND": "TEXT_FILE",
+      "EXTRACTION_KIND": "WHOLE_FILE",
+      "EXTRACTOR_VERSION": "WHOLE-FILE-1",
+      "EXTRACTED_SHA256": "dfd8b48dded34de8426181f309032da31c86e83f675412add15076fc421a096f",
+      "REQUIRED_FOR_LIVE": true,
+      "SOURCE_PATH": "lab/project_corpus_pilot_registration.json"
+    }
+  ],
+  "implementation": [
+    {
+      "PATH": "lab/ally_generation_live.py",
+      "SHA256": "79f9ae4e651509458f6acc8eda3b7814ae0ad67733afdbb45c27305810f3fc4c",
+      "ROLE": "PARSER"
+    },
+    {
+      "PATH": "lab/ephemeral_output.py",
+      "SHA256": "03212cf0799f3e7822c2098105c39d94ad4d79ae833e8e5b2334f30de52a61de",
+      "ROLE": "EXTRACTOR"
+    },
+    {
+      "PATH": "lab/experiment_manifest.py",
+      "SHA256": "fce731a27f8d316d18c569245ba21bd685dc8671b260c3188a7d3b58bfd76cf2",
+      "ROLE": "RUNNER"
+    },
+    {
+      "PATH": "lab/parse_shape.py",
+      "SHA256": "db84aa89ac35c75fa98012b604232bb7221458a842f1a9d3da1bd796240a5592",
+      "ROLE": "PARSER"
+    },
+    {
+      "PATH": "lab/project_corpus_generation_pilot.py",
+      "SHA256": "0b5c59f6f7cc0c5248adc17b95236f42c7d26088912afcdc695866fe2954a050",
+      "ROLE": "EXTRACTOR"
+    },
+    {
+      "PATH": "lab/project_corpus_jsonschema.py",
+      "SHA256": "fbc7edbaf50f6a6d4abe2e16b4e32b1b068fb3d3fbe97c220e886da65f3d625d",
+      "ROLE": "RUNNER"
+    },
+    {
+      "PATH": "lab/reference_telemetry.py",
+      "SHA256": "e418b509c20bb0b893bff7335df1198c921a7768d0a60166e2479d5726bdcaec",
+      "ROLE": "PARSER"
+    },
+    {
+      "PATH": "saimail/ally_advice.py",
+      "SHA256": "637236737b3e24932cb5b7f3efe1f093542566e7f102c9695e830b31bd8a3673",
+      "ROLE": "GRADER"
+    },
+    {
+      "PATH": "saimail/ally_generation.py",
+      "SHA256": "db5aac15b3fb9725b39eb101e2abebbb9a23bba10de80c9e1a375bee69a1b117",
+      "ROLE": "GRADER"
+    }
+  ]
+}

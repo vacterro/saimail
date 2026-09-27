@@ -1,0 +1,85 @@
+{
+  "selection_version": "PROJECT-CORPUS-PILOT-1",
+  "artifacts": [
+    {
+      "label": "A1",
+      "source_kind": "SPEC_DECISION",
+      "source_ref": "decision:D-047",
+      "observed_at": "2026-09-19T19:32:00Z",
+      "source": "spec/DECISIONS.md",
+      "selector": {
+        "kind": "MARKDOWN_SECTION",
+        "heading_prefix": "## D-047 \u2014 ",
+        "boundary_prefix": "## D-"
+      }
+    },
+    {
+      "label": "A2",
+      "source_kind": "TEST_RESULT",
+      "source_ref": "saipen-log:E-715",
+      "observed_at": "2026-09-19T19:32:00Z",
+      "source": ".saipen/LOG.md",
+      "selector": {"kind": "LOG_RECORD", "marker": "[E-715]"}
+    },
+    {
+      "label": "A3",
+      "source_kind": "SPEC_DECISION",
+      "source_ref": "decision:D-048",
+      "observed_at": "2026-09-19T19:48:00Z",
+      "source": "spec/DECISIONS.md",
+      "selector": {
+        "kind": "MARKDOWN_SECTION",
+        "heading_prefix": "## D-048 \u2014 ",
+        "boundary_prefix": "## D-"
+      }
+    },
+    {
+      "label": "A4",
+      "source_kind": "TEST_RESULT",
+      "source_ref": "saipen-log:E-726",
+      "observed_at": "2026-09-19T19:49:00Z",
+      "source": ".saipen/LOG.md",
+      "selector": {"kind": "LOG_RECORD", "marker": "[E-726]"}
+    },
+    {
+      "label": "A5",
+      "source_kind": "REVIEW_FINDING",
+      "source_ref": "lab-report:ALLY_GENERATION_REPORT_20260919T201826Z_2a73d98de110453a",
+      "observed_at": "2026-09-19T20:18:26Z",
+      "source": "lab/out/ALLY_GENERATION_REPORT_20260919T201826Z_2a73d98de110453a.md",
+      "selector": {"kind": "WHOLE_FILE"}
+    },
+    {
+      "label": "A6",
+      "source_kind": "SPEC_DECISION",
+      "source_ref": "decision:D-049",
+      "observed_at": "2026-09-19T20:46:00Z",
+      "source": "spec/DECISIONS.md",
+      "selector": {
+        "kind": "MARKDOWN_SECTION",
+        "heading_prefix": "## D-049 \u2014 ",
+        "boundary_prefix": "## D-"
+      }
+    },
+    {
+      "label": "A7",
+      "source_kind": "SPEC_DECISION",
+      "source_ref": "decision:D-050",
+      "observed_at": "2026-09-19T21:16:00Z",
+      "source": "spec/DECISIONS.md",
+      "selector": {
+        "kind": "MARKDOWN_SECTION",
+        "heading_prefix": "## D-050 \u2014 ",
+        "boundary_prefix": "## D-"
+      }
+    },
+    {
+      "label": "A8",
+      "source_kind": "TEST_RESULT",
+      "source_ref": "saipen-log:E-779",
+      "observed_at": "2026-09-19T21:17:00Z",
+      "source": ".saipen/LOG.md",
+      "selector": {"kind": "LOG_RECORD", "marker": "[E-779]"}
+    }
+  ]
+}

@@ -112,12 +112,55 @@ Extensions "never relax what Core requires"
 (`.saipen/extensions/subs/PROTOCOL.md`), and SAIMAIL must not be the first one
 that tries.
 
+### S2 as built — the `saipen` bridge
+
+`saimail.saipen_bridge`, exposed as `saimail-local saipen status|init|cite|verify`.
+
+- **Caller-supplied evidence.** The library reads only the STATE, IDENTITY and
+  LOG files its caller names and writes to none of them; it never names SAIPEN's
+  memory directory, so the I1 structural test holds for it unchanged. The
+  SAIPEN layout (`STATE.md`, `IDENTITY.md`, active `LOG.md`, sealed
+  `logs/LOG-*.md`; project root = `--project-root` or the nearest ancestor that
+  carries it) lives in the operator entrypoint, as `tools/dev_access.py` already
+  keeps it outside the library.
+- **Acting seat, not last owner.** The seat is `--seat`, else `SAIPEN_AGENT`,
+  else `STATE.agent`. `STATE.agent` records the project's last canonical owner,
+  not the actor running now; binding it silently mislabels every message another
+  actor sends. The result reports `seat_source` and `state_agent`.
+- **Caller-supplied workspace.** `init --workspace PATH` creates the ordinary
+  V2-01 workspace for that seat. No mailbox is implied inside a project tree;
+  the Post Office root stays caller-supplied.
+- **Citation.** `cite --event E-###` locates exactly one LOG line whose fixed
+  skeleton id (`- DD.MM.YY HH:MM [E-###]`) is that event and emits one `KIND:O`
+  record: `SRC:LOG:saipen/<lineage>/E-###`, `EV:sha256:<exact line bytes, no
+  line terminator>`, `STATUS:U4`, `DIRECTNESS:HIGH`, `INTEGRITY:MED`. The claim
+  is only that the LOG carries that line; what the line says is not asserted,
+  and its text never travels inside the record (`I1`: evidence by hash, not
+  payload). A parent mention or commentary never counts as the event.
+- **Re-check.** `verify --record` re-hashes the cited line in the reader's own
+  view of the project. A rewritten line is `SAIPEN_CITATION_MISMATCH`, another
+  project's lineage is `SAIPEN_CITATION_FOREIGN`.
+- **Transport is unchanged.** A cited record is sent with the existing
+  `saimail-local send --record`; there is no new wire field.
+
+Limits, stated: `INTEGRITY:MED` because `LOG.md` is a plain writable file — the
+hash proves the line is unchanged since citation, not that it was ever true. A
+reader without access to the same project tree cannot re-check the citation.
+SAIPEN LOG times are UTC without a zone marker; the citation hashes them as
+written and does not interpret them.
+
 At every stage the honest test is the same: **remove SAIMAIL entirely and
 SAIPEN keeps working unchanged.** The day that stops being true, the seam
 became a fusion, and the property the user asked for — soft, seamless, later —
 is gone.
 
 ## 5. Risks recorded now, not discovered later
+
+Current checkout adds the [SAIPEN Work Desk](27-SAIPEN-WORK-DESK-v0.md), T-110:
+`enter` checks local project participation and `brief` joins work context with
+an unread metadata page. SAIPEN `init` and `telegram` now also require a valid
+project IDENTITY. Diagnostic binding and historical citations remain usable.
+This admission checks local evidence; it does not certify SAIPEN compliance.
 
 | Risk | Mitigation |
 |---|---|

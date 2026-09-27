@@ -1,6 +1,50 @@
 # SAIMAIL
 
-**v0.0.1**
+![SAIMAIL logo](pics/SAIMAIL_LOGO.png)
+
+**SAIMAIL — LOCAL ONLY**
+
+- Desktop GUI available (this checkout)
+- CLI / headless path available
+- No cloud messaging, no server, no daemon
+
+```
+pip install "saimail[gui,crypto]"
+saimail-gui
+```
+
+```
+saimail-local
+```
+
+**FROZEN VERIFIED ARTIFACT:** `0.0.2a2` — local alpha candidate (built,
+externally proven, `NOT_PUBLISHED`). The desktop GUI is **not** inside that
+frozen wheel.
+
+**CURRENT CHECKOUT:** **v0.0.2a3** — includes the accepted post-a2 delta
+`P1 + V4-01 + V5-01` (inbox query, correspondence continuation, desktop GUI).
+The exact `0.0.2a3` wheel is locally frozen and proven; genuine external proof
+of that exact wheel is not yet admitted
+(`READY_FOR_EXTERNAL_INSTALL_PROOF`). `NOT_PUBLISHED`. The checkout also
+carries the SAIPEN seam bridge (`saimail-local saipen`, S2, T-108) and SAITELEMES
+agent telegrams (T-109), which are **not** inside the frozen `0.0.2a3` wheel.
+
+**SAIPEN work desk (checkout):** `saimail-local saipen enter` checks local
+project participation and the workspace seat; `saimail-local saipen brief`
+shows current work with a bounded page of unread telegrams. Other topics stay
+visible, and continuation detects a changed work context. SAIPEN `init`,
+`telegram`, and `brief` require a valid project IDENTITY. This is a local
+integration check, not a protocol-compliance certificate. SAIPEN `continue`
+and `status` count your unread telegrams at turn entry when
+`SAIMAIL_WORKSPACE` is set; that read, like every header-only command, never
+touches a private key (T-117). See the
+[work desk guide](humbox/SAIPEN-WORK-DESK.md).
+
+Security reporting: [SECURITY.md](SECURITY.md). Roadmap authority:
+[humbox/FUTURE-GATES-V6.md](humbox/FUTURE-GATES-V6.md). Exact GitHub
+description/topics: [humbox/GITHUB-SETTINGS-V6.md](humbox/GITHUB-SETTINGS-V6.md).
+
+---
 
 An agent post office with an evidence discipline.
 
@@ -42,6 +86,14 @@ boundary, not a secret dialect. `SAINOTE` is the human-readable surface.
 | `saimail.postoffice` Post Office v0 — verified durable delivery with no payload decryption and no recipient private key, one immutable inbox bundle plus a receiver-owned receipt per accepted envelope, one canonical append-only `index.jsonl` header row per `ENVELOPE_ID` (a repeat is named corruption, never silently deduplicated), quarantine under a domain-separated raw-bytes identity for bounded parse/auth/addressing failures, OS-locked concurrent-safe index appends, crash recovery of the one bundle-then-row window, lifecycle-wide duplicate delivery that keeps the original `RECEIVED_AT` (an exact replay of an opened message never recreates unread state), crash-copy reconciliation proven by byte identity alone (never byte length), header-only scan (receiver-owned `HeaderInterest`, monotone machine+model attention merge, no `.senv` payload reads, no model or network calls), declared scan/open budgets whose scan budget bounds actual row parsing with a byte-offset continuation cursor, and an authenticated inbox→read open that never auto-promotes | working (T-45, T-46); contract in [D-031](spec/DECISIONS.md) / [D-036](spec/DECISIONS.md) / [D-037](spec/DECISIONS.md) |
 | TTL sweep to tombstone (T-7, hardened T-49) | working — receiver-owned retention (default 14D in the 7–30D range, sender `TTL` is a ceiling only), receiver-local expiry clock (`RECEIVED_AT + effective_ttl`, never `CREATED`), explicit-maintenance `sweep_expired` that never runs in deliver/scan/open/recover and has no daemon, immutable tombstone under `mail/expired/<seat>/<digest>.json` published before the body is deleted, `EXPIRED` scan skips, `ALREADY_EXPIRED` open, and exact redelivery of an expired `ENVELOPE_ID` that stays `DUPLICATE` and resurrects nothing; a tombstone must prove its own file name = its `envelope_id` and bind the index row before it can assert `EXPIRED` (a corrupt/conflicting tombstone cannot mask `INDEX_BODY_MISSING`), and one maintenance pass converges every tombstone+BOTH crash state to `EXPIRED`; contract in [D-038](spec/DECISIONS.md) / [D-039](spec/DECISIONS.md) |
 | `saimail.legacy` LEGACY v0 — canonical immutable LEG1 predecessor accounts, exact `OpenedEnvelope` payload/K/TOPIC adoption proof, store-minted non-transplantable `LegacyEntry`, domain-separated content+transport entry identity, explicit immutable receiver-local store, exact-subject retrieval ordered by receiver-owned `received_at`, and progress-guaranteed keyset successor pagination that keeps observed/new scopes, cited refs, disagreements, and `WATCH_NEXT:UNVERIFIED` separate without creating authority, tasks, commands, promotion, or KNOWLEDGE | working (B-013 / T-50, hardened T-51); contract in [D-040](spec/DECISIONS.md) / [D-041](spec/DECISIONS.md) / [LEGACY v0](spec/04-LEGACY-v0.md) |
+| `saimail.sailetter` SAILETTER / `HUMAN_PRIVATE` — canonical `HLET1` plaintext, recipient-bound `HENV1` container (P-256 ECDH + HKDF-SHA256 + ChaCha20Poly1305, Ed25519 sender authentication verified before any recipient private-key operation), explicit `STRICT`/`RECOVERABLE` modes with `NO_IMPLICIT_RECOVERY`, the `HumanPrivateKeyProvider` seam with a software reference provider, a non-transferable opened type-state, and a ciphertext-only `human-private` store with no clear `SUBJECT`/`BODY` and no intentional plaintext persistence | working (B-001 / T-55); contract in [D-042](spec/DECISIONS.md) / [SAILETTER v0](spec/05-SAILETTER-v0.md) |
+| `saimail.hardware_piv` hardware custody — `PivP256Provider` satisfying the same provider seam over one existing PIV P-256 key, identity derived from the slot public key, one explicit session per ECDH (open, optional single PIN attempt, touch enforced by the token, close), honest `HARDENED` / `COMPATIBLE_WEAK_POLICY` / `UNKNOWN_POLICY` interaction classification, normalized `HARDWARE_*` refusals, strictly read-only discovery, and an explicit non-destructive `python -m saimail.hardware_piv verify` that never provisions, imports, deletes or resets any token; hardware support is the declared `hardware-yubikey` extra and the canonical suite passes without it | working (T-56); contract in [D-043](spec/DECISIONS.md) / [hardware custody](spec/06-HUMAN-HARDWARE-v0.md) |
+| `saimail.human_attention` HUMAN_ATTENTION_BUDGET v0 — a receiver-local attention queue under a caller-supplied root: queue-clock-only operation time, queue-minted human identity and enqueue time, immutable candidate and presented-receipt publications, atomically replaceable leases, one OS-backed lock serializing every transition, a rolling receiver-time budget (default `1` per `86400`s; `0` is valid), deterministic allocation precedence over receiver enqueue instants, two-phase `RESERVE` then `ACK_PRESENTED` delivery with fail-closed clock regression, crash-order recovery and lease expiry, explicit `release`, and deferral outcomes (`DEFERRED` / `ATTENTION_BLOCKED` / `ATTENTION_HALT_REQUIRED`) returned as data — no sender importance field, no payload inspection, no model or score, no automatic state mutation, zero messages a valid success | working (B-011 / T-57, corrected by T-58); contract in [D-044/D-045](spec/DECISIONS.md) / [HUMAN_ATTENTION_BUDGET v0](spec/07-HUMAN-ATTENTION-v0.md) |
+| `saimail.ally_advice` ALLY_ADVICE v0 — bounded immutable canonical `ALLY1` private reflections with separate observed/unverified-inferred/proposal/counterevidence/uncertainty/agency sections, a two-observation and three-distinct-ref structural floor, mandatory cited counterevidence, fixed `RECIPIENT_DECIDES`, and a caller-supplied existence resolver that mints a non-transplantable proof type without claiming semantic support; the official adapter reuses unchanged HLET1/HENV1 and ciphertext-only `HumanPrivateStore`, while receiver attention admission remains explicit `HUMAN_PRIVATE` + `LETTER_ID` and zero advice remains valid | working (B-012 / T-59); contract in [D-046](spec/DECISIONS.md) / [ALLY_ADVICE v0](spec/08-ALLY-ADVICE-v0.md) |
+| `saimail.ally_generation` ALLY_ADVICE GENERATION v0 — bounded autonomous-generation gate above B-012: explicit caller-supplied `ReflectionCorpus` (no history discovery, project-operational source domain, 64 items / 8192 bytes per item / 131072 total, deterministic domain-separated corpus identity), a closed generator result (`NO_ADVICE` or one already-valid `AllyAdvice` whose refs must live inside the corpus), at most one generator and one reviewer invocation per run with no retry or rewrite loop, an independent semantic reviewer that receives the full corpus and no generator reasoning, eight `PASS`/`FAIL`/`UNKNOWN` dimensions (`OBSERVATION_SUPPORT`, `COUNTEREVIDENCE_ADEQUACY`, `SCOPE_DISCIPLINE`, `NO_MOTIVE_INFERENCE`, `NO_FLATTERY`, `NO_COMPLIANCE_PRESSURE`, `UNCERTAINTY_ADEQUACY`, `RECIPIENT_AGENCY`) with fail-closed all-`PASS` approval, an invocation-bound mint (a caller-constructed report is data, not proof: one actual `reviewer.review` invocation mints a non-transferable `ReviewInvocationResult` and only that proof can be approved), `OBSERVATION_SUPPORT` / `COUNTEREVIDENCE_ADEQUACY` `PASS` required to cite at least one corpus ref, a non-transferable `SemanticallyReviewedAllyAdvice` proof bound to exact candidate + exact corpus + rubric, and a generated private adapter that reuses the unchanged HLET1/HENV1 corridor; every corpus item also carries a caller-declared `EVENT_REF` distinct from `EVIDENCE_REF` and bound into the corpus identity, and autonomously generated repeated-pattern advice must cite OBSERVED evidence spanning at least two distinct declared events before the reviewer is invoked (`ALLY_GEN_INSUFFICIENT_DISTINCT_EVENTS`, zero reviewer calls; `EVENT_REF` is an assertion, never truth, and is never inferred automatically); approval never seals, stores or admits attention, and zero advice stays a successful non-delivery | working (B-016 / T-61, corrected by T-62 and T-66); contract in [D-047/D-048/D-049](spec/DECISIONS.md) / [ALLY_ADVICE GENERATION v0](spec/09-ALLY-GENERATION-v0.md) |
+| `saimail.project_corpus` PROJECT CORPUS v0 — bounded real-project corpus builder above B-016: one explicit caller-supplied `ProjectCorpusRequest` (canonical `project:` scope, exact half-open UTC selection window, fixed `EXPLICIT_BOUNDED_SET` basis, frozen seven-kind `PROJECT_OPERATIONAL` source vocabulary, 64/8192/131072 bounds), zero discovery (no directory, repository, SAIPEN, network or model access; no path parameter), a builder-minted domain-separated `EVIDENCE_REF` from scope + source kind + source ref + content digest (observation time never changes it), a builder-minted `EVENT_REF` from the exact caller declaration (declaration members are evidence refs only; ticket ids, filenames, paths, timestamps and identical text never group or merge), an exact partition requirement (unknown member, unassigned artifact, multi-event artifact and empty event refuse), a `BUILD_ID` binding policy + scope + window + artifacts + grouping beside the unchanged B-016 `CORPUS_ID`, and a non-transferable `BuiltProjectCorpus` proof (direct construction and `dataclasses.replace` refuse; a changed corpus, grouping, window or artifact set refuses) with a `require_built_project_corpus` gate for the future real-project pilot; selection completeness stays `NOT_PROVEN`, no corpus plaintext is persisted, and the generic B-016 and manual B-012 paths are unchanged | working (B-017 / T-67); contract in [D-050](spec/DECISIONS.md) / [PROJECT CORPUS v0](spec/10-PROJECT-CORPUS-v0.md) |
+| `lab/project_corpus_pilot.py` B-018 real-project corpus pilot — one immutable operator-authorized registration (eight exact artifacts with `MARKDOWN_SECTION` / `LOG_RECORD` / `WHOLE_FILE` selectors, five explicit event declarations, per-source and per-content SHA-256 pins) written before any corpus is built; a read-only capture adapter that reads exactly the registered paths, extracts exactly the registered selectors, fails closed on any pin mismatch (the single narrow exception is an append-only journal source whose every registered record still proves its frozen content pin, recorded as `APPEND_ONLY_SOURCE_MATCHES_REGISTERED_CONTENT_PINS`), and builds through the unchanged B-017 builder only; one lab snapshot plus report with the exact `EVIDENCE_REF`/`EVENT_REF` maps, bounded mutation and no-model/no-mail proofs; a raw `ReflectionCorpus` still fails the future-pilot proof gate | working (B-018 / T-68); registration in [lab/project_corpus_pilot_registration.json](lab/project_corpus_pilot_registration.json) |
+| `lab/project_corpus_generation_pilot.py` B-019 real-project bounded generation pilot — one immutable live registration frozen before discovery (exact B-018 `REGISTRATION_ID`/`BUILD_ID`/`CORPUS_ID` bound, 8 discovery + 2 generation + 2 review <= 12 live calls, local raw-output/prompt persistence false, provider-side retention `NOT_VERIFIED_BY_SAIMAIL`); the runner rebuilds the exact B-018 `BuiltProjectCorpus` through the unchanged B-018/B-017 path and refuses `NO_GO_INPUT_DRIFT` before any model call on any identity difference, while a raw `ReflectionCorpus` still fails `PROJECT_CORPUS_BUILDER_PROOF_REQUIRED`; a redacting dispatch keeps the durable call record metadata-only (prompt/output/error nulled in a `finally` block before parsing), and two role-swapped replicates run through the unchanged B-016 `generate_reviewed_ally_advice` with no retry, no repair prompt and no post-freeze replacement; the artifact/report/interpretation carry identities, hashes, lengths, evidence refs, dimension verdicts and counts only — never prompt text, corpus content, candidate prose, reviewer rationale or provider error bodies (the population section is built from an explicit sanitized projection, and the historical T-69 claim was corrected additively — see [lab/analysis/project_corpus_generation_20260919T220641Z_privacy_correction.md](lab/analysis/project_corpus_generation_20260919T220641Z_privacy_correction.md)); the one registered live run spent 8 calls (6 discovery, 2 generation, 0 review) and produced `ERROR` (R1, non-parseable generator answer) and `NO_ADVICE` (R2) with zero reviewer calls, zero mail/attention side effects and no operator presentation | working (B-019 / T-69); registration in [lab/project_corpus_generation_registration.json](lab/project_corpus_generation_registration.json) |
 
 The last benchmark verdict, the negative findings, and the recommended next
 simplification live in [bench/ANALYSIS.md](bench/ANALYSIS.md). Read it before
@@ -57,10 +109,156 @@ python bench/r1_shootout.py --out bench/out
 python bench/selector_run.py --out bench/out
 python lab/saifren_run.py --out lab/out --dry-run
 python lab/stability_run.py --out lab/out --dry-run
+python lab/project_corpus_pilot.py --register   # frozen once, before any capture
+python lab/project_corpus_pilot.py --run
+python lab/project_corpus_generation_pilot.py --register   # frozen once, before any live call
+python lab/project_corpus_generation_pilot.py --dry-run
+python lab/project_corpus_generation_pilot.py --run        # one registered live run
+python tools/fg05_local_scenario.py                       # FG-05 offline end-to-end scenario
 ```
 
 Nothing above touches the network. A live `lab/` run does, and needs the
 credential below.
+
+## Trying it locally
+
+One installable, offline command runs the end-to-end demo and the utility
+benchmark:
+
+```
+pip install "saimail[crypto]"     # runtime crypto extra the demo needs
+saimail-local --version           # version + result schema identities
+saimail-local                     # FG-05 two-participant demo (default)
+saimail-local --utility           # FG-06 TOTAL_FRICTION benchmark
+saimail-local --api-map           # path to the machine-readable stable API map
+saimail-local --out OUT --json    # bounded machine-readable result
+```
+
+A demo run exits `0` only when every acceptance invariant holds and prints a
+bounded state summary. Its temporary workspace lives under the OS temp
+directory and is deleted unless `--keep` is given; `--out DIR` writes
+`local_scenario_result.json` and `fg06_utility_result.json`. The stable API
+map is `lab/stable_local_api.json`; limitations and the explicit
+"does not promise" list are in
+[spec/16-UTILITY-AND-LOCAL-ENTRYPOINT-v0.md](spec/16-UTILITY-AND-LOCAL-ENTRYPOINT-v0.md).
+The demo and benchmark make zero network and zero model calls. SAIMAIL does
+**not** promise automatic truth detection, reviewer reliability, provider JSON
+Schema enforcement, automatic promotion or correspondence, Gmail/Slack/Outlook
+integration, hardware-key provisioning or zero protocol overhead.
+
+### A persistent local workspace (V2-01)
+
+The practical local workflow. Two workspaces, two persistent identities, one
+real local message across separate process invocations:
+
+```
+pip install "saimail[crypto]"
+saimail-local init --workspace ws-a --seat SAIMAIL-A
+saimail-local init --workspace ws-b --seat SAIMAIL-B
+saimail-local identity --workspace ws-a --export-card a.card.json
+saimail-local identity --workspace ws-b --export-card b.card.json
+# exchange the PUBLIC cards and register each side (one command each)
+saimail-local recipient add --workspace ws-a --alias bob --card b.card.json --peer-workspace ws-b
+saimail-local recipient add --workspace ws-b --alias alice --card a.card.json --peer-workspace ws-a
+# every command below is its own process; state persists on disk
+saimail-local send --workspace ws-a --to bob --claim "one line for bob"
+saimail-local inbox --workspace ws-b            # metadata only, no payload
+saimail-local open --workspace ws-b --envelope sha256:...
+saimail-local reopen --workspace ws-b --envelope sha256:... # re-read opened message without state mutation
+saimail-local send --workspace ws-a --redeliver sha256:...   # exact replay -> DUPLICATE
+saimail-local acceptance --root fresh-dir       # one-command PASS/FAIL harness
+```
+
+Identity survives restarts: `saimail-local identity` returns the same public
+fingerprints after any number of separate invocations. Repeating the exact
+delivery is the canonical `DUPLICATE` (the original `RECEIVED_AT` is kept and
+no second unread message appears) — the CLI adds no dedup layer of its own.
+`open` requires the exact message identity, moves it to read state and never
+promotes; `reopen` allows explicit receiver re-reading of an already-read
+message across sessions without mutating durable state or duplicating bundles;
+promotion stays a separate action. Machine-readable results are
+`LOCAL_WORKSPACE_COMMAND_1` per command and `LOCAL_WORKSPACE_RESULT_1` for the
+harness. `--json` works on every command.
+
+Local filesystem only: delivery is an explicit path to the recipient's
+workspace, so the sender needs write access to it. No Gmail/Slack/Outlook, no
+adapter, no server or daemon, no remote service, no semantic reviewer, no
+automatic discovery.
+
+### The local alpha candidate (0.0.2a3)
+
+A frozen, locally proven alpha candidate for testing the complete persistent
+workspace workflow without network dependency:
+
+```
+pip install "saimail-0.0.2a3-py3-none-any.whl[crypto]"
+saimail-local --version
+```
+
+The candidate manifest records the exact package identity, content proof,
+mode-accurate security limitations, and release tooling truth (refusing to build into the historical
+a1 bundle or to overwrite any frozen candidate); `tools/local_alpha_release.py
+verify --bundle <dir>` re-checks the recorded hashes, and the wheel content
+proof refuses a candidate without the custody module, identity schema v2, the
+`--custody`/`custody status`/`custody migrate` surface, the first-run notice and
+— with `--require-product-delta` — the P1/V4-01/V5-01 product surface. A
+corrupted wheel or a corrupted recorded hash is rejected (red control), and the
+release privacy scan (`tools/scan_local_alpha_privacy.py`) fails on a planted
+marker or planted key material. The historical a2 evidence lives under
+`release/evidence/a2/`; the current candidate-specific evidence (installed-wheel
+verification, the Windows os-store proof, migration proof, reproducibility,
+privacy/integrity red controls, claim matrix and gate evaluation) lives under
+`release/evidence/a3/`. The full contract, the alpha scope, the platform proof
+scope (CPython 3.11 on win32) and the "does not claim" list are in
+[spec/18-LOCAL-ALPHA-v0.md](spec/18-LOCAL-ALPHA-v0.md),
+[spec/20-LOCAL-KEY-CUSTODY-v0.md](spec/20-LOCAL-KEY-CUSTODY-v0.md),
+[spec/DECISIONS-D055.md](spec/DECISIONS-D055.md) and
+[spec/DECISIONS-D056.md](spec/DECISIONS-D056.md).
+
+**Works:** install the package; initialize persistent workspaces; exchange
+public identity cards; register a known local peer; local send; inbox list
+(metadata only) and bounded inbox query/triage (`P1`); explicit open; explicit
+one-hop correspondence continuation (`V4-01`); duplicate suppression; restart
+persistence; the optional desktop local messenger GUI (`V5-01`, `saimail-gui`,
+PySide6 behind the `gui` extra — never a base dependency); raw
+(default) identity custody; explicit `os-store` protected custody where a
+checked OS credential backend exists, including fingerprint-preserving
+migration; FG-05 demo; FG-06 benchmark; V2-01 acceptance; machine-readable
+results.
+
+**Does not exist:** remote delivery, email-provider integration, server,
+daemon, account synchronization, automatic recipient discovery, a protected
+default, hardware custody, key rotation, automatic recovery, automatic
+correspondence, general-purpose secure messenger.
+
+**Custody warning (two modes):** the default `raw` mode stores the private
+Ed25519/X25519 identity keys as raw software files in the workspace — **not
+encrypted at rest**, and a copied workspace directory copies the identity. The
+explicit `os-store` opt-in moves the private keys into the OS credential store
+and removes the raw bytes from the workspace, protecting against
+workspace-directory-copy exposure **only**; it does **not** protect against
+malware or processes running as the same authorized user, admin/kernel
+compromise, hardware attack, physical presence or human-identity proof, and it
+provides no hardware custody, rotation or automatic recovery. An
+OS-account/host migration may strand the key material, and the backend evidence
+for this candidate is Windows-specific (`WinVaultKeyring`). Claim boundaries:
+[spec/20-LOCAL-KEY-CUSTODY-v0.md](spec/20-LOCAL-KEY-CUSTODY-v0.md).
+
+**Utility warning:** the measured verdict is `UTILITY_CONDITIONAL`. SAIMAIL
+does not universally save tokens or cost; moderate/high open-rate workloads are
+neutral under the declared friction model.
+
+**Alpha warning:** this is a scoped local alpha candidate, not a production
+communication service.
+
+**Publication status:** building the candidate does not mean the package has
+been published. `publication_status = NOT_PUBLISHED`; publication is a separate
+explicit operator action. The exact `0.0.2a2` wheel is externally proven in a
+genuinely separate Linux / Python 3.13.5 environment
+(`release/evidence/a2/external_linux_verification.json`). The current `0.0.2a3`
+wheel is locally frozen and proven; its genuine external proof is **not yet
+admitted** (`READY_FOR_EXTERNAL_INSTALL_PROOF`), and the a2 external proof is
+never inherited. Publication authorization (G17) remains ABSENT.
 
 ## The SAIRoute credential
 
@@ -111,6 +309,21 @@ command is the command that works. `tiktoken` is pinned so published token
 ratios stay reproducible; it downloads small BPE tables on first use, never
 model weights.
 
+Hardware custody is a separate optional extra, never installed at runtime:
+
+```
+pip install -e ".[hardware-yubikey]"
+python -m saimail.hardware_piv inspect          # strictly read-only
+python -m saimail.hardware_piv verify --device NAME --slot 9D
+```
+
+Without the extra, every hardware entry point refuses with
+`HARDWARE_PROVIDER_UNAVAILABLE`; with the extra but without a token, a manual
+verification is reported `NOT_RUN_NO_HARDWARE`, never `PASS` and never `FAIL`.
+Both commands are non-destructive: there is no provisioning, import, deletion
+or reset path, no automatic slot choice, and no `--pin` option — the PIN is
+only ever typed at an interactive prompt.
+
 ## Documents
 
 | File | What is in it |
@@ -126,6 +339,15 @@ model weights.
 | [spec/02-SAIENVELOPE-v0.md](spec/02-SAIENVELOPE-v0.md) | the `.senv` container, crypto, the five invariants, SAINOTE |
 | [spec/03-POST-OFFICE.md](spec/03-POST-OFFICE.md) | layout, interest filter, the three memory tiers, promotion |
 | [spec/04-SAIPEN-SEAM.md](spec/04-SAIPEN-SEAM.md) | what SAIPEN already implements, what is genuinely new, the integration path |
+| [spec/07-HUMAN-ATTENTION-v0.md](spec/07-HUMAN-ATTENTION-v0.md) | the receiver-owned human-attention budget: candidate identity, rolling window, reserve-then-ACK delivery, deferral outcomes, privacy and authority boundaries |
+| [spec/15-LOCAL-SCENARIO-v0.md](spec/15-LOCAL-SCENARIO-v0.md) | the FG-05 two-participant offline scenario and its machine-readable `LOCAL_SCENARIO_RESULT_1` result |
+| [spec/16-UTILITY-AND-LOCAL-ENTRYPOINT-v0.md](spec/16-UTILITY-AND-LOCAL-ENTRYPOINT-v0.md) | the FG-06 TOTAL_FRICTION benchmark, the fair baseline boundary, the local entrypoint, the stable API/type/failure maps and the "does not promise" list |
+| [spec/17-LOCAL-WORKSPACE-v0.md](spec/17-LOCAL-WORKSPACE-v0.md) | the V2-01 persistent local workspace contract: layout, commands, identity cards, the local delivery boundary, `LOCAL_WORKSPACE_COMMAND_1` / `LOCAL_WORKSPACE_RESULT_1`, privacy/atomicity and the honest limitations |
+| [spec/18-LOCAL-ALPHA-v0.md](spec/18-LOCAL-ALPHA-v0.md) | the local alpha candidate contract: scope, bundle layout, manifest, standalone verifier, integrity/privacy gates and the publication boundary |
+| [spec/20-LOCAL-KEY-CUSTODY-v0.md](spec/20-LOCAL-KEY-CUSTODY-v0.md) | the V3-01 custody threat model, the selected OS-store option, the identity schema v2 handles contract, migration ordering, named `CUSTODY_*` failures and the claim boundaries |
+| [spec/22-LOCAL-INBOX-QUERY-v0.md](spec/22-LOCAL-INBOX-QUERY-v0.md) | the P1 metadata-only inbox triage query: exact AND filters, `received_at` time bounds, the declared scan budget and byte-offset continuation cursor, fail-closed states and the no-payload proof |
+| [spec/26-SAITELEMES-v0.md](spec/26-SAITELEMES-v0.md) | SAITELEMES v0: one-call telegrams between running agents on the unchanged wire, the acting-seat guard and the header-only turn-entry read |
+| [spec/24-LOCAL-CORRESPONDENCE-CONTINUATION-v0.md](spec/24-LOCAL-CORRESPONDENCE-CONTINUATION-v0.md) | the V4-01 one-hop reply: the two relation domains (SENV2 `REF` transport link vs SAILANG `SUPPORTS`/`REFUTES`/`CON`), the READ prerequisite, identity-bound recipient resolution and the result contract |
 | [bench/ANALYSIS.md](bench/ANALYSIS.md) | what the measurements actually mean, negative findings included |
 | [lab/LATEST.md](lab/LATEST.md) | the live-run index: which run is current, and every earlier one with its own immutable reading in `lab/analysis/` |
 | [provenance/RECEIPT_KIND_SCOPE.json](provenance/RECEIPT_KIND_SCOPE.json) | the rule that a receipt's intake kind is transport and its segments are authorship (D-017) |

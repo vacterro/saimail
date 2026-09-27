@@ -372,4 +372,38 @@ and is not special-cased: no durable promotion ledger exists and T-7 owns
 transport retention only — it creates or alters no KNOWLEDGE card and marks no
 promotion state.
 
+Contended lock initialization is waited for, never an I/O failure: the
+initializing write into byte 0 of a lock file another process already holds
+is the contended case, and the waiter joins the ordinary lock deadline
+instead of failing the delivery (D-065, T-123 mesh torture).
+
+**Receiver re-read continuity (
+eopen_message).** open_message transitions
+an unread bundle from inbox/ to 
+ead/ and refuses repeated calls with
+ALREADY_READ. Receiver re-reading of an already-read message across process
+restarts or later sessions is provided via explicit
+
+eopen_message(envelope_id, *, recipient_private_key):
+
+- **State precondition:** The target bundle must already reside in durable
+  
+ead/ state. An unread or non-existent envelope refuses REOPEN_NOT_READ.
+- **Budget consumption:** Each successful 
+eopen_message consumes exactly one
+  unit of the session's declared open_budget. If the budget is exhausted,
+  it refuses OPEN_BUDGET_EXHAUSTED with zero cryptographic or disk work.
+- **Fail-closed verification under lifecycle lock:** The operation executes
+  under the mailbox mail/lifecycle.lock. It re-verifies the stored bundle
+  against the receiver's KeyRegistry (sender key acceptance),
+  RecipientKeyRegistry (recipient key acceptance), the canonical index row
+  (INDEX_ROW_CONFLICT on mismatch), and the bundle receipt (RECEIPT_CORRUPT
+  on mismatch). Any crash or ambiguous state (BOTH,
+  EXPIRY_RECONCILIATION_REQUIRED) or TTL expiry/tombstone (ALREADY_EXPIRED)
+  fails closed immediately.
+- **Zero durable mutation:** Reopen leaves the durable state READ, leaves the
+  sealed container bytes on disk completely untouched, creates no duplicate
+  lifecycle bundle or index row, and never persists decrypted plaintext to disk.
+  Decrypted content is returned as an in-memory OpenedEnvelope.
+
 必要なものだけ残す — keep only what is needed.

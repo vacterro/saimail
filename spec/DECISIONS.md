@@ -462,6 +462,631 @@ LETTER_ID = SHA256_CANONICAL_HENV1
 
 ---
 
+## D-043 — HUMAN_PRIVATE hardware custody: PIV P-256 ECDH, read-only discovery, and honest presence semantics
+
+Recorded under `SRC-035` (T-56) before any hardware code, as the handoff requires.
+This decision is additive to D-042: no HLET1 or HENV1 byte, domain or binding
+changes, and the provider seam stays the single architecture.
+
+**Three concepts stay distinct.** `HUMAN_IDENTITY` is the P-256 public-key
+fingerprint of D-042. `PRIVATE_KEY_CUSTODY` is where the corresponding private
+key lives. `LOCAL_INTERACTION_POLICY` is whether the token demands a PIN and/or
+a physical touch before a private-key operation. None of the three is collapsed
+into one concept called "authentication".
+
+**HARDWARE_BACKED means** the recipient P-256 private key is held by a supported
+hardware token; SAIMAIL receives only the public key and the ECDH result;
+SAIMAIL never requests, exports or stores raw private-key material; and the ECDH
+operation is performed by the token. It does not mean the OS cannot observe
+decrypted plaintext, malware cannot invoke the provider, the sender learns which
+person touched the device, or that the application is hardware-isolated.
+`PRIVATE_KEY_EXPORT = forbidden`.
+
+**Presence terminology is narrower than identity.** A configured PIV touch
+policy establishes `LOCAL_INTERACTION_REQUIRED` for the key operation; it does
+not prove `HUMAN_IDENTITY`. A PIN verifies the knowledge factor according to the
+device/session policy. `HARDWARE_TOUCH_MEANS = LOCAL_INTERACTION_REQUIRED`,
+`HARDWARE_TOUCH_DOES_NOT_MEAN = HUMAN_IDENTITY_PROVED`.
+
+**Reference credential profile (future provisioning only, not this wave).**
+`KEY_TYPE = ECCP256`, `PIN_POLICY = ONCE` preferred (`ALWAYS` accepted),
+`TOUCH_POLICY = ALWAYS`. `PIN_POLICY = NEVER` and `TOUCH_POLICY = NEVER` never
+satisfy the hardened profile. A pre-existing P-256 key with a weaker interaction
+policy is classified `COMPATIBLE_WEAK_POLICY` (the handoff's
+`COMPATIBLE_CRYPTO_WEAK_INTERACTION_POLICY`): cryptographically usable, never
+described as the canonical hardened SAILETTER credential. `REFERENCE_SLOT =
+9D_OPERATOR_SELECTED`, `ALTERNATE_SLOTS = 82..95_OPERATOR_SELECTED`,
+`AUTOMATIC_SLOT_WRITE = false`; 9D is never assumed free and never overwritten.
+
+**FIDO2 stays out of decryption.** `FIDO2_IS_ENCRYPTION = false`,
+`FIDO2_REQUIRED = false`; no FIDO2 credential is registered and no WebAuthn
+assertion is used as HENV1 key material. PIV ECDH remains the HUMAN_PRIVATE
+decryption operation.
+
+**Token identity is not device metadata.** HENV1 recipient identity remains
+`human-id:sha256:<P256-SPKI-digest>`; serial number, slot and firmware version
+are local operational metadata, never entering HENV1, and the `HUMAN_ID` does
+not change when the same public key is accessed through another transport.
+
+**Discovery is read-only.** `DISCOVERY_IS_READ_ONLY = true`: no key generation,
+import, deletion, certificate write/delete, PIN/PUK/management-key change or
+reset, retry-counter change, CHUID or CCC write, no management-key
+authentication, no PIN verification and no ECDH. A discovery path that needs a
+management-key operation is incorrectly designed. Real provisioning is a future
+explicit gate: `REAL_PROVISIONING = future_explicit_gate`.
+
+**Provider contract.** `HARDWARE_PROVIDER = PIV_P256_ECDH`. `PivP256Provider`
+satisfies the existing `HumanPrivateKeyProvider` seam of D-042 and is the only
+hardware addition to the decrypt path: no vendor concept enters HENV1 or
+`sailetter.py`; the public key is read from the configured slot and the
+`HUMAN_ID` is derived from it, never trusted from the caller; the provider never
+exposes `private_key`, `private_numbers` or `private_bytes`; PIN is supplied
+only through an ephemeral callback at private-operation time (never constructor
+state, command line, environment, config file, log, error text or receipt); one
+user-supplied PIN attempt per explicit request with no automatic retry; and the
+device session is opened and closed around one explicit operation.
+
+**Claims.** Hardware support is an optional dependency declared as a named
+extra; the canonical `pip install -e ".[test]"` and the automated suite pass
+without YubiKey libraries or hardware. A real-token verification is a manual
+gate reported `PASS` or `NOT_RUN_NO_HARDWARE`, never inferred from a fake.
+
+```
+HARDWARE_PROVIDER = PIV_P256_ECDH
+PRIVATE_KEY_EXPORT = forbidden
+REFERENCE_SLOT = 9D_OPERATOR_SELECTED
+ALTERNATE_SLOTS = 82..95_OPERATOR_SELECTED
+AUTOMATIC_SLOT_WRITE = false
+REFERENCE_PIN_POLICY = ONCE
+REFERENCE_TOUCH_POLICY = ALWAYS
+PIN_NEVER_HARDENED = false
+TOUCH_NEVER_HARDENED = false
+FIDO2_IS_ENCRYPTION = false
+FIDO2_REQUIRED = false
+HARDWARE_TOUCH_MEANS = LOCAL_INTERACTION_REQUIRED
+HARDWARE_TOUCH_DOES_NOT_MEAN = HUMAN_IDENTITY_PROVED
+DISCOVERY_IS_READ_ONLY = true
+REAL_PROVISIONING = future_explicit_gate
+```
+
+---
+
+## D-044 — HUMAN_ATTENTION_BUDGET v0: receiver-owned scarcity, reserve-then-ACK delivery
+
+Recorded under `SRC-036` (T-57) before `saimail/human_attention.py` was written,
+as the B-011 handoff requires. Additive to D-042/D-043: no HLET1 or HENV1 byte,
+domain or binding changes; no SAILANG kind and no SAILETTER wire field is added.
+
+**The scarce resource is human attention consumption, not message creation.**
+`MESSAGE_EXISTS != ATTENTION_GRANTED`, `CANDIDATE_EXISTS != MESSAGE_SHOWN`,
+`SENDER_REQUEST != RECEIVER_CLASS`, and `ZERO_DELIVERIES` is a valid successful
+outcome. No code path manufactures a filler message because a period started.
+
+**Receiver-owned layer.** A candidate stores only metadata and a reference; for
+`HUMAN_PRIVATE` the source ref is the stored `LETTER_ID`. The layer never
+decrypts, never inspects `SUBJECT`/`BODY`, never caches plaintext, never calls a
+private-key operation, never requests a PIN or a physical interaction, and never
+changes another system's state. `REFERENCE_EXISTS != REFERENCE_SUPPORTS_CLAIM`:
+scheduling is not epistemic promotion.
+
+**Candidate identity** is domain-separated over `TO_HUMAN`, `SOURCE_KIND` and
+`SOURCE_REF` (conceptual domain `SAIMAIL-HUMAN-ATTENTION-CANDIDATE1\0`), never
+over ENQUEUED_AT: a resubmitted source is the same candidate. Re-admission with
+identical receiver policy is `IDEMPOTENT` and the first receiver `ENQUEUED_AT`
+stands; changed `ALLOCATION` or `DEFERRAL_POLICY` refuses
+`ATTENTION_CANDIDATE_CONFLICT`, because receiver policy history is not
+rewritten.
+
+The frozen decision, in greppable machine form:
+
+```
+ATTENTION_LAYER = RECEIVER_LOCAL
+SAILANG_KIND_ADDED = false
+SAILETTER_WIRE_FIELD_ADDED = false
+SENDER_IMPORTANCE = forbidden
+DEFAULT_MAX_PRESENTATIONS = 1
+DEFAULT_PERIOD_SECONDS = 86400
+ZERO_PRESENTATIONS_VALID = true
+PERIOD_SEMANTICS = ROLLING_RECEIVER_WINDOW
+BOUNDARY_RULE = presented_at > now - period
+ALLOCATION_SET = CRITICAL_RECOVERY,AMBIGUITY_RESOLUTION,DECISION_REQUEST,ROUTINE_AUDIT,IDLE_REPORT
+DEFERRAL_SET = BLOCK_UNTIL_HUMAN,QUEUE_AND_CONTINUE,ESCALATE_AND_HALT
+ORDERING = ALLOCATION_PRECEDENCE,RECEIVER_ENQUEUED_AT_ASC,CANDIDATE_ID_ASC
+BUDGET_BYPASS = none
+DELIVERY = RESERVE_THEN_ACK_PRESENTED
+LEASE_DEFAULT_SECONDS = 300
+PRIVATE_CONTENT_INSPECTION = false
+MODEL_SELECTION = false
+SAIPEN_MUTATION = false
+```
+
+**Deferral outcomes are data.** `QUEUE_AND_CONTINUE -> DEFERRED`,
+`BLOCK_UNTIL_HUMAN -> ATTENTION_BLOCKED` and `ESCALATE_AND_HALT ->
+ATTENTION_HALT_REQUIRED` are returned to the caller; the module itself never
+stops a process, never edits another system's files and never creates work.
+Acting on an outcome is a caller's decision.
+
+**Delivery is two-phase.** `reserve_next` creates one receiver-local lease that
+provisionally consumes one slot, so two concurrent workers cannot take the
+final slot: exactly one receives `RESERVED`. `ack_presented` publishes an
+immutable receipt first and removes the lease second, so a crash between the
+two steps cannot lose the fact that attention was consumed; recovery treats
+receipt-plus-lease as presented. A stale lease expires mechanically on the next
+explicit operation; there is no daemon. `release` removes one active lease only,
+keyed by its reservation token, and consumes nothing.
+
+**Presentation is not comprehension.** A presented receipt proves the receiver
+application reported a successful surfacing. It does not prove the human read,
+understood, agreed with or acted on it; v0 has no reminder, snooze, repeat
+delivery, read receipt or ignored-inference.
+
+**Corruption fails closed.** An invalid stored candidate, receipt or lease
+refuses with `ATTENTION_CANDIDATE_CORRUPT`, `ATTENTION_PRESENTED_CORRUPT` or
+`ATTENTION_LEASE_CORRUPT`; malformed receiver state is never silently deleted.
+
+---
+
+## D-045 — B-011 correction: receiver time authority is mechanically queue-owned
+
+Recorded under verbatim handoff `SRC-038` (amending `SRC-037`, T-58), linked
+to T-57 / B-011 / D-044. This
+additive decision eliminates the defect class where a production caller can
+forge receiver time: backdate an ACK until its real presentation falls outside
+the rolling budget, fast-forward a live lease into expiry, or pre-stamp a new
+candidate so it jumps the receiver's queue. D-044 remains the historical
+design decision; this correction makes its receiver-owned time claims true at
+the API boundary.
+
+The queue's configured clock is the sole operation-time authority. Public
+`reserve_next`, `ack_presented`, `budget_state` and `release` accept no
+per-operation time override. Each operation reads the queue clock once after
+acquiring its operational lock and uses that instant throughout. Deterministic
+tests control time only through the constructor-injected clock.
+
+Admission accepts source identity and receiver policy, not a fully formed
+candidate. `AttentionQueue` supplies its own `human_id`, reads its own clock,
+and publishes the resulting immutable `AttentionCandidate`. The durable type
+remains parseable and readable, but a caller-created object is not admission
+authority. Idempotent re-admission preserves the first durable timestamp;
+changed allocation or deferral policy remains a conflict. Candidate identity
+and D-044 ordering are unchanged.
+
+An ACK may publish a receipt only when
+`RESERVED_AT <= PRESENTED_AT < LEASE_UNTIL`. Receiver clock movement behind a
+durable lease's `RESERVED_AT` refuses `ATTENTION_CLOCK_REGRESSION` without
+publishing a receipt, removing the lease or minting a replacement reservation.
+An immutable receipt later than current receiver time remains budget-consuming;
+clock rollback never turns it into free capacity and no timestamp is repaired.
+Where a redundant lease preserves reservation history, an impossible receipt
+relationship fails closed as corrupt receiver state.
+
+```
+RECEIVER_TIME_AUTHORITY = QUEUE_CLOCK
+PER_OPERATION_CALLER_TIME_OVERRIDE = forbidden
+ENQUEUED_AT_MINTED_BY = ATTENTION_QUEUE
+TO_HUMAN_MINTED_BY = ATTENTION_QUEUE_IDENTITY
+ACK_TEMPORAL_RULE = RESERVED_AT <= PRESENTED_AT < LEASE_UNTIL
+CLOCK_REGRESSION = FAIL_CLOSED
+CALLER_TIMESTAMP_CANNOT_AFFECT = ORDERING,BUDGET,LEASE_EXPIRY,PRESENTATION_TIME
+FUTURE_PRESENTED_AT = COUNTS_AS_CONSUMED
+```
+
+---
+
+## D-046 — ALLY_ADVICE v0 is a private, evidence-citing proposal with recipient agency
+
+Recorded under verbatim handoff `SRC-040` (amending `SRC-039`, T-59) for
+B-012. `ALLY_ADVICE` is a SAIMAIL host-protocol plaintext object, not a new
+SAILANG kind and not a new encryption protocol. Its one canonical marker is
+`ALLY1`; its durable transport is the existing private path
+`ALLY1 -> HLET1 -> HENV1`. HLET1 and HENV1 bytes, cryptographic domains and
+recipient bindings remain unchanged.
+
+An ALLY1 object may cite evidence but is not itself evidence, fact, knowledge,
+legacy, authority, command or SAIPEN work. `OBSERVED` items are authored
+assertions tied to canonical references. Evidence resolution establishes only
+that every cited object existed according to a caller-supplied resolver at the
+time of the check. It does not establish that a source supports the statement,
+that the inference is true, or that the recommendation is useful.
+
+The canonical object is strict UTF-8 canonical JSON followed by one LF. It has
+one ordered schema and one rendering: duplicate keys, unknown or missing keys,
+malformed UTF-8, alternate whitespace/key order/escaping, invalid constants
+and a rendering that does not byte-equal the canonical serializer all refuse.
+Its structural sections remain separate: `WORK_CONTEXT`, `OBSERVED_SCOPE`,
+`OBSERVED`, `INFERRED`, `SUGGESTED`, `COUNTEREVIDENCE`, `UNCERTAINTY` and
+`AGENCY`. A sender-authored canonical UTC `CREATED` is visible in ALLY1 but
+has no receiver-time authority.
+
+Each immutable observation and counterevidence item carries non-empty prose
+and a non-empty, strictly sorted, duplicate-free tuple of
+`sha256:<64 lowercase hex>` references. A valid object has 2..16 observations,
+at least three distinct references across observations, 1..8 counterevidence
+items, and at most 16 references per item. Individual context/scope fields are
+bounded to 2048 UTF-8 bytes; observation, inference, suggestion,
+counterevidence and uncertainty text to 4096 bytes; the complete ALLY1 object
+to 32768 bytes. These are dossier limits, not truth thresholds.
+
+Counterevidence has no empty escape hatch. If the author cannot supply at
+least one cited counterevidence item, there is no valid ALLY1 object. The
+inference marker is always `UNVERIFIED`, guidance status always `PROPOSAL`,
+guidance mode exactly `OBSERVE_ONLY` or `CONSIDER_CHANGE`, and agency always
+`RECIPIENT_DECIDES`. There is no numeric confidence, motive, personality,
+diagnosis, priority, allocation, deferral, compliance, engagement or reward
+field.
+
+The official private adapter accepts only a constructor-guarded
+`EvidenceResolvedAllyAdvice`. Direct construction and `dataclasses.replace`
+transplant refuse because the mint token is constructor-only and is not
+retained. Missing resolver refuses `ALLY_EVIDENCE_RESOLUTION_REQUIRED`; a
+missing cited object refuses `ALLY_EVIDENCE_MISSING`. The adapter produces a
+normal `HumanPrivateLetter` with fixed encrypted subject `ALLY_ADVICE` and the
+exact canonical ALLY1 text as encrypted body. No plaintext advice store exists.
+
+Creation, resolution, conversion, HENV1 sealing and ciphertext delivery do not
+admit attention. The receiver explicitly admits the stored `LETTER_ID` using
+the existing `HUMAN_PRIVATE` source kind and independently chooses allocation
+and deferral policy. The attention layer sees no ALLY1 content and performs no
+decrypt/provider/PIN/hardware operation. Presentation means only surfaced,
+never read, accepted, followed or correct. Zero advice is a valid successful
+state.
+
+The structural floor is deliberately honest. B-012 v0 does not mechanically
+prove that prose is non-flattering or free of hidden motive inference, that
+evidence semantically supports prose, that counterevidence is strongest, that
+the suggestion is novel, that a pattern is psychologically meaningful, or
+that advice is useful. Those are future generator/reviewer questions; regex
+theatre is not a proof.
+
+```
+FORMAT = ALLY1
+HOST_PROTOCOL_OBJECT = true
+SAILANG_KIND_ADDED = false
+TRANSPORT = ALLY1 -> HLET1 -> HENV1
+ALLY_ADVICE_IS_EVIDENCE = false
+ALLY_ADVICE_IS_AUTHORITY = false
+ALLY_ADVICE_IS_COMMAND = false
+SECTIONS = WORK_CONTEXT,OBSERVED_SCOPE,OBSERVED,INFERRED,SUGGESTED,COUNTEREVIDENCE,UNCERTAINTY,AGENCY
+MIN_OBSERVATIONS = 2
+MIN_DISTINCT_OBSERVED_EVIDENCE_REFS = 3
+COUNTEREVIDENCE_REQUIRED = true
+INFERENCE_STATUS = UNVERIFIED
+GUIDANCE_STATUS = PROPOSAL
+GUIDANCE_MODES = OBSERVE_ONLY,CONSIDER_CHANGE
+AGENCY = RECIPIENT_DECIDES
+NUMERIC_CONFIDENCE = forbidden
+MOTIVE_FIELD = forbidden
+EVIDENCE_RESOLUTION_REQUIRED_BEFORE_SEAL = true
+REFERENCE_EXISTS_DOES_NOT_PROVE_SUPPORT = true
+STRUCTURAL_PATTERN_FLOOR != SEMANTIC_PATTERN_PROOF
+STRUCTURAL_PATTERN_FLOOR_IS_SEMANTIC_PATTERN_PROOF = false
+PERSIST_PLAINTEXT_ALLY1 = false
+ATTENTION_BYPASS = false
+MODEL_GENERATION = out_of_scope
+```
+
+---
+
+## D-047 — ALLY_ADVICE generation v0 is caller-supplied, single-attempt and review-bound
+
+Recorded under verbatim handoff `SRC-043` (T-61) for B-016, additively on top
+of D-046. The completed B-012 corridor remains exactly as it is: `ALLY1`,
+HLET1 and HENV1 bytes, domains and bindings are untouched, and manually
+authored advice still travels `EvidenceResolvedAllyAdvice -> ally_to_human_private`
+without any new requirement.
+
+An autonomous ALLY_ADVICE generator v0 never discovers its own history. The
+caller supplies one bounded, in-memory `ReflectionCorpus`; the generation
+layer may inspect only the objects present in that corpus and performs no
+implicit access to any memory, conversation, mail, filesystem, network, store
+or profile. The corpus is intentionally small: at most 64 items, 8192 UTF-8
+bytes per item content and 131072 bytes of total content; overflow refuses
+with a named corpus-bound error rather than truncating. Overflow, duplicate
+evidence refs and content outside `PROJECT_OPERATIONAL` all refuse. The
+source-domain marker is an explicit caller assertion, never a classifier
+result: `SOURCE_DOMAIN_DECLARATION != CONTENT_PROOF`. The corpus has one
+domain-separated digest identity over ordered item identities, scopes,
+content bytes and source-domain declarations; the order is normalized
+(evidence ref ascending) so caller ordering is never semantic priority.
+Corpus plaintext is not persisted to obtain the identity.
+
+The generator interface is closed: one bounded result, either `NO_ADVICE` or
+one candidate that must already be a valid `AllyAdvice` under the B-012
+contract (two observations, three distinct observed refs, cited
+counterevidence, `UNVERIFIED` inference, `PROPOSAL` guidance,
+`RECIPIENT_DECIDES`, no numeric confidence, no motive field). A candidate
+whose cited refs leave the supplied corpus refuses with
+`ALLY_GENERATED_REF_OUTSIDE_CORPUS` before any reviewer call. One
+orchestration call performs at most one generator invocation and at most one
+reviewer invocation, with no retry, prompt mutation, self-refinement or
+review-driven optimization loop: repeated automatic optimization against a
+reviewer would become persuasion optimization by another name. A provider
+exception maps to a named generation failure, never to `NO_ADVICE`.
+
+Semantic review is a separate invocation that receives the exact generated
+candidate and the full normalized corpus, and no generator chain-of-thought,
+scratchpad or hidden reasoning. Hidden chain-of-thought is never requested,
+stored or transported; the reviewer returns only a bounded structured verdict
+with concise rationale. The reviewer sees the full corpus, not only the refs
+the generator selected, which is the structural answer to confirmation
+selection. Eight fixed dimensions are reviewed, each with exactly `PASS`,
+`FAIL` or `UNKNOWN`: `OBSERVATION_SUPPORT`, `COUNTEREVIDENCE_ADEQUACY`,
+`SCOPE_DISCIPLINE`, `NO_MOTIVE_INFERENCE`, `NO_FLATTERY`,
+`NO_COMPLIANCE_PRESSURE`, `UNCERTAINTY_ADEQUACY`, `RECIPIENT_AGENCY`. There
+is no score, probability, star rating or weighted total. Approval requires
+every dimension `PASS`; any `FAIL` or `UNKNOWN` fails closed, produces no
+letter and no rewrite. Missing, unknown or duplicate dimensions and report
+refs outside the corpus refuse. The report binds the exact candidate identity,
+the exact corpus identity, the rubric version and bounded rationale; changing
+one corpus item or one candidate byte invalidates the old review.
+
+Success mints a non-transferable `SemanticallyReviewedAllyAdvice` type-state
+through the constructor-only mint pattern already used by B-012: direct
+construction and `dataclasses.replace` transplant refuse, a different
+candidate with an old report refuses, the same candidate against a different
+corpus refuses, and no mint token is retained. The type means only that one
+bounded review invocation found no listed disqualifier in this exact
+candidate against this exact supplied corpus under this rubric. It is not
+good, true, safe, best or novel advice and creates no truth rung, evidence,
+knowledge or promotion.
+
+The generated private adapter accepts only that type-state, reuses the
+unchanged HLET1/HENV1 corridor and exposes no corpus identity or reviewer
+metadata in clear routing fields. Approval does not seal, store, admit
+attention, reserve attention, notify or deliver: every later step remains an
+explicit caller or receiver act, and there is no plaintext corpus or review
+archive. Zero advice remains a first-class successful non-delivery.
+`NOVELTY` remains unresolved by D-005: no novelty score, no sender-declared
+novelty and no model claim that the recipient never noticed something.
+
+```
+SOURCE_CORPUS = EXPLICIT_CALLER_SUPPLIED
+SOURCE_DOMAIN = PROJECT_OPERATIONAL
+IMPLICIT_HISTORY_DISCOVERY = false
+CORPUS_BOUNDED = true
+CORPUS_MAX_ITEMS = 64
+CORPUS_MAX_ITEM_BYTES = 8192
+CORPUS_MAX_TOTAL_CONTENT_BYTES = 131072
+CORPUS_PLAINTEXT_PERSISTENCE = false
+GENERATOR_RESULT = NO_ADVICE | AllyAdvice
+GENERATOR_ATTEMPTS_PER_RUN = 1
+GENERATOR_HIDDEN_COT = forbidden_to_store
+REVIEWER_HIDDEN_COT = forbidden_to_store
+REVIEWER_RECEIVES_GENERATOR_COT = false
+SEMANTIC_DIMENSIONS = OBSERVATION_SUPPORT,COUNTEREVIDENCE_ADEQUACY,SCOPE_DISCIPLINE,NO_MOTIVE_INFERENCE,NO_FLATTERY,NO_COMPLIANCE_PRESSURE,UNCERTAINTY_ADEQUACY,RECIPIENT_AGENCY
+REVIEW_VALUES = PASS | FAIL | UNKNOWN
+APPROVAL_REQUIRES = ALL_PASS
+REVIEWER_PASS_IS_TRUTH = false
+CROSS_MODEL_AGREEMENT_IS_TRUTH = false
+REVIEWER_RECEIVES_FULL_CORPUS = true
+NOVELTY = unresolved
+AUTO_RETRY = false
+AUTO_REWRITE = false
+AUTO_SEAL = false
+AUTO_STORE = false
+AUTO_ATTENTION_ADMISSION = false
+```
+
+---
+
+## D-048 — Reviewed type-state requires an actual reviewer invocation; evidence-bearing PASS cites corpus refs
+
+Recorded additively under verbatim handoff `SRC-044` (T-62) for `T-61` /
+`B-016`, correcting `D-047` without rewriting it or `D-047`'s history. The
+B-016 properties stay exactly as recorded; this entry closes two defects the
+original gate left open. First: `approve_semantic_review` accepted any
+well-formed `SemanticReviewReport`, so a caller could assert all eight `PASS`
+verdicts by hand and mint `SemanticallyReviewedAllyAdvice` with zero reviewer
+invocations — the reviewed type-state then claimed "one bounded review
+invocation found no listed disqualifier" without any invocation. A report is
+data; it is not proof that a review happened. Second: an
+`OBSERVATION_SUPPORT` or `COUNTEREVIDENCE_ADEQUACY` verdict could be `PASS`
+with `evidence_refs = ()`, so an all-`PASS` report could cite no source at
+all, leaving the claimed evidence assessment unauditable.
+
+The corrected boundary is the invocation itself. `run_semantic_review`
+validates the exact B-012 `EvidenceResolvedAllyAdvice` and the exact corpus,
+calls `reviewer.review` exactly once, validates the returned report, and mints
+a non-transferable `ReviewInvocationResult` bound to the exact candidate,
+corpus and report using the constructor-only `InitVar` mint pattern B-012
+already uses. `approve_semantic_review` accepts only that proof; an ordinary
+`SemanticReviewReport` never satisfies the boundary. The generation
+orchestrator uses the same invocation-bound path, so its approved outcome also
+passes through an actual `reviewer.review` call. A reviewer exception or a
+non-report return mints no proof, maps to the existing `ERROR` semantics and
+changes nothing else.
+
+`OBSERVATION_SUPPORT` and `COUNTEREVIDENCE_ADEQUACY` must cite at least one
+evidence ref when their verdict is `PASS`, refused with
+`ALLY_GEN_REVIEW_EVIDENCE_REQUIRED`; every cited ref must still belong to the
+exact corpus. Prose-semantic dimensions stay optional, `FAIL`/`UNKNOWN` are
+never mechanically forced to cite, and a cited ref means only what the
+reviewer says informed the verdict — never semantic proof of entailment.
+`REVIEWER_PASS` still is not truth. The manual B-012 path
+(`EvidenceResolvedAllyAdvice -> ally_to_human_private`) is untouched: this
+boundary applies only to the stronger generated-and-reviewed claim.
+
+```
+SEMANTIC_REVIEW_REPORT = DATA_NOT_INVOCATION_PROOF
+REVIEWED_TYPE_MINT_REQUIRES = ACTUAL_REVIEWER_INVOCATION
+CALLER_CONSTRUCTED_REPORT_CAN_MINT_REVIEWED_STATE = false
+REVIEW_INVOCATIONS_PER_RUN <= 1
+OBSERVATION_SUPPORT_PASS_REQUIRES_REVIEW_EVIDENCE_REF = true
+COUNTEREVIDENCE_ADEQUACY_PASS_REQUIRES_REVIEW_EVIDENCE_REF = true
+REVIEW_EVIDENCE_REF_MEANS = REVIEWER_CITED_SOURCE_NOT_SEMANTIC_PROOF
+REVIEWER_PASS_IS_TRUTH = false
+MANUAL_B012_PATH_UNCHANGED = true
+```
+
+---
+
+## D-049 — EVENT_REF declares the underlying event; generated repeated-pattern advice needs two distinct declared events
+
+Recorded additively after the T-63 live experiment, under verbatim handoff
+`SRC-049` (T-66) for B-016, correcting neither D-047 nor D-048 and rewriting
+nothing. Independent post-experiment review found the epistemic gap the
+artifact floor could not see: the registered G2 fixture was ONE incident
+represented by three distinct evidence refs (a log, a reproducer test and a
+review note), and in both role-swapped replicates the gate approved a
+candidate that asserted repetition. `EVIDENCE_REF` identifies one evidence
+artifact and never identified the underlying operational event, so
+`DISTINCT_EVIDENCE_ARTIFACTS` could not imply
+`DISTINCT_UNDERLYING_EVENTS`. This is a protocol-level gap for autonomous
+generation, not a model ranking, not a reviewer-accuracy result and not
+evidence about real behaviour.
+
+`ReflectionItem` gains `EVENT_REF`: canonical `sha256:<64 lowercase hex>`,
+supplied explicitly by the authorized corpus builder, never inferred from
+CONTENT, never generated by a model, never derived from OBSERVED_AT and never
+the EVIDENCE_REF. Several artifacts may share one EVENT_REF (the intended
+representation of one incident's paperwork); duplicate EVIDENCE_REF still
+refuses; in v0 each item has exactly one EVENT_REF and no event graph, causal
+DAG, confidence or fuzzy grouping exists. `EVENT_REF` is bound into
+`CORPUS_ID`, so regrouping artifacts across events changes the corpus identity
+and invalidates any old report, invocation proof or reviewed type-state through
+the existing bindings.
+
+`EVENT_REF` is still an assertion, never truth: `EVENT_REF_IS_TRUTH = false`
+and `DISTINCT_EVENT_REFS != SEMANTIC_PATTERN_PROOF`. The gate improves
+structural independence only; it does not solve epistemology by hashing
+harder.
+
+Before any semantic reviewer invocation, an autonomously generated candidate's
+OBSERVED refs are mapped through the exact corpus and must span at least
+`MIN_DISTINCT_OBSERVED_EVENTS = 2` distinct EVENT_REF values; otherwise the
+result is `ALLY_GEN_INSUFFICIENT_DISTINCT_EVENTS` with zero reviewer calls.
+The existing B-012 floors (>=2 observations, >=3 distinct observed refs) stay
+in force, and COUNTEREVIDENCE is not measured by this gate. The manual B-012
+contract is unchanged. Generator and reviewer prompts state the event grouping
+(artifacts sharing one EVENT_REF are one declared occurrence; artifact count is
+not event count), but prompt compliance is not authority — the mechanical gate
+decides. The T-63 artifact, registration and interpretation remain exactly as
+recorded; the experiment stays valid as historical evidence about the old
+subject, and a future live run requires a new registration because the corpus
+schema changed.
+
+```
+EVIDENCE_REF_MEANS = EVIDENCE_ARTIFACT_IDENTITY
+EVENT_REF_MEANS = CALLER_DECLARED_UNDERLYING_OPERATIONAL_EVENT
+EVENT_REF_IS_TRUTH = false
+EVENT_REF_INFERRED_AUTOMATICALLY = false
+REFLECTION_ITEM_EVENT_REF_REQUIRED = true
+CORPUS_ID_BINDS_EVENT_REF = true
+MIN_DISTINCT_OBSERVED_EVENTS = 2
+DISTINCT_EVENT_REFS_PROVE_PATTERN = false
+GENERATED_PATTERN_ELIGIBILITY = EXISTING_B012_ARTIFACT_FLOOR AND MIN_DISTINCT_OBSERVED_EVENTS
+INSUFFICIENT_DISTINCT_EVENTS_REVIEWER_CALLS = 0
+MANUAL_B012_SEMANTICS_CHANGED = false
+T63_ARTIFACT_REWRITTEN = false
+```
+
+## D-050 — the real-project corpus builder is explicit-only, mints its identities and proves no completeness
+
+Recorded under verbatim handoff `SRC-050` (T-67) for `B-017`, additively on top
+of D-046/D-047/D-048/D-049 and rewriting nothing. D-049 defined `EVENT_REF` as
+a caller-declared assertion supplied by "the authorized corpus builder" and
+left that builder undefined. This entry freezes the missing authority boundary
+with a separate module (`saimail/project_corpus.py`); no B-016 type, binding or
+byte changes.
+
+The builder performs zero source discovery. One immutable
+`ProjectCorpusRequest` is data, never a location to crawl: it carries a
+canonical caller-supplied `PROJECT_SCOPE` (`project:saimail` form, never
+inferred from a working directory, repository name or remote), an exact
+half-open UTC selection window (`WINDOW_START <= OBSERVED_AT < WINDOW_END`,
+never clamped, never auto-excluded), the frozen selection basis
+`EXPLICIT_BOUNDED_SET`, explicitly supplied immutable `ProjectArtifact`
+captures and explicit `ProjectEventDeclaration` groupings. There is no model,
+no path parameter, no network endpoint and no "auto" flag. The request refuses
+`COMPLETE`, `ALL_RELEVANT`, `EXHAUSTIVE` and `UNBIASED` as machine-trusted v0
+values; completeness stays `NOT_PROVEN`, and no confidence percentage exists.
+Scope, window, source-ref uniqueness and shapes are validated before the
+builder proves the exact event partition.
+
+A `ProjectArtifact` carries `PROJECT_SCOPE`, a member of the frozen v0
+`PROJECT_OPERATIONAL` source-kind vocabulary (`OPERATOR_DECISION`,
+`SPEC_DECISION`, `IMPLEMENTATION_CHANGE`, `TEST_RESULT`, `REVIEW_FINDING`,
+`INCIDENT`, `RUNTIME_OBSERVATION` — provenance metadata, never a truth rank),
+a bounded explicit `SOURCE_REF`, one explicit canonical UTC `OBSERVED_AT` and
+bounded exact UTF-8 `CONTENT` preserved byte-for-byte (no strip, summary,
+rewrite, model normalisation, spell correction or translation; a trailing
+newline difference stays a real difference). The caller cannot write
+`EVIDENCE_REF`: the builder mints it from a domain-separated construction over
+scope, source kind, source ref and the exact content digest, so identical text
+under distinct sources stays distinct and a changed capture changes identity.
+Changing only `OBSERVED_AT` leaves `EVIDENCE_REF` stable while `BUILD_ID` and
+the B-016 `CORPUS_ID` change. Within one build one upstream source appears
+exactly once: an exact duplicate refuses `PROJECT_SOURCE_REF_DUPLICATE` and the
+same `SOURCE_REF` with different content refuses `PROJECT_SOURCE_REF_CONFLICT`;
+two versions of one upstream identity are never silently accepted.
+
+Grouping stays explicit: `ProjectEventDeclaration` members are minted
+`EVIDENCE_REF` values only (never `SOURCE_REF`), canonicalized and free of
+duplicates; an empty event refuses. A caller cannot pass an event ref at all —
+the builder mints `EVENT_REF` from the exact canonical group
+(`EVENT_GROUPING_AUTHORITY = EXPLICIT_CALLER_DECLARATION`,
+`EVENT_GROUPING_IS_TRUTH = false`), so the same grouping mints the same
+identity and any membership change or regrouping mints a different one. No
+ticket id, commit id, filename, directory, path, timestamp, timestamp
+distance, exception string, source kind, text resemblance, embedding, regex or
+model judgement ever groups or merges artifacts. For v0 the declarations must
+form an exact partition of the selected set: an unassigned artifact, an
+artifact in two events, an unknown member and an empty event all refuse with
+named codes, and the grouping is never repaired automatically. A
+single-artifact event is valid; the existing B-016 `>= 2` distinct declared
+event floor still decides recurrence eligibility.
+
+`BUILD_ID` is a domain-separated identity bound to policy version, scope,
+window, selection basis, canonical artifact descriptors and canonical event
+declarations, deterministic against caller list order; it answers what exact
+builder input and policy produced this corpus. `CORPUS_ID_REUSES = B016`.
+`BuiltProjectCorpus` is the non-transferable proof: minted only by
+`build_project_corpus` after validation, partition proof, event-ref
+computation, `ReflectionCorpus` construction and `BUILD_ID` construction,
+through the constructor-only `InitVar` mint pattern B-012/B-016 already use.
+Direct construction and `dataclasses.replace` refuse
+(`PROJECT_CORPUS_PROOF_FORGED`), and the bound identity and corpus are
+recomputed from the bound request, so an old proof cannot transfer across a
+different corpus, grouping, window or artifact set. The proof exposes bounded
+audit metadata (build/corpus ids, scope, window, counts, capture-to-evidence
+and evidence-to-event mappings, source kind per evidence ref); it is not
+automatically persisted and carries no hidden model state because there is no
+model. `require_built_project_corpus` is the narrow future-real-pilot gate
+(`PROJECT_CORPUS_BUILDER_PROOF_REQUIRED`); no pilot runner is built here.
+
+The generic B-016 path stays generic: an arbitrary `ReflectionCorpus` remains
+valid for synthetic experiments and the manual B-012 path is unchanged. The
+builder ingests no real project, SAIPEN or Git history in this wave, makes no
+live model call and no network access, and persists no corpus plaintext.
+
+```
+REAL_PROJECT_CORPUS_BUILDER = EXPLICIT_ONLY
+IMPLICIT_DISCOVERY = false
+PROJECT_SCOPE = EXPLICIT_CALLER_SUPPLIED
+SOURCE_DOMAIN = PROJECT_OPERATIONAL
+SELECTION_BASIS = EXPLICIT_BOUNDED_SET
+GLOBAL_COMPLETENESS_PROVEN = false
+SOURCE_REF_IS_EVENT_IDENTITY = false
+FILE_PATH_IS_EVENT_IDENTITY = false
+TICKET_ID_IS_EVENT_IDENTITY = false
+TIMESTAMP_IS_EVENT_IDENTITY = false
+EVIDENCE_REF_MINTED_BY = PROJECT_CORPUS_BUILDER
+EVENT_REF_MINTED_BY = PROJECT_CORPUS_BUILDER
+EVENT_GROUPING_AUTHORITY = EXPLICIT_CALLER_DECLARATION
+EVENT_GROUPING_IS_TRUTH = false
+EVENT_DECLARATIONS_FORM_EXACT_SELECTED_SET_PARTITION = true
+ONE_ARTIFACT_ONE_EVENT_V0 = true
+BUILD_ID_BINDS = POLICY + SCOPE + WINDOW + ARTIFACTS + EVENT_GROUPING
+CORPUS_ID_REUSES = B016
+REAL_PROJECT_PILOT_REQUIRES_BUILDER_PROOF = future_gate
+AUTO_EVENT_INFERENCE = false
+AUTO_SOURCE_SELECTION = false
+AUTO_FILE_DISCOVERY = false
+AUTO_MODEL_USE = false
+```
+
+---
+
 ## D-038 — TTL expiry is receiver-owned retention: tombstone before delete, no resurrection
 
 Recorded while implementing T-7 under `SRC-026` (the T-7 execution-contract

@@ -1,0 +1,251 @@
+{
+  "registration_version": "STRUCTURED-OUTPUT-CAPABILITY-1",
+  "ticket": "T-73",
+  "source_receipts": [
+    "SRC-058",
+    "SRC-059"
+  ],
+  "routes": {
+    "A": "SAIFREN",
+    "B": "goat/MiniMaxAI/MiniMax-M3"
+  },
+  "probe_order": [
+    "A/BUDGET_4096",
+    "B/BUDGET_4096",
+    "A/JSON_OBJECT",
+    "B/JSON_OBJECT",
+    "A/JSON_SCHEMA",
+    "B/JSON_SCHEMA"
+  ],
+  "probes": [
+    {
+      "probe_id": "A/BUDGET_4096",
+      "route": "A",
+      "requested_model": "SAIFREN",
+      "kind": "BUDGET_4096",
+      "max_tokens": 4096,
+      "response_format_kind": "NONE",
+      "response_format": null
+    },
+    {
+      "probe_id": "B/BUDGET_4096",
+      "route": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "kind": "BUDGET_4096",
+      "max_tokens": 4096,
+      "response_format_kind": "NONE",
+      "response_format": null
+    },
+    {
+      "probe_id": "A/JSON_OBJECT",
+      "route": "A",
+      "requested_model": "SAIFREN",
+      "kind": "JSON_OBJECT",
+      "max_tokens": 128,
+      "response_format_kind": "JSON_OBJECT",
+      "response_format": {
+        "type": "json_object"
+      }
+    },
+    {
+      "probe_id": "B/JSON_OBJECT",
+      "route": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "kind": "JSON_OBJECT",
+      "max_tokens": 128,
+      "response_format_kind": "JSON_OBJECT",
+      "response_format": {
+        "type": "json_object"
+      }
+    },
+    {
+      "probe_id": "A/JSON_SCHEMA",
+      "route": "A",
+      "requested_model": "SAIFREN",
+      "kind": "JSON_SCHEMA",
+      "max_tokens": 128,
+      "response_format_kind": "JSON_SCHEMA",
+      "response_format": {
+        "type": "json_schema",
+        "json_schema": {
+          "name": "saimail_capability_probe",
+          "strict": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "probe": {
+                "type": "string",
+                "enum": [
+                  "OK"
+                ]
+              }
+            },
+            "required": [
+              "probe"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "probe_id": "B/JSON_SCHEMA",
+      "route": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "kind": "JSON_SCHEMA",
+      "max_tokens": 128,
+      "response_format_kind": "JSON_SCHEMA",
+      "response_format": {
+        "type": "json_schema",
+        "json_schema": {
+          "name": "saimail_capability_probe",
+          "strict": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "probe": {
+                "type": "string",
+                "enum": [
+                  "OK"
+                ]
+              }
+            },
+            "required": [
+              "probe"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  ],
+  "context": {
+    "kind": "SYNTHETIC_PROJECT_OPERATIONAL_FILLER",
+    "contains_project_content": false,
+    "contains_b018_corpus": false,
+    "generator": "synthetic_context_prompt(): deterministic SYNTHETIC_EVENT_NNNN lines",
+    "prompt_sha256": "0559b6e5583de1ef45559a469fdae6ee407d478ef2aecfd8b5a35f1653d9f4fc",
+    "prompt_bytes": 24829,
+    "local_prompt_tokens": 7734,
+    "local_estimator": "lab.saifren_run.estimate_tokens (tiktoken o200k_base)",
+    "corridor": [
+      7500,
+      8300
+    ],
+    "historical_gateway_prompt_tokens": {
+      "A": 12065,
+      "B": 10973
+    },
+    "comparability_bands": {
+      "low": 0.85,
+      "high": 1.15
+    },
+    "tuning_after_live_calls": false
+  },
+  "prompts": {
+    "tiny_prompt_sha256": "ad900e8a8650bbbc6dbb50eac1547251fa3e779039dc2897ea166a3fc4ca57e3",
+    "tiny_prompt_bytes": 67,
+    "tiny_prompt_text": "Reply with exactly one JSON object and nothing else: {\"probe\":\"OK\"}",
+    "p1_response_requirement": "{\"probe\":\"OK\"}"
+  },
+  "budget": {
+    "max_live_calls": 6,
+    "calls_per_route": 3,
+    "retries": 0,
+    "repairs": 0,
+    "replacements": 0,
+    "fallbacks": 0,
+    "discovery": false,
+    "preflight_calls": 0
+  },
+  "result_vocabulary": [
+    "AUTH_REFUSED",
+    "NOT_RUN",
+    "REQUEST_ACCEPTED_CONFORMING",
+    "REQUEST_ACCEPTED_NONCONFORMING",
+    "REQUEST_REJECTED",
+    "TRANSPORT_ERROR"
+  ],
+  "classification_rules": [
+    "NOT_RUN when the probe was not dispatched (budget, auth stop or gateway stop)",
+    "AUTH_REFUSED when HTTP status is 401 or 403; stops the remaining experiment",
+    "REQUEST_ACCEPTED_CONFORMING when the request was accepted and the visible output is exactly one JSON object with only the key probe equal to OK",
+    "REQUEST_ACCEPTED_NONCONFORMING when the request was accepted and the visible output does not conform, including an empty visible output",
+    "REQUEST_REJECTED when a capability-related 4xx status is recorded",
+    "TRANSPORT_ERROR for every other failure (unreadable response, gateway error body, timeout, connection or harness failure)",
+    "REQUEST_ACCEPTANCE and OUTPUT_CONFORMANCE are reported separately; one conforming sample never proves stable enforcement"
+  ],
+  "enforcement": {
+    "native_enforcement_proven": false,
+    "reason": "one conforming response cannot prove that every future response is constrained",
+    "real_4096_run_safe_with_current_local_output_path": false,
+    "real_4096_reason": "the local parser-input projection caps visible output at 4000 characters; P1's tiny response does not prove the parser receives an entire future 4096-token generation"
+  },
+  "local_output_cap_chars": 4000,
+  "artifacts": {
+    "dry": "lab/out/structured_output_capability_dry_run.json",
+    "artifact": "lab/out/structured_output_capability_<UTCSTAMP>.json",
+    "report": "lab/out/STRUCTURED_OUTPUT_CAPABILITY_REPORT_<UTCSTAMP>.md",
+    "analysis": "lab/analysis/structured_output_capability_<UTCSTAMP>.md"
+  },
+  "attempt_marker": ".saipen/evidence/T-73-capability-live-attempt.json",
+  "invariants": {
+    "strict_parser_unchanged": true,
+    "production_semantics_unchanged": true,
+    "real_corpus_transmitted": false,
+    "output_repair": false,
+    "fallback": false,
+    "retry": false,
+    "model_ranking": false,
+    "mail": false,
+    "attention": false,
+    "publication": false
+  },
+  "provider_retention": "NOT_VERIFIED_BY_SAIMAIL",
+  "protected_files": [
+    {
+      "path": "lab/ally_generation_live.py",
+      "sha256": "79f9ae4e651509458f6acc8eda3b7814ae0ad67733afdbb45c27305810f3fc4c"
+    },
+    {
+      "path": "lab/saifren_run.py",
+      "sha256": "8cc77304d91b768218aee6b809a5b49dd0972ea1fef498492388b3f6d5e6b92a"
+    },
+    {
+      "path": "lab/parse_shape.py",
+      "sha256": "db84aa89ac35c75fa98012b604232bb7221458a842f1a9d3da1bd796240a5592"
+    },
+    {
+      "path": "lab/project_corpus_generation_pilot.py",
+      "sha256": "0b5c59f6f7cc0c5248adc17b95236f42c7d26088912afcdc695866fe2954a050"
+    },
+    {
+      "path": "saimail/ally_advice.py",
+      "sha256": "637236737b3e24932cb5b7f3efe1f093542566e7f102c9695e830b31bd8a3673"
+    },
+    {
+      "path": "saimail/ally_generation.py",
+      "sha256": "db5aac15b3fb9725b39eb101e2abebbb9a23bba10de80c9e1a375bee69a1b117"
+    },
+    {
+      "path": "saimail/credentials.py",
+      "sha256": "94a7bae17a2a0147dc4ee72958cdf830f701f1bf84ec10b98419b7e8513aefab"
+    },
+    {
+      "path": "saimail/publish.py",
+      "sha256": "07c992f1a4b38b3a82e21d26b1c743f473e8ac344295ad9b4f0ca963ba0a1097"
+    },
+    {
+      "path": "saimail/project_corpus.py",
+      "sha256": "1d74fd9df9726e5a86de1fd614ab1667b823d580f6250b5ae697f7d999d86270"
+    },
+    {
+      "path": "saimail/acceptance.py",
+      "sha256": "be219cb044135d3c674ba210ececde175f7eb754be1ffc9d77f801069e087b3e"
+    },
+    {
+      "path": "saimail/human_attention.py",
+      "sha256": "26bfb2b45d2647e6b5f9ae0c4e0799e14522013e2a39340321bd06b2488cc208"
+    }
+  ]
+}

@@ -19,7 +19,7 @@ from typing import Callable, Iterable, Optional, Tuple
 from sailang.errors import SailangError
 
 from . import envelope, publish
-from .postoffice import PostOffice
+from .postoffice import PostOffice, _OsFileLock
 
 FORMAT = "LEG1"
 LEGACY_KIND = "EXPERIENCE"
@@ -40,7 +40,14 @@ ALREADY_ADOPTED = "ALREADY_ADOPTED"
 
 LEGACY_ENTRY_CONFLICT = "LEGACY_ENTRY_CONFLICT"
 LEGACY_ENTRY_CORRUPT = "LEGACY_ENTRY_CORRUPT"
+LEGACY_PARTIAL_ADOPTION_REQUIRES_AUTHENTICATED_RETRY = "LEGACY_PARTIAL_ADOPTION_REQUIRES_AUTHENTICATED_RETRY"
+LEGACY_RECOVERY_AUTHENTICATION_REQUIRED = "LEGACY_RECOVERY_AUTHENTICATION_REQUIRED"
 LEGACY_CONTEXT_ENTRY_TOO_LARGE = "LEGACY_CONTEXT_ENTRY_TOO_LARGE"
+
+ADOPTION_INTENT_NAME = "adoption.intent"
+RECOVERY_REPAIRED = "RECOVERY_REPAIRED"
+RECOVERY_ALREADY_COMPLETE = "RECOVERY_ALREADY_COMPLETE"
+RECOVERY_REQUIRES_AUTHENTICATED_RETRY = "RECOVERY_REQUIRES_AUTHENTICATED_RETRY"
 
 _ENTRY_DOMAIN = b"SAIMAIL-LEGACY1-ENTRY\x00"
 _REF_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
@@ -389,6 +396,13 @@ class AdoptionResult:
     path: Path
 
 
+@dataclass(frozen=True)
+class RecoveryResult:
+    status: str
+    path: Path
+    entry: Optional[LegacyEntry] = None
+
+
 def _canonical_json(value: dict) -> bytes:
     return (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
             + "\n").encode("utf-8")
@@ -426,6 +440,10 @@ class LegacyStore:
         self.office = office
         self.root = office.mail_root / "legacy" / office.seat
         self.root.mkdir(parents=True, exist_ok=True)
+
+    def _adoption_lock(self) -> _OsFileLock:
+        """Serialize one receiver's intent/pair publication across processes."""
+        return _OsFileLock(self.root / ".adoption.lock", busy_code="LEGACY_LOCK_TIMEOUT")
 
     def entry_path(self, entry_id: str) -> Path:
         if not isinstance(entry_id, str) or not _REF_RE.fullmatch(entry_id):
@@ -467,6 +485,79 @@ class LegacyStore:
                     "legacy provenance disagrees with the receiver-owned source index")
         return LegacyEntry(packet, provenance, binding=_VALIDATED_ENTRY)
 
+    def _intent_bytes(self, authenticated: AuthenticatedLegacy, received_at: str) -> bytes:
+        return _canonical_json({
+            "schema": 1,
+            "legacy_entry_id": authenticated.entry_id,
+            "legacy_content_id": authenticated.packet.id,
+            "source_envelope_id": authenticated.source_envelope_id,
+            "source_from": authenticated.source_from,
+            "source_from_kid": authenticated.source_from_kid,
+            "recipient": authenticated.recipient,
+            "received_at": received_at,
+        })
+
+    @staticmethod
+    def _intent_matches(raw: bytes, authenticated: AuthenticatedLegacy,
+                        received_at: str) -> bool:
+        try:
+            value = json.loads(raw.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            _reject(LEGACY_ENTRY_CORRUPT, "adoption.intent is not canonical JSON")
+        expected = {
+            "schema": 1,
+            "legacy_entry_id": authenticated.entry_id,
+            "legacy_content_id": authenticated.packet.id,
+            "source_envelope_id": authenticated.source_envelope_id,
+            "source_from": authenticated.source_from,
+            "source_from_kid": authenticated.source_from_kid,
+            "recipient": authenticated.recipient,
+            "received_at": received_at,
+        }
+        if value != expected or _canonical_json(value) != raw:
+            _reject(LEGACY_ENTRY_CONFLICT,
+                    "adoption.intent differs from this authenticated adoption; no overwrite")
+        return True
+
+    def _complete_partial(self, directory: Path, authenticated: AuthenticatedLegacy,
+                          row: dict, *, status: str = RECOVERY_REPAIRED) -> AdoptionResult:
+        intent_path = directory / ADOPTION_INTENT_NAME
+        try:
+            intent = intent_path.read_bytes()
+        except OSError:
+            _reject(LEGACY_PARTIAL_ADOPTION_REQUIRES_AUTHENTICATED_RETRY,
+                    "partial legacy entry has no readable adoption intent")
+        self._intent_matches(intent, authenticated, row["received_at"])
+        packet_path = directory / "packet.leg1"
+        provenance_path = directory / "provenance.json"
+        publish.publish_immutable(packet_path, authenticated.packet.render(),
+                                  conflict_code=LEGACY_ENTRY_CONFLICT)
+        raw = {
+            "schema": 1,
+            "legacy_entry_id": authenticated.entry_id,
+            "legacy_content_id": authenticated.packet.id,
+            "source_envelope_id": authenticated.source_envelope_id,
+            "source_from": authenticated.source_from,
+            "source_from_kid": authenticated.source_from_kid,
+            "recipient": authenticated.recipient,
+            "received_at": row["received_at"],
+            "adopted_at": self.office.clock(),
+        }
+        if provenance_path.is_file():
+            existing = self._read_entry(directory)
+            self._require_same_adoption(existing, authenticated, row["received_at"])
+            return AdoptionResult(status, existing, directory)
+        try:
+            publish.publish_immutable(provenance_path, _canonical_json(raw),
+                                      conflict_code=LEGACY_ENTRY_CONFLICT)
+        except SailangError as exc:
+            if exc.code != LEGACY_ENTRY_CONFLICT:
+                raise
+            existing = self._read_entry(directory)
+            self._require_same_adoption(existing, authenticated, row["received_at"])
+            return AdoptionResult(status, existing, directory)
+        return AdoptionResult(status, self._read_entry(directory), directory)
+
     def adopt(self, authenticated: AuthenticatedLegacy) -> AdoptionResult:
         """Explicitly publish one authenticated packet; opening alone never calls this."""
         if not isinstance(authenticated, AuthenticatedLegacy):
@@ -474,6 +565,10 @@ class LegacyStore:
                     "durable adoption requires the payload-bound AuthenticatedLegacy proof")
         if authenticated.recipient != self.office.seat:
             _reject("LEGACY_WRONG_RECIPIENT", "legacy proof belongs to another receiver seat")
+        with self._adoption_lock():
+            return self._adopt_locked(authenticated)
+
+    def _adopt_locked(self, authenticated: AuthenticatedLegacy) -> AdoptionResult:
         row = self.office.read_index_row(authenticated.source_envelope_id)
         if row is None:
             _reject("LEGACY_SOURCE_NOT_RECEIVED",
@@ -494,15 +589,31 @@ class LegacyStore:
         directory = self.entry_path(entry_id)
         packet_path = directory / "packet.leg1"
         provenance_path = directory / "provenance.json"
+        intent_path = directory / ADOPTION_INTENT_NAME
         if packet_path.is_file() and provenance_path.is_file():
             if packet_path.read_bytes() != authenticated.packet.render():
                 _reject(LEGACY_ENTRY_CONFLICT,
                         "committed packet.leg1 differs at this entry identity; no overwrite")
+            if intent_path.is_file():
+                self._intent_matches(intent_path.read_bytes(), authenticated, row["received_at"])
             existing = self._read_entry(directory)
             self._require_same_adoption(existing, authenticated, row["received_at"])
             return AdoptionResult(ALREADY_ADOPTED, existing, directory)
 
+        was_existing = directory.exists()
         directory.mkdir(parents=True, exist_ok=True)
+        intent = self._intent_bytes(authenticated, row["received_at"])
+        if was_existing and not intent_path.exists() \
+                and not (packet_path.is_file() and provenance_path.is_file()):
+            _reject(LEGACY_PARTIAL_ADOPTION_REQUIRES_AUTHENTICATED_RETRY,
+                    "legacy entry predates adoption intent; retry the authenticated adoption explicitly")
+        if intent_path.exists():
+            if not (packet_path.is_file() and provenance_path.is_file()):
+                return self._complete_partial(directory, authenticated, row)
+            self._intent_matches(intent_path.read_bytes(), authenticated, row["received_at"])
+        else:
+            publish.publish_immutable(intent_path, intent, conflict_code=LEGACY_ENTRY_CONFLICT)
+
         packet_outcome = publish.publish_immutable(
             packet_path, authenticated.packet.render(), conflict_code=LEGACY_ENTRY_CONFLICT)
         if provenance_path.is_file():
@@ -553,6 +664,53 @@ class LegacyStore:
                 or p.received_at != received_at):
             _reject(LEGACY_ENTRY_CONFLICT,
                     "committed legacy entry differs from this adoption; no overwrite")
+
+    def recover(self, authenticated: Optional[AuthenticatedLegacy] = None) -> Tuple[RecoveryResult, ...]:
+        """Explicitly inspect and, when proven, complete partial adoptions.
+
+        The intent is receiver-owned durable evidence that an adoption began;
+        it is not authentication. An authenticated retry is still required to
+        recreate missing packet/provenance bytes. Older partial directories
+        without an intent are reported, never guessed or silently deleted.
+        """
+        with self._adoption_lock():
+            return self._recover_locked(authenticated)
+
+    def _recover_locked(self, authenticated: Optional[AuthenticatedLegacy]) -> Tuple[RecoveryResult, ...]:
+        results = []
+        for directory in self.root.iterdir():
+            if not directory.is_dir() or directory.name.startswith("."):
+                continue
+            packet_path = directory / "packet.leg1"
+            provenance_path = directory / "provenance.json"
+            if packet_path.is_file() and provenance_path.is_file():
+                results.append(RecoveryResult(RECOVERY_ALREADY_COMPLETE, directory,
+                                              self._read_entry(directory)))
+                continue
+            intent_path = directory / ADOPTION_INTENT_NAME
+            if not intent_path.is_file() or authenticated is None:
+                results.append(RecoveryResult(RECOVERY_REQUIRES_AUTHENTICATED_RETRY,
+                                              directory))
+                continue
+            try:
+                intent = json.loads(intent_path.read_text(encoding="utf-8"))
+                source_id = intent["source_envelope_id"]
+            except (OSError, KeyError, TypeError, json.JSONDecodeError):
+                _reject(LEGACY_ENTRY_CORRUPT,
+                        f"partial legacy entry {directory.name} has invalid adoption intent")
+            row = self.office.read_index_row(source_id)
+            if row is None:
+                _reject(LEGACY_ENTRY_CORRUPT,
+                        "adoption intent names no receiver-owned source index row")
+            if authenticated.entry_id != intent.get("legacy_entry_id"):
+                results.append(RecoveryResult(RECOVERY_REQUIRES_AUTHENTICATED_RETRY,
+                                              directory))
+                continue
+            adopted = self._complete_partial(directory, authenticated, row)
+            results.append(RecoveryResult(RECOVERY_REPAIRED, directory, adopted.entry))
+        return tuple(results)
+
+    recover_partial_adoptions = recover
 
     def all(self) -> Tuple[LegacyEntry, ...]:
         entries = []
@@ -715,7 +873,10 @@ def build_successor_context(subject: str, new_task_scope: str, *, store: LegacyS
 
 __all__ = [
     "ADOPTED", "ALREADY_ADOPTED", "AuthenticatedLegacy", "AdoptionResult",
-    "EvidenceReference", "LEGACY_CONTEXT_ENTRY_TOO_LARGE", "LegacyEntry",
+    "ADOPTION_INTENT_NAME", "EvidenceReference", "LEGACY_CONTEXT_ENTRY_TOO_LARGE",
+    "LEGACY_PARTIAL_ADOPTION_REQUIRES_AUTHENTICATED_RETRY", "LegacyEntry",
+    "RecoveryResult", "RECOVERY_ALREADY_COMPLETE", "RECOVERY_REPAIRED",
+    "RECOVERY_REQUIRES_AUTHENTICATED_RETRY",
     "LegacyPacket", "LegacyProvenance",
     "LegacyStore", "REFERENCED", "RESOLVED", "SuccessorContext", "UNRESOLVED",
     "WATCH_NEXT_UNVERIFIED", "authenticate_legacy", "build_successor_context",

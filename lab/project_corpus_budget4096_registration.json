@@ -1,0 +1,226 @@
+{
+  "registration_version": "PROJECT-CORPUS-BUDGET4096-1",
+  "ticket": "T-74",
+  "source_receipts": [
+    "SRC-060",
+    "SRC-061"
+  ],
+  "contract": {
+    "path": "spec/11-STRICT-SCHEMA-OBSERVABILITY-v0.md",
+    "sha256": "6c681ce35645203f2ed098d1cf3f962f58544f78590a6195939965a0616aebf2"
+  },
+  "b018_input": {
+    "registration_id": "sha256:dfd8b48dded34de8426181f309032da31c86e83f675412add15076fc421a096f",
+    "build_id": "sha256:0e05460aae1645b6bdfeec887f02a978a185026422faf74c90238f0938bd4e35",
+    "corpus_id": "sha256:b009bdf3a8efd28f29be76d0dfd9c2809c0e7dd010af8e92c94a97fbeeec19ac",
+    "artifact_count": 8,
+    "event_count": 5,
+    "scope": "project:saimail"
+  },
+  "routes": {
+    "A": "SAIFREN",
+    "B": "goat/MiniMaxAI/MiniMax-M3"
+  },
+  "roles": [
+    {
+      "replicate": 1,
+      "generator": "A",
+      "reviewer": "B"
+    },
+    {
+      "replicate": 2,
+      "generator": "B",
+      "reviewer": "A"
+    }
+  ],
+  "budget": {
+    "max_live_calls": 6,
+    "probe_max": 2,
+    "generation_max": 2,
+    "review_max": 2,
+    "retries": 0,
+    "repair_calls": 0,
+    "replacements": 0,
+    "fallbacks": 0
+  },
+  "token_budgets": {
+    "probe_max_tokens": 16,
+    "generator_max_tokens": 4096,
+    "reviewer_max_tokens": 2048,
+    "scope": "per_function_remote_budget; never one global max_tokens"
+  },
+  "response_format": {
+    "generator": "ABSENT",
+    "reviewer": "ABSENT",
+    "probe": "ABSENT",
+    "json_object": false,
+    "json_schema": false,
+    "this_run_is": "BUDGET_ONLY_ARM"
+  },
+  "prompts": {
+    "generator_template_sha256": "f2eb95c23b8302ab408624c864a78609b25541771a656a5039d3d578cf6608d2",
+    "reviewer_template_sha256": "6c64136d75bbd176e79e0ffc87f9aa19a4308c4cf2b2f98826fdd7bae291afed",
+    "t71_max_tokens": 2048,
+    "legacy_max_output_chars": 4000,
+    "temperature": "NOT_SENT",
+    "semantic_prompt_change": "NONE",
+    "chain_of_thought": "NOT_REQUESTED"
+  },
+  "deliberate_changes_from_t71": [
+    "generator max_tokens 2048 -> 4096 (the single experimental variable)",
+    "LAB-only ephemeral full-visible-output parser path replaces the 4000-character parser-input projection",
+    "registration-bound exclusive live-attempt marker"
+  ],
+  "full_output_contract": {
+    "full_visible_output_definition": "the entire assistant-visible textual content extracted from the accepted provider response AFTER the existing inline reasoning-tag removal semantics and BEFORE the historical 4000-character projection",
+    "is_not": [
+      "raw HTTP body",
+      "hidden reasoning fields",
+      "reasoning_details",
+      "provider internals"
+    ],
+    "allow_list_philosophy": "PRESERVED",
+    "complete_or_refuse": true,
+    "truncate_and_parse": false,
+    "legacy_projection_would_truncate_reported_as": "metadata_only",
+    "ephemeral_equals_cryptographic_memory_erasure": false,
+    "durable_guarantee": "NO_DURABLE_PLAINTEXT_PERSISTENCE"
+  },
+  "invariants": {
+    "strict_parser_unchanged": true,
+    "production_semantics_unchanged": true,
+    "generic_4000_projection_unchanged": true,
+    "corpus_refresh": false,
+    "output_repair": false,
+    "participant_replacement": false,
+    "advice_presentation": false,
+    "structured_output": false,
+    "mail": false,
+    "attention": false,
+    "publication": false
+  },
+  "provider_retention": "NOT_VERIFIED_BY_SAIMAIL",
+  "historical_shape": "UNKNOWN_BYTES_DISCARDED",
+  "protected_files": [
+    {
+      "path": "lab/saifren_run.py",
+      "sha256": "8cc77304d91b768218aee6b809a5b49dd0972ea1fef498492388b3f6d5e6b92a"
+    },
+    {
+      "path": "lab/ally_generation_live.py",
+      "sha256": "79f9ae4e651509458f6acc8eda3b7814ae0ad67733afdbb45c27305810f3fc4c"
+    },
+    {
+      "path": "lab/project_corpus_generation_pilot.py",
+      "sha256": "0b5c59f6f7cc0c5248adc17b95236f42c7d26088912afcdc695866fe2954a050"
+    },
+    {
+      "path": "lab/parse_shape.py",
+      "sha256": "db84aa89ac35c75fa98012b604232bb7221458a842f1a9d3da1bd796240a5592"
+    },
+    {
+      "path": "lab/project_corpus_pilot.py",
+      "sha256": "61395e7404853686b806ec5195e56d3bb8f536d3f6d8a29a2110fff6a97f70af"
+    },
+    {
+      "path": "lab/project_corpus_pilot_registration.json",
+      "sha256": "dfd8b48dded34de8426181f309032da31c86e83f675412add15076fc421a096f"
+    },
+    {
+      "path": "lab/project_corpus_generation_registration.json",
+      "sha256": "5d750a8aaf166a02d7f1bc13c98f7bbde91728dd616083a0d2cde563e1f40b6e"
+    },
+    {
+      "path": "lab/project_corpus_reachability_registration.json",
+      "sha256": "825c0853dc1a5cd73939bbf91201fb1e4f8a8b40a62e0d69a87d0fcd6be7dc16"
+    },
+    {
+      "path": "lab/structured_output_capability_registration.json",
+      "sha256": "e696db4c786ea60b9764b50e924fd93ed505efdf1b8b366529600ac100c4ffdf"
+    },
+    {
+      "path": "spec/11-STRICT-SCHEMA-OBSERVABILITY-v0.md",
+      "sha256": "6c681ce35645203f2ed098d1cf3f962f58544f78590a6195939965a0616aebf2"
+    },
+    {
+      "path": "saimail/ally_generation.py",
+      "sha256": "db5aac15b3fb9725b39eb101e2abebbb9a23bba10de80c9e1a375bee69a1b117"
+    },
+    {
+      "path": "saimail/ally_advice.py",
+      "sha256": "637236737b3e24932cb5b7f3efe1f093542566e7f102c9695e830b31bd8a3673"
+    },
+    {
+      "path": "saimail/project_corpus.py",
+      "sha256": "1d74fd9df9726e5a86de1fd614ab1667b823d580f6250b5ae697f7d999d86270"
+    },
+    {
+      "path": "saimail/credentials.py",
+      "sha256": "94a7bae17a2a0147dc4ee72958cdf830f701f1bf84ec10b98419b7e8513aefab"
+    },
+    {
+      "path": "saimail/publish.py",
+      "sha256": "07c992f1a4b38b3a82e21d26b1c743f473e8ac344295ad9b4f0ca963ba0a1097"
+    },
+    {
+      "path": "saimail/acceptance.py",
+      "sha256": "be219cb044135d3c674ba210ececde175f7eb754be1ffc9d77f801069e087b3e"
+    },
+    {
+      "path": "saimail/human_attention.py",
+      "sha256": "26bfb2b45d2647e6b5f9ae0c4e0799e14522013e2a39340321bd06b2488cc208"
+    },
+    {
+      "path": "lab/out/project_corpus_reachability_live.json",
+      "sha256": "a9c7905af2d8b4a79849e811637946411c47c977c51a99cc8788b2ff75dff43b"
+    },
+    {
+      "path": "lab/out/PROJECT_CORPUS_REACHABILITY_REPORT.md",
+      "sha256": "1d5f01a26030841ba3dcfa678939d33f53ba61eabfcf5fd1279d6e171150d3f7"
+    },
+    {
+      "path": "lab/analysis/project_corpus_reachability.md",
+      "sha256": "1d5f01a26030841ba3dcfa678939d33f53ba61eabfcf5fd1279d6e171150d3f7"
+    },
+    {
+      "path": "lab/analysis/project_corpus_reachability_closure.md",
+      "sha256": "c4ff5cd777750b2cc8170b2cb46170b0adf446e3a872b0ae30b3b5dcead97cf5"
+    },
+    {
+      "path": "lab/out/structured_output_capability_20260920T001732Z.json",
+      "sha256": "687da1f27d95d5287f8d217d172407d76930b73849caa3910528fc18420bb40d"
+    },
+    {
+      "path": "lab/out/STRUCTURED_OUTPUT_CAPABILITY_REPORT_20260920T001732Z.md",
+      "sha256": "511dea08ab7b95be28da62665c45201643a7b6854db6909891dc75a7d69ddc99"
+    },
+    {
+      "path": "lab/analysis/structured_output_capability_20260920T001732Z.md",
+      "sha256": "36de55bdfb9c9c9103c8427d0d1cb2a78a0bfa0e235c63f229b483f28d3d48cd"
+    },
+    {
+      "path": "lab/out/project_corpus_generation_live_20260919T220641Z.json",
+      "sha256": "e9745fcbb84f12f29f8e54c7f891e0b9a61949710e40d48224e9352889caa5d7"
+    },
+    {
+      "path": "lab/out/PROJECT_CORPUS_GENERATION_REPORT_20260919T220641Z.md",
+      "sha256": "f442512fc28d7e31d54b0ae01510c9ee78985dc46024d56873c31b42e4f860b5"
+    },
+    {
+      "path": "lab/analysis/project_corpus_generation_20260919T220641Z.md",
+      "sha256": "f4f2d92c60fbab134ef5b404968a6dc853f3ca2914fe83ae269376b791157617"
+    }
+  ],
+  "attempt_marker": ".saipen/evidence/T-74-budget4096-live-attempt.json",
+  "artifacts": {
+    "dry": "lab/out/project_corpus_budget4096_dry_run.json",
+    "live": "lab/out/project_corpus_budget4096_live_<UTCSTAMP>.json",
+    "report": "lab/out/PROJECT_CORPUS_BUDGET4096_REPORT_<UTCSTAMP>.md",
+    "analysis": "lab/analysis/project_corpus_budget4096_<UTCSTAMP>.md"
+  },
+  "closure": {
+    "validation": "NO_NEW_FAILURES; CURRENT_FAIL CARRIED_DEBT_UNCHANGED when exact baseline failures persist",
+    "stop_after": "ONE_BOUNDED_LIVE_ATTEMPT",
+    "provider_retention": "NOT_VERIFIED_BY_SAIMAIL"
+  }
+}

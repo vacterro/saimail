@@ -178,6 +178,47 @@ def test_generated_and_published_credential_shapes_are_found():
     assert (q.CREDENTIAL_ASSIGNMENT, 3) in categories
 
 
+@pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+@pytest.mark.parametrize("blank", ["", " \t ", "\t\t"])
+@pytest.mark.parametrize("boundary", ["before", "after", "both"])
+def test_assignment_does_not_cross_a_blank_line(newline, blank, boundary):
+    # T-65: a prose label must not consume a constant in the next paragraph.
+    gap = newline + blank + newline
+    before = gap if boundary in ("before", "both") else " "
+    after = gap if boundary in ("after", "both") else " "
+    body = f"scope {LABEL}{before}:{after}SAIMAIL_SCOPE_EXAMPLE".encode("utf-8")
+    assert q.scan(body) == ()
+
+
+@pytest.mark.parametrize("label", ["api_key", "api-key", "access_token",
+                                   "access-token", LABEL, "password", "passwd", "secret"])
+@pytest.mark.parametrize("separator", [":", "="])
+@pytest.mark.parametrize("gap", ["", " \t", "\n", "\r\n", "\r", " \t\n\t "])
+def test_assignment_keeps_inline_and_adjacent_line_values(label, separator, gap):
+    value = "synthetic-value-only"
+    body = f"— ünïcödé —\n{label.upper()}{gap}{separator}{gap}{value}".encode("utf-8")
+    (finding,) = q.scan(body)
+    assert finding.category == q.CREDENTIAL_ASSIGNMENT
+    assert finding.start == body.index(value.encode("utf-8"))
+    assert finding.end == len(body)
+    assert finding.line == body[:finding.start].count(b"\n") + 1
+
+
+@pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+def test_blank_line_does_not_hide_independently_detectable_credentials(newline):
+    value = "s" + "k-" + "A1b2C3d4E5f6G7h8J9k0"
+    body = f"{LABEL}:{newline}{newline}{value}".encode("utf-8")
+    (finding,) = q.scan(body)
+    assert finding.category == q.KNOWN_CREDENTIAL_SHAPE
+    assert body[finding.start:finding.end] == value.encode("utf-8")
+
+
+@pytest.mark.parametrize("value", ["<redacted>", "********", "<placeholder>",
+                                   "${PLACEHOLDER}"])
+def test_assignment_placeholders_stay_exempt(value):
+    assert q.scan(f"{LABEL}:\n  {value}".encode("utf-8")) == ()
+
+
 def test_findings_are_positions_and_never_text():
     value = "s" + "k-" + "Q9w8E7r6T5y4U3i2O1p0"
     findings = q.scan(f"key material {value} end".encode("utf-8"))
@@ -204,10 +245,12 @@ def test_distribution_states_are_a_closed_set_beside_intake_status(records):
     assert q.distribution_state("SRC-007", records) == q.SENSITIVE_QUARANTINED
     assert q.distribution_state(records["SRC-007"].derivative.id, records) == \
         q.SANITIZED_DERIVATIVE
+    # generalized from the single-record corpus: any receipt with a record reads
+    # quarantined, any receipt without one reads normal (T-63, second record)
     for meta in INTAKE.glob("SRC-*.meta.json"):
         receipt = meta.name[: -len(".meta.json")]
-        if receipt != "SRC-007":
-            assert q.distribution_state(receipt, records) == q.ACTIVE_NORMAL, receipt
+        expected = (q.SENSITIVE_QUARANTINED if receipt in records else q.ACTIVE_NORMAL)
+        assert q.distribution_state(receipt, records) == expected, receipt
 
 
 def test_intake_lifecycle_status_decides_nothing_here():
@@ -506,7 +549,11 @@ def test_the_saipen_export_status_is_stated_not_assumed(records):
     stated = records["SRC-007"].evidence["saipen_export"]["status"]
     assert stated == q.saipen_export_status(manifest, records, MEMORY_ROOT)
     assert stated == q.NOT_HONOURED
-    proposed = {**manifest, "quarantine": {"excluded_bodies": ["intake/active/SRC-007.md"]}}
+    # generalized from the single-record corpus: excluding every quarantined
+    # body, not only SRC-007's, is what the export status calls honoured
+    excluded = sorted(record.original_path.replace("\\", "/")[len(MEMORY_ROOT) + 1:]
+                      for record in records.values())
+    proposed = {**manifest, "quarantine": {"excluded_bodies": excluded}}
     assert q.saipen_export_status(proposed, records, MEMORY_ROOT) == q.HONOURED
 
 

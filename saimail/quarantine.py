@@ -134,8 +134,13 @@ _KNOWN_SHAPE = re.compile(
     r"|AIza[0-9A-Za-z_\-]{35}"
     r")")
 _BEARER = re.compile(r"(?i)\bbearer\s+([A-Za-z0-9_\-.=]{20,})")
+# D-051: keep an adjacent-line assignment, but never consume a new paragraph.
+# CRLF is one line break; excluding both CR and LF from the padding prevents
+# backtracking from treating its two bytes as independent whitespace.
+_ASSIGNMENT_GAP = r"[^\S\r\n]*(?:(?:\r\n?|\n)[^\S\r\n]*)?"
 _ASSIGNMENT = re.compile(
-    r"(?i)\b(?:api[_-]?key|access[_-]?token|token|password|passwd|secret)\b\s*[:=]\s*"
+    r"(?i)\b(?:api[_-]?key|access[_-]?token|token|password|passwd|secret)\b"
+    + _ASSIGNMENT_GAP + r"[:=]" + _ASSIGNMENT_GAP +
     r"(?!<redacted>|\*{3}|<|\$\{)([^\s,;]{8,})")
 _MIN_ENTROPY = 4.0
 
@@ -214,7 +219,10 @@ def scan(body: bytes) -> Tuple[Finding, ...]:
     Known limits, accepted and declared: a path containing whitespace is
     examined one whitespace-delimited token at a time, and a labelled file name
     is only read where the token has a file shape -- an extension or a path
-    anchor (D-027); a bare slash in prose is not a path. The scan is
+    anchor (D-027); a bare slash in prose is not a path. Assignment matches
+    stop at blank lines (D-051): a label, separator and value may
+    span adjacent lines, but an empty or whitespace-only line ends the match.
+    Other credential detectors still inspect the entire body. The scan is
     conservative: a false positive costs a redaction and a human look, a false
     negative costs a credential.
 

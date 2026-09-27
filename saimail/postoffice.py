@@ -105,6 +105,7 @@ BAD_BUDGET = "BAD_BUDGET"
 BAD_CURSOR = "BAD_CURSOR"
 NOT_A_POST_OFFICE = "NOT_A_POST_OFFICE"
 NOT_A_SESSION = "NOT_A_SESSION"
+REOPEN_NOT_READ = "REOPEN_NOT_READ"
 
 #: TTL sweep refusals and states (D-038).
 RECEIVER_TTL_OUT_OF_RANGE = "RECEIVER_TTL_OUT_OF_RANGE"
@@ -444,7 +445,13 @@ class _OsFileLock:
         self._path.parent.mkdir(parents=True, exist_ok=True)
         self._fd = os.open(self._path, os.O_RDWR | os.O_CREAT, 0o600)
         if os.fstat(self._fd).st_size == 0:
-            os.write(self._fd, b"\0")
+            try:
+                os.write(self._fd, b"\0")
+            except PermissionError:
+                # Another process created the file first and already holds byte
+                # 0; Windows refuses a write into a locked region. That is the
+                # contended case, so wait for the lock instead of failing (T-123).
+                pass
         os.lseek(self._fd, 0, os.SEEK_SET)
         self._acquire(self._fd, self._busy_code)
         return self
@@ -1731,6 +1738,67 @@ class PostOfficeSession:
             opened = envelope.open(verified, recipient_private_key,
                                    self.office.recipient_registry)
             self._transition_to_read(envelope_id)
+            return opened
+
+    def reopen_message(self, envelope_id: str, *, recipient_private_key) -> OpenedEnvelope:
+        """Reopen one already-read message explicitly under the session budget.
+
+        The durable bundle in read/<seat>/<digest>/ remains authoritative. The
+        message must already be in READ state; inbox, expired, crash (BOTH) and
+        unknown envelopes are refused. The container, receipt, sender,
+        recipient, index row, expiry and tombstone state are re-verified.
+        One attempt is consumed from the session's open_budget. Plaintext is
+        never persisted, sealed bytes are untouched, and the lifecycle state
+        remains READ.
+        """
+        if not isinstance(envelope_id, str) or not _EID_RE.match(envelope_id):
+            _reject("BAD_ENVELOPE_ID", "an envelope id is sha256:<64 lowercase hex>")
+        with self.office._lifecycle_lock():
+            state = self.office.bundle_state(envelope_id)
+            if state in (EXPIRED_STATE, EXPIRY_RECONCILIATION_REQUIRED):
+                _reject(ALREADY_EXPIRED,
+                        f"envelope {envelope_id} is expired; an expired message is never "
+                        "decrypted or resurrected")
+            if state == BOTH:
+                _reject(RECONCILIATION_REQUIRED,
+                        f"envelope {envelope_id} exists as both an inbox and a read bundle; "
+                        "maintenance reconciliation must prove identity first")
+            if state == UNREAD:
+                _reject(REOPEN_NOT_READ,
+                        f"envelope {envelope_id} is UNREAD; reopen requires an already-READ message")
+            if state == NEITHER:
+                if self.office.has_index_row(envelope_id):
+                    _reject(INDEX_BODY_MISSING,
+                            f"indexed envelope {envelope_id} has no bundle to reopen")
+                _reject(UNKNOWN_ENVELOPE, f"no bundle for {envelope_id}")
+            if state != READ_STATE:
+                _reject(REOPEN_NOT_READ,
+                        f"envelope {envelope_id} is not in read/ state ({state})")
+
+            read_bundle = self.office.read_bundle(envelope_id)
+            if not read_bundle.is_dir():
+                _reject(INDEX_BODY_MISSING,
+                        f"read bundle for {envelope_id} is missing")
+
+            header, stored_at = self.office._verify_bundle(read_bundle, envelope_id)
+            self.office._require_index_row(header, envelope_id, stored_at)
+
+            ttl = effective_ttl_seconds(header, self.office.default_ttl)
+            instant = _as_instant(self.office.clock())
+            if instant >= _expires_at(stored_at, ttl):
+                _reject(ALREADY_EXPIRED,
+                        f"envelope {envelope_id} has expired (TTL {ttl}s); an expired message "
+                        "is never decrypted or resurrected")
+
+            if self._open_attempts >= self.open_budget:
+                _reject(OPEN_BUDGET_EXHAUSTED,
+                        f"this session has spent its {self.open_budget} open attempts; "
+                        "nothing was decrypted")
+
+            self._open_attempts += 1
+            verified = envelope.verify(header, self.office.sender_registry)
+            opened = envelope.open(verified, recipient_private_key,
+                                   self.office.recipient_registry)
             return opened
 
     def _transition_to_read(self, envelope_id: str) -> None:
