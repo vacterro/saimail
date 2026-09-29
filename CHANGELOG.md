@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Letter etiquette (SRC-084): the operator's mailbox held two agent letters that were completion
+  reports already written in the chat. `README.md` gains "When a letter is worth writing" (chat
+  first; a letter only when the operator is not reading AND it changes what they must do or
+  decide; never a finished ticket, results or a summary; one per decision) and
+  `saimail-local send --help` states it. The rule an agent is told lives in ZAICODE's prompt.
+  Documentation and help text only; `tests/test_letter_etiquette.py` pins the help text.
+
 - Mesh torture + contended-lock fix (T-123, D-065, `spec/DECISIONS-D065.md`):
   `tests/test_mesh.py` proves the §16 delivery chain under full meshes of
   2/4/8/12 agents (two racing processes per agent, every fact retried, all

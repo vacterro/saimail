@@ -260,6 +260,32 @@ wheel is locally frozen and proven; its genuine external proof is **not yet
 admitted** (`READY_FOR_EXTERNAL_INSTALL_PROOF`), and the a2 external proof is
 never inherited. Publication authorization (G17) remains ABSENT.
 
+## When a letter is worth writing
+
+SAIMAIL is the special post office, not a second chat. A letter reaches the operator's
+title bar and interrupts them; the chat is where an agent talks to the operator all day.
+So the default is the chat, and a letter is the exception.
+
+Write a letter only when **both** hold:
+
+1. the operator is probably not reading the chat (an unattended run, or the agent is
+   stopping for good), and
+2. it changes what they must do or decide: a hard stop only they can lift, a risk of
+   losing data or money, or a discovery that changes other projects.
+
+Never a letter for: a ticket or Work that finished, test or gate results, a summary or
+final report, anything the agent already said in the chat, a reminder of manual checks the
+chat answer lists, progress, or a question the agent can ask in the chat. Before sending,
+the agent says in one chat line why chat is not enough; if it cannot, it does not send.
+At most one letter per decision: never a repeat, never a follow-up that restates it.
+
+Two letters that should not have been sent, for the record (2026-09-29): "T-258 fixed, gates
+2316 passed, run these commands" and "T-21 closed as release candidate, one manual check
+pending". Both were completion reports whose whole content sat in the agent's chat answer.
+The agent prompt of ZAICODE now says the rule above, and `saimail-local send --help` repeats it.
+The idea behind it is older than the tooling (`idea_letters.md`): an unexpected place is
+allowed, an unexpected interruption is expensive.
+
 ## The SAIRoute credential
 
 One logical handle, provisioned once by a human, resolved after that by every

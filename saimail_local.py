@@ -795,7 +795,18 @@ def _build_parser() -> argparse.ArgumentParser:
     recipient_list.add_argument("--workspace", required=True)
     recipient_list.add_argument("--json", action="store_true", dest="sub_json")
 
-    send_p = sub.add_parser("send", help="seal and deliver one real local message")
+    send_p = sub.add_parser(
+        "send",
+        help="seal and deliver one real local message",
+        description=(
+            "Seal and deliver one real local message. A letter to a person is RARE on "
+            "purpose: send one only when the operator is probably not reading the chat "
+            "AND it changes what they must do or decide (a hard stop only they can lift, "
+            "a risk of losing data or money, a discovery that changes other projects). "
+            "Never for a finished ticket, test results, a summary or anything already said "
+            "in the chat; at most one per decision. See README: When a letter is worth writing."
+        ),
+    )
     send_p.add_argument("--workspace", required=True)
     send_p.add_argument("--to", default=None, help="registered recipient alias")
     send_p.add_argument("--claim", default=None, help="one line of operator text (canonical wrapper)")
