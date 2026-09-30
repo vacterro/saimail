@@ -1,4 +1,14 @@
 {
-  "requirements": {},
+  "requirements": {
+    "SRC-032:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-53 closed with verification evidence in LOG: verify -> PASS [target: T-53] conf: high -- run inside phase VERIFY: origin main f0554543e8be equals HEAD; tag v0.0.1 object 6322856 peels to closure commit 7c6e89d5; content lineage a2ecc2d3 -> 7c6e89d5 -> f0554543 all public; 309 tracked files, zero non-exportable or cache paths; full suite exit 0; repo consistency test exit 0; saipen validate VALID",
+      "text": "Complete the v0.0.1 first-publish release shape after T-52: commit the canonical closure set (BOARD, STATE, LOG, kitchen digest, sealed LOG segment) and push annotated tag v0.0.1 on the closure commit; content commit a2ecc2d is already on origin/main; engine ship was blocked by the T-34 SOURCE_COVERAGE freeze and the accepted path is the manual two-commit contract",
+      "verification": "the Work this request created reached its own verification gate; see the T-53 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-53"
+    }
+  },
   "schema_version": 1
 }

@@ -1,0 +1,20 @@
+{
+  "baseline": {
+    "problems": 3,
+    "warnings": 21
+  },
+  "created_utc": "2026-09-20T20:26:00Z",
+  "failure_lines": [
+    "source receipts -- DONE Work T-41 has unresolved source receipt SRC-017",
+    "source receipts -- source credential gate: SOURCE_CREDENTIALS_UNSAFE credential pattern in exact active source SRC-036; supply a user-authorized replacement or amendment before release",
+    "improve report [improve-report] -- the stored improve report's protocol_fingerprint and source_tree_fingerprint no longer match the installed protocol / live tree at the same HEAD (inherited stale improve-cycle evidence; DOGFOOD V, T-618 / T-555)"
+  ],
+  "gate": "core",
+  "new_candidate_attributable_failures": 0,
+  "note": "inherited SAIPEN core debt (SRC-017/T-41 linkage, SRC-036, stale improve-report fingerprint); no T-91/D2/T-92 artifact named; not repaired by this closure",
+  "problems": 3,
+  "result": "INHERITED_BASELINE_MATCH",
+  "schema": "SAIMAIL_A2_SAIPEN_VALIDATION_1",
+  "version": 1,
+  "warnings": 21
+}

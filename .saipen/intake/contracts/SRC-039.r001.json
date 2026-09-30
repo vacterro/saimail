@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-039:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "implement and close B-012 ALLY_ADVICE / PERSONAL_REFLECTION v0"
+    }
+  },
+  "derived_at": "2026-09-19T19:07:24Z",
+  "derived_from": "SRC-039",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "5d7ba24a747f097467dfbf6678fdc3e3989043a6e5cc779e236f417b001ce4d2"
+}

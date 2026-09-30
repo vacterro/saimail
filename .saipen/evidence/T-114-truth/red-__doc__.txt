@@ -1,0 +1,31 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+__________ test_gui_read_capability_language_matches_explicit_reopen __________
+
+    def test_gui_read_capability_language_matches_explicit_reopen():
+        """Qt-independent oracle: first-Open refusal must point to real Reopen."""
+        from saimail import gui_adapter, workspace
+    
+        assert callable(workspace.reopen_message)
+        assert callable(gui_adapter.GuiAdapter.reopen_selected)
+        assert not hasattr(gui_adapter, "READ_REREAD_GAP"), "T-113 resolved this gap"
+        for reason in (gui_adapter.REASON_OPEN_ALREADY_READ,
+                       gui_adapter.REASON_READ_NOT_THIS_SESSION):
+            assert "READ" in reason and "Reopen" in reason, (
+                "READ guidance must point to the explicit Reopen action")
+        # Check only READ capability prose; non-READ refusal text remains valid.
+        capability = " ".join((gui_adapter.__doc__,
+                               gui_adapter.REASON_OPEN_ALREADY_READ,
+                               gui_adapter.REASON_READ_NOT_THIS_SESSION))
+        capability = " ".join(capability.split()).lower()
+>       assert not re.search(
+            r"not re-readable|cannot be (?:re-?opened|shown again)|"
+            r"(?:only|one|sole) decryption path|backend.capability gap", capability)
+E       AssertionError: assert not <re.Match object; span=(1260, 1282), match='backend-capability gap'>
+E        +  where <re.Match object; span=(1260, 1282), match='backend-capability gap'> = <function search at 0x000001C81618C540>('not re-readable|cannot be (?:re-?opened|shown again)|(?:only|one|sole) decryption path|backend.capability gap', 'saimail gui presentation adapter (v5-01, spec/25). the gui is a presentation layer, never a second protocol implement...the first read only. use reopen to read again. read — content is not loaded in this session. use reopen to read again.')
+E        +    where <function search at 0x000001C81618C540> = re.search
+
+tests\test_repo_consistency.py:1155: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_repo_consistency.py::test_gui_read_capability_language_matches_explicit_reopen
+1 failed in 0.25s

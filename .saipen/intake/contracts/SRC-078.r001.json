@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-078:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute Roadmap v3 gate D1 \u2014 RELEASE DECISION PACKET (mission file V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260920_2235.md)"
+    }
+  },
+  "derived_at": "2026-09-20T19:46:19Z",
+  "derived_from": "SRC-078",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "cbad46da26887c6294af3b594415d4c3c09cdb307ddaeb0aa7af2397f7c0b711"
+}

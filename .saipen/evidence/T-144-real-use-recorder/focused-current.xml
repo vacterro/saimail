@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="44" time="2.771" timestamp="2026-09-30T15:32:30.639538+03:00" hostname="DESKTOP-TTH0L52"><testcase classname="tests.test_real_use_recorder" name="test_entry2_appends_and_preserves_history" time="0.108" /><testcase classname="tests.test_real_use_recorder" name="test_entry3_follows_deterministically_without_replacing_entry2" time="0.111" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-entry]" time="0.065" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-study]" time="0.065" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-registration]" time="0.064" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-Work]" time="0.071" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-independent0]" time="0.065" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-independent1]" time="0.064" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-independent2]" time="0.062" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-independent3]" time="0.067" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-independent4]" time="0.063" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-EMPTY0]" time="0.072" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-EMPTY1]" time="0.064" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-context0]" time="0.062" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-context1]" time="0.063" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-context2]" time="0.067" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-boundary]" time="0.065" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-previous observation]" time="0.064" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-observational authority]" time="0.064" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-memory]" time="0.070" /><testcase classname="tests.test_real_use_recorder" name="test_malformed_retained_observation_refuses_capture_and_verifier[&lt;lambda&gt;-foreign]" time="0.067" /><testcase classname="tests.test_real_use_recorder" name="test_duplicate_or_noncanonical_numbering_fails_closed[runtime-001.json]" time="0.011" /><testcase classname="tests.test_real_use_recorder" name="test_duplicate_or_noncanonical_numbering_fails_closed[runtime-2.json]" time="0.010" /><testcase classname="tests.test_real_use_recorder" name="test_duplicate_or_noncanonical_numbering_fails_closed[runtime-002-copy.json]" time="0.012" /><testcase classname="tests.test_real_use_recorder" name="test_duplicate_or_noncanonical_numbering_fails_closed[runtime-000.json]" time="0.010" /><testcase classname="tests.test_real_use_recorder" name="test_sequence_gap_fails_closed" time="0.010" /><testcase classname="tests.test_real_use_recorder" name="test_invalid_previous_json_fails_closed[{]" time="0.012" /><testcase classname="tests.test_real_use_recorder" name="test_invalid_previous_json_fails_closed[[]]" time="0.020" /><testcase classname="tests.test_real_use_recorder" name="test_invalid_previous_json_fails_closed[{&quot;entry&quot;:2,&quot;entry&quot;:2}]" time="0.011" /><testcase classname="tests.test_real_use_recorder" name="test_invalid_previous_json_fails_closed[{&quot;entry&quot;:NaN}]" time="0.012" /><testcase classname="tests.test_real_use_recorder" name="test_immutable_evidence_hash_mismatch_fails_closed[registration.json]" time="0.010" /><testcase classname="tests.test_real_use_recorder" name="test_immutable_evidence_hash_mismatch_fails_closed[runtime.json]" time="0.012" /><testcase classname="tests.test_real_use_recorder" name="test_seventh_entry_is_refused" time="0.361" /><testcase classname="tests.test_real_use_recorder" name="test_retained_seventh_entry_is_also_refused" time="0.011" /><testcase classname="tests.test_real_use_recorder" name="test_same_work_event_phase_and_focus_changes_do_not_inflate_boundaries" time="0.078" /><testcase classname="tests.test_real_use_recorder" name="test_verifier_rejects_same_boundary_under_new_number" time="0.069"><failure message="AssertionError: Regex pattern did not match.&#10; Regex: 'boundary'&#10; Input: 'previous observation hash binding mismatch'">study = (&lt;module 't142_test_capture' from 'V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\evidence\\T-142-e...jects_same_bou0/foreign'), WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-56/test_verifier_rejects_same_bou0/box'), ...)
+
+    def test_verifier_rejects_same_boundary_under_new_number(study):
+        cap, verify, evidence, *_ = study
+        cap.main()
+        record = read(evidence / "runtime-002.json")
+        record["entry"] = 3
+        rewrite(evidence / "runtime-003.json", record)
+        with pytest.raises(ValueError, match="boundary"):
+&gt;           verify.sequence(evidence)
+
+tests\test_real_use_recorder.py:238: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.saipen\evidence\T-142-evolution-audit\verify.py:284: in sequence
+    require(record.get("previous_observation_sha256") == sha(paths[entry - 1]),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+condition = False, message = 'previous observation hash binding mismatch'
+
+    def require(condition, message):
+        if not condition:
+&gt;           raise StudyError(message)
+E           t142_test_verify.StudyError: previous observation hash binding mismatch
+
+.saipen\evidence\T-142-evolution-audit\verify.py:30: StudyError
+
+During handling of the above exception, another exception occurred:
+
+study = (&lt;module 't142_test_capture' from 'V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\evidence\\T-142-e...jects_same_bou0/foreign'), WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-56/test_verifier_rejects_same_bou0/box'), ...)
+
+    def test_verifier_rejects_same_boundary_under_new_number(study):
+        cap, verify, evidence, *_ = study
+        cap.main()
+        record = read(evidence / "runtime-002.json")
+        record["entry"] = 3
+        rewrite(evidence / "runtime-003.json", record)
+&gt;       with pytest.raises(ValueError, match="boundary"):
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'boundary'
+E        Input: 'previous observation hash binding mismatch'
+
+tests\test_real_use_recorder.py:237: AssertionError</failure></testcase><testcase classname="tests.test_real_use_recorder" name="test_recorder_refuses_unowned_or_ended_work[another-seat-BUILD]" time="0.011" /><testcase classname="tests.test_real_use_recorder" name="test_recorder_refuses_unowned_or_ended_work[saipen-cli-DONE]" time="0.010" /><testcase classname="tests.test_real_use_recorder" name="test_empty_no_provider_no_correspondence_or_project_or_foreign_mutation" time="0.066" /><testcase classname="tests.test_real_use_recorder" name="test_changed_context_during_focus_is_not_retained" time="0.071" /><testcase classname="tests.test_real_use_recorder" name="test_atomic_destination_race_never_replaces_existing_file" time="0.064" /><testcase classname="tests.test_real_use_recorder" name="test_original_single_observation_mechanical_status" time="0.009" /><testcase classname="tests.test_real_use_recorder" name="test_nonempty_is_metadata_only_and_does_not_become_independent_behavior" time="0.019"><failure message="sailang.errors.SailangError: BAD_LETTER: scope names 1 to 8 exact files where this letter is useful">study = (&lt;module 't142_test_capture' from 'V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\evidence\\T-142-e..._metadata_only0/foreign'), WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-56/test_nonempty_is_metadata_only0/box'), ...)
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002442B75F350&gt;
+
+    def test_nonempty_is_metadata_only_and_does_not_become_independent_behavior(study, monkeypatch):
+        cap, verify, evidence, project, foreign, box, _, _ = study
+        recipient = workspace.load_workspace(box)
+        sender_path = box.parent / "test-sender"
+        workspace.init_workspace(sender_path, seat="test-sender")
+        sender = workspace.load_workspace(sender_path)
+        lineage = verify.sequence(evidence)["project_lineage"]
+        workspace.add_recipient(sender, "saipen-cli", workspace.identity_card(recipient), box)
+        participants.admit_participant(sender, lineage, "saipen-cli")
+        (project / "test-evidence.txt").write_text("Controlled test evidence only.\n", encoding="utf-8")
+        letter = letters.template(lineage, "T-1", "T-144", issue="fixture-opportunity")
+        letter.update(observation="Controlled fixture", impact="Test read-only collection", request="Explicit review",
+                      done_when="Receiver chooses", uncertainty="No independent behavior in this test",
+                      evidence=[letters.evidence_ref(project, "test-evidence.txt")])
+&gt;       correspondence.dispatch(sender, letter, lineage=lineage, sender_work="T-1", to_seat="saipen-cli", project_root=project)
+
+tests\test_real_use_recorder.py:332: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+saimail\correspondence.py:146: in dispatch
+    letters.validate(letter, lineage=lineage, sender_work=sender_work)
+saimail\letters.py:116: in validate
+    _reject(BAD_LETTER, "scope names 1 to 8 exact files where this letter is useful")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+code = 'BAD_LETTER'
+detail = 'scope names 1 to 8 exact files where this letter is useful'
+
+    def _reject(code, detail):
+&gt;       raise SailangError(code, detail)
+E       sailang.errors.SailangError: BAD_LETTER: scope names 1 to 8 exact files where this letter is useful
+
+saimail\letters.py:35: SailangError</failure></testcase><testcase classname="tests.test_real_use_recorder" name="test_predecessor_binding_detects_replacement_of_semantically_valid_history" time="0.118" /></testsuite></testsuites>

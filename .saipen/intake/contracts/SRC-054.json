@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-054:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIMAIL SAIHANDOFF 20260920_0200 (V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260920_0200.md): add privacy-safe structural parse-shape telemetry for live generator/reviewer outputs and run exactly one bounded two-role-swapped real-project reachability experiment on the frozen B-018 corpus; 3 sequential targets A/B/C; converge+experiment; strict parser authority."
+    }
+  },
+  "derived_at": "2026-09-19T23:32:53Z",
+  "derived_from": "SRC-054",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "9f088399f77f07cf52cac4398ae8ecb459e839766a8367352f11323d0a7c6618"
+}

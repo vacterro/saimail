@@ -1,0 +1,14 @@
+== unmutated copy: rc=0 12 passed in 0.50s
+== mutant no_identity_pin: rc=1 1 failed, 11 passed in 0.75s
+  FAILED tests/test_participants.py::test_resolution_refuses_instead_of_guessing
+== mutant no_project_scope: rc=1 1 failed, 11 passed in 0.61s
+  FAILED tests/test_participants.py::test_resolution_refuses_instead_of_guessing
+== mutant no_trigger_check: rc=1 2 failed, 10 passed in 0.58s
+  FAILED tests/test_participants.py::test_resolution_refuses_instead_of_guessing
+  FAILED tests/test_participants.py::test_cli_takes_the_project_from_the_admitted_binding
+== mutant self_allowed: rc=1 1 failed, 11 passed in 0.69s
+  FAILED tests/test_participants.py::test_resolution_refuses_instead_of_guessing
+== mutant lenient_file: rc=1 3 failed, 9 passed in 0.65s
+  FAILED tests/test_participants.py::test_a_tampered_registry_fails_closed[<lambda>1]
+  FAILED tests/test_participants.py::test_a_tampered_registry_fails_closed[<lambda>2]
+  FAILED tests/test_participants.py::test_a_tampered_registry_fails_closed[<lambda>3]

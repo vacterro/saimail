@@ -1,0 +1,17 @@
+{
+  "op_id": "scope-5d27d752e6d042b6a6af044804b47ccc",
+  "paths": {
+    ".saipen/extensions/subs/saiui/BOARD.md": "e8926ba462cfcf99e87422bef11d59dda148b4753e695e365a954e81d96cac95",
+    ".saipen/extensions/subs/saiui/LOG.md": "a6efd625014db428508499949841f13d57b64c1cb5ff094acf1fcda5a5d10eb9",
+    ".saipen/extensions/subs/saiui/STATE.md": "807bb9532b073bb9fdc89361b82209c1835d57b02c443b84da6f3e15591f5439",
+    ".saipen/extensions/subs/saiui/kitchen/OUTBOX.md": "3d42384e59e865bd73b69f9a7792abfb294a89909aae0939dce0ed4d6fc4ab40",
+    ".saipen/extensions/subs/saiui/kitchen/UI-003-review-pass.md": "40d72002b1443412c3ac4fc06f8abafa72485f37012f505ea7200ecd171f4dc1"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-25T16:08:54Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:8b5376574aa5f803b4d48b6863a90b58aa658d9684c6b42332a8762015a5763f",
+  "ticket": "T-128"
+}

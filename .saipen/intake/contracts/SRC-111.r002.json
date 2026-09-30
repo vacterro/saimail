@@ -1,0 +1,19 @@
+{
+  "clauses": {
+    "SRC-111:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Finish the existing bounded T-143 provenance verification/review/local ship first without changing its product scope."
+    },
+    "SRC-111:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Repair the T142_REAL_USE_1 recorder and verifier as the immediate next Work: preserve immutable registration/entry1; append a bounded contiguous fail-closed actual-Work sequence with honest context qualification and negative evidence."
+    }
+  },
+  "derived_at": "2026-09-30T12:39:25Z",
+  "derived_from": "SRC-111",
+  "interpretation_revision": 2,
+  "schema_version": 1,
+  "source_sha256": "7e630628f9b7c507da1c799dedd08ced109466b4af7f63620841be7a8baab2fa"
+}

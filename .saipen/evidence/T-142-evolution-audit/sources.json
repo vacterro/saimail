@@ -1,0 +1,26 @@
+{
+  "local": {
+    "saimail/agent_cycle.py": "7a0d019972f13e7184350841d80001a9bdcab2ee58611936a8c83a8629e1ea5a",
+    "saimail/correspondence.py": "895eac0deb8e61bd9837d784f6a1672525b4ce3c8a25faa7d132262808a1347f",
+    "saimail/notify.py": "7477445e2da4ac74f362b5f17fcffd4fadff0c661868332c37271aea325ae5c3",
+    "saimail/saipen_bridge.py": "97065c7d2138f5e387b28e4e65f6892e046be3e8bf739f8d796899a3528ae299",
+    "saimail/host_contract.py": "b26a4c612619c5268bf0764296b6a29434741bf29e87f8d1f0284aac293db3f8",
+    "saimail_local.py": "fde32d57108d18a30de8aceda58a43b44d8e828a979ad12290639a0bad05cde1",
+    "saimail_host.py": "ca2eba850847f276cf97782fd2cf1ac8b4e02fa5516d33a59ebed492221de328",
+    "lab/institution_run.py": "ce52c68609fbffcf7614482b5fdbb0cb77495881d7040b50d61aa3a4abcda66b",
+    "lab/saifren_run.py": "8cc77304d91b768218aee6b809a5b49dd0972ea1fef498492388b3f6d5e6b92a",
+    "humbox/bee_like_idea1.md": "0a49a8cd0e2625d35bc8071898a7d7b5ace836aa3ea40d9bd9fa365641f2f578",
+    "humbox/iniciative.md": "5424ffedc5adac3bf76599e6eae94f0735dd4f6219331f8818ed60e21bb2a1a0",
+    "lab/out/INSTITUTION_20260930/plan.json": "d055a57b78e19c8223ac291ddac99a5e34d3d991b41e197adf484fdd4c6c151e",
+    "lab/out/INSTITUTION_20260930/result.json": "dd16cf3ad7084f711ebbfd490a8629156f82295cadaaaa91f2ea39405f0e7e11",
+    "lab/out/INSTITUTION_20260930/receiver.json": "7c9e422a8edbcb9ecb238a619e3c8f927c98dd640517ada75f2d98b08984afb3",
+    "lab/out/INSTITUTION_20260930/successor.json": "8e8986e7842bbff747f6f12fb6344768dcfe92c505b7a955a29c59bc8be019fa"
+  },
+  "foreign": {
+    "bin/saipen.cmd": "f57fd06de34a9ed277a600bd053bcbbda4bc2044524814ded47e271ddeefdb43",
+    "tools/saipen.py": "3d7646e7b72988df911046e83ee74ffe62b85e9fcbc78f7d76fd32e4a5a80cb4",
+    "tools/saipen_engine/telegrams.py": "0dedf9408c0445e969a1d284ad42c81cac742fa9bc19ecc7ddbfc1f8d55e2089",
+    "tools/saipen_engine/mailbox.py": "5b7327c514af21e61f0f5dfadd8d8d5abb4e9ff38a44505cb91cd45c3bfa372f",
+    ".saipen/STATE.md": "9732b935141f178c5f41752fa4036db67796218a711107d1524070b6c8ab7df1"
+  }
+}

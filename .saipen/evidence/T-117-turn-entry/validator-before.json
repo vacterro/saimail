@@ -1,0 +1,89 @@
+{
+  "ok": false,
+  "code": "CONFORMANCE_UNHEALTHY",
+  "structural_gate": "pass",
+  "validator": {
+    "path": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\tools\\validate.py",
+    "launched": true,
+    "exit_code": 1,
+    "summary": "2828d9f724b3fc86ac1ec3a8697c0f20728b516d0c4a6603aa2' but the current tree computes 'git-delta-v1:2f2280bc59dc6eef889a8241edd9005412dd67cc56c1973cc5e34372d6656bb5' -- the tree changed since the package was produced (same HEAD or not), so it is stale and MUST NOT be collected (PROTOCOL.md § 6, T-543) -- reported under `--gate core`, where this producer is not being consumed; it FAILs under `--gate collect:saiwiki` and blocks nothing else\nWARN [producer-package-stale]: ... and 1 more like the above\nWARN [producer-package-malformed]: .saipen/saitranslate/kitchen/OUTBOX.md fails strict OUTBOX parsing: OUTBOX:3 package missing instructions; OUTBOX:3 verified field must be a closed verdict (`PASS -- <command/result evidence>` | `FAIL -- <evidence>` | `BLOCKED -- <missing fact>`); arbitrary prose is never positive evidence; OUTBOX:30 unknown field 'package' (PROTOCOL.md § 2) -- reported under `--gate core`, where this producer is not being consumed; it FAILs under `--gate collect:saitranslate` and blocks nothing else\nWARN [subsaipen-uncollected]: 2 subSaipen OUTBOX entr(y/ies) sit at `status: ready` -- that is a finding waiting on `saipen sub collect`, visible only when someone runs it (extensions/subs/PROTOCOL.md § 4)\nWARN [cross-doc-drift]: cross-doc drift [ahead-stamp-repair] -- CORE.md must say a future-stamped LOG line is restamped to a defensible bound with a DEC naming the original, the replacement, and that the minute is inherited rather than measured. Without it the only sanctioned response is waiting, which keeps a false record and reds every gate until the clock catches up\nWARN [cross-doc-drift]: cross-doc drift [shortcut-memory-ban] -- BOOT.md step 7 must order § 1.10's table read before acting on a shortcut and explicitly state that memory is never a source for it. An agent that believes it knows what a key means answers from recall rather than reading the file\nWARN [cross-doc-drift]: ... and 13 more like the above\nValidation FAILED: 2 problem(s), 24 warning(s)"
+  },
+  "conformance_status": {
+    "status": "CURRENT_FAIL",
+    "gate": "core",
+    "reason": "canonical validator reports FAIL for the current checkpoint",
+    "receipt": {
+      "blocking_findings": {
+        "problem_count": 2,
+        "problems": [
+          {
+            "category": null,
+            "credential": false,
+            "detail": "SRC-017,T-41",
+            "detail_hash": "8e410875a794f3dc",
+            "finding_key": "a54045958afe6483",
+            "rule_id": "source_receipt_unresolved_work",
+            "severity": "problem",
+            "subject_id": "T-41",
+            "subject_kind": "work",
+            "subject_ref": null
+          },
+          {
+            "category": null,
+            "credential": false,
+            "detail": "improve report [improve-report] -- .saipen\\improve\\imp-vacterro-saimail-20260920-1\\astra-01\\saipen_improve_SAIPEN.md: report protocol_fingerprint 'sha256:22391dd1a09265826de311aee843635c0511d6994e1b1d",
+            "detail_hash": "c7e6f36c086c115e",
+            "finding_key": "76b48f23558dce11",
+            "rule_id": "unclassified",
+            "severity": "problem",
+            "subject_id": null,
+            "subject_kind": "global",
+            "subject_ref": null
+          }
+        ],
+        "ruleset_fingerprint": "82e5e183ae8f0fd909be3fa3627f00489cacaab813d942186c832db02a05a1c1",
+        "ruleset_version": 1,
+        "status": "complete",
+        "warning_count": 24
+      },
+      "board_hash": "52e64af4b9e28cb1",
+      "canonical_next_command": null,
+      "content_hash": "b7ae48c5add35d2b",
+      "exit_code": 1,
+      "external_actions": [],
+      "gate": "core",
+      "kind": "conformance_receipt",
+      "log_hash": "07a4a523a1b1653c",
+      "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+      "receipt_id": "receipt-a2aff6c7051f",
+      "remediation_commands": [],
+      "schema_version": 2,
+      "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+      "source_tree_fingerprint": "git-delta-v1:2f2280bc59dc6eef889a8241edd9005412dd67cc56c1973cc5e34372d6656bb5",
+      "state_hash": "e1271de3bba06177",
+      "timestamp_utc": "2026-09-24T05:36:46.927328Z",
+      "validator_protocol_version": "1",
+      "verdict": "FAIL"
+    },
+    "validator": {
+      "validator_path": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\tools\\validate.py",
+      "validator_protocol_version": "1",
+      "project_protocol_version": "8",
+      "gate": "core",
+      "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+      "source_tree_fingerprint": "git-delta-v1:2f2280bc59dc6eef889a8241edd9005412dd67cc56c1973cc5e34372d6656bb5"
+    }
+  },
+  "reason": "canonical validator reports FAIL for the current checkpoint",
+  "detail": "conformance is CURRENT_FAIL: canonical validator reports FAIL for the current checkpoint",
+  "canonical_next_command": null,
+  "repair_status": "ENGINEERING_REQUIRED",
+  "diagnostic": {
+    "kind": "ENGINEERING_REQUIRED",
+    "owner": "SAIPEN conformance/remediation",
+    "receipt_id": "receipt-a2aff6c7051f",
+    "findings_status": "complete",
+    "detail": "CURRENT_FAIL has no registered executable repair. Diagnose the receipt-bound blocking findings under their owning Work and implement or register the required repair; validate again after the input, state or runtime changes. Missing findings require diagnostic repair."
+  },
+  "terminal": true
+}

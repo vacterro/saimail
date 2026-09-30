@@ -1,0 +1,85 @@
+........................................................................ [  2%]
+........................................................................ [  5%]
+........................................................................ [  8%]
+........................................................................ [ 11%]
+........................................................................ [ 14%]
+........................................................................ [ 16%]
+........................................................................ [ 19%]
+........................................................................ [ 22%]
+........................................................................ [ 25%]
+........................................................................ [ 28%]
+........................................................................ [ 31%]
+........................................................................ [ 33%]
+........................................................................ [ 36%]
+........................................................................ [ 39%]
+........................................................................ [ 42%]
+........................................................................ [ 45%]
+........................................................................ [ 47%]
+........................................................................ [ 50%]
+........................................................................ [ 53%]
+........................................................................ [ 56%]
+........................................................................ [ 59%]
+........................................................................ [ 62%]
+........................................................................ [ 64%]
+........................................................................ [ 67%]
+........................................................................ [ 70%]
+..............................................................F......... [ 73%]
+........................................................................ [ 76%]
+........................................................................ [ 78%]
+........................................................................ [ 81%]
+........................................................................ [ 84%]
+........................................................................ [ 87%]
+........................................................................ [ 90%]
+........................................................................ [ 93%]
+........................................................................ [ 95%]
+........................................................................ [ 98%]
+................................                                         [100%]
+================================== FAILURES ===================================
+_______________ test_candidate_prose_and_canary_are_not_durable _______________
+
+built = BuiltProjectCorpus(request=ProjectCorpusRequest(project_scope='project:saimail', window_start='2026-09-19T19:30:00Z', ...9c0e7dd010af8e92c94a97fbeeec19ac'), build_id='sha256:0e05460aae1645b6bdfeec887f02a978a185026422faf74c90238f0938bd4e35')
+tmp_path = WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-6970/test_candidate_prose_and_canar1')
+
+    def test_candidate_prose_and_canary_are_not_durable(built, tmp_path):
+        corpus = built.reflection_corpus
+        base = pilot.two_event_candidate(corpus)
+        candidate = aa.AllyAdvice(
+            created=base.created, work_context=base.work_context,
+            observed_scope=base.observed_scope, observed=base.observed,
+            inferred=CANARY, guidance_mode=base.guidance_mode, suggested=base.suggested,
+            counterevidence=base.counterevidence, uncertainty=base.uncertainty)
+>       result = document(built, rso.DryTransport(corpus, candidate=candidate))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_reviewer_structured_output.py:349: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_reviewer_structured_output.py:43: in document
+    stored, _manifest, built_now, gsb, rtb = rso.check_registration(root=rso.ROOT)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lab\reviewer_structured_output.py:1432: in check_registration
+    built = pilot.prepare_input(root)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+lab\project_corpus_generation_pilot.py:583: in prepare_input
+    registration, result = rebuild_b018(source_root)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+lab\project_corpus_generation_pilot.py:553: in rebuild_b018
+    return registration, pcp.build_pilot_corpus(registration, root)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lab\project_corpus_pilot.py:860: in build_pilot_corpus
+    capture = capture_registered_artifacts(registration, source_root)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lab\project_corpus_pilot.py:778: in capture_registered_artifacts
+    _reject(PROJECT_PILOT_SOURCE_MUTATED,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+code = 'PROJECT_PILOT_SOURCE_MUTATED'
+detail = 'a registered source changed during capture; the pilot observes history and never rewrites it'
+
+    def _reject(code: str, detail: str) -> None:
+>       raise SailangError(code, detail)
+E       sailang.errors.SailangError: PROJECT_PILOT_SOURCE_MUTATED: a registered source changed during capture; the pilot observes history and never rewrites it
+
+lab\project_corpus_pilot.py:225: SailangError
+- generated xml file: V:\___VAC\__K\__CODE\_AI_STUFF_AGENTIC\__SAIMAIL__\.saipen\evidence\T-114-truth\full.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_reviewer_structured_output.py::test_candidate_prose_and_canary_are_not_durable

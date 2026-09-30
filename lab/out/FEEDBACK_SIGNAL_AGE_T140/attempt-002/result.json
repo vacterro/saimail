@@ -1,0 +1,94 @@
+{
+  "checks": {
+    "changed_context_refused": true,
+    "changed_result_detected": true,
+    "correction_has_distinct_reply": true,
+    "dated_feedback_preserved_with_separate_observation_times": true,
+    "equivalent_keyless_observation": true,
+    "fewer_cli_invocations": true,
+    "focus_keeps_cycle_invocation_count": true,
+    "focus_reduces_agent_context": true,
+    "focused_changed_context_refused": true,
+    "focused_discovery_preserved": true,
+    "focused_lost_state_preserved": true,
+    "focused_negative_and_deferred_feedback": true,
+    "focused_stale_correction_preserved": true,
+    "focused_successor_preserves_reserve": true,
+    "fresh_successor_discovers_reserve": true,
+    "fresh_successor_rechecks_actual_result": true,
+    "lost_state_does_not_invent_reserve": true,
+    "resolution_history_preserved": true,
+    "resolution_retry_idempotent": true,
+    "review_is_pending": true,
+    "scripted_sender_adaptation": true,
+    "sealed_deferred_feedback": true,
+    "sealed_negative_feedback": true,
+    "stale_correction_removes_reserve": true
+  },
+  "claim_boundary": "Scripted receiver decisions and fresh CLI processes; no model, field-use or comfort claim.",
+  "limitations": [
+    "Three repetitions on one Windows checkout",
+    "Payload bytes are normalized JSON, not model tokens",
+    "Latency includes local startup/cache variation",
+    "Receiver and sender choices are scripted",
+    "Broader autonomous improvement and real-session usefulness remain unproven"
+  ],
+  "measurements": {
+    "baseline": {
+      "agent_visible_payload_bytes": [
+        3077,
+        3077,
+        3077
+      ],
+      "cli_invocations_per_entry": [
+        3,
+        3,
+        3
+      ],
+      "median_cli_seconds": 0.38632639998104423,
+      "normalized_payload_bytes": [
+        4161,
+        4161,
+        4161
+      ]
+    },
+    "cycle": {
+      "agent_visible_payload_bytes": [
+        3707,
+        3707,
+        3707
+      ],
+      "cli_invocations_per_entry": [
+        2,
+        2,
+        2
+      ],
+      "median_cli_seconds": 0.24743159994250163,
+      "normalized_payload_bytes": [
+        4791,
+        4791,
+        4791
+      ]
+    },
+    "focus": {
+      "agent_visible_payload_bytes": [
+        1279,
+        1279,
+        1279
+      ],
+      "cli_invocations_per_entry": [
+        2,
+        2,
+        2
+      ],
+      "median_cli_seconds": 0.2470902999630198,
+      "normalized_payload_bytes": [
+        4791,
+        4791,
+        4791
+      ]
+    }
+  },
+  "schema": "SAIMAIL_AGENT_CYCLE_EXPERIMENT_1",
+  "status": "PASS"
+}

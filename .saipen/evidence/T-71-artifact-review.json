@@ -1,0 +1,36 @@
+{
+  "artifacts": {
+    "dry": "f65f545519744fb3bcbdab1aa932dfd07c628443f194f6a0fa64d658880ac95e",
+    "live": "a9c7905af2d8b4a79849e811637946411c47c977c51a99cc8788b2ff75dff43b",
+    "report": "1d5f01a26030841ba3dcfa678939d33f53ba61eabfcf5fd1279d6e171150d3f7",
+    "interpretation": "1d5f01a26030841ba3dcfa678939d33f53ba61eabfcf5fd1279d6e171150d3f7"
+  },
+  "input_identity": "EXACT_B018",
+  "strict_artifact_schemas": "PASS",
+  "implementation_matches_dry_and_live": true,
+  "corpus_content_or_line_leaks": [],
+  "live_attempt_markers": 1,
+  "live_calls": 4,
+  "reviewer_calls": 0,
+  "live_outcomes": [
+    "ERROR",
+    "NO_ADVICE"
+  ],
+  "dry_outcomes": [
+    "APPROVED",
+    "NO_ADVICE"
+  ],
+  "no_additional_live_call": true,
+  "protected_files": 36,
+  "protected_file_drift": [],
+  "full_suite": {
+    "passed": 1677,
+    "failed": 0
+  },
+  "postlive_focused": {
+    "passed": 129,
+    "failed": 0
+  },
+  "ruff": "PASS",
+  "validation": "CURRENT_FAIL CARRIED_DEBT_UNCHANGED"
+}

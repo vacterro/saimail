@@ -1,0 +1,8 @@
+{
+  "schema": "SAIMAIL_T139_ISOLATION_CONTROL_1",
+  "verifier_sha256": "caaef7250b926da311fa945773c3751f95d4cbe28877fb435e396d10fc453151",
+  "host_effects_in_lab": "FAIL",
+  "host_effects_in_operator_tool": "PASS",
+  "verifier_unchanged": true,
+  "status": "PASS"
+}

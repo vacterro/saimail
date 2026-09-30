@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-048:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-66 closed with verification evidence in LOG: verify -> PASS [target: T-66] conf: high -- instrument controls: TAMPER-A (distinct-event gate removed -> one-event three-artifact candidate reached the reviewer and was APPROVED pre-fix; test_one_event_three_artifacts_is_refused_before_review and the observed-only floor test red; gate restored -> green) which also covers RED-D (prose claiming repetition is not authority); TAMPER-B (EVENT_REF drop",
+      "text": "SAIMAIL POST-T63 EXPERIMENT INTEGRITY + EVENT INDEPENDENCE GATE: capture handoff V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260919_2331.md verbatim as the shared source for the wave; TARGET A close the existing T-64 discovery-probe status bookkeeping defect with no live rerun; TARGET B freeze explicit EVENT_REF evidence-artifact distinction for ReflectionCorpus; TARGET C enforce distinct-event support before semantic review; then STOP",
+      "verification": "the Work this request created reached its own verification gate; see the T-66 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-66"
+    }
+  },
+  "schema_version": 1
+}

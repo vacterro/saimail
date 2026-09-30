@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-110:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-124 closed with verification evidence in LOG: verify -> PASS [target: T-124] conf: high -- python .saipen/saitranslate/kitchen/_source_digest.py reported README.ja.md current and README.uk.md current, exit 0 (canonical marker 4d4136e1e20cebce re-derived from current README.md); deliberate red control on a corrupted-marker copy reported STALE, so the gate can fail; freshness.compute_source_identity reported 3fa8f229 / git-delta-v1:8b5376574aa5",
+      "text": "saitranslate",
+      "verification": "the Work this request created reached its own verification gate; see the T-124 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-124"
+    }
+  },
+  "schema_version": 1
+}

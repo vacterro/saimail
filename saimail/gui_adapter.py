@@ -35,7 +35,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional
 
 from sailang import SailangError
 from saimail import workspace as _workspace
@@ -102,10 +101,10 @@ class Composer:
     """One composer mode. NEW selects a recipient; REPLY cannot."""
 
     mode: str
-    alias: Optional[str] = None
-    reply_target: Optional[str] = None
+    alias: str | None = None
+    reply_target: str | None = None
     subject: str = _workspace.DEFAULT_SUBJECT
-    topic: Optional[str] = None
+    topic: str | None = None
     kind: str = _workspace.DEFAULT_REPLY_KIND
     draft: str = ""
 
@@ -119,10 +118,10 @@ class Composer:
 class Page:
     """One bounded page of metadata rows plus its continuation state."""
 
-    items: List[dict] = field(default_factory=list)
+    items: list[dict] = field(default_factory=list)
     rows_examined: int = 0
     exhausted: bool = False
-    cursor: Optional[int] = None
+    cursor: int | None = None
 
     @property
     def has_more(self) -> bool:
@@ -138,46 +137,51 @@ class GuiAdapter:
 
     def __init__(self, page_size: int = DEFAULT_PAGE_SIZE):
         self.page_size = int(page_size)
-        self.workspace: Optional[_workspace.Workspace] = None
+        self.workspace: _workspace.Workspace | None = None
         self.page = Page()
-        self.filters: Dict[str, Optional[str]] = {}
-        self.selected_id: Optional[str] = None
-        self._opened: Dict[str, dict] = {}
-        self.composer: Optional[Composer] = None
+        self.filters: dict[str, str | None] = {}
+        self.selected_id: str | None = None
+        self._opened: dict[str, dict] = {}
+        self.composer: Composer | None = None
         self.status = Status()
         self.error_active = False
         self.busy = False
 
     # -- lifecycle ---------------------------------------------------------
 
-    def open_workspace(self, root) -> dict:
+    def open_workspace(self, root, *, password=None) -> dict:
         """Open an existing workspace. Read-only; nothing is created."""
         self.busy = True
         try:
-            loaded = _workspace.load_workspace(Path(root))
+            try:
+                loaded = _workspace.load_workspace(Path(root), password=password)
+            except SailangError as exc:
+                if exc.code != "MASTER_KEY_REQUIRED":
+                    raise
+                loaded = _workspace.load_workspace_headers(Path(root))
         except SailangError as exc:
             return self._fail("workspace-open", exc)
         finally:
             self.busy = False
         self.workspace = loaded
         self._reset_view()
+        if self.locked:
+            return self._ok("workspace-open", "MAILBOX_LOCKED",
+                            "Mailbox connected. Headers are available; unlock in Keys & backup to read letters.")
         return self._ok("workspace-open", "WORKSPACE_LOADED",
                         f"workspace opened for seat {loaded.seat}")
 
-    def create_workspace(self, root, seat: str, custody: str = "raw") -> dict:
+    def create_workspace(self, root, seat: str, custody: str = "raw", *, password=None) -> dict:
         """Create a workspace through the existing init path (raw by default)."""
         self.busy = True
         try:
-            result = _workspace.init_workspace(Path(root), seat=seat, custody=custody)
+            result = _workspace.init_workspace(Path(root), seat=seat, custody=custody, password=password)
         except SailangError as exc:
             return self._fail("workspace-create", exc)
         finally:
             self.busy = False
-        if result.get("status") == _workspace.CREATED:
-            self.workspace = _workspace.load_workspace(Path(root))
-            self._reset_view()
-        elif result.get("status") == _workspace.ALREADY_EXISTS:
-            self.workspace = _workspace.load_workspace(Path(root))
+        if result.get("status") == _workspace.CREATED or result.get("status") == _workspace.ALREADY_EXISTS:
+            self.workspace = _workspace.load_workspace(Path(root), password=password)
             self._reset_view()
         notices = result.get("notices") or []
         return self._ok("workspace-create", result.get("status", "OK"),
@@ -188,6 +192,96 @@ class GuiAdapter:
         """Drop every ephemeral view. Durable state is untouched."""
         self.workspace = None
         self._reset_view()
+
+    @property
+    def locked(self) -> bool:
+        return self.workspace is not None and isinstance(self.workspace, _workspace.WorkspaceHeaders)
+
+    def lock_workspace(self) -> dict:
+        if self.workspace is None:
+            return self._refuse_no_workspace("lock")
+        root = self.workspace.root
+        self.workspace = _workspace.load_workspace_headers(root)
+        self._reset_view()
+        return self._ok("lock", "MAILBOX_LOCKED", "Mailbox locked; plaintext and in-memory key references cleared.")
+
+    def unlock_workspace(self, password=None) -> dict:
+        if self.workspace is None:
+            return self._refuse_no_workspace("unlock")
+        return self.open_workspace(self.workspace.root, password=password)
+
+    def protect_keys(self, password) -> dict:
+        from saimail import keyvault
+
+        if self.workspace is None or self.locked:
+            return self._fail_code("protect-keys", keyvault.MASTER_KEY_REQUIRED, "Unlock the mailbox first.")
+        try:
+            keyvault.protect(self.workspace, password)
+            self.workspace = _workspace.load_workspace(self.workspace.root, password=password)
+        except SailangError as exc:
+            return self._fail("protect-keys", exc)
+        return self._ok("protect-keys", "MASTER_KEY_PROTECTED",
+                        "Master password set. Create a recovery backup and keep its recovery key separately.")
+
+    def recovery_backup(self, dest) -> dict:
+        from saimail import keyvault
+
+        if self.workspace is None or self.locked:
+            return self._fail_code("backup", keyvault.MASTER_KEY_REQUIRED, "Unlock before creating a recovery backup.")
+        try:
+            backup = keyvault.recovery_backup(self.workspace, dest)
+        except SailangError as exc:
+            return self._fail("backup", exc)
+        self._ok("backup", "RECOVERY_BACKUP_CREATED", "Encrypted recovery backup saved; keep its recovery key separately.")
+        return {"ok": True, "code": "RECOVERY_BACKUP_CREATED", "backup": backup}
+
+    def restore_backup(self, backup, root, recovery_key, new_password) -> dict:
+        from saimail import keyvault
+
+        try:
+            keyvault.restore(backup, root, recovery_key, new_password)
+        except SailangError as exc:
+            return self._fail("restore", exc)
+        result = self.open_workspace(root, password=new_password)
+        if result["ok"]:
+            result["text"] = "Identity restored. Copy separately backed-up sealed mail and register your contacts."
+        return result
+
+    def correspondence_action(self, project_root, action, *, envelope_id=None, work=None,
+                              scope=None, decision=None, reason=None, result_path=None,
+                              cursor=0, inbox_cursor=None, continuation=None):
+        """Explicit GUI bridge over the same host APIs used by headless agents."""
+        from saimail import correspondence, letters, saipen_bridge
+        from saimail_project import project_paths
+
+        if self.workspace is None:
+            return self._refuse_no_workspace("correspondence")
+        if action not in {"desk", "review", "decide", "retain", "report", "metrics"}:
+            return self._fail_code("correspondence", "BAD_INPUT", "Unknown correspondence action.")
+        if action not in {"desk", "metrics"} and self.locked:
+            return self._fail_code("correspondence", "MASTER_KEY_REQUIRED", "Unlock before reading or handling a letter.")
+        try:
+            project = project_paths(project_root)
+            binding = saipen_bridge.enter(
+                self.workspace, project["state"], project["identity"], seat=self.workspace.seat)["saipen"]
+            common = {"lineage": binding["lineage"], "project_root": Path(project_root)}
+            if action == "desk":
+                result = correspondence.desk(
+                    _workspace.load_workspace_headers(self.workspace.root), lineage=binding["lineage"],
+                    work=work or binding["task"], scope=scope, budget=self.page_size,
+                    cursor=cursor, inbox_cursor=inbox_cursor, continuation=continuation)
+            elif action == "metrics":
+                result = correspondence.metrics(self.workspace, lineage=binding["lineage"])
+            elif action == "decide":
+                refs = [letters.evidence_ref(project_root, result_path)] if result_path else []
+                result = correspondence.decide(self.workspace, envelope_id, decision=decision,
+                                               reason=reason, evidence=refs, **common)
+            else:
+                result = getattr(correspondence, action)(self.workspace, envelope_id, **common)
+        except SailangError as exc:
+            return self._fail("correspondence", exc)
+        self._ok("correspondence", result["status"], result["detail"])
+        return result
 
     def _reset_view(self) -> None:
         self.page = Page()
@@ -228,14 +322,14 @@ class GuiAdapter:
         return WORKSPACE_LOADED
 
     @property
-    def selected_row(self) -> Optional[dict]:
+    def selected_row(self) -> dict | None:
         for item in self.page.items:
             if item["envelope_id"] == self.selected_id:
                 return item
         return None
 
     @property
-    def selected_state(self) -> Optional[str]:
+    def selected_state(self) -> str | None:
         row = self.selected_row
         return None if row is None else row["state"]
 
@@ -244,7 +338,7 @@ class GuiAdapter:
         """True only after this session's explicit Open or Reopen succeeded."""
         return self.selected_id in self._opened
 
-    def content(self) -> Optional[dict]:
+    def content(self) -> dict | None:
         """Canonical record fields returned by explicit Open or Reopen, if any."""
         return self._opened.get(self.selected_id) if self.selected_id else None
 
@@ -312,7 +406,7 @@ class GuiAdapter:
         self.filters = {}
         return self._ok("filters", "CLEARED", "filters cleared")
 
-    def active_filters(self) -> List[str]:
+    def active_filters(self) -> list[str]:
         return [f"{key}={value}" for key, value in sorted(self.filters.items())
                 if value is not None]
 
@@ -337,6 +431,8 @@ class GuiAdapter:
         """Explicit first Open of UNREAD. Backend success gates the transition."""
         if self.workspace is None:
             return self._refuse_no_workspace("open")
+        if self.locked:
+            return self._fail_code("open", "MASTER_KEY_REQUIRED", "Unlock in Keys & backup before opening letters.")
         row = self.selected_row
         if row is None:
             return self._fail_code("open", _workspace.BAD_INPUT, "no message is selected")
@@ -367,8 +463,10 @@ class GuiAdapter:
         return self._ok("open", "READ", f"opened {row['envelope_id']} explicitly",
                         record=record)
 
-    def open_reason(self) -> Optional[str]:
+    def open_reason(self) -> str | None:
         """Visible reason when Open is unavailable; None when it is available."""
+        if self.locked:
+            return "Unlock in Keys & backup to read this letter."
         row = self.selected_row
         if row is None:
             return "Select a message to open."
@@ -382,6 +480,8 @@ class GuiAdapter:
         """The explicit re-read action for an already-READ message."""
         if self.workspace is None:
             return self._refuse_no_workspace("reopen")
+        if self.locked:
+            return self._fail_code("reopen", "MASTER_KEY_REQUIRED", "Unlock in Keys & backup before reading letters.")
         row = self.selected_row
         if row is None:
             return self._fail_code("reopen", _workspace.BAD_INPUT, "no message is selected")
@@ -407,10 +507,12 @@ class GuiAdapter:
         return self._ok("reopen", "READ", f"reopened {row['envelope_id']} explicitly",
                         record=record)
 
-    def reopen_reason(self) -> Optional[str]:
+    def reopen_reason(self) -> str | None:
         """Visible reason when Reopen is unavailable; None when it is available."""
         if self.workspace is None:
             return REASON_NO_WORKSPACE
+        if self.locked:
+            return "Unlock in Keys & backup to read this letter."
         row = self.selected_row
         if row is None:
             return REASON_REOPEN_NONE
@@ -420,7 +522,7 @@ class GuiAdapter:
             return f"State {row['state']} cannot be reopened."
         return None
 
-    def content_note(self) -> Optional[str]:
+    def content_note(self) -> str | None:
         """Why no content is shown for the current selection, if none is."""
         row = self.selected_row
         if row is None or self.content_visible:
@@ -466,10 +568,12 @@ class GuiAdapter:
         if self.composer is not None:
             self.composer.draft = text
 
-    def reply_reason(self) -> Optional[str]:
+    def reply_reason(self) -> str | None:
         """Visible reason when Reply is unavailable; None when it is available."""
         if self.workspace is None:
             return REASON_NO_WORKSPACE
+        if self.locked:
+            return "Unlock the mailbox before replying."
         row = self.selected_row
         if row is None:
             return REASON_REPLY_NONE
@@ -479,10 +583,12 @@ class GuiAdapter:
             return f"State {row['state']} cannot be replied to."
         return None
 
-    def send_reason(self) -> Optional[str]:
+    def send_reason(self) -> str | None:
         """Visible reason when Send is unavailable; None when it is available."""
         if self.workspace is None:
             return REASON_NO_WORKSPACE
+        if self.locked:
+            return "Unlock the mailbox before sending."
         if self.composer is None:
             return "Open the composer to send."
         if not self.composer.draft.strip():
@@ -531,7 +637,7 @@ class GuiAdapter:
 
     # -- recipients, identity, custody ------------------------------------
 
-    def recipients(self) -> List[dict]:
+    def recipients(self) -> list[dict]:
         if self.workspace is None:
             return []
         return list(_workspace.list_recipients(self.workspace).get("recipients") or [])
@@ -562,6 +668,8 @@ class GuiAdapter:
     def export_identity_card(self, dest) -> dict:
         if self.workspace is None:
             return self._refuse_no_workspace("identity-export")
+        if self.locked:
+            return self._fail_code("identity-export", "MASTER_KEY_REQUIRED", "Unlock before exporting the identity card.")
         self.busy = True
         try:
             result = _workspace.export_identity_card(self.workspace, Path(dest))
@@ -648,17 +756,14 @@ __all__ = [
     "BUSY",
     "COMPOSING_NEW",
     "COMPOSING_REPLY",
-    "Composer",
     "DEFAULT_PAGE_SIZE",
     "ERROR",
     "ERROR_LEVEL",
-    "GuiAdapter",
     "MESSAGE_OPENED_CURRENT_SESSION",
     "MESSAGE_SELECTED_READ",
     "MESSAGE_SELECTED_UNREAD",
     "NO_WORKSPACE",
     "OK",
-    "Page",
     "REASON_COMPOSER_EMPTY",
     "REASON_EMPTY_INBOX",
     "REASON_NO_FILTERS",
@@ -670,7 +775,10 @@ __all__ = [
     "REASON_REOPEN_NOT_READ",
     "REASON_REPLY_NONE",
     "REASON_REPLY_UNREAD",
-    "Status",
     "WARNING",
     "WORKSPACE_LOADED",
+    "Composer",
+    "GuiAdapter",
+    "Page",
+    "Status",
 ]

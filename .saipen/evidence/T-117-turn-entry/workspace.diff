@@ -1,0 +1,207 @@
+--- .saipen/evidence/T-117-turn-entry/before/workspace.py	2026-09-24 08:40:31.096015200 +0300
++++ saimail/workspace.py	2026-09-24 08:40:39.143320900 +0300
+@@ -470,17 +470,53 @@
+         }
+ 
+     def office(self, *, clock=None) -> postoffice.PostOffice:
+-        clock = clock or postoffice.utc_now
+-        sender_registry = envelope.KeyRegistry({
+-            record["seat"]: [Ed25519PublicKey.from_public_bytes(
+-                bytes.fromhex(record["sender_public_key"]))]
+-            for record in self.peers.values()
+-        })
+-        recipient_registry = envelope.RecipientKeyRegistry({
+-            self.seat: [self.recipient_private_key.public_key()]})
+-        return postoffice.PostOffice(
+-            self.root, seat=self.seat, sender_registry=sender_registry,
+-            recipient_registry=recipient_registry, clock=clock)
++        return _post_office(self.root, self.seat, self.recipient_private_key.public_key(),
++                            clock=clock)
++
++
++@dataclass(frozen=True)
++class WorkspaceHeaders:
++    """A secret-free view of one workspace for header-only reads (T-117).
++
++    Defect class it eliminates: a metadata read that retrieves private keys.
++    Listing, querying and the SAIPEN turn-entry read need only public keys, yet
++    they used to perform the full load, which in os-store custody pulls both
++    private keys out of the OS credential store on every automatic turn entry
++    and turns a locked store into a failed count. This view carries no private
++    key and no way to obtain one, so it cannot open, reopen, send, reply or
++    sign; those operations keep the full ``load_workspace``.
++    """
++
++    root: Path
++    seat: str
++    created: str
++    recipient_public_key: X25519PublicKey
++    sender_kid: str
++    recipient_kid: str
++    custody: str
++
++    @property
++    def peers(self) -> dict:
++        """The durable recipient mapping, re-read from disk on every use."""
++        return _read_peers(self.root)
++
++    def office(self, *, clock=None) -> postoffice.PostOffice:
++        return _post_office(self.root, self.seat, self.recipient_public_key, clock=clock)
++
++
++def _post_office(root: Path, seat: str, recipient_public_key: X25519PublicKey, *,
++                 clock=None) -> postoffice.PostOffice:
++    """The workspace's Post Office, built from public keys only."""
++    clock = clock or postoffice.utc_now
++    sender_registry = envelope.KeyRegistry({
++        record["seat"]: [Ed25519PublicKey.from_public_bytes(
++            bytes.fromhex(record["sender_public_key"]))]
++        for record in _read_peers(root).values()
++    })
++    recipient_registry = envelope.RecipientKeyRegistry({seat: [recipient_public_key]})
++    return postoffice.PostOffice(
++        root, seat=seat, sender_registry=sender_registry,
++        recipient_registry=recipient_registry, clock=clock)
+ 
+ 
+ def custody_notice(mode: str) -> dict:
+@@ -635,6 +671,59 @@
+     the custody store and must re-derive the durable public identity.
+     """
+     root = Path(root)
++    marker, identity, mode = _read_durable_identity(root)
++    if mode == _custody.CUSTODY_RAW:
++        sender_private = Ed25519PrivateKey.from_private_bytes(
++            bytes.fromhex(identity["sender_private_key"]))
++        recipient_private = X25519PrivateKey.from_private_bytes(
++            bytes.fromhex(identity["recipient_private_key"]))
++        projection = _public_projection(marker["seat"], marker["created"],
++                                        sender_private.public_key(),
++                                        recipient_private.public_key())
++        if (projection["sender_kid"] != marker["sender_kid"]
++                or projection["recipient_kid"] != marker["recipient_kid"]):
++            _reject(INVALID_WORKSPACE,
++                    "workspace marker does not match the durable private identity; refusing "
++                    "to serve a forged or stale workspace")
++    else:
++        sender_private, recipient_private = _load_protected_keys(identity, store=store)
++    # Validate the durable mapping at load time; the property re-reads it on use.
++    _read_peers(root)
++    return Workspace(root=root, seat=marker["seat"], created=marker["created"],
++                     sender_private_key=sender_private,
++                     recipient_private_key=recipient_private,
++                     sender_kid=marker["sender_kid"],
++                     recipient_kid=marker["recipient_kid"], custody=mode)
++
++
++def load_workspace_headers(root) -> WorkspaceHeaders:
++    """Reopen one workspace for header-only reads without touching a secret.
++
++    Every public check of ``load_workspace`` runs unchanged: the marker and its
++    self-derived fingerprints, the identity file's field set and its agreement
++    with the marker, and in os-store custody the durable public projection and
++    handles. No private-key object is built and the credential store is never
++    read. Proving that the private identity matches is the full load's job,
++    done exactly when a key is needed (open, reopen, send, reply).
++    """
++    root = Path(root)
++    marker, _identity, mode = _read_durable_identity(root)
++    _read_peers(root)
++    return WorkspaceHeaders(
++        root=root, seat=marker["seat"], created=marker["created"],
++        recipient_public_key=X25519PublicKey.from_public_bytes(
++            bytes.fromhex(marker["recipient_public_key"])),
++        sender_kid=marker["sender_kid"], recipient_kid=marker["recipient_kid"],
++        custody=mode)
++
++
++def _read_durable_identity(root: Path) -> tuple[dict, dict, str]:
++    """Validate the public marker and the identity file; return them and the custody mode.
++
++    Shared by the full and the header-only load so the two can never disagree
++    about which workspace is well formed. Private key bytes (raw custody) are
++    checked for shape only; they are not turned into keys here.
++    """
+     marker_path = root / MARKER_NAME
+     if not marker_path.is_file():
+         _reject(WORKSPACE_MISSING, f"no workspace marker at {marker_path}")
+@@ -647,7 +736,6 @@
+     if identity.get("seat") != marker["seat"] or identity.get("created") != marker["created"]:
+         _reject(INVALID_WORKSPACE, "workspace identity and marker disagree")
+     if identity.get("schema") == IDENTITY_SCHEMA and identity.get("version") == 1:
+-        mode = _custody.CUSTODY_RAW
+         expected = {"schema", "version", "seat", "created", "sender_private_key",
+                     "recipient_private_key"}
+         if set(identity) != expected:
+@@ -657,32 +745,13 @@
+             if not isinstance(identity.get(field), str) or not _HEX32_RE.match(identity[field]):
+                 _reject(INVALID_WORKSPACE,
+                         f"workspace identity {field} is not 32 raw bytes of hex")
+-        sender_private = Ed25519PrivateKey.from_private_bytes(
+-            bytes.fromhex(identity["sender_private_key"]))
+-        recipient_private = X25519PrivateKey.from_private_bytes(
+-            bytes.fromhex(identity["recipient_private_key"]))
+-        projection = _public_projection(marker["seat"], marker["created"],
+-                                        sender_private.public_key(),
+-                                        recipient_private.public_key())
+-        if (projection["sender_kid"] != marker["sender_kid"]
+-                or projection["recipient_kid"] != marker["recipient_kid"]):
+-            _reject(INVALID_WORKSPACE,
+-                    "workspace marker does not match the durable private identity; refusing "
+-                    "to serve a forged or stale workspace")
+-    elif (identity.get("schema") == IDENTITY_SCHEMA_V2
++        return marker, identity, _custody.CUSTODY_RAW
++    if (identity.get("schema") == IDENTITY_SCHEMA_V2
+             and identity.get("version") == IDENTITY_VERSION_V2):
+-        mode = _custody.CUSTODY_OS_STORE
+         _validate_identity_v2(identity, marker=marker)
+-        sender_private, recipient_private = _load_protected_keys(identity, store=store)
+-    else:
+-        _reject(INVALID_WORKSPACE, "workspace identity has an unknown schema or field set")
+-    # Validate the durable mapping at load time; the property re-reads it on use.
+-    _read_peers(root)
+-    return Workspace(root=root, seat=marker["seat"], created=marker["created"],
+-                     sender_private_key=sender_private,
+-                     recipient_private_key=recipient_private,
+-                     sender_kid=marker["sender_kid"],
+-                     recipient_kid=marker["recipient_kid"], custody=mode)
++        return marker, identity, _custody.CUSTODY_OS_STORE
++    _reject(INVALID_WORKSPACE, "workspace identity has an unknown schema or field set")
++    raise AssertionError("unreachable")
+ 
+ 
+ def migrate_workspace_custody(root, *, store=None) -> dict:
+@@ -1184,7 +1253,7 @@
+         detail=_send_detail(delivery))
+ 
+ 
+-def list_inbox(workspace: Workspace, *, clock=None) -> dict:
++def list_inbox(workspace: Workspace | WorkspaceHeaders, *, clock=None) -> dict:
+     """Header-only listing: canonical index rows plus durable bundle state."""
+     office = workspace.office(clock=clock)
+     items = []
+@@ -1201,7 +1270,7 @@
+                           detail=f"{len(items)} message(s), {unread} unread")
+ 
+ 
+-def query_inbox(workspace: Workspace, *, sender=None, topic=None, kind=None, state=None,
++def query_inbox(workspace: Workspace | WorkspaceHeaders, *, sender=None, topic=None, kind=None, state=None,
+                 ref=None, since=None, before=None, scan_budget=None, cursor=None,
+                 clock=None) -> dict:
+     """Metadata-only bounded triage query over the canonical index (P1).
+@@ -1425,6 +1494,7 @@
+     "WORKSPACE_SCHEMA",
+     "WORKSPACE_VERSION",
+     "Workspace",
++    "WorkspaceHeaders",
+     "add_recipient",
+     "command_result",
+     "custody_notice",
+@@ -1435,6 +1505,7 @@
+     "list_inbox",
+     "list_recipients",
+     "load_workspace",
++    "load_workspace_headers",
+     "migrate_workspace_custody",
+     "open_message",
+     "query_inbox",

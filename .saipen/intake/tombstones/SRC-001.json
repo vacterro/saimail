@@ -1,0 +1,27 @@
+{
+  "archive_ref": ".saipen/archive/retired/SRC-001.md",
+  "linked_work": null,
+  "measured_sha256": "9c75f6e9bee15fe6d0813a4e4390a7ff7d61da6c50d5bf608f170e83ef0d858a",
+  "receipt_id": "SRC-001",
+  "retired_at": "2026-09-21T21:28:07Z",
+  "retired_by": "astra",
+  "retirement": {
+    "digest_mismatch": false,
+    "measured_sha256": "9c75f6e9bee15fe6d0813a4e4390a7ff7d61da6c50d5bf608f170e83ef0d858a",
+    "note": "",
+    "reason": "SUPERSEDED_SOURCE",
+    "receipt_only": true,
+    "recorded_sha256": "9c75f6e9bee15fe6d0813a4e4390a7ff7d61da6c50d5bf608f170e83ef0d858a",
+    "retired_at": "2026-09-21T21:28:07Z",
+    "retired_by": "astra",
+    "retirement_event": "E-1294",
+    "schema_version": 2,
+    "source_reason": "SUPERSEDED_SOURCE",
+    "successor": "SRC-003"
+  },
+  "retirement_event": "E-1294",
+  "schema_version": 2,
+  "source_reason": "SUPERSEDED_SOURCE",
+  "source_sha256": "9c75f6e9bee15fe6d0813a4e4390a7ff7d61da6c50d5bf608f170e83ef0d858a",
+  "status": "INVALID"
+}

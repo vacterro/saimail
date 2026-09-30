@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-045:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute the SRC-045 review handoff as exactly one corrective ticket linked to T-61/B-016/D-047 without rewriting T-61 history: TARGET A make SemanticallyReviewedAllyAdvice provable only from one actual bounded reviewer invocation producing the report for the exact candidate and corpus (no public report-only mint path; non-transferable invocation proof; reviewer count 1 on approval, 0 on NO_ADVICE and pre-review rejection, 1 without proof on FAIL/UNKNOWN; no retry); TARGET B require OBSERVATION_SUPPORT and COUNTEREVIDENCE_ADEQUACY PASS to cite at least one corpus evidence ref, leaving FAIL/UNKNOWN and pure-prose dimensions unaffected and refs non-authoritative; preserve every B-016 property and the manual B-012 path; record one additive corrective decision and update spec/09, DECISIONS, README/BACKLOG; capture this handoff verbatim; closure requires focused, B-012 and full suites green and saipen validate VALID; no live experiment, model adapters, T-34, auto seal/store/attention; STOP after closure without commit/tag/push"
+    }
+  },
+  "derived_at": "2026-09-19T19:51:10Z",
+  "derived_from": "SRC-045",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "658aceb65c5311c4b9f410b2888e8b62491b472c169e852763280e72d77241d9"
+}

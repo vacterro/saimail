@@ -1,0 +1,27 @@
+--- .saipen/evidence/T-122-notify/capabilities.before.py	2026-09-24 10:14:05.116751700 +0300
++++ saimail/capabilities.py	2026-09-24 10:14:27.132434400 +0300
+@@ -17,6 +17,7 @@
+ from __future__ import annotations
+ 
+ from sailang import SailangError
++from saimail import notify as _notify
+ from saimail import outbox, participants, postoffice
+ from saimail import workspace as _workspace
+ 
+@@ -150,6 +151,16 @@
+     except SailangError as exc:
+         caps["participant_registry"] = _cap(UNAVAILABLE, PARTICIPANTS_CORRUPT, code=exc.code)
+         reasons.append(PARTICIPANTS_CORRUPT)
++    registry, box_cap = caps["participant_registry"], caps["durable_outbox"]
++    if registry["state"] != AVAILABLE:
++        caps["notify"] = _cap(registry["state"], registry["reason"])
++    elif box_cap["state"] == UNAVAILABLE:
++        caps["notify"] = _cap(UNAVAILABLE, box_cap["reason"])
++    else:
++        caps["notify"] = _cap(AVAILABLE, triggers=sorted(participants.TRIGGERS),
++                              budget={"per_recipient_per_hour": _notify.BUDGET_PER_RECIPIENT,
++                                      "per_recipient_work_per_hour":
++                                          _notify.BUDGET_PER_RECIPIENT_WORK})
+     for name, entry in (extra or {}).items():
+         caps[name] = entry
+         if entry.get("reason") and entry["state"] != AVAILABLE:

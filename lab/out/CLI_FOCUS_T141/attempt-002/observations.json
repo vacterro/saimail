@@ -1,0 +1,4974 @@
+[
+  {
+    "action": "dispatch",
+    "agent_visible_payload_bytes": 1869,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "saipen-notify",
+          "detail": "new intent; state DELIVERED",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:9974cc6eb37e9f4209efde370b34c6f48b6f0f4ef5bc20287a4b185c31e6dc0b",
+            "sender_kid": "sha256:414614b3208f8bffc74717ea2a6e23aeec0cf861d8d1b2c00cef051798c5cefe"
+          },
+          "intent": {
+            "alias": "reviewer",
+            "attempts": 1,
+            "delivered_at": "2026-09-30T10:05:47Z",
+            "delivery_status": "ACCEPTED",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "failed_at": null,
+            "failure": null,
+            "failure_reason": null,
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-137:finding:reviewer:l978110f8db8cd626c4add42e",
+            "key_id": "sha256:df2d90330e7548f7e98011ce2976b81d27dd574a1af34741e123ab7027671c52",
+            "kind": "DISCOVERY",
+            "last_attempt_at": "2026-09-30T10:05:47Z",
+            "last_error": null,
+            "next_attempt_at": null,
+            "received_at": "2026-09-30T10:05:47Z",
+            "recipient_seat": "reviewer",
+            "recorded_at": "2026-09-30T10:05:47Z",
+            "sealed_at": "2026-09-30T10:05:47Z",
+            "state": "DELIVERED",
+            "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-137"
+          },
+          "network_attempts": 0,
+          "notify": {
+            "alias": "reviewer",
+            "content_contract": "SAIMAIL_LETTER_1",
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-137:finding:reviewer:l978110f8db8cd626c4add42e",
+            "kind": "DISCOVERY",
+            "to_seat": "reviewer",
+            "trigger": "finding",
+            "work": "T-137"
+          },
+          "ok": true,
+          "operator_action_required": false,
+          "resumed": {
+            "DELIVERED": 0,
+            "FAILED": 0,
+            "PENDING_RETRY": 0,
+            "examined": 0,
+            "needs_signing_key": 0,
+            "not_due": 0
+          },
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "builder",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "builder",
+            "task": "T-136"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "DELIVERED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\builder",
+            "seat": "builder"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11560110002756119,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16252400004304945,
+        "normalized_payload_bytes": 1869,
+        "operation": "dispatch"
+      }
+    ],
+    "seat": "builder",
+    "stage": "actual-context-race"
+  },
+  {
+    "action": "baseline",
+    "agent_visible_payload_bytes": 3077,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "cases": [],
+          "cases_examined": 0,
+          "command": "letter-desk",
+          "complete": true,
+          "complete_from_start": true,
+          "context": "sha256:923b9371d05c125d5a470346b9cc4927c49aa1c18c12e4282ed7e25a5de9f5e1",
+          "continuation": null,
+          "cursor": null,
+          "detail": "metadata only; reserve evidence must be rechecked by explicit review",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "inbox_cursor": null,
+          "items": [
+            {
+              "created": "2026-09-30T10:05:47Z",
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "from": "builder",
+              "kind": "DISCOVERY",
+              "received_at": "2026-09-30T10:05:47Z",
+              "ref": null,
+              "state": "UNREAD",
+              "to": "reviewer",
+              "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-137"
+            }
+          ],
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "rows_examined": 1,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      },
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "letter-metrics",
+          "detail": "receiver-recorded outcomes; no claim about model intelligence or universal utility",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "metrics": {
+            "basis": "EXPLICIT_RECEIVER_DECISIONS",
+            "decisions": {
+              "ACCEPTED": 0,
+              "DECLINED": 0,
+              "DEFERRED": 0,
+              "PENDING": 0,
+              "RESOLVED": 0,
+              "STALE": 0
+            },
+            "feedback_hints": [],
+            "feedback_hints_scope": "LIFETIME_HISTORY",
+            "feedback_signals": {
+              "active": [],
+              "authority": "INFORMATION_ONLY",
+              "automatic_execution": false,
+              "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+              "excluded": {
+                "FUTURE_ASSESSMENT": 0,
+                "LETTER_EXPIRED": 0,
+                "OUTSIDE_WINDOW": 0,
+                "PENDING": 0
+              },
+              "observed_at": "2026-09-30T10:05:47Z",
+              "schema": "SAIMAIL_FEEDBACK_SIGNALS_1",
+              "window_days": 7,
+              "window_start": "2026-09-23T10:05:47Z"
+            },
+            "model_improvement_proven": false,
+            "reasons": {
+              "ACCEPTED": {
+                "ACTION_PLANNED": 0
+              },
+              "DECLINED": {
+                "ALREADY_KNOWN": 0,
+                "NOT_ACTIONABLE": 0,
+                "OUTSIDE_SCOPE": 0,
+                "WRONG_RECIPIENT": 0
+              },
+              "DEFERRED": {
+                "OUTSIDE_CURRENT_WORK": 0,
+                "WAITING_DEPENDENCY": 0
+              },
+              "RESOLVED": {
+                "ACTION_TAKEN": 0
+              },
+              "STALE": {
+                "CONDITION_CHANGED": 0,
+                "EVIDENCE_CHANGED": 0,
+                "EXPIRED": 0
+              }
+            },
+            "resolved_fraction": null,
+            "retained": 0,
+            "reviewed": 0
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11121559998719022,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.1527813000138849,
+        "normalized_payload_bytes": 1336,
+        "operation": "baseline"
+      },
+      {
+        "elapsed_seconds": 0.1578842000453733,
+        "normalized_payload_bytes": 1741,
+        "operation": "baseline"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-0-baseline"
+  },
+  {
+    "action": "cycle",
+    "agent_visible_payload_bytes": 3707,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "agent-cycle",
+          "cycle": {
+            "actions": [
+              {
+                "action": "REVIEW",
+                "arguments": [
+                  "--envelope",
+                  "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+                ],
+                "authority": "INFORMATION_ONLY",
+                "command": [
+                  "saipen",
+                  "letter",
+                  "review"
+                ],
+                "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+                "reason": "CURRENT_MAIL"
+              }
+            ],
+            "authority": "INFORMATION_ONLY",
+            "automatic_execution": false,
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:ca63c9360d07a1303a47791afe3b1fd422c7431372d5d1bb3939d77994d28b1b",
+            "continuation": null,
+            "next_action": {
+              "action": "REVIEW",
+              "arguments": [
+                "--envelope",
+                "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+              ],
+              "authority": "INFORMATION_ONLY",
+              "command": [
+                "saipen",
+                "letter",
+                "review"
+              ],
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "CURRENT_MAIL"
+            },
+            "schema": "SAIMAIL_AGENT_CYCLE_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "work": "T-137"
+          },
+          "desk": {
+            "cases": [],
+            "cases_examined": 0,
+            "command": "letter-desk",
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:923b9371d05c125d5a470346b9cc4927c49aa1c18c12e4282ed7e25a5de9f5e1",
+            "continuation": null,
+            "cursor": null,
+            "detail": "metadata only; reserve evidence must be rechecked by explicit review",
+            "identity": {
+              "custody": "raw",
+              "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+              "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+            },
+            "inbox_cursor": null,
+            "items": [
+              {
+                "created": "2026-09-30T10:05:47Z",
+                "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+                "from": "builder",
+                "kind": "DISCOVERY",
+                "received_at": "2026-09-30T10:05:47Z",
+                "ref": null,
+                "state": "UNREAD",
+                "to": "reviewer",
+                "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-137"
+              }
+            ],
+            "ok": true,
+            "operator_action_required": false,
+            "rows_examined": 1,
+            "schema": "LOCAL_WORKSPACE_COMMAND_1",
+            "status": "OK",
+            "version": 1,
+            "workspace": {
+              "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+              "seat": "reviewer"
+            }
+          },
+          "detail": "metadata only; host chooses when to review and act; evidence must be rechecked",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "metrics": {
+            "basis": "EXPLICIT_RECEIVER_DECISIONS",
+            "decisions": {
+              "ACCEPTED": 0,
+              "DECLINED": 0,
+              "DEFERRED": 0,
+              "PENDING": 0,
+              "RESOLVED": 0,
+              "STALE": 0
+            },
+            "feedback_hints": [],
+            "feedback_hints_scope": "LIFETIME_HISTORY",
+            "feedback_signals": {
+              "active": [],
+              "authority": "INFORMATION_ONLY",
+              "automatic_execution": false,
+              "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+              "excluded": {
+                "FUTURE_ASSESSMENT": 0,
+                "LETTER_EXPIRED": 0,
+                "OUTSIDE_WINDOW": 0,
+                "PENDING": 0
+              },
+              "observed_at": "2026-09-30T10:05:47Z",
+              "schema": "SAIMAIL_FEEDBACK_SIGNALS_1",
+              "window_days": 7,
+              "window_start": "2026-09-23T10:05:47Z"
+            },
+            "model_improvement_proven": false,
+            "reasons": {
+              "ACCEPTED": {
+                "ACTION_PLANNED": 0
+              },
+              "DECLINED": {
+                "ALREADY_KNOWN": 0,
+                "NOT_ACTIONABLE": 0,
+                "OUTSIDE_SCOPE": 0,
+                "WRONG_RECIPIENT": 0
+              },
+              "DEFERRED": {
+                "OUTSIDE_CURRENT_WORK": 0,
+                "WAITING_DEPENDENCY": 0
+              },
+              "RESOLVED": {
+                "ACTION_TAKEN": 0
+              },
+              "STALE": {
+                "CONDITION_CHANGED": 0,
+                "EVIDENCE_CHANGED": 0,
+                "EXPIRED": 0
+              }
+            },
+            "resolved_fraction": null,
+            "retained": 0,
+            "reviewed": 0
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11495529999956489,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.158540099975653,
+        "normalized_payload_bytes": 3707,
+        "operation": "cycle"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-0-cycle"
+  },
+  {
+    "action": "local-focus",
+    "agent_visible_payload_bytes": 1279,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "authority": "INFORMATION_ONLY",
+          "automatic_execution": false,
+          "context": "sha256:ca63c9360d07a1303a47791afe3b1fd422c7431372d5d1bb3939d77994d28b1b",
+          "continuation": null,
+          "coverage": {
+            "cases_examined": 0,
+            "complete": true,
+            "complete_from_start": true,
+            "rows_examined": 1
+          },
+          "decisions": {
+            "ACCEPTED": 0,
+            "DECLINED": 0,
+            "DEFERRED": 0,
+            "PENDING": 0,
+            "RESOLVED": 0,
+            "STALE": 0
+          },
+          "feedback": [],
+          "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+          "feedback_scope": "LIFETIME_HISTORY",
+          "feedback_signals": {
+            "active": [],
+            "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+            "excluded": {
+              "FUTURE_ASSESSMENT": 0,
+              "LETTER_EXPIRED": 0,
+              "OUTSIDE_WINDOW": 0,
+              "PENDING": 0
+            },
+            "observed_at": "2026-09-30T10:05:48Z",
+            "state": "KNOWN",
+            "window_days": 7,
+            "window_start": "2026-09-23T10:05:48Z"
+          },
+          "host": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "task": "T-137"
+          },
+          "model_improvement_proven": false,
+          "next_action": {
+            "action": "REVIEW",
+            "arguments": [
+              "--envelope",
+              "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+            ],
+            "operation": "review"
+          },
+          "reading": [
+            {
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "CURRENT_MAIL"
+            }
+          ],
+          "retained": 0,
+          "reviewed": 0,
+          "schema": "SAIMAIL_HOST_FOCUS_1",
+          "scope": [
+            "saimail_local.py"
+          ],
+          "state": "OK",
+          "work": "T-137"
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11366670002462342,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.1516935999970883,
+        "normalized_payload_bytes": 3707,
+        "operation": "local-focus"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-0-local-focus"
+  },
+  {
+    "action": "focus",
+    "agent_visible_payload_bytes": 1279,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "authority": "INFORMATION_ONLY",
+          "automatic_execution": false,
+          "context": "sha256:ca63c9360d07a1303a47791afe3b1fd422c7431372d5d1bb3939d77994d28b1b",
+          "continuation": null,
+          "coverage": {
+            "cases_examined": 0,
+            "complete": true,
+            "complete_from_start": true,
+            "rows_examined": 1
+          },
+          "decisions": {
+            "ACCEPTED": 0,
+            "DECLINED": 0,
+            "DEFERRED": 0,
+            "PENDING": 0,
+            "RESOLVED": 0,
+            "STALE": 0
+          },
+          "feedback": [],
+          "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+          "feedback_scope": "LIFETIME_HISTORY",
+          "feedback_signals": {
+            "active": [],
+            "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+            "excluded": {
+              "FUTURE_ASSESSMENT": 0,
+              "LETTER_EXPIRED": 0,
+              "OUTSIDE_WINDOW": 0,
+              "PENDING": 0
+            },
+            "observed_at": "2026-09-30T10:05:48Z",
+            "state": "KNOWN",
+            "window_days": 7,
+            "window_start": "2026-09-23T10:05:48Z"
+          },
+          "host": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "task": "T-137"
+          },
+          "model_improvement_proven": false,
+          "next_action": {
+            "action": "REVIEW",
+            "arguments": [
+              "--envelope",
+              "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+            ],
+            "operation": "review"
+          },
+          "reading": [
+            {
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "CURRENT_MAIL"
+            }
+          ],
+          "retained": 0,
+          "reviewed": 0,
+          "schema": "SAIMAIL_HOST_FOCUS_1",
+          "scope": [
+            "saimail_local.py"
+          ],
+          "state": "OK",
+          "work": "T-137"
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.1131910000112839,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.1578136999742128,
+        "normalized_payload_bytes": 1509,
+        "operation": "focus"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-0-focus"
+  },
+  {
+    "action": "focus",
+    "agent_visible_payload_bytes": 1279,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "authority": "INFORMATION_ONLY",
+          "automatic_execution": false,
+          "context": "sha256:ca63c9360d07a1303a47791afe3b1fd422c7431372d5d1bb3939d77994d28b1b",
+          "continuation": null,
+          "coverage": {
+            "cases_examined": 0,
+            "complete": true,
+            "complete_from_start": true,
+            "rows_examined": 1
+          },
+          "decisions": {
+            "ACCEPTED": 0,
+            "DECLINED": 0,
+            "DEFERRED": 0,
+            "PENDING": 0,
+            "RESOLVED": 0,
+            "STALE": 0
+          },
+          "feedback": [],
+          "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+          "feedback_scope": "LIFETIME_HISTORY",
+          "feedback_signals": {
+            "active": [],
+            "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+            "excluded": {
+              "FUTURE_ASSESSMENT": 0,
+              "LETTER_EXPIRED": 0,
+              "OUTSIDE_WINDOW": 0,
+              "PENDING": 0
+            },
+            "observed_at": "2026-09-30T10:05:49Z",
+            "state": "KNOWN",
+            "window_days": 7,
+            "window_start": "2026-09-23T10:05:49Z"
+          },
+          "host": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "task": "T-137"
+          },
+          "model_improvement_proven": false,
+          "next_action": {
+            "action": "REVIEW",
+            "arguments": [
+              "--envelope",
+              "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+            ],
+            "operation": "review"
+          },
+          "reading": [
+            {
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "CURRENT_MAIL"
+            }
+          ],
+          "retained": 0,
+          "reviewed": 0,
+          "schema": "SAIMAIL_HOST_FOCUS_1",
+          "scope": [
+            "saimail_local.py"
+          ],
+          "state": "OK",
+          "work": "T-137"
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11469919997034594,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.1593836999963969,
+        "normalized_payload_bytes": 1509,
+        "operation": "focus"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-1-focus"
+  },
+  {
+    "action": "local-focus",
+    "agent_visible_payload_bytes": 1279,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "authority": "INFORMATION_ONLY",
+          "automatic_execution": false,
+          "context": "sha256:ca63c9360d07a1303a47791afe3b1fd422c7431372d5d1bb3939d77994d28b1b",
+          "continuation": null,
+          "coverage": {
+            "cases_examined": 0,
+            "complete": true,
+            "complete_from_start": true,
+            "rows_examined": 1
+          },
+          "decisions": {
+            "ACCEPTED": 0,
+            "DECLINED": 0,
+            "DEFERRED": 0,
+            "PENDING": 0,
+            "RESOLVED": 0,
+            "STALE": 0
+          },
+          "feedback": [],
+          "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+          "feedback_scope": "LIFETIME_HISTORY",
+          "feedback_signals": {
+            "active": [],
+            "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+            "excluded": {
+              "FUTURE_ASSESSMENT": 0,
+              "LETTER_EXPIRED": 0,
+              "OUTSIDE_WINDOW": 0,
+              "PENDING": 0
+            },
+            "observed_at": "2026-09-30T10:05:49Z",
+            "state": "KNOWN",
+            "window_days": 7,
+            "window_start": "2026-09-23T10:05:49Z"
+          },
+          "host": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "task": "T-137"
+          },
+          "model_improvement_proven": false,
+          "next_action": {
+            "action": "REVIEW",
+            "arguments": [
+              "--envelope",
+              "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+            ],
+            "operation": "review"
+          },
+          "reading": [
+            {
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "CURRENT_MAIL"
+            }
+          ],
+          "retained": 0,
+          "reviewed": 0,
+          "schema": "SAIMAIL_HOST_FOCUS_1",
+          "scope": [
+            "saimail_local.py"
+          ],
+          "state": "OK",
+          "work": "T-137"
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.12689210003009066,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.15399530000286177,
+        "normalized_payload_bytes": 3707,
+        "operation": "local-focus"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-1-local-focus"
+  },
+  {
+    "action": "cycle",
+    "agent_visible_payload_bytes": 3707,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "agent-cycle",
+          "cycle": {
+            "actions": [
+              {
+                "action": "REVIEW",
+                "arguments": [
+                  "--envelope",
+                  "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+                ],
+                "authority": "INFORMATION_ONLY",
+                "command": [
+                  "saipen",
+                  "letter",
+                  "review"
+                ],
+                "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+                "reason": "CURRENT_MAIL"
+              }
+            ],
+            "authority": "INFORMATION_ONLY",
+            "automatic_execution": false,
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:ca63c9360d07a1303a47791afe3b1fd422c7431372d5d1bb3939d77994d28b1b",
+            "continuation": null,
+            "next_action": {
+              "action": "REVIEW",
+              "arguments": [
+                "--envelope",
+                "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+              ],
+              "authority": "INFORMATION_ONLY",
+              "command": [
+                "saipen",
+                "letter",
+                "review"
+              ],
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "CURRENT_MAIL"
+            },
+            "schema": "SAIMAIL_AGENT_CYCLE_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "work": "T-137"
+          },
+          "desk": {
+            "cases": [],
+            "cases_examined": 0,
+            "command": "letter-desk",
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:923b9371d05c125d5a470346b9cc4927c49aa1c18c12e4282ed7e25a5de9f5e1",
+            "continuation": null,
+            "cursor": null,
+            "detail": "metadata only; reserve evidence must be rechecked by explicit review",
+            "identity": {
+              "custody": "raw",
+              "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+              "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+            },
+            "inbox_cursor": null,
+            "items": [
+              {
+                "created": "2026-09-30T10:05:47Z",
+                "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+                "from": "builder",
+                "kind": "DISCOVERY",
+                "received_at": "2026-09-30T10:05:47Z",
+                "ref": null,
+                "state": "UNREAD",
+                "to": "reviewer",
+                "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-137"
+              }
+            ],
+            "ok": true,
+            "operator_action_required": false,
+            "rows_examined": 1,
+            "schema": "LOCAL_WORKSPACE_COMMAND_1",
+            "status": "OK",
+            "version": 1,
+            "workspace": {
+              "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+              "seat": "reviewer"
+            }
+          },
+          "detail": "metadata only; host chooses when to review and act; evidence must be rechecked",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "metrics": {
+            "basis": "EXPLICIT_RECEIVER_DECISIONS",
+            "decisions": {
+              "ACCEPTED": 0,
+              "DECLINED": 0,
+              "DEFERRED": 0,
+              "PENDING": 0,
+              "RESOLVED": 0,
+              "STALE": 0
+            },
+            "feedback_hints": [],
+            "feedback_hints_scope": "LIFETIME_HISTORY",
+            "feedback_signals": {
+              "active": [],
+              "authority": "INFORMATION_ONLY",
+              "automatic_execution": false,
+              "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+              "excluded": {
+                "FUTURE_ASSESSMENT": 0,
+                "LETTER_EXPIRED": 0,
+                "OUTSIDE_WINDOW": 0,
+                "PENDING": 0
+              },
+              "observed_at": "2026-09-30T10:05:49Z",
+              "schema": "SAIMAIL_FEEDBACK_SIGNALS_1",
+              "window_days": 7,
+              "window_start": "2026-09-23T10:05:49Z"
+            },
+            "model_improvement_proven": false,
+            "reasons": {
+              "ACCEPTED": {
+                "ACTION_PLANNED": 0
+              },
+              "DECLINED": {
+                "ALREADY_KNOWN": 0,
+                "NOT_ACTIONABLE": 0,
+                "OUTSIDE_SCOPE": 0,
+                "WRONG_RECIPIENT": 0
+              },
+              "DEFERRED": {
+                "OUTSIDE_CURRENT_WORK": 0,
+                "WAITING_DEPENDENCY": 0
+              },
+              "RESOLVED": {
+                "ACTION_TAKEN": 0
+              },
+              "STALE": {
+                "CONDITION_CHANGED": 0,
+                "EVIDENCE_CHANGED": 0,
+                "EXPIRED": 0
+              }
+            },
+            "resolved_fraction": null,
+            "retained": 0,
+            "reviewed": 0
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.1130416999803856,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16237689997069538,
+        "normalized_payload_bytes": 3707,
+        "operation": "cycle"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-1-cycle"
+  },
+  {
+    "action": "baseline",
+    "agent_visible_payload_bytes": 3077,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "cases": [],
+          "cases_examined": 0,
+          "command": "letter-desk",
+          "complete": true,
+          "complete_from_start": true,
+          "context": "sha256:923b9371d05c125d5a470346b9cc4927c49aa1c18c12e4282ed7e25a5de9f5e1",
+          "continuation": null,
+          "cursor": null,
+          "detail": "metadata only; reserve evidence must be rechecked by explicit review",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "inbox_cursor": null,
+          "items": [
+            {
+              "created": "2026-09-30T10:05:47Z",
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "from": "builder",
+              "kind": "DISCOVERY",
+              "received_at": "2026-09-30T10:05:47Z",
+              "ref": null,
+              "state": "UNREAD",
+              "to": "reviewer",
+              "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-137"
+            }
+          ],
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "rows_examined": 1,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      },
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "letter-metrics",
+          "detail": "receiver-recorded outcomes; no claim about model intelligence or universal utility",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "metrics": {
+            "basis": "EXPLICIT_RECEIVER_DECISIONS",
+            "decisions": {
+              "ACCEPTED": 0,
+              "DECLINED": 0,
+              "DEFERRED": 0,
+              "PENDING": 0,
+              "RESOLVED": 0,
+              "STALE": 0
+            },
+            "feedback_hints": [],
+            "feedback_hints_scope": "LIFETIME_HISTORY",
+            "feedback_signals": {
+              "active": [],
+              "authority": "INFORMATION_ONLY",
+              "automatic_execution": false,
+              "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+              "excluded": {
+                "FUTURE_ASSESSMENT": 0,
+                "LETTER_EXPIRED": 0,
+                "OUTSIDE_WINDOW": 0,
+                "PENDING": 0
+              },
+              "observed_at": "2026-09-30T10:05:50Z",
+              "schema": "SAIMAIL_FEEDBACK_SIGNALS_1",
+              "window_days": 7,
+              "window_start": "2026-09-23T10:05:50Z"
+            },
+            "model_improvement_proven": false,
+            "reasons": {
+              "ACCEPTED": {
+                "ACTION_PLANNED": 0
+              },
+              "DECLINED": {
+                "ALREADY_KNOWN": 0,
+                "NOT_ACTIONABLE": 0,
+                "OUTSIDE_SCOPE": 0,
+                "WRONG_RECIPIENT": 0
+              },
+              "DEFERRED": {
+                "OUTSIDE_CURRENT_WORK": 0,
+                "WAITING_DEPENDENCY": 0
+              },
+              "RESOLVED": {
+                "ACTION_TAKEN": 0
+              },
+              "STALE": {
+                "CONDITION_CHANGED": 0,
+                "EVIDENCE_CHANGED": 0,
+                "EXPIRED": 0
+              }
+            },
+            "resolved_fraction": null,
+            "retained": 0,
+            "reviewed": 0
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11834689998067915,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16776540002319962,
+        "normalized_payload_bytes": 1336,
+        "operation": "baseline"
+      },
+      {
+        "elapsed_seconds": 0.15905159997055307,
+        "normalized_payload_bytes": 1741,
+        "operation": "baseline"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-1-baseline"
+  },
+  {
+    "action": "cycle",
+    "agent_visible_payload_bytes": 3707,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "agent-cycle",
+          "cycle": {
+            "actions": [
+              {
+                "action": "REVIEW",
+                "arguments": [
+                  "--envelope",
+                  "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+                ],
+                "authority": "INFORMATION_ONLY",
+                "command": [
+                  "saipen",
+                  "letter",
+                  "review"
+                ],
+                "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+                "reason": "CURRENT_MAIL"
+              }
+            ],
+            "authority": "INFORMATION_ONLY",
+            "automatic_execution": false,
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:ca63c9360d07a1303a47791afe3b1fd422c7431372d5d1bb3939d77994d28b1b",
+            "continuation": null,
+            "next_action": {
+              "action": "REVIEW",
+              "arguments": [
+                "--envelope",
+                "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+              ],
+              "authority": "INFORMATION_ONLY",
+              "command": [
+                "saipen",
+                "letter",
+                "review"
+              ],
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "CURRENT_MAIL"
+            },
+            "schema": "SAIMAIL_AGENT_CYCLE_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "work": "T-137"
+          },
+          "desk": {
+            "cases": [],
+            "cases_examined": 0,
+            "command": "letter-desk",
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:923b9371d05c125d5a470346b9cc4927c49aa1c18c12e4282ed7e25a5de9f5e1",
+            "continuation": null,
+            "cursor": null,
+            "detail": "metadata only; reserve evidence must be rechecked by explicit review",
+            "identity": {
+              "custody": "raw",
+              "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+              "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+            },
+            "inbox_cursor": null,
+            "items": [
+              {
+                "created": "2026-09-30T10:05:47Z",
+                "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+                "from": "builder",
+                "kind": "DISCOVERY",
+                "received_at": "2026-09-30T10:05:47Z",
+                "ref": null,
+                "state": "UNREAD",
+                "to": "reviewer",
+                "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-137"
+              }
+            ],
+            "ok": true,
+            "operator_action_required": false,
+            "rows_examined": 1,
+            "schema": "LOCAL_WORKSPACE_COMMAND_1",
+            "status": "OK",
+            "version": 1,
+            "workspace": {
+              "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+              "seat": "reviewer"
+            }
+          },
+          "detail": "metadata only; host chooses when to review and act; evidence must be rechecked",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "metrics": {
+            "basis": "EXPLICIT_RECEIVER_DECISIONS",
+            "decisions": {
+              "ACCEPTED": 0,
+              "DECLINED": 0,
+              "DEFERRED": 0,
+              "PENDING": 0,
+              "RESOLVED": 0,
+              "STALE": 0
+            },
+            "feedback_hints": [],
+            "feedback_hints_scope": "LIFETIME_HISTORY",
+            "feedback_signals": {
+              "active": [],
+              "authority": "INFORMATION_ONLY",
+              "automatic_execution": false,
+              "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+              "excluded": {
+                "FUTURE_ASSESSMENT": 0,
+                "LETTER_EXPIRED": 0,
+                "OUTSIDE_WINDOW": 0,
+                "PENDING": 0
+              },
+              "observed_at": "2026-09-30T10:05:50Z",
+              "schema": "SAIMAIL_FEEDBACK_SIGNALS_1",
+              "window_days": 7,
+              "window_start": "2026-09-23T10:05:50Z"
+            },
+            "model_improvement_proven": false,
+            "reasons": {
+              "ACCEPTED": {
+                "ACTION_PLANNED": 0
+              },
+              "DECLINED": {
+                "ALREADY_KNOWN": 0,
+                "NOT_ACTIONABLE": 0,
+                "OUTSIDE_SCOPE": 0,
+                "WRONG_RECIPIENT": 0
+              },
+              "DEFERRED": {
+                "OUTSIDE_CURRENT_WORK": 0,
+                "WAITING_DEPENDENCY": 0
+              },
+              "RESOLVED": {
+                "ACTION_TAKEN": 0
+              },
+              "STALE": {
+                "CONDITION_CHANGED": 0,
+                "EVIDENCE_CHANGED": 0,
+                "EXPIRED": 0
+              }
+            },
+            "resolved_fraction": null,
+            "retained": 0,
+            "reviewed": 0
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11774460005108267,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16619369998807088,
+        "normalized_payload_bytes": 3707,
+        "operation": "cycle"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-2-cycle"
+  },
+  {
+    "action": "focus",
+    "agent_visible_payload_bytes": 1279,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "authority": "INFORMATION_ONLY",
+          "automatic_execution": false,
+          "context": "sha256:ca63c9360d07a1303a47791afe3b1fd422c7431372d5d1bb3939d77994d28b1b",
+          "continuation": null,
+          "coverage": {
+            "cases_examined": 0,
+            "complete": true,
+            "complete_from_start": true,
+            "rows_examined": 1
+          },
+          "decisions": {
+            "ACCEPTED": 0,
+            "DECLINED": 0,
+            "DEFERRED": 0,
+            "PENDING": 0,
+            "RESOLVED": 0,
+            "STALE": 0
+          },
+          "feedback": [],
+          "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+          "feedback_scope": "LIFETIME_HISTORY",
+          "feedback_signals": {
+            "active": [],
+            "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+            "excluded": {
+              "FUTURE_ASSESSMENT": 0,
+              "LETTER_EXPIRED": 0,
+              "OUTSIDE_WINDOW": 0,
+              "PENDING": 0
+            },
+            "observed_at": "2026-09-30T10:05:51Z",
+            "state": "KNOWN",
+            "window_days": 7,
+            "window_start": "2026-09-23T10:05:51Z"
+          },
+          "host": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "task": "T-137"
+          },
+          "model_improvement_proven": false,
+          "next_action": {
+            "action": "REVIEW",
+            "arguments": [
+              "--envelope",
+              "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+            ],
+            "operation": "review"
+          },
+          "reading": [
+            {
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "CURRENT_MAIL"
+            }
+          ],
+          "retained": 0,
+          "reviewed": 0,
+          "schema": "SAIMAIL_HOST_FOCUS_1",
+          "scope": [
+            "saimail_local.py"
+          ],
+          "state": "OK",
+          "work": "T-137"
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.21399810002185404,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.2730468999943696,
+        "normalized_payload_bytes": 1509,
+        "operation": "focus"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-2-focus"
+  },
+  {
+    "action": "baseline",
+    "agent_visible_payload_bytes": 3077,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "cases": [],
+          "cases_examined": 0,
+          "command": "letter-desk",
+          "complete": true,
+          "complete_from_start": true,
+          "context": "sha256:923b9371d05c125d5a470346b9cc4927c49aa1c18c12e4282ed7e25a5de9f5e1",
+          "continuation": null,
+          "cursor": null,
+          "detail": "metadata only; reserve evidence must be rechecked by explicit review",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "inbox_cursor": null,
+          "items": [
+            {
+              "created": "2026-09-30T10:05:47Z",
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "from": "builder",
+              "kind": "DISCOVERY",
+              "received_at": "2026-09-30T10:05:47Z",
+              "ref": null,
+              "state": "UNREAD",
+              "to": "reviewer",
+              "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-137"
+            }
+          ],
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "rows_examined": 1,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      },
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "letter-metrics",
+          "detail": "receiver-recorded outcomes; no claim about model intelligence or universal utility",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "metrics": {
+            "basis": "EXPLICIT_RECEIVER_DECISIONS",
+            "decisions": {
+              "ACCEPTED": 0,
+              "DECLINED": 0,
+              "DEFERRED": 0,
+              "PENDING": 0,
+              "RESOLVED": 0,
+              "STALE": 0
+            },
+            "feedback_hints": [],
+            "feedback_hints_scope": "LIFETIME_HISTORY",
+            "feedback_signals": {
+              "active": [],
+              "authority": "INFORMATION_ONLY",
+              "automatic_execution": false,
+              "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+              "excluded": {
+                "FUTURE_ASSESSMENT": 0,
+                "LETTER_EXPIRED": 0,
+                "OUTSIDE_WINDOW": 0,
+                "PENDING": 0
+              },
+              "observed_at": "2026-09-30T10:05:52Z",
+              "schema": "SAIMAIL_FEEDBACK_SIGNALS_1",
+              "window_days": 7,
+              "window_start": "2026-09-23T10:05:52Z"
+            },
+            "model_improvement_proven": false,
+            "reasons": {
+              "ACCEPTED": {
+                "ACTION_PLANNED": 0
+              },
+              "DECLINED": {
+                "ALREADY_KNOWN": 0,
+                "NOT_ACTIONABLE": 0,
+                "OUTSIDE_SCOPE": 0,
+                "WRONG_RECIPIENT": 0
+              },
+              "DEFERRED": {
+                "OUTSIDE_CURRENT_WORK": 0,
+                "WAITING_DEPENDENCY": 0
+              },
+              "RESOLVED": {
+                "ACTION_TAKEN": 0
+              },
+              "STALE": {
+                "CONDITION_CHANGED": 0,
+                "EVIDENCE_CHANGED": 0,
+                "EXPIRED": 0
+              }
+            },
+            "resolved_fraction": null,
+            "retained": 0,
+            "reviewed": 0
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.22757829999318346,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.3009781999862753,
+        "normalized_payload_bytes": 1336,
+        "operation": "baseline"
+      },
+      {
+        "elapsed_seconds": 0.29896430001826957,
+        "normalized_payload_bytes": 1741,
+        "operation": "baseline"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-2-baseline"
+  },
+  {
+    "action": "local-focus",
+    "agent_visible_payload_bytes": 1279,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "authority": "INFORMATION_ONLY",
+          "automatic_execution": false,
+          "context": "sha256:ca63c9360d07a1303a47791afe3b1fd422c7431372d5d1bb3939d77994d28b1b",
+          "continuation": null,
+          "coverage": {
+            "cases_examined": 0,
+            "complete": true,
+            "complete_from_start": true,
+            "rows_examined": 1
+          },
+          "decisions": {
+            "ACCEPTED": 0,
+            "DECLINED": 0,
+            "DEFERRED": 0,
+            "PENDING": 0,
+            "RESOLVED": 0,
+            "STALE": 0
+          },
+          "feedback": [],
+          "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+          "feedback_scope": "LIFETIME_HISTORY",
+          "feedback_signals": {
+            "active": [],
+            "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+            "excluded": {
+              "FUTURE_ASSESSMENT": 0,
+              "LETTER_EXPIRED": 0,
+              "OUTSIDE_WINDOW": 0,
+              "PENDING": 0
+            },
+            "observed_at": "2026-09-30T10:05:53Z",
+            "state": "KNOWN",
+            "window_days": 7,
+            "window_start": "2026-09-23T10:05:53Z"
+          },
+          "host": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "task": "T-137"
+          },
+          "model_improvement_proven": false,
+          "next_action": {
+            "action": "REVIEW",
+            "arguments": [
+              "--envelope",
+              "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+            ],
+            "operation": "review"
+          },
+          "reading": [
+            {
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "CURRENT_MAIL"
+            }
+          ],
+          "retained": 0,
+          "reviewed": 0,
+          "schema": "SAIMAIL_HOST_FOCUS_1",
+          "scope": [
+            "saimail_local.py"
+          ],
+          "state": "OK",
+          "work": "T-137"
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.1247208000277169,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16022919997340068,
+        "normalized_payload_bytes": 3707,
+        "operation": "local-focus"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "entry-2-local-focus"
+  },
+  {
+    "action": "review",
+    "agent_visible_payload_bytes": 2430,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": true,
+            "decision": "PENDING",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:46Z",
+            "id": 1,
+            "issue": "actual-context-race",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": null,
+            "recipient_work": "T-137",
+            "retained": false,
+            "reviewed_at": "2026-09-30T10:05:53Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "builder",
+            "sender_work": "T-136",
+            "updated_at": "2026-09-30T10:05:53Z"
+          },
+          "command": "letter-review",
+          "detail": "explicitly reviewed; hashes prove bytes, not truth; no action or promotion inferred",
+          "evidence": [
+            {
+              "path": "before.json",
+              "sha256": "f631cc98c105907b113e94dbd6939d8c6aba6aa11fc41096473bad50d7a50c01",
+              "state": "CURRENT"
+            }
+          ],
+          "evidence_current": true,
+          "expired": false,
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "letter": {
+            "done_when": "The same control returns SAIPEN_CONTEXT_CHANGED, exit 1 and exactly one admission event.",
+            "evidence": [
+              {
+                "path": "before.json",
+                "sha256": "f631cc98c105907b113e94dbd6939d8c6aba6aa11fc41096473bad50d7a50c01"
+              }
+            ],
+            "expires_at": "2026-10-30T10:05:46Z",
+            "impact": "The receiver could adopt a cycle bound to a different observed Work context.",
+            "in_reply_to": null,
+            "issue": "actual-context-race",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "observation": "T-137's pre-fix CLI control hid event 40->41 behind a second admission and returned OK.",
+            "recipient_work": "T-137",
+            "request": "Inspect the fixed one-admission control and recheck its named refusal.",
+            "schema": "SAIMAIL_LETTER_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender_work": "T-136",
+            "trigger": "finding",
+            "uncertainty": "Actual mechanical Work evidence; this replay has scripted decisions and no model judgment."
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "result_current": false,
+          "result_evidence": [],
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_REVIEWED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.12083649996202439,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.17056759999832138,
+        "normalized_payload_bytes": 2430,
+        "operation": "review"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "explicit-first-review"
+  },
+  {
+    "action": "decision",
+    "agent_visible_payload_bytes": 1475,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": true,
+            "decision": "DEFERRED",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:46Z",
+            "id": 1,
+            "issue": "actual-context-race",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": "WAITING_DEPENDENCY",
+            "recipient_work": "T-137",
+            "retained": false,
+            "reviewed_at": "2026-09-30T10:05:53Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "builder",
+            "sender_work": "T-136",
+            "updated_at": "2026-09-30T10:05:53Z"
+          },
+          "command": "letter-decide",
+          "detail": "receiver decision recorded; delivery and reading never imply resolution",
+          "history": [
+            {
+              "at": "2026-09-30T10:05:53Z",
+              "decision": "DEFERRED",
+              "evidence": [],
+              "reason": "WAITING_DEPENDENCY"
+            }
+          ],
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "repeated": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_DECIDED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.12042610003845766,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.24003789998823777,
+        "normalized_payload_bytes": 1475,
+        "operation": "decision"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "defer"
+  },
+  {
+    "action": "report",
+    "agent_visible_payload_bytes": 2125,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "letter-report",
+          "detail": "new intent; state DELIVERED",
+          "feedback": {
+            "at": "2026-09-30T10:05:53Z",
+            "authority": "INFORMATION_ONLY",
+            "decision": "DEFERRED",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "event_id": 1,
+            "reason": "WAITING_DEPENDENCY",
+            "schema": "SAIMAIL_RECEIVER_FEEDBACK_1"
+          },
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "intent": {
+            "alias": "builder",
+            "attempts": 1,
+            "delivered_at": "2026-09-30T10:05:54Z",
+            "delivery_status": "ACCEPTED",
+            "envelope_id": "sha256:310a05bf2a7655697e4d54d73873f9d5db3365fd77809e43ea07526022ed0686",
+            "failed_at": null,
+            "failure": null,
+            "failure_reason": null,
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-136:reply:builder:l73bd71bc3aee608807e5e8d2",
+            "key_id": "sha256:23ad6d3ef948b28fae99ef2051ec6d1c33d894b22d474140cfe9b165b85c921e",
+            "kind": "DISCOVERY",
+            "last_attempt_at": "2026-09-30T10:05:54Z",
+            "last_error": null,
+            "next_attempt_at": null,
+            "received_at": "2026-09-30T10:05:54Z",
+            "recipient_seat": "builder",
+            "recorded_at": "2026-09-30T10:05:54Z",
+            "sealed_at": "2026-09-30T10:05:54Z",
+            "state": "DELIVERED",
+            "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-136"
+          },
+          "network_attempts": 0,
+          "notify": {
+            "alias": "builder",
+            "content_contract": "SAIMAIL_LETTER_1",
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-136:reply:builder:l73bd71bc3aee608807e5e8d2",
+            "kind": "DISCOVERY",
+            "to_seat": "builder",
+            "trigger": "reply",
+            "work": "T-136"
+          },
+          "ok": true,
+          "operator_action_required": false,
+          "resumed": {
+            "DELIVERED": 0,
+            "FAILED": 0,
+            "PENDING_RETRY": 0,
+            "examined": 0,
+            "needs_signing_key": 0,
+            "not_due": 0
+          },
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "DELIVERED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.12323209998430684,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.18275559996254742,
+        "normalized_payload_bytes": 2125,
+        "operation": "report"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "report-defer"
+  },
+  {
+    "action": "review",
+    "agent_visible_payload_bytes": 2438,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": true,
+            "decision": "PENDING",
+            "envelope_id": "sha256:310a05bf2a7655697e4d54d73873f9d5db3365fd77809e43ea07526022ed0686",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:53Z",
+            "id": 1,
+            "issue": "feedback-b268108d96da3d51d1f7d3a95cfc5dd0-1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": null,
+            "recipient_work": "T-136",
+            "retained": false,
+            "reviewed_at": "2026-09-30T10:05:54Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "reviewer",
+            "sender_work": "T-137",
+            "updated_at": "2026-09-30T10:05:54Z"
+          },
+          "command": "letter-review",
+          "detail": "explicitly reviewed; hashes prove bytes, not truth; no action or promotion inferred",
+          "evidence": [],
+          "evidence_current": false,
+          "expired": false,
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:9974cc6eb37e9f4209efde370b34c6f48b6f0f4ef5bc20287a4b185c31e6dc0b",
+            "sender_kid": "sha256:414614b3208f8bffc74717ea2a6e23aeec0cf861d8d1b2c00cef051798c5cefe"
+          },
+          "letter": {
+            "done_when": "The same control returns SAIPEN_CONTEXT_CHANGED, exit 1 and exactly one admission event.",
+            "evidence": [],
+            "expires_at": "2026-10-30T10:05:53Z",
+            "impact": "The original sender can reassess relevance, recipient and timing before repeating this request.",
+            "in_reply_to": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "issue": "feedback-b268108d96da3d51d1f7d3a95cfc5dd0-1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "observation": "The receiver recorded DEFERRED/WAITING_DEPENDENCY for sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3.",
+            "recipient_work": "T-136",
+            "request": "Assess this receiver feedback against the original completion criterion before planning another letter.",
+            "schema": "SAIMAIL_LETTER_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender_work": "T-137",
+            "trigger": "reply",
+            "uncertainty": "This is the receiver's recorded assessment; it does not prove the claim is true or that work was completed."
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "result_current": false,
+          "result_evidence": [],
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "builder",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_REVIEWED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\builder",
+            "seat": "builder"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.15729389997432008,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.21642190002603456,
+        "normalized_payload_bytes": 2438,
+        "operation": "review"
+      }
+    ],
+    "seat": "builder",
+    "stage": "fresh-sender-feedback"
+  },
+  {
+    "action": "dispatch",
+    "agent_visible_payload_bytes": 1869,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "saipen-notify",
+          "detail": "new intent; state DELIVERED",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:9974cc6eb37e9f4209efde370b34c6f48b6f0f4ef5bc20287a4b185c31e6dc0b",
+            "sender_kid": "sha256:414614b3208f8bffc74717ea2a6e23aeec0cf861d8d1b2c00cef051798c5cefe"
+          },
+          "intent": {
+            "alias": "reviewer",
+            "attempts": 1,
+            "delivered_at": "2026-09-30T10:05:55Z",
+            "delivery_status": "ACCEPTED",
+            "envelope_id": "sha256:4aa66325348edf8f0a36b481574b2114fe5121175ccfa76a5508f01f4714bf05",
+            "failed_at": null,
+            "failure": null,
+            "failure_reason": null,
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-137:finding:reviewer:l15d08e386ae061d517d80e0c",
+            "key_id": "sha256:3680c41c37435969c8fc6f8ac2943b171b8f801d3d7db19c1155678cbd1ea1c9",
+            "kind": "DISCOVERY",
+            "last_attempt_at": "2026-09-30T10:05:55Z",
+            "last_error": null,
+            "next_attempt_at": null,
+            "received_at": "2026-09-30T10:05:55Z",
+            "recipient_seat": "reviewer",
+            "recorded_at": "2026-09-30T10:05:55Z",
+            "sealed_at": "2026-09-30T10:05:55Z",
+            "state": "DELIVERED",
+            "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-137"
+          },
+          "network_attempts": 0,
+          "notify": {
+            "alias": "reviewer",
+            "content_contract": "SAIMAIL_LETTER_1",
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-137:finding:reviewer:l15d08e386ae061d517d80e0c",
+            "kind": "DISCOVERY",
+            "to_seat": "reviewer",
+            "trigger": "finding",
+            "work": "T-137"
+          },
+          "ok": true,
+          "operator_action_required": false,
+          "resumed": {
+            "DELIVERED": 0,
+            "FAILED": 0,
+            "PENDING_RETRY": 0,
+            "examined": 0,
+            "needs_signing_key": 0,
+            "not_due": 0
+          },
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "builder",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "builder",
+            "task": "T-136"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "DELIVERED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\builder",
+            "seat": "builder"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11683680000714958,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.17945440002949908,
+        "normalized_payload_bytes": 1869,
+        "operation": "dispatch"
+      }
+    ],
+    "seat": "builder",
+    "stage": "vague-request"
+  },
+  {
+    "action": "decision",
+    "agent_visible_payload_bytes": 1462,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": false,
+            "decision": "DECLINED",
+            "envelope_id": "sha256:4aa66325348edf8f0a36b481574b2114fe5121175ccfa76a5508f01f4714bf05",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:54Z",
+            "id": 2,
+            "issue": "vague-request",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": "NOT_ACTIONABLE",
+            "recipient_work": "T-137",
+            "retained": false,
+            "reviewed_at": "2026-09-30T10:05:55Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "builder",
+            "sender_work": "T-136",
+            "updated_at": "2026-09-30T10:05:55Z"
+          },
+          "command": "letter-decide",
+          "detail": "receiver decision recorded; delivery and reading never imply resolution",
+          "history": [
+            {
+              "at": "2026-09-30T10:05:55Z",
+              "decision": "DECLINED",
+              "evidence": [],
+              "reason": "NOT_ACTIONABLE"
+            }
+          ],
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "repeated": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_DECIDED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11310000001685694,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16274380002869293,
+        "normalized_payload_bytes": 1462,
+        "operation": "decision"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "decline-vague"
+  },
+  {
+    "action": "report",
+    "agent_visible_payload_bytes": 2121,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "letter-report",
+          "detail": "new intent; state DELIVERED",
+          "feedback": {
+            "at": "2026-09-30T10:05:55Z",
+            "authority": "INFORMATION_ONLY",
+            "decision": "DECLINED",
+            "envelope_id": "sha256:4aa66325348edf8f0a36b481574b2114fe5121175ccfa76a5508f01f4714bf05",
+            "event_id": 2,
+            "reason": "NOT_ACTIONABLE",
+            "schema": "SAIMAIL_RECEIVER_FEEDBACK_1"
+          },
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "intent": {
+            "alias": "builder",
+            "attempts": 1,
+            "delivered_at": "2026-09-30T10:05:56Z",
+            "delivery_status": "ACCEPTED",
+            "envelope_id": "sha256:44cd93dfd5fd7d3f7a531e172ae6c7bdaa5b53564a626dfdcba4624fd0a31531",
+            "failed_at": null,
+            "failure": null,
+            "failure_reason": null,
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-136:reply:builder:l8bd9589ad80f265818278095",
+            "key_id": "sha256:b477cf69863f4d97affc6cdfff31175cf28c2b2b2b9a5dce7006a2e69d2094b3",
+            "kind": "DISCOVERY",
+            "last_attempt_at": "2026-09-30T10:05:56Z",
+            "last_error": null,
+            "next_attempt_at": null,
+            "received_at": "2026-09-30T10:05:56Z",
+            "recipient_seat": "builder",
+            "recorded_at": "2026-09-30T10:05:56Z",
+            "sealed_at": "2026-09-30T10:05:56Z",
+            "state": "DELIVERED",
+            "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-136"
+          },
+          "network_attempts": 0,
+          "notify": {
+            "alias": "builder",
+            "content_contract": "SAIMAIL_LETTER_1",
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-136:reply:builder:l8bd9589ad80f265818278095",
+            "kind": "DISCOVERY",
+            "to_seat": "builder",
+            "trigger": "reply",
+            "work": "T-136"
+          },
+          "ok": true,
+          "operator_action_required": false,
+          "resumed": {
+            "DELIVERED": 0,
+            "FAILED": 0,
+            "PENDING_RETRY": 0,
+            "examined": 0,
+            "needs_signing_key": 0,
+            "not_due": 0
+          },
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "DELIVERED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11673930002143607,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.17023569997400045,
+        "normalized_payload_bytes": 2121,
+        "operation": "report"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "report-decline"
+  },
+  {
+    "action": "review",
+    "agent_visible_payload_bytes": 2377,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": true,
+            "decision": "PENDING",
+            "envelope_id": "sha256:44cd93dfd5fd7d3f7a531e172ae6c7bdaa5b53564a626dfdcba4624fd0a31531",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:55Z",
+            "id": 2,
+            "issue": "feedback-4aa66325348edf8f0a36b481574b2114-2",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": null,
+            "recipient_work": "T-136",
+            "retained": false,
+            "reviewed_at": "2026-09-30T10:05:56Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "reviewer",
+            "sender_work": "T-137",
+            "updated_at": "2026-09-30T10:05:56Z"
+          },
+          "command": "letter-review",
+          "detail": "explicitly reviewed; hashes prove bytes, not truth; no action or promotion inferred",
+          "evidence": [],
+          "evidence_current": false,
+          "expired": false,
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:9974cc6eb37e9f4209efde370b34c6f48b6f0f4ef5bc20287a4b185c31e6dc0b",
+            "sender_kid": "sha256:414614b3208f8bffc74717ea2a6e23aeec0cf861d8d1b2c00cef051798c5cefe"
+          },
+          "letter": {
+            "done_when": "Receiver determines completion.",
+            "evidence": [],
+            "expires_at": "2026-10-30T10:05:55Z",
+            "impact": "The original sender can reassess relevance, recipient and timing before repeating this request.",
+            "in_reply_to": "sha256:4aa66325348edf8f0a36b481574b2114fe5121175ccfa76a5508f01f4714bf05",
+            "issue": "feedback-4aa66325348edf8f0a36b481574b2114-2",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "observation": "The receiver recorded DECLINED/NOT_ACTIONABLE for sha256:4aa66325348edf8f0a36b481574b2114fe5121175ccfa76a5508f01f4714bf05.",
+            "recipient_work": "T-136",
+            "request": "Assess this receiver feedback against the original completion criterion before planning another letter.",
+            "schema": "SAIMAIL_LETTER_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender_work": "T-137",
+            "trigger": "reply",
+            "uncertainty": "This is the receiver's recorded assessment; it does not prove the claim is true or that work was completed."
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "result_current": false,
+          "result_evidence": [],
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "builder",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_REVIEWED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\builder",
+            "seat": "builder"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11465360003057867,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.15774299995973706,
+        "normalized_payload_bytes": 2377,
+        "operation": "review"
+      }
+    ],
+    "seat": "builder",
+    "stage": "fresh-sender-negative"
+  },
+  {
+    "action": "focus",
+    "agent_visible_payload_bytes": 1909,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "authority": "INFORMATION_ONLY",
+          "automatic_execution": false,
+          "context": "sha256:ca63c9360d07a1303a47791afe3b1fd422c7431372d5d1bb3939d77994d28b1b",
+          "continuation": null,
+          "coverage": {
+            "cases_examined": 2,
+            "complete": true,
+            "complete_from_start": true,
+            "rows_examined": 2
+          },
+          "decisions": {
+            "ACCEPTED": 0,
+            "DECLINED": 1,
+            "DEFERRED": 1,
+            "PENDING": 0,
+            "RESOLVED": 0,
+            "STALE": 0
+          },
+          "feedback": [
+            {
+              "count": 1,
+              "decision": "DEFERRED",
+              "reason": "WAITING_DEPENDENCY",
+              "suggestion": "WAIT_FOR_DEPENDENCY_EVIDENCE"
+            },
+            {
+              "count": 1,
+              "decision": "DECLINED",
+              "reason": "NOT_ACTIONABLE",
+              "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+            }
+          ],
+          "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+          "feedback_scope": "LIFETIME_HISTORY",
+          "feedback_signals": {
+            "active": [
+              {
+                "count": 1,
+                "decision": "DECLINED",
+                "first_at": "2026-09-30T10:05:55Z",
+                "kind": "ASSESSMENT_ONLY",
+                "last_at": "2026-09-30T10:05:55Z",
+                "reason": "NOT_ACTIONABLE",
+                "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+              },
+              {
+                "count": 1,
+                "decision": "DEFERRED",
+                "first_at": "2026-09-30T10:05:53Z",
+                "kind": "UNEXPIRED_RELEVANCE",
+                "last_at": "2026-09-30T10:05:53Z",
+                "reason": "WAITING_DEPENDENCY",
+                "suggestion": "WAIT_FOR_DEPENDENCY_EVIDENCE"
+              }
+            ],
+            "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+            "excluded": {
+              "FUTURE_ASSESSMENT": 0,
+              "LETTER_EXPIRED": 0,
+              "OUTSIDE_WINDOW": 0,
+              "PENDING": 0
+            },
+            "observed_at": "2026-09-30T10:05:56Z",
+            "state": "KNOWN",
+            "window_days": 7,
+            "window_start": "2026-09-23T10:05:56Z"
+          },
+          "host": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "task": "T-137"
+          },
+          "model_improvement_proven": false,
+          "next_action": {
+            "action": "REVIEW",
+            "arguments": [
+              "--envelope",
+              "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+            ],
+            "operation": "review"
+          },
+          "reading": [
+            {
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "CURRENT_WORK"
+            }
+          ],
+          "retained": 0,
+          "reviewed": 2,
+          "schema": "SAIMAIL_HOST_FOCUS_1",
+          "scope": [
+            "saimail_local.py"
+          ],
+          "state": "OK",
+          "work": "T-137"
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11889819998759776,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16188129998045042,
+        "normalized_payload_bytes": 2139,
+        "operation": "focus"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "focused-receiver-feedback"
+  },
+  {
+    "action": "dispatch",
+    "agent_visible_payload_bytes": 1869,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "saipen-notify",
+          "detail": "new intent; state DELIVERED",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:9974cc6eb37e9f4209efde370b34c6f48b6f0f4ef5bc20287a4b185c31e6dc0b",
+            "sender_kid": "sha256:414614b3208f8bffc74717ea2a6e23aeec0cf861d8d1b2c00cef051798c5cefe"
+          },
+          "intent": {
+            "alias": "reviewer",
+            "attempts": 1,
+            "delivered_at": "2026-09-30T10:05:57Z",
+            "delivery_status": "ACCEPTED",
+            "envelope_id": "sha256:5e2465e2d6a19cb4e80f40c65299ca7c6483cb49b895ba33ac1a162fe638c8b0",
+            "failed_at": null,
+            "failure": null,
+            "failure_reason": null,
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-137:finding:reviewer:lb2011a85da570ccf550e09ff",
+            "key_id": "sha256:10755fe03d610758d4d13cbd938a97d1938951a8141981011eaccec43687473c",
+            "kind": "DISCOVERY",
+            "last_attempt_at": "2026-09-30T10:05:57Z",
+            "last_error": null,
+            "next_attempt_at": null,
+            "received_at": "2026-09-30T10:05:57Z",
+            "recipient_seat": "reviewer",
+            "recorded_at": "2026-09-30T10:05:57Z",
+            "sealed_at": "2026-09-30T10:05:57Z",
+            "state": "DELIVERED",
+            "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-137"
+          },
+          "network_attempts": 0,
+          "notify": {
+            "alias": "reviewer",
+            "content_contract": "SAIMAIL_LETTER_1",
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-137:finding:reviewer:lb2011a85da570ccf550e09ff",
+            "kind": "DISCOVERY",
+            "to_seat": "reviewer",
+            "trigger": "finding",
+            "work": "T-137"
+          },
+          "ok": true,
+          "operator_action_required": false,
+          "resumed": {
+            "DELIVERED": 0,
+            "FAILED": 0,
+            "PENDING_RETRY": 0,
+            "examined": 0,
+            "needs_signing_key": 0,
+            "not_due": 0
+          },
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "builder",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "builder",
+            "task": "T-136"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "DELIVERED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\builder",
+            "seat": "builder"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.12221689999569207,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16659179999260232,
+        "normalized_payload_bytes": 1869,
+        "operation": "dispatch"
+      }
+    ],
+    "seat": "builder",
+    "stage": "clarified-request"
+  },
+  {
+    "action": "review",
+    "agent_visible_payload_bytes": 2426,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": true,
+            "decision": "PENDING",
+            "envelope_id": "sha256:5e2465e2d6a19cb4e80f40c65299ca7c6483cb49b895ba33ac1a162fe638c8b0",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:56Z",
+            "id": 3,
+            "issue": "clarified-request",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": null,
+            "recipient_work": "T-137",
+            "retained": false,
+            "reviewed_at": "2026-09-30T10:05:57Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "builder",
+            "sender_work": "T-136",
+            "updated_at": "2026-09-30T10:05:57Z"
+          },
+          "command": "letter-review",
+          "detail": "explicitly reviewed; hashes prove bytes, not truth; no action or promotion inferred",
+          "evidence": [
+            {
+              "path": "before.json",
+              "sha256": "f631cc98c105907b113e94dbd6939d8c6aba6aa11fc41096473bad50d7a50c01",
+              "state": "CURRENT"
+            }
+          ],
+          "evidence_current": true,
+          "expired": false,
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "letter": {
+            "done_when": "The same control returns SAIPEN_CONTEXT_CHANGED, exit 1 and exactly one admission event.",
+            "evidence": [
+              {
+                "path": "before.json",
+                "sha256": "f631cc98c105907b113e94dbd6939d8c6aba6aa11fc41096473bad50d7a50c01"
+              }
+            ],
+            "expires_at": "2026-10-30T10:05:56Z",
+            "impact": "The receiver could adopt a cycle bound to a different observed Work context.",
+            "in_reply_to": null,
+            "issue": "clarified-request",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "observation": "T-137's pre-fix CLI control hid event 40->41 behind a second admission and returned OK.",
+            "recipient_work": "T-137",
+            "request": "Inspect the fixed one-admission control and recheck its named refusal.",
+            "schema": "SAIMAIL_LETTER_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender_work": "T-136",
+            "trigger": "finding",
+            "uncertainty": "Actual mechanical Work evidence; this replay has scripted decisions and no model judgment."
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "result_current": false,
+          "result_evidence": [],
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_REVIEWED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11625789996469393,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.1669994000112638,
+        "normalized_payload_bytes": 2426,
+        "operation": "review"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "review-clarified"
+  },
+  {
+    "action": "decision",
+    "agent_visible_payload_bytes": 1465,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": true,
+            "decision": "ACCEPTED",
+            "envelope_id": "sha256:5e2465e2d6a19cb4e80f40c65299ca7c6483cb49b895ba33ac1a162fe638c8b0",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:56Z",
+            "id": 3,
+            "issue": "clarified-request",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": "ACTION_PLANNED",
+            "recipient_work": "T-137",
+            "retained": false,
+            "reviewed_at": "2026-09-30T10:05:57Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "builder",
+            "sender_work": "T-136",
+            "updated_at": "2026-09-30T10:05:58Z"
+          },
+          "command": "letter-decide",
+          "detail": "receiver decision recorded; delivery and reading never imply resolution",
+          "history": [
+            {
+              "at": "2026-09-30T10:05:58Z",
+              "decision": "ACCEPTED",
+              "evidence": [],
+              "reason": "ACTION_PLANNED"
+            }
+          ],
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "repeated": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_DECIDED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11633400002028793,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.15699480002513155,
+        "normalized_payload_bytes": 1465,
+        "operation": "decision"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "accept-clarified"
+  },
+  {
+    "action": "cycle",
+    "agent_visible_payload_bytes": 5404,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "agent-cycle",
+          "cycle": {
+            "actions": [
+              {
+                "action": "REVIEW",
+                "arguments": [
+                  "--envelope",
+                  "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+                ],
+                "authority": "INFORMATION_ONLY",
+                "command": [
+                  "saipen",
+                  "letter",
+                  "review"
+                ],
+                "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+                "reason": "CURRENT_WORK"
+              }
+            ],
+            "authority": "INFORMATION_ONLY",
+            "automatic_execution": false,
+            "complete": false,
+            "complete_from_start": false,
+            "context": "sha256:d57ecb4069048d65911b07993eee0e4ce8b8dca117751c91f8c2e67fa587e00c",
+            "continuation": "eyJjb250ZXh0Ijoic2hhMjU2OmQ1N2VjYjQwNjkwNDhkNjU5MTFiMDc5OTNlZWUwZTRjZThiOGRjYTExNzc1MWM5MWY4YzJlNjdmYTU4N2UwMGMiLCJkZXNrIjoiZXlKallYTmxjeUk2TVN3aVkyOXVkR1Y0ZENJNkluTm9ZVEkxTmpvNE16RTBPRE00TVdFelpURXpOV05oTlRaak1EVmxPRFpsWm1Ka05qWmhNR05tWWpZd1ltTXhPVGN6TmpZeU5tUm1PRFU0WVdVd09HRTROR1F3T0RoaUlpd2lhVzVpYjNnaU9qUTBNaXdpYzJOb1pXMWhJam9pVTBGSlRVRkpURjlFUlZOTFgwTlZVbE5QVWw4eEluMD0iLCJzY2hlbWEiOiJTQUlNQUlMX0FHRU5UX0NZQ0xFX0NVUlNPUl8xIn0=",
+            "next_action": {
+              "action": "REVIEW",
+              "arguments": [
+                "--envelope",
+                "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+              ],
+              "authority": "INFORMATION_ONLY",
+              "command": [
+                "saipen",
+                "letter",
+                "review"
+              ],
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "CURRENT_WORK"
+            },
+            "schema": "SAIMAIL_AGENT_CYCLE_1",
+            "scope": [],
+            "work": "T-137"
+          },
+          "desk": {
+            "cases": [
+              {
+                "actionable": true,
+                "decision": "DEFERRED",
+                "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+                "evidence_recheck_required": true,
+                "expired": false,
+                "expires_at": "2026-10-30T10:05:46Z",
+                "id": 1,
+                "issue": "actual-context-race",
+                "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+                "match": "CURRENT_WORK",
+                "reason": "WAITING_DEPENDENCY",
+                "recipient_work": "T-137",
+                "retained": false,
+                "reviewed_at": "2026-09-30T10:05:53Z",
+                "scope": [
+                  "saimail_local.py"
+                ],
+                "sender": "builder",
+                "sender_work": "T-136",
+                "updated_at": "2026-09-30T10:05:53Z"
+              }
+            ],
+            "cases_examined": 1,
+            "command": "letter-desk",
+            "complete": false,
+            "complete_from_start": false,
+            "context": "sha256:83148381a3e135ca56c05e86efbd66a0cfb60bc19736626df858ae08a84d088b",
+            "continuation": "eyJjYXNlcyI6MSwiY29udGV4dCI6InNoYTI1Njo4MzE0ODM4MWEzZTEzNWNhNTZjMDVlODZlZmJkNjZhMGNmYjYwYmMxOTczNjYyNmRmODU4YWUwOGE4NGQwODhiIiwiaW5ib3giOjQ0Miwic2NoZW1hIjoiU0FJTUFJTF9ERVNLX0NVUlNPUl8xIn0=",
+            "cursor": 1,
+            "detail": "metadata only; reserve evidence must be rechecked by explicit review",
+            "identity": {
+              "custody": "raw",
+              "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+              "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+            },
+            "inbox_cursor": 442,
+            "items": [],
+            "ok": true,
+            "operator_action_required": false,
+            "rows_examined": 1,
+            "schema": "LOCAL_WORKSPACE_COMMAND_1",
+            "status": "OK",
+            "version": 1,
+            "workspace": {
+              "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+              "seat": "reviewer"
+            }
+          },
+          "detail": "metadata only; host chooses when to review and act; evidence must be rechecked",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "metrics": {
+            "basis": "EXPLICIT_RECEIVER_DECISIONS",
+            "decisions": {
+              "ACCEPTED": 1,
+              "DECLINED": 1,
+              "DEFERRED": 1,
+              "PENDING": 0,
+              "RESOLVED": 0,
+              "STALE": 0
+            },
+            "feedback_hints": [
+              {
+                "authority": "INFORMATION_ONLY",
+                "count": 1,
+                "decision": "DECLINED",
+                "reason": "NOT_ACTIONABLE",
+                "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+              },
+              {
+                "authority": "INFORMATION_ONLY",
+                "count": 1,
+                "decision": "DEFERRED",
+                "reason": "WAITING_DEPENDENCY",
+                "suggestion": "WAIT_FOR_DEPENDENCY_EVIDENCE"
+              }
+            ],
+            "feedback_hints_scope": "LIFETIME_HISTORY",
+            "feedback_signals": {
+              "active": [
+                {
+                  "count": 1,
+                  "decision": "ACCEPTED",
+                  "first_at": "2026-09-30T10:05:58Z",
+                  "kind": "UNEXPIRED_RELEVANCE",
+                  "last_at": "2026-09-30T10:05:58Z",
+                  "reason": "ACTION_PLANNED"
+                },
+                {
+                  "count": 1,
+                  "decision": "DECLINED",
+                  "first_at": "2026-09-30T10:05:55Z",
+                  "kind": "ASSESSMENT_ONLY",
+                  "last_at": "2026-09-30T10:05:55Z",
+                  "reason": "NOT_ACTIONABLE",
+                  "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+                },
+                {
+                  "count": 1,
+                  "decision": "DEFERRED",
+                  "first_at": "2026-09-30T10:05:53Z",
+                  "kind": "UNEXPIRED_RELEVANCE",
+                  "last_at": "2026-09-30T10:05:53Z",
+                  "reason": "WAITING_DEPENDENCY",
+                  "suggestion": "WAIT_FOR_DEPENDENCY_EVIDENCE"
+                }
+              ],
+              "authority": "INFORMATION_ONLY",
+              "automatic_execution": false,
+              "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+              "excluded": {
+                "FUTURE_ASSESSMENT": 0,
+                "LETTER_EXPIRED": 0,
+                "OUTSIDE_WINDOW": 0,
+                "PENDING": 0
+              },
+              "observed_at": "2026-09-30T10:05:58Z",
+              "schema": "SAIMAIL_FEEDBACK_SIGNALS_1",
+              "window_days": 7,
+              "window_start": "2026-09-23T10:05:58Z"
+            },
+            "model_improvement_proven": false,
+            "reasons": {
+              "ACCEPTED": {
+                "ACTION_PLANNED": 1
+              },
+              "DECLINED": {
+                "ALREADY_KNOWN": 0,
+                "NOT_ACTIONABLE": 1,
+                "OUTSIDE_SCOPE": 0,
+                "WRONG_RECIPIENT": 0
+              },
+              "DEFERRED": {
+                "OUTSIDE_CURRENT_WORK": 0,
+                "WAITING_DEPENDENCY": 1
+              },
+              "RESOLVED": {
+                "ACTION_TAKEN": 0
+              },
+              "STALE": {
+                "CONDITION_CHANGED": 0,
+                "EVIDENCE_CHANGED": 0,
+                "EXPIRED": 0
+              }
+            },
+            "resolved_fraction": 0.0,
+            "retained": 0,
+            "reviewed": 3
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11153310001827776,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.15604329999769107,
+        "normalized_payload_bytes": 5404,
+        "operation": "cycle"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "partial-page"
+  },
+  {
+    "action": "cycle",
+    "agent_visible_payload_bytes": 102,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "code": "SAIPEN_CONTEXT_CHANGED",
+        "reason": "REFUSED",
+        "state": "DEGRADED"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11769099999219179,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.1626105000032112,
+        "normalized_payload_bytes": 102,
+        "operation": "cycle"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "changed-host-context"
+  },
+  {
+    "action": "focus",
+    "agent_visible_payload_bytes": 102,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "code": "SAIPEN_CONTEXT_CHANGED",
+        "reason": "REFUSED",
+        "state": "DEGRADED"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11764159996528178,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.15659209998557344,
+        "normalized_payload_bytes": 102,
+        "operation": "focus"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "focused-changed-host-context"
+  },
+  {
+    "action": "decision",
+    "agent_visible_payload_bytes": 1657,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": false,
+            "decision": "RESOLVED",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:46Z",
+            "id": 1,
+            "issue": "actual-context-race",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": "ACTION_TAKEN",
+            "recipient_work": "T-137",
+            "retained": false,
+            "reviewed_at": "2026-09-30T10:05:53Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "builder",
+            "sender_work": "T-136",
+            "updated_at": "2026-09-30T10:05:59Z"
+          },
+          "command": "letter-decide",
+          "detail": "receiver decision recorded; delivery and reading never imply resolution",
+          "history": [
+            {
+              "at": "2026-09-30T10:05:53Z",
+              "decision": "DEFERRED",
+              "evidence": [],
+              "reason": "WAITING_DEPENDENCY"
+            },
+            {
+              "at": "2026-09-30T10:05:59Z",
+              "decision": "RESOLVED",
+              "evidence": [
+                {
+                  "path": "after.json",
+                  "sha256": "a18dd73bc2bc206407f3f703732dc920bd3e9572bfde8f78967e59c6d3432c0c"
+                }
+              ],
+              "reason": "ACTION_TAKEN"
+            }
+          ],
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "repeated": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_DECIDED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.12150670000119135,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.15773530001752079,
+        "normalized_payload_bytes": 1657,
+        "operation": "decision"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "resolve"
+  },
+  {
+    "action": "retain",
+    "agent_visible_payload_bytes": 1352,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": false,
+            "decision": "RESOLVED",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:46Z",
+            "id": 1,
+            "issue": "actual-context-race",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": "ACTION_TAKEN",
+            "recipient_work": "T-137",
+            "retained": true,
+            "reviewed_at": "2026-09-30T10:05:53Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "builder",
+            "sender_work": "T-136",
+            "updated_at": "2026-09-30T10:05:59Z"
+          },
+          "command": "letter-retain",
+          "detail": "retained as a context-linked reading recommendation; not promoted to knowledge",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_RETAINED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11777180002536625,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.15691720001632348,
+        "normalized_payload_bytes": 1352,
+        "operation": "retain"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "retain"
+  },
+  {
+    "action": "report",
+    "agent_visible_payload_bytes": 2119,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "letter-report",
+          "detail": "new intent; state DELIVERED",
+          "feedback": {
+            "at": "2026-09-30T10:05:59Z",
+            "authority": "INFORMATION_ONLY",
+            "decision": "RESOLVED",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "event_id": 4,
+            "reason": "ACTION_TAKEN",
+            "schema": "SAIMAIL_RECEIVER_FEEDBACK_1"
+          },
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "intent": {
+            "alias": "builder",
+            "attempts": 1,
+            "delivered_at": "2026-09-30T10:06:00Z",
+            "delivery_status": "ACCEPTED",
+            "envelope_id": "sha256:784485e7b64d82db339a3574a709be98712755cb87ed007bc8edef1dc62589f0",
+            "failed_at": null,
+            "failure": null,
+            "failure_reason": null,
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-136:reply:builder:l3e110fa32c24662d384a241d",
+            "key_id": "sha256:d9fe0265d75c6e54e302cbe9fbc5140acc1a1dd3fd6589b216f97b51ef057eed",
+            "kind": "DISCOVERY",
+            "last_attempt_at": "2026-09-30T10:06:00Z",
+            "last_error": null,
+            "next_attempt_at": null,
+            "received_at": "2026-09-30T10:06:00Z",
+            "recipient_seat": "builder",
+            "recorded_at": "2026-09-30T10:06:00Z",
+            "sealed_at": "2026-09-30T10:06:00Z",
+            "state": "DELIVERED",
+            "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-136"
+          },
+          "network_attempts": 0,
+          "notify": {
+            "alias": "builder",
+            "content_contract": "SAIMAIL_LETTER_1",
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-136:reply:builder:l3e110fa32c24662d384a241d",
+            "kind": "DISCOVERY",
+            "to_seat": "builder",
+            "trigger": "reply",
+            "work": "T-136"
+          },
+          "ok": true,
+          "operator_action_required": false,
+          "resumed": {
+            "DELIVERED": 0,
+            "FAILED": 0,
+            "PENDING_RETRY": 0,
+            "examined": 0,
+            "needs_signing_key": 0,
+            "not_due": 0
+          },
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "DELIVERED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11386340000899509,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.19192210002802312,
+        "normalized_payload_bytes": 2119,
+        "operation": "report"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "report-resolution"
+  },
+  {
+    "action": "report",
+    "agent_visible_payload_bytes": 2151,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "letter-report",
+          "detail": "existing intent resumed; no second message; state DELIVERED",
+          "feedback": {
+            "at": "2026-09-30T10:05:59Z",
+            "authority": "INFORMATION_ONLY",
+            "decision": "RESOLVED",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "event_id": 4,
+            "reason": "ACTION_TAKEN",
+            "schema": "SAIMAIL_RECEIVER_FEEDBACK_1"
+          },
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "intent": {
+            "alias": "builder",
+            "attempts": 1,
+            "delivered_at": "2026-09-30T10:06:00Z",
+            "delivery_status": "ACCEPTED",
+            "envelope_id": "sha256:784485e7b64d82db339a3574a709be98712755cb87ed007bc8edef1dc62589f0",
+            "failed_at": null,
+            "failure": null,
+            "failure_reason": null,
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-136:reply:builder:l3e110fa32c24662d384a241d",
+            "key_id": "sha256:d9fe0265d75c6e54e302cbe9fbc5140acc1a1dd3fd6589b216f97b51ef057eed",
+            "kind": "DISCOVERY",
+            "last_attempt_at": "2026-09-30T10:06:00Z",
+            "last_error": null,
+            "next_attempt_at": null,
+            "received_at": "2026-09-30T10:06:00Z",
+            "recipient_seat": "builder",
+            "recorded_at": "2026-09-30T10:06:00Z",
+            "sealed_at": "2026-09-30T10:06:00Z",
+            "state": "DELIVERED",
+            "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-136"
+          },
+          "network_attempts": 0,
+          "notify": {
+            "alias": "builder",
+            "content_contract": "SAIMAIL_LETTER_1",
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-136:reply:builder:l3e110fa32c24662d384a241d",
+            "kind": "DISCOVERY",
+            "to_seat": "builder",
+            "trigger": "reply",
+            "work": "T-136"
+          },
+          "ok": true,
+          "operator_action_required": false,
+          "resumed": {
+            "DELIVERED": 0,
+            "FAILED": 0,
+            "PENDING_RETRY": 0,
+            "examined": 0,
+            "needs_signing_key": 0,
+            "not_due": 0
+          },
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "DELIVERED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11653320002369583,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16818929999135435,
+        "normalized_payload_bytes": 2151,
+        "operation": "report"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "retry-resolution"
+  },
+  {
+    "action": "cycle",
+    "agent_visible_payload_bytes": 4637,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "agent-cycle",
+          "cycle": {
+            "actions": [
+              {
+                "action": "REVIEW",
+                "arguments": [
+                  "--envelope",
+                  "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+                ],
+                "authority": "INFORMATION_ONLY",
+                "command": [
+                  "saipen",
+                  "letter",
+                  "review"
+                ],
+                "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+                "reason": "SUCCESSOR_RESERVE"
+              }
+            ],
+            "authority": "INFORMATION_ONLY",
+            "automatic_execution": false,
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:92756e7c3f36490f93269bdade64b4e9ec371e0e3ac956d4c1469f19ed678f20",
+            "continuation": null,
+            "next_action": {
+              "action": "REVIEW",
+              "arguments": [
+                "--envelope",
+                "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+              ],
+              "authority": "INFORMATION_ONLY",
+              "command": [
+                "saipen",
+                "letter",
+                "review"
+              ],
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "SUCCESSOR_RESERVE"
+            },
+            "schema": "SAIMAIL_AGENT_CYCLE_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "work": "T-138"
+          },
+          "desk": {
+            "cases": [
+              {
+                "actionable": false,
+                "decision": "RESOLVED",
+                "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+                "evidence_recheck_required": true,
+                "expired": false,
+                "expires_at": "2026-10-30T10:05:46Z",
+                "id": 1,
+                "issue": "actual-context-race",
+                "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+                "match": "SUCCESSOR_RESERVE",
+                "reason": "ACTION_TAKEN",
+                "recipient_work": "T-137",
+                "retained": true,
+                "reviewed_at": "2026-09-30T10:05:53Z",
+                "scope": [
+                  "saimail_local.py"
+                ],
+                "sender": "builder",
+                "sender_work": "T-136",
+                "updated_at": "2026-09-30T10:05:59Z"
+              }
+            ],
+            "cases_examined": 3,
+            "command": "letter-desk",
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:d68dabcc2801bf97ec27c7b1675d243c222672f623f164e6b4e72b531736ebd5",
+            "continuation": null,
+            "cursor": null,
+            "detail": "metadata only; reserve evidence must be rechecked by explicit review",
+            "identity": {
+              "custody": "raw",
+              "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+              "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+            },
+            "inbox_cursor": null,
+            "items": [],
+            "ok": true,
+            "operator_action_required": false,
+            "rows_examined": 3,
+            "schema": "LOCAL_WORKSPACE_COMMAND_1",
+            "status": "OK",
+            "version": 1,
+            "workspace": {
+              "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+              "seat": "reviewer"
+            }
+          },
+          "detail": "metadata only; host chooses when to review and act; evidence must be rechecked",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "metrics": {
+            "basis": "EXPLICIT_RECEIVER_DECISIONS",
+            "decisions": {
+              "ACCEPTED": 1,
+              "DECLINED": 1,
+              "DEFERRED": 0,
+              "PENDING": 0,
+              "RESOLVED": 1,
+              "STALE": 0
+            },
+            "feedback_hints": [
+              {
+                "authority": "INFORMATION_ONLY",
+                "count": 1,
+                "decision": "DECLINED",
+                "reason": "NOT_ACTIONABLE",
+                "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+              }
+            ],
+            "feedback_hints_scope": "LIFETIME_HISTORY",
+            "feedback_signals": {
+              "active": [
+                {
+                  "count": 1,
+                  "decision": "ACCEPTED",
+                  "first_at": "2026-09-30T10:05:58Z",
+                  "kind": "UNEXPIRED_RELEVANCE",
+                  "last_at": "2026-09-30T10:05:58Z",
+                  "reason": "ACTION_PLANNED"
+                },
+                {
+                  "count": 1,
+                  "decision": "DECLINED",
+                  "first_at": "2026-09-30T10:05:55Z",
+                  "kind": "ASSESSMENT_ONLY",
+                  "last_at": "2026-09-30T10:05:55Z",
+                  "reason": "NOT_ACTIONABLE",
+                  "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+                },
+                {
+                  "count": 1,
+                  "decision": "RESOLVED",
+                  "first_at": "2026-09-30T10:05:59Z",
+                  "kind": "ASSESSMENT_ONLY",
+                  "last_at": "2026-09-30T10:05:59Z",
+                  "reason": "ACTION_TAKEN"
+                }
+              ],
+              "authority": "INFORMATION_ONLY",
+              "automatic_execution": false,
+              "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+              "excluded": {
+                "FUTURE_ASSESSMENT": 0,
+                "LETTER_EXPIRED": 0,
+                "OUTSIDE_WINDOW": 0,
+                "PENDING": 0
+              },
+              "observed_at": "2026-09-30T10:06:01Z",
+              "schema": "SAIMAIL_FEEDBACK_SIGNALS_1",
+              "window_days": 7,
+              "window_start": "2026-09-23T10:06:01Z"
+            },
+            "model_improvement_proven": false,
+            "reasons": {
+              "ACCEPTED": {
+                "ACTION_PLANNED": 1
+              },
+              "DECLINED": {
+                "ALREADY_KNOWN": 0,
+                "NOT_ACTIONABLE": 1,
+                "OUTSIDE_SCOPE": 0,
+                "WRONG_RECIPIENT": 0
+              },
+              "DEFERRED": {
+                "OUTSIDE_CURRENT_WORK": 0,
+                "WAITING_DEPENDENCY": 0
+              },
+              "RESOLVED": {
+                "ACTION_TAKEN": 1
+              },
+              "STALE": {
+                "CONDITION_CHANGED": 0,
+                "EVIDENCE_CHANGED": 0,
+                "EXPIRED": 0
+              }
+            },
+            "resolved_fraction": 0.3333333333333333,
+            "retained": 1,
+            "reviewed": 3
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11979389999760315,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16275170003063977,
+        "normalized_payload_bytes": 4637,
+        "operation": "cycle"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "fresh-successor"
+  },
+  {
+    "action": "focus",
+    "agent_visible_payload_bytes": 2026,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "authority": "INFORMATION_ONLY",
+          "automatic_execution": false,
+          "context": "sha256:92756e7c3f36490f93269bdade64b4e9ec371e0e3ac956d4c1469f19ed678f20",
+          "continuation": null,
+          "coverage": {
+            "cases_examined": 3,
+            "complete": true,
+            "complete_from_start": true,
+            "rows_examined": 3
+          },
+          "decisions": {
+            "ACCEPTED": 1,
+            "DECLINED": 1,
+            "DEFERRED": 0,
+            "PENDING": 0,
+            "RESOLVED": 1,
+            "STALE": 0
+          },
+          "feedback": [
+            {
+              "count": 1,
+              "decision": "ACCEPTED",
+              "reason": "ACTION_PLANNED"
+            },
+            {
+              "count": 1,
+              "decision": "DECLINED",
+              "reason": "NOT_ACTIONABLE",
+              "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+            },
+            {
+              "count": 1,
+              "decision": "RESOLVED",
+              "reason": "ACTION_TAKEN"
+            }
+          ],
+          "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+          "feedback_scope": "LIFETIME_HISTORY",
+          "feedback_signals": {
+            "active": [
+              {
+                "count": 1,
+                "decision": "ACCEPTED",
+                "first_at": "2026-09-30T10:05:58Z",
+                "kind": "UNEXPIRED_RELEVANCE",
+                "last_at": "2026-09-30T10:05:58Z",
+                "reason": "ACTION_PLANNED"
+              },
+              {
+                "count": 1,
+                "decision": "DECLINED",
+                "first_at": "2026-09-30T10:05:55Z",
+                "kind": "ASSESSMENT_ONLY",
+                "last_at": "2026-09-30T10:05:55Z",
+                "reason": "NOT_ACTIONABLE",
+                "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+              },
+              {
+                "count": 1,
+                "decision": "RESOLVED",
+                "first_at": "2026-09-30T10:05:59Z",
+                "kind": "ASSESSMENT_ONLY",
+                "last_at": "2026-09-30T10:05:59Z",
+                "reason": "ACTION_TAKEN"
+              }
+            ],
+            "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+            "excluded": {
+              "FUTURE_ASSESSMENT": 0,
+              "LETTER_EXPIRED": 0,
+              "OUTSIDE_WINDOW": 0,
+              "PENDING": 0
+            },
+            "observed_at": "2026-09-30T10:06:01Z",
+            "state": "KNOWN",
+            "window_days": 7,
+            "window_start": "2026-09-23T10:06:01Z"
+          },
+          "host": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "task": "T-137"
+          },
+          "model_improvement_proven": false,
+          "next_action": {
+            "action": "REVIEW",
+            "arguments": [
+              "--envelope",
+              "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3"
+            ],
+            "operation": "review"
+          },
+          "reading": [
+            {
+              "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+              "reason": "SUCCESSOR_RESERVE"
+            }
+          ],
+          "retained": 1,
+          "reviewed": 3,
+          "schema": "SAIMAIL_HOST_FOCUS_1",
+          "scope": [
+            "saimail_local.py"
+          ],
+          "state": "OK",
+          "work": "T-138"
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11524040001677349,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.15401440003188327,
+        "normalized_payload_bytes": 2256,
+        "operation": "focus"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "focused-fresh-successor"
+  },
+  {
+    "action": "review",
+    "agent_visible_payload_bytes": 2555,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": false,
+            "decision": "RESOLVED",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:46Z",
+            "id": 1,
+            "issue": "actual-context-race",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": "ACTION_TAKEN",
+            "recipient_work": "T-137",
+            "retained": true,
+            "reviewed_at": "2026-09-30T10:05:53Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "builder",
+            "sender_work": "T-136",
+            "updated_at": "2026-09-30T10:05:59Z"
+          },
+          "command": "letter-review",
+          "detail": "explicitly reviewed; hashes prove bytes, not truth; no action or promotion inferred",
+          "evidence": [
+            {
+              "path": "before.json",
+              "sha256": "f631cc98c105907b113e94dbd6939d8c6aba6aa11fc41096473bad50d7a50c01",
+              "state": "CURRENT"
+            }
+          ],
+          "evidence_current": true,
+          "expired": false,
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "letter": {
+            "done_when": "The same control returns SAIPEN_CONTEXT_CHANGED, exit 1 and exactly one admission event.",
+            "evidence": [
+              {
+                "path": "before.json",
+                "sha256": "f631cc98c105907b113e94dbd6939d8c6aba6aa11fc41096473bad50d7a50c01"
+              }
+            ],
+            "expires_at": "2026-10-30T10:05:46Z",
+            "impact": "The receiver could adopt a cycle bound to a different observed Work context.",
+            "in_reply_to": null,
+            "issue": "actual-context-race",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "observation": "T-137's pre-fix CLI control hid event 40->41 behind a second admission and returned OK.",
+            "recipient_work": "T-137",
+            "request": "Inspect the fixed one-admission control and recheck its named refusal.",
+            "schema": "SAIMAIL_LETTER_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender_work": "T-136",
+            "trigger": "finding",
+            "uncertainty": "Actual mechanical Work evidence; this replay has scripted decisions and no model judgment."
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "result_current": true,
+          "result_evidence": [
+            {
+              "path": "after.json",
+              "sha256": "a18dd73bc2bc206407f3f703732dc920bd3e9572bfde8f78967e59c6d3432c0c",
+              "state": "CURRENT"
+            }
+          ],
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_REVIEWED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11680999997770414,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16498719999799505,
+        "normalized_payload_bytes": 2555,
+        "operation": "review"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "successor-result-recheck"
+  },
+  {
+    "action": "cycle",
+    "agent_visible_payload_bytes": 2870,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "agent-cycle",
+          "cycle": {
+            "actions": [],
+            "authority": "INFORMATION_ONLY",
+            "automatic_execution": false,
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:92756e7c3f36490f93269bdade64b4e9ec371e0e3ac956d4c1469f19ed678f20",
+            "continuation": null,
+            "next_action": {
+              "action": "CONTINUE_WORK",
+              "authority": "INFORMATION_ONLY"
+            },
+            "schema": "SAIMAIL_AGENT_CYCLE_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "work": "T-138"
+          },
+          "desk": {
+            "cases": [],
+            "cases_examined": 0,
+            "command": "letter-desk",
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:d68dabcc2801bf97ec27c7b1675d243c222672f623f164e6b4e72b531736ebd5",
+            "continuation": null,
+            "cursor": null,
+            "detail": "metadata only; reserve evidence must be rechecked by explicit review",
+            "identity": {
+              "custody": "raw",
+              "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+              "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+            },
+            "inbox_cursor": null,
+            "items": [],
+            "ok": true,
+            "operator_action_required": false,
+            "rows_examined": 3,
+            "schema": "LOCAL_WORKSPACE_COMMAND_1",
+            "status": "OK",
+            "version": 1,
+            "workspace": {
+              "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+              "seat": "reviewer"
+            }
+          },
+          "detail": "metadata only; host chooses when to review and act; evidence must be rechecked",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "metrics": {
+            "basis": "EXPLICIT_RECEIVER_DECISIONS",
+            "decisions": {
+              "ACCEPTED": 0,
+              "DECLINED": 0,
+              "DEFERRED": 0,
+              "PENDING": 0,
+              "RESOLVED": 0,
+              "STALE": 0
+            },
+            "feedback_hints": [],
+            "feedback_hints_scope": "LIFETIME_HISTORY",
+            "feedback_signals": {
+              "active": [],
+              "authority": "INFORMATION_ONLY",
+              "automatic_execution": false,
+              "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+              "excluded": {
+                "FUTURE_ASSESSMENT": 0,
+                "LETTER_EXPIRED": 0,
+                "OUTSIDE_WINDOW": 0,
+                "PENDING": 0
+              },
+              "observed_at": "2026-09-30T10:06:02Z",
+              "schema": "SAIMAIL_FEEDBACK_SIGNALS_1",
+              "window_days": 7,
+              "window_start": "2026-09-23T10:06:02Z"
+            },
+            "model_improvement_proven": false,
+            "reasons": {
+              "ACCEPTED": {
+                "ACTION_PLANNED": 0
+              },
+              "DECLINED": {
+                "ALREADY_KNOWN": 0,
+                "NOT_ACTIONABLE": 0,
+                "OUTSIDE_SCOPE": 0,
+                "WRONG_RECIPIENT": 0
+              },
+              "DEFERRED": {
+                "OUTSIDE_CURRENT_WORK": 0,
+                "WAITING_DEPENDENCY": 0
+              },
+              "RESOLVED": {
+                "ACTION_TAKEN": 0
+              },
+              "STALE": {
+                "CONDITION_CHANGED": 0,
+                "EVIDENCE_CHANGED": 0,
+                "EXPIRED": 0
+              }
+            },
+            "resolved_fraction": null,
+            "retained": 0,
+            "reviewed": 0
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.1182975999545306,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.1547368000028655,
+        "normalized_payload_bytes": 2870,
+        "operation": "cycle"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "lost-state-control"
+  },
+  {
+    "action": "focus",
+    "agent_visible_payload_bytes": 1051,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "authority": "INFORMATION_ONLY",
+          "automatic_execution": false,
+          "context": "sha256:92756e7c3f36490f93269bdade64b4e9ec371e0e3ac956d4c1469f19ed678f20",
+          "continuation": null,
+          "coverage": {
+            "cases_examined": 0,
+            "complete": true,
+            "complete_from_start": true,
+            "rows_examined": 3
+          },
+          "decisions": {
+            "ACCEPTED": 0,
+            "DECLINED": 0,
+            "DEFERRED": 0,
+            "PENDING": 0,
+            "RESOLVED": 0,
+            "STALE": 0
+          },
+          "feedback": [],
+          "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+          "feedback_scope": "LIFETIME_HISTORY",
+          "feedback_signals": {
+            "active": [],
+            "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+            "excluded": {
+              "FUTURE_ASSESSMENT": 0,
+              "LETTER_EXPIRED": 0,
+              "OUTSIDE_WINDOW": 0,
+              "PENDING": 0
+            },
+            "observed_at": "2026-09-30T10:06:03Z",
+            "state": "KNOWN",
+            "window_days": 7,
+            "window_start": "2026-09-23T10:06:03Z"
+          },
+          "host": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "task": "T-137"
+          },
+          "model_improvement_proven": false,
+          "next_action": {
+            "action": "CONTINUE_WORK"
+          },
+          "reading": [],
+          "retained": 0,
+          "reviewed": 0,
+          "schema": "SAIMAIL_HOST_FOCUS_1",
+          "scope": [
+            "saimail_local.py"
+          ],
+          "state": "OK",
+          "work": "T-138"
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.20642520004184917,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.31030170002486557,
+        "normalized_payload_bytes": 1281,
+        "operation": "focus"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "focused-lost-state-control"
+  },
+  {
+    "action": "review",
+    "agent_visible_payload_bytes": 2556,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": false,
+            "decision": "RESOLVED",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:46Z",
+            "id": 1,
+            "issue": "actual-context-race",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": "ACTION_TAKEN",
+            "recipient_work": "T-137",
+            "retained": true,
+            "reviewed_at": "2026-09-30T10:05:53Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "builder",
+            "sender_work": "T-136",
+            "updated_at": "2026-09-30T10:05:59Z"
+          },
+          "command": "letter-review",
+          "detail": "explicitly reviewed; hashes prove bytes, not truth; no action or promotion inferred",
+          "evidence": [
+            {
+              "path": "before.json",
+              "sha256": "f631cc98c105907b113e94dbd6939d8c6aba6aa11fc41096473bad50d7a50c01",
+              "state": "CURRENT"
+            }
+          ],
+          "evidence_current": true,
+          "expired": false,
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "letter": {
+            "done_when": "The same control returns SAIPEN_CONTEXT_CHANGED, exit 1 and exactly one admission event.",
+            "evidence": [
+              {
+                "path": "before.json",
+                "sha256": "f631cc98c105907b113e94dbd6939d8c6aba6aa11fc41096473bad50d7a50c01"
+              }
+            ],
+            "expires_at": "2026-10-30T10:05:46Z",
+            "impact": "The receiver could adopt a cycle bound to a different observed Work context.",
+            "in_reply_to": null,
+            "issue": "actual-context-race",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "observation": "T-137's pre-fix CLI control hid event 40->41 behind a second admission and returned OK.",
+            "recipient_work": "T-137",
+            "request": "Inspect the fixed one-admission control and recheck its named refusal.",
+            "schema": "SAIMAIL_LETTER_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender_work": "T-136",
+            "trigger": "finding",
+            "uncertainty": "Actual mechanical Work evidence; this replay has scripted decisions and no model judgment."
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "result_current": false,
+          "result_evidence": [
+            {
+              "path": "after.json",
+              "sha256": "a18dd73bc2bc206407f3f703732dc920bd3e9572bfde8f78967e59c6d3432c0c",
+              "state": "CHANGED"
+            }
+          ],
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_REVIEWED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.21046109998133034,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.2936065000249073,
+        "normalized_payload_bytes": 2556,
+        "operation": "review"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "changed-result-control"
+  },
+  {
+    "action": "decision",
+    "agent_visible_payload_bytes": 1749,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "case": {
+            "actionable": false,
+            "decision": "STALE",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "evidence_recheck_required": true,
+            "expired": false,
+            "expires_at": "2026-10-30T10:05:46Z",
+            "id": 1,
+            "issue": "actual-context-race",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "reason": "EVIDENCE_CHANGED",
+            "recipient_work": "T-137",
+            "retained": false,
+            "reviewed_at": "2026-09-30T10:05:53Z",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "sender": "builder",
+            "sender_work": "T-136",
+            "updated_at": "2026-09-30T10:06:04Z"
+          },
+          "command": "letter-decide",
+          "detail": "receiver decision recorded; delivery and reading never imply resolution",
+          "history": [
+            {
+              "at": "2026-09-30T10:05:53Z",
+              "decision": "DEFERRED",
+              "evidence": [],
+              "reason": "WAITING_DEPENDENCY"
+            },
+            {
+              "at": "2026-09-30T10:05:59Z",
+              "decision": "RESOLVED",
+              "evidence": [
+                {
+                  "path": "after.json",
+                  "sha256": "a18dd73bc2bc206407f3f703732dc920bd3e9572bfde8f78967e59c6d3432c0c"
+                }
+              ],
+              "reason": "ACTION_TAKEN"
+            },
+            {
+              "at": "2026-09-30T10:06:04Z",
+              "decision": "STALE",
+              "evidence": [],
+              "reason": "EVIDENCE_CHANGED"
+            }
+          ],
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "repeated": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "LETTER_DECIDED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.17279889999190345,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.17416990001220256,
+        "normalized_payload_bytes": 1749,
+        "operation": "decision"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "stale-correction"
+  },
+  {
+    "action": "report",
+    "agent_visible_payload_bytes": 2120,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "letter-report",
+          "detail": "new intent; state DELIVERED",
+          "feedback": {
+            "at": "2026-09-30T10:06:04Z",
+            "authority": "INFORMATION_ONLY",
+            "decision": "STALE",
+            "envelope_id": "sha256:b268108d96da3d51d1f7d3a95cfc5dd0e41ad6df7b13ed38115e6633539b40f3",
+            "event_id": 5,
+            "reason": "EVIDENCE_CHANGED",
+            "schema": "SAIMAIL_RECEIVER_FEEDBACK_1"
+          },
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "intent": {
+            "alias": "builder",
+            "attempts": 1,
+            "delivered_at": "2026-09-30T10:06:05Z",
+            "delivery_status": "ACCEPTED",
+            "envelope_id": "sha256:c38b0f7c5c41c96458b363333cec8701d11cf8babccc2515d2ff3aa35a9fd5f3",
+            "failed_at": null,
+            "failure": null,
+            "failure_reason": null,
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-136:reply:builder:l6e70d2864e982fa6c5bcdefb",
+            "key_id": "sha256:f32a0531793cffce6ac960086a679cee9887d537acda255ff647a1a67e027588",
+            "kind": "DISCOVERY",
+            "last_attempt_at": "2026-09-30T10:06:05Z",
+            "last_error": null,
+            "next_attempt_at": null,
+            "received_at": "2026-09-30T10:06:05Z",
+            "recipient_seat": "builder",
+            "recorded_at": "2026-09-30T10:06:05Z",
+            "sealed_at": "2026-09-30T10:06:05Z",
+            "state": "DELIVERED",
+            "topic": "l.d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8.T-136"
+          },
+          "network_attempts": 0,
+          "notify": {
+            "alias": "builder",
+            "content_contract": "SAIMAIL_LETTER_1",
+            "key": "notify:lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8:T-136:reply:builder:l6e70d2864e982fa6c5bcdefb",
+            "kind": "DISCOVERY",
+            "to_seat": "builder",
+            "trigger": "reply",
+            "work": "T-136"
+          },
+          "ok": true,
+          "operator_action_required": false,
+          "resumed": {
+            "DELIVERED": 0,
+            "FAILED": 0,
+            "PENDING_RETRY": 0,
+            "examined": 0,
+            "needs_signing_key": 0,
+            "not_due": 0
+          },
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "DELIVERED",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.1277072000084445,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.1930589000112377,
+        "normalized_payload_bytes": 2120,
+        "operation": "report"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "report-stale"
+  },
+  {
+    "action": "cycle",
+    "agent_visible_payload_bytes": 3681,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "command": "agent-cycle",
+          "cycle": {
+            "actions": [],
+            "authority": "INFORMATION_ONLY",
+            "automatic_execution": false,
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:92756e7c3f36490f93269bdade64b4e9ec371e0e3ac956d4c1469f19ed678f20",
+            "continuation": null,
+            "next_action": {
+              "action": "CONTINUE_WORK",
+              "authority": "INFORMATION_ONLY"
+            },
+            "schema": "SAIMAIL_AGENT_CYCLE_1",
+            "scope": [
+              "saimail_local.py"
+            ],
+            "work": "T-138"
+          },
+          "desk": {
+            "cases": [],
+            "cases_examined": 3,
+            "command": "letter-desk",
+            "complete": true,
+            "complete_from_start": true,
+            "context": "sha256:d68dabcc2801bf97ec27c7b1675d243c222672f623f164e6b4e72b531736ebd5",
+            "continuation": null,
+            "cursor": null,
+            "detail": "metadata only; reserve evidence must be rechecked by explicit review",
+            "identity": {
+              "custody": "raw",
+              "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+              "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+            },
+            "inbox_cursor": null,
+            "items": [],
+            "ok": true,
+            "operator_action_required": false,
+            "rows_examined": 3,
+            "schema": "LOCAL_WORKSPACE_COMMAND_1",
+            "status": "OK",
+            "version": 1,
+            "workspace": {
+              "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+              "seat": "reviewer"
+            }
+          },
+          "detail": "metadata only; host chooses when to review and act; evidence must be rechecked",
+          "identity": {
+            "custody": "raw",
+            "recipient_kid": "sha256:6222f08eab237d044d6abf56ce1d3944181af409e117e274e29846f1f6609557",
+            "sender_kid": "sha256:52ef67ca64242153db41bb8e40f23853a0b55b3e4d4dc9246fb52bcb6efe9844"
+          },
+          "metrics": {
+            "basis": "EXPLICIT_RECEIVER_DECISIONS",
+            "decisions": {
+              "ACCEPTED": 1,
+              "DECLINED": 1,
+              "DEFERRED": 0,
+              "PENDING": 0,
+              "RESOLVED": 0,
+              "STALE": 1
+            },
+            "feedback_hints": [
+              {
+                "authority": "INFORMATION_ONLY",
+                "count": 1,
+                "decision": "DECLINED",
+                "reason": "NOT_ACTIONABLE",
+                "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+              },
+              {
+                "authority": "INFORMATION_ONLY",
+                "count": 1,
+                "decision": "STALE",
+                "reason": "EVIDENCE_CHANGED",
+                "suggestion": "REHASH_AND_REVIEW"
+              }
+            ],
+            "feedback_hints_scope": "LIFETIME_HISTORY",
+            "feedback_signals": {
+              "active": [
+                {
+                  "count": 1,
+                  "decision": "ACCEPTED",
+                  "first_at": "2026-09-30T10:05:58Z",
+                  "kind": "UNEXPIRED_RELEVANCE",
+                  "last_at": "2026-09-30T10:05:58Z",
+                  "reason": "ACTION_PLANNED"
+                },
+                {
+                  "count": 1,
+                  "decision": "DECLINED",
+                  "first_at": "2026-09-30T10:05:55Z",
+                  "kind": "ASSESSMENT_ONLY",
+                  "last_at": "2026-09-30T10:05:55Z",
+                  "reason": "NOT_ACTIONABLE",
+                  "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+                },
+                {
+                  "count": 1,
+                  "decision": "STALE",
+                  "first_at": "2026-09-30T10:06:04Z",
+                  "kind": "ASSESSMENT_ONLY",
+                  "last_at": "2026-09-30T10:06:04Z",
+                  "reason": "EVIDENCE_CHANGED",
+                  "suggestion": "REHASH_AND_REVIEW"
+                }
+              ],
+              "authority": "INFORMATION_ONLY",
+              "automatic_execution": false,
+              "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+              "excluded": {
+                "FUTURE_ASSESSMENT": 0,
+                "LETTER_EXPIRED": 0,
+                "OUTSIDE_WINDOW": 0,
+                "PENDING": 0
+              },
+              "observed_at": "2026-09-30T10:06:05Z",
+              "schema": "SAIMAIL_FEEDBACK_SIGNALS_1",
+              "window_days": 7,
+              "window_start": "2026-09-23T10:06:05Z"
+            },
+            "model_improvement_proven": false,
+            "reasons": {
+              "ACCEPTED": {
+                "ACTION_PLANNED": 1
+              },
+              "DECLINED": {
+                "ALREADY_KNOWN": 0,
+                "NOT_ACTIONABLE": 1,
+                "OUTSIDE_SCOPE": 0,
+                "WRONG_RECIPIENT": 0
+              },
+              "DEFERRED": {
+                "OUTSIDE_CURRENT_WORK": 0,
+                "WAITING_DEPENDENCY": 0
+              },
+              "RESOLVED": {
+                "ACTION_TAKEN": 0
+              },
+              "STALE": {
+                "CONDITION_CHANGED": 0,
+                "EVIDENCE_CHANGED": 1,
+                "EXPIRED": 0
+              }
+            },
+            "resolved_fraction": 0.0,
+            "retained": 0,
+            "reviewed": 3
+          },
+          "network_attempts": 0,
+          "ok": true,
+          "operator_action_required": false,
+          "saipen": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "seat_source": "explicit",
+            "state": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\project\\.saipen\\STATE.md",
+            "state_agent": "reviewer",
+            "task": "T-137"
+          },
+          "schema": "LOCAL_WORKSPACE_COMMAND_1",
+          "status": "OK",
+          "version": 1,
+          "workspace": {
+            "root": "V:\\_TEMP_\\saimail-cycle-replay-kjux0n_n\\reviewer",
+            "seat": "reviewer"
+          }
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.11564079998061061,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.16377749998355284,
+        "normalized_payload_bytes": 3681,
+        "operation": "cycle"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "successor-after-stale"
+  },
+  {
+    "action": "focus",
+    "agent_visible_payload_bytes": 1861,
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "data": {
+          "authority": "INFORMATION_ONLY",
+          "automatic_execution": false,
+          "context": "sha256:92756e7c3f36490f93269bdade64b4e9ec371e0e3ac956d4c1469f19ed678f20",
+          "continuation": null,
+          "coverage": {
+            "cases_examined": 3,
+            "complete": true,
+            "complete_from_start": true,
+            "rows_examined": 3
+          },
+          "decisions": {
+            "ACCEPTED": 1,
+            "DECLINED": 1,
+            "DEFERRED": 0,
+            "PENDING": 0,
+            "RESOLVED": 0,
+            "STALE": 1
+          },
+          "feedback": [
+            {
+              "count": 1,
+              "decision": "ACCEPTED",
+              "reason": "ACTION_PLANNED"
+            },
+            {
+              "count": 1,
+              "decision": "DECLINED",
+              "reason": "NOT_ACTIONABLE",
+              "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+            },
+            {
+              "count": 1,
+              "decision": "STALE",
+              "reason": "EVIDENCE_CHANGED",
+              "suggestion": "REHASH_AND_REVIEW"
+            }
+          ],
+          "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+          "feedback_scope": "LIFETIME_HISTORY",
+          "feedback_signals": {
+            "active": [
+              {
+                "count": 1,
+                "decision": "ACCEPTED",
+                "first_at": "2026-09-30T10:05:58Z",
+                "kind": "UNEXPIRED_RELEVANCE",
+                "last_at": "2026-09-30T10:05:58Z",
+                "reason": "ACTION_PLANNED"
+              },
+              {
+                "count": 1,
+                "decision": "DECLINED",
+                "first_at": "2026-09-30T10:05:55Z",
+                "kind": "ASSESSMENT_ONLY",
+                "last_at": "2026-09-30T10:05:55Z",
+                "reason": "NOT_ACTIONABLE",
+                "suggestion": "ADD_REPRODUCTION_OR_DECISION_CRITERION"
+              },
+              {
+                "count": 1,
+                "decision": "STALE",
+                "first_at": "2026-09-30T10:06:04Z",
+                "kind": "ASSESSMENT_ONLY",
+                "last_at": "2026-09-30T10:06:04Z",
+                "reason": "EVIDENCE_CHANGED",
+                "suggestion": "REHASH_AND_REVIEW"
+              }
+            ],
+            "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+            "excluded": {
+              "FUTURE_ASSESSMENT": 0,
+              "LETTER_EXPIRED": 0,
+              "OUTSIDE_WINDOW": 0,
+              "PENDING": 0
+            },
+            "observed_at": "2026-09-30T10:06:05Z",
+            "state": "KNOWN",
+            "window_days": 7,
+            "window_start": "2026-09-23T10:06:05Z"
+          },
+          "host": {
+            "blocker": null,
+            "last_event": "1",
+            "lineage": "lineage-d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8d8",
+            "phase": "BUILD",
+            "seat": "reviewer",
+            "task": "T-137"
+          },
+          "model_improvement_proven": false,
+          "next_action": {
+            "action": "CONTINUE_WORK"
+          },
+          "reading": [],
+          "retained": 0,
+          "reviewed": 3,
+          "schema": "SAIMAIL_HOST_FOCUS_1",
+          "scope": [
+            "saimail_local.py"
+          ],
+          "state": "OK",
+          "work": "T-138"
+        },
+        "state": "OK"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.12641129997791722,
+        "normalized_payload_bytes": 1134,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.17528409999795258,
+        "normalized_payload_bytes": 2091,
+        "operation": "focus"
+      }
+    ],
+    "seat": "reviewer",
+    "stage": "focused-successor-after-stale"
+  }
+]

@@ -1,0 +1,21 @@
+SAIMAIL D3/a3 SAIPEN Validation (core gate)
+
+Candidate: 0.0.2a3
+Wheel SHA256: 6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc
+Created: 2026-09-23T17:31:03Z
+D3 source-tree fingerprint: 8b73dd9d926f2ec2b72cd4d0812782b96162f99d0490246f2ca54693d54f8f18
+Canonical validator: FAIL
+Canonical receipt: receipt-9f8d9a8f781c
+
+Baseline problems/warnings: 4/23
+Current problems/warnings: 4/23
+New candidate-attributable failures: 0
+Result: INHERITED_BASELINE_MATCH
+
+source_receipt_unresolved_work [T-41] detail 8e410875a794f3dc
+unclassified [global] detail 84a39e0eab234308
+source_credential_unsafe [SRC-017] detail 13c5015d6f0fe0c7
+unclassified [global] detail c7e6f36c086c115e
+
+Warning detail unavailable; warning counts compared.
+SAIPEN canonical validation itself remains FAIL with inherited findings. The active T-107 resume baseline is the pre-repair 4/23 receipt; the older a3 record's 3/21 counts predate T-108/T-109/T-110 and are retained as inherited baseline drift. Problem signatures are compared exactly; warning details were not emitted by the canonical status surface, so their count is compared and the limitation is recorded.

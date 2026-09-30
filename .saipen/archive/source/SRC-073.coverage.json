@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-073:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-86 closed with verification evidence in LOG: verify -> PASS [target: T-86] conf: high -- python -m pytest --junitxml=release/evidence/T87-full-suite.xml: 2123 passed, 0 failed, 0 errors, 0 skipped in 64.07s; python release/evidence/check_external_proof.py: PASS; python tools/local_alpha_release.py verify --bundle release/local-alpha: PASS; final repo consistency: 33 passed. Final external gate satisfied, frozen candidate and original proof u",
+      "text": "Execute V2-04 SCOPED LOCAL ALPHA RELEASE READINESS (MEGA HANDOFF) per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260920_2024.md",
+      "verification": "the Work this request created reached its own verification gate; see the T-86 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-86"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,467 @@
+# SAIMAIL: Roadmap v6 (POST-V5 / GITHUB IDENTITY + PRESENTATION LANE)
+
+Updated: 2026-09-24. Authority: this file, for work after V5-01. It supersedes
+`humbox/FUTURE-GATES-V5.md` as the *current* roadmap; v1 through v5 stay intact
+and identifiable as completed historical planning evidence. This is a plan, not
+permission to publish, to make a live model call, or to change any proven
+contract.
+
+Roadmap v5 closed with **V5-01 DONE via T-97** and no selected next GUI gate.
+The operator then supplied a **new explicit distribution/presentation goal**:
+make GitHub describe the SAIMAIL that actually exists — canonical logo, social
+preview, honest README first screen, public security surface, and a roadmap
+that records the new lane. That operator authority is the only reason this
+roadmap generation exists.
+
+**V6-01 (GitHub Identity and Presentation Sync) is DONE via T-104.** It was the
+only gate executed under T-104; no second gate was started inside it.
+
+**V6-02 (receiver re-read continuity) is DONE via T-113**, E-1527; see §14.
+T-114 DONE (E-1541) completed the capability/recovery truth reconciliation.
+This roadmap names no active owner: `.saipen/STATE.md`, BOARD and LOG are the
+lifecycle authority for any active Work and its phase.
+
+**V6-03 (SAIPEN turn-entry hook evaluation) is implemented in the checkout by
+T-117**; see §15. Its lifecycle facts, like every Work's, come from STATE, BOARD
+and LOG.
+
+**§16 records the operator's wave "SAITELEMES reliable autonomous delivery v1"
+(SRC-108), gates V6-04 to V6-08.** V6-05 (durable outbox, T-119) and V6-06
+(participant registry, T-120) are implemented in the checkout.
+
+## 1. Current proven baseline (post-V5)
+
+- Deterministic local composition (FG-05), installable entrypoint and stable maps
+  (FG-06), reproducibility discipline (spec/13), persistent workspace (V2-01),
+  custody (V3-01), inbox query (P1), correspondence continuation (V4-01),
+  desktop local messenger alpha (V5-01 via T-97).
+- Historical `0.0.2a2` remains externally proven in a separate Linux / Python
+  3.13.5 environment; that proof applies only to a2. T-106 built and froze the
+  exact `0.0.2a3` candidate. It remains `NOT_PUBLISHED`; G17 authorization is
+  ABSENT and G13 is `PENDING_EXTERNAL`.
+- The checkout is ahead of frozen a3 by checkout-only T-108, T-109, T-110,
+  T-113 and T-117 product work, with T-107/T-115 release-evidence repairs.
+  Frozen `0.0.2a3` does not contain T-113. T-107 DONE at E-1502:
+  local release-control repair passed independent
+  review. SRC-102 confirms `humbox/SAIGIMN.mp3` is user-owned and must
+  remain; a narrow exact-path/hash/size manifest covers only that asset.
+  Candidate-bound local evidence is under `release/evidence/a3/`.
+- Zero runtime network/model/provider calls on every local path.
+- Visual sources exist under `pics/` (SAIMAIL1–6, banner); canonical mark is
+  `pics/SAIMAIL_LOGO.png` sourced from `SAIMAIL2`.
+
+## 2. Current limitations (relevant to this lane)
+
+- **L1 — Public face lags product truth.** README first screen and GitHub
+  repository metadata do not yet communicate the desktop GUI, the local-only
+  boundary, or the frozen-vs-checkout split with enough clarity for a new
+  visitor.
+- **L2 — No SECURITY.md.** The project handles cryptographic identity, sealed
+  envelopes, OS credential custody and private-key boundaries but has no
+  public reporting/scope document.
+- **L3 — Source identity drift (resolved by T-106).** At V6 creation, the tree
+  identified as `0.0.2a2` while containing post-a2 product work. T-106 aligned
+  that source as frozen candidate `0.0.2a3`; the later T-108/T-109/T-110
+  checkout-only changes do not alter the frozen candidate.
+- **L4 — READ_REREAD_GAP resolved by T-113.** Explicit Reopen re-authenticates
+  and decrypts an already-READ message across sessions. Open remains first-read
+  only; entry, selection and refresh remain metadata-only. See §14.
+- **L5 — Header-only reads held private keys (resolved by T-117).** `inbox` and
+  the SAIPEN seam reads performed the full load, so in os-store custody every
+  automatic turn entry retrieved both private keys to count headers, and a
+  locked store failed the count. See §15.
+
+## 3. Priority principles
+
+- Present what exists; never enlarge capability claims.
+- Separate frozen-release truth from development-checkout truth.
+- Brand clearly without turning aesthetics into release semantics.
+- Do not modify protocol semantics, selectors, PostOffice, custody authority
+  or frozen release trees inside this lane.
+- Every gate needs a stop condition; a gate whose evidence says "stop"
+  succeeds.
+- One gate at a time: V6-01 is DONE; D3 local repair is DONE via T-107;
+  V6-02 is DONE via T-113; the separate turn-entry hook was not implemented by
+  T-114; SAIPEN T-1497 built its read, and V6-03 (T-117, §15) evaluated it.
+
+## 4. Lanes
+
+**V6-01 — GitHub Identity and Presentation Sync: DONE via T-104.**
+
+- Canonical logo asset: `pics/SAIMAIL_LOGO.png` from `pics/SAIMAIL2.png`.
+- Social preview: `pics/SAIMAIL_SOCIAL_PREVIEW.png` at 1280×640 PNG <1 MB,
+  recomposed (not stretched from the banner).
+- README hero: LOCAL ONLY, desktop GUI discoverable, CLI/headless path
+  visible, frozen `0.0.2a2` boundary explicit, deep research moved below the
+  practical entry surface.
+- Public docs: `SECURITY.md`; `CONTRIBUTING.md` only if concise and real.
+- Roadmap: this file records V6-01 as the current gate.
+- GitHub metadata prepared as exact description + topics; social preview
+  asset ready. Settings upload may be `MANUAL_GITHUB_SETTINGS_REQUIRED` and
+  does not block V6-01.
+- Distribution finding recorded: **CURRENT SOURCE IS MATERIALLY AHEAD OF
+  FROZEN 0.0.2a2.**
+
+Utility/selector lane: closed by U1; no U2 created.
+Security/custody lane: V3-01 DONE; do not reopen without new evidence.
+Distribution/release lane: D3 candidate `0.0.2a3` remains frozen and
+`NOT_PUBLISHED`; T-107 DONE after T-108/T-109/T-110. Candidate-bound G15/G16
+records document the final local repair; subsequent checkout work is separate.
+G13 remains `PENDING_EXTERNAL`, G17 `ABSENT`, and publication `NONE`.
+Optional research lane: V2-03 DONE (negative); no generative production work.
+GUI product lane: V5-01 DONE via T-97; V5-01 enters the D3 candidate unchanged
+(optionally behind `gui` extra; base install stays Qt-free); no new GUI gate selected.
+SAIPEN seam lane: **S2 DONE via T-108** (operator request SRC-096; `spec/04`
+stage S2, D-057; see §11). Checkout-only: the checkout is ahead of frozen
+`0.0.2a3` by S2. S3 promotion proposals already exist (T-10); S4 (registered
+SAIPEN extension) is not started and needs its own operator goal.
+SAITELEMES lane: **SAITELEMES v0 DONE via T-109** (operator request SRC-097;
+`spec/26`, D-058; see §12). Also checkout-only. The SAIPEN-side trigger and
+turn-entry hook are filed with the protocolist as a future gate. SAIPEN T-1497
+has since built the turn-entry read; V6-03 evaluated it from this side (§15).
+
+## 5. Dependencies
+
+```
+V6-01  <- V5-01 (DONE), V4-01 (DONE), P1 (DONE), V3-01 (DONE)   [this gate]
+S2     <- V2-01 (DONE, workspace), T-10 (DONE, promotion), spec/04 seam
+SAITELEMES v0 <- S2 (DONE, T-108), P1 (DONE, metadata query)
+V6-03  <- SAITELEMES v0 (DONE, T-109), Work Desk v0 (DONE, T-110),
+          SAIPEN T-1497 turn-entry read (external, SAIPEN-owned)
+```
+
+- SAIPEN debt is not a dependency of V6-01 or of S2. S2 reads SAIPEN files as
+  evidence; it never repairs, validates or writes SAIPEN state.
+- D3 — Post-GUI release candidate / source identity alignment — created the
+  frozen candidate via T-106 (E-1356). T-107 DONE at E-1502. The earlier
+  2512/1 full-suite result predates SRC-102's authorized exact-asset manifest;
+  it is historical and is not current G15 authority. Candidate `0.0.2a3`
+  (`release/candidates/0.0.2a3/`, wheel
+  `saimail-0.0.2a3-py3-none-any.whl`,
+  `6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc`, 65
+  members, digest `2f75bdb7…`) remains frozen and `NOT_PUBLISHED`. Local
+  repair passed 2514 tests and a 111-test independent review. G13 is `PENDING_EXTERNAL`; G17 is
+  `ABSENT`; publication is `NONE`. V6-02 is DONE via T-113, checkout-only.
+
+## 6. Selected gate
+
+**V6-01 — GitHub Identity and Presentation Sync: DONE via T-104.** See
+section 7. **D3 — Post-GUI candidate 0.0.2a3: local repair DONE via T-107** (see §9).
+
+## 7. V6-01 — GitHub Identity and Presentation Sync (SPECIFICATION)
+
+**Status at file creation: CURRENT (executed under T-104 / SRC-089,
+continuation SRC-091).** **Closure: DONE via T-104.**
+
+- **Observed gap.** The public-facing repository surface (README hero,
+  canonical logo name, social preview, SECURITY.md, GitHub description/topics)
+  does not yet present the product that exists: local-only agent post office,
+  optional desktop GUI, CLI/headless path, and an honest frozen-vs-checkout
+  boundary.
+- **Target.** One coherent presentation state: stable canonical logo asset;
+  1280×640 social preview; README first screen that communicates SAIMAIL /
+  LOCAL ONLY / desktop GUI available / CLI path available and separates
+  frozen `0.0.2a2` from the current checkout (`ahead by P1 + V4-01 + V5-01`);
+  concrete `SECURITY.md`; exact GitHub description and topics prepared;
+  this roadmap file as authority.
+- **Non-goals.** No protocol change; no VERSION bump; no `0.0.2a3` build; no
+  tag; no push for ceremony; no publication; no release; no frozen-tree
+  mutation under `release/local-alpha/`, `release/candidates/0.0.2a2/`,
+  `release/evidence/a2/`; no reread implementation; no network transport; no
+  AI features; no capability claims beyond what is proven.
+- **Acceptance evidence.** Canonical logo byte-identical to SAIMAIL2;
+  social preview 1280×640 PNG under 1 MB; README links and version mirrors
+  still consistent with `VERSION`; `SECURITY.md` present; this file present;
+  repository consistency suite green; distribution finding recorded.
+- **Stop condition.** When the public face describes the SAIMAIL that actually
+  exists, frozen-release truth is separate from checkout truth, and the
+  canonical suite is green — stop. Do not start D3 or V6-02 inside T-104.
+- **Negative evidence closes it:** yes. A measured negative is a successful
+  research closure.
+
+## 8. What not to claim
+
+- Do not claim the GUI exists inside frozen `0.0.2a2`.
+- Do not claim the current checkout is an externally verified a2 artifact.
+- Do not claim cloud messaging, autonomous agents, AI replies or semantic
+  reviewer reliability.
+- Do not claim publication or external verification of the current checkout.
+- Do not claim default identity protection: `raw` custody stays the default.
+
+## 9. Current release decision (D3 local repair complete via T-107)
+
+V6-01 selected one direction after evaluation:
+
+- **D3 — post-GUI release candidate / source identity alignment: LOCALLY COMPLETE;
+  T-107 DONE after T-108/T-109/T-110.** Candidate
+  `0.0.2a3` (`release/candidates/0.0.2a3/`,
+  wheel `saimail-0.0.2a3-py3-none-any.whl`,
+  `6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc`, 65 members,
+  content digest `2f75bdb7…`. The historical pre-T-106 D3 packet
+  `release/evidence/d3/release_decision.json` recorded `NEW_CANDIDATE_REQUIRED`
+  (D-056); T-106 built that candidate. The wheel stays frozen and
+  `NOT_PUBLISHED`. The earlier 2512/1 full-suite record predates SRC-102 and is
+  stale. SRC-102 authorizes retaining the exact user asset through
+  `humbox/media-assets.json`; local G15/G16 evidence is candidate-bound.
+  G13 is `PENDING_EXTERNAL`, G17 `ABSENT`, publication `NONE`.)
+- **V6-02 — READ_REREAD_GAP: NOT STARTED at T-107 closure.** This is the
+  historical E-1502 boundary. Later SRC-102/SRC-103 authorized checkout
+  improvements; T-113 implemented the saved design and closed at E-1527.
+  Current status is DONE via T-113 (§14); T-114 DONE (E-1541) reconciled the
+  capability/recovery truth.
+- **External operator action:** follow `release/evidence/a3/EXTERNAL_VERIFICATION_REQUEST.md`
+  on a genuinely separate machine/VM/host and return raw verifier JSON. No active
+  implementation ticket waits solely for G13; publication remains unauthorized.
+
+## 11. S2 — SAIPEN seam bridge (T-108)
+
+**Status: DONE via T-108** (operator request SRC-096: "Возведи и соедини с
+SAIPEN как нибудь"; operator goal: "пусть это будет работать как задумано.
+humbox как маяк"). Contract: `spec/04-SAIPEN-SEAM.md` "S2 as built", D-057.
+
+- **Observed gap.** SAIMAIL and SAIPEN shared one directory and nothing else.
+  The seat was copied by hand, and a message about project work could cite a
+  SAIPEN event only in prose, with no witness a reader could re-check.
+- **Target.** `saimail-local saipen status|init|cite|verify`: bind the acting
+  seat (`--seat` > `SAIPEN_AGENT` > `STATE.agent`, source reported), create the
+  ordinary V2-01 workspace at a caller-supplied `--workspace`, cite one LOG
+  event as a `KIND:O` record whose `EV` is the sha256 of the exact LOG line,
+  and re-check a citation by re-deriving it from the reader's own LOG bytes.
+- **Non-goals.** No write into `.saipen/`; the library never names SAIPEN
+  memory (I1 structural test); no mailbox inside a project tree; no new wire or
+  state field; no SAIPEN extension registration (S4); no SAIPEN debt repair; no
+  version bump, rebuild, tag, push or publication; the frozen `0.0.2a3` wheel
+  is untouched and claims nothing about S2.
+- **Acceptance evidence.** `tests/test_saipen_bridge.py` green;
+  `tests/test_i1_inert_payload.py` green for the new module; full canonical
+  suite green; live: E-1362 cited, sealed `opus -> reviewer`, opened `READ`
+  with the cited content identity, `CITATION_VERIFIED`.
+- **Measured failures that shaped it** (D-057): library naming SAIPEN memory
+  (I1 red), repo mailbox (consistency red), last owner used as actor (operator
+  report), EV-only verifier accepting forged `SUBJ`/`CLAIM` (REVIEW P1, red
+  before fix and green after).
+- **Stop condition.** One seat binding, one citation, one re-check, and a green
+  canonical suite. Stop. S4 is not started inside T-108.
+
+## 12. SAITELEMES v0 — telegrams between running agents (T-109)
+
+**Status: DONE via T-109** (operator request SRC-097: "SAITELEMES - это как
+телеграмма для другого работающего агента, это должно происходить автоматически
+пока выясняется текущий аудит чтобы решались задачи эффективнее"). Contract:
+`spec/26-SAITELEMES-v0.md`, D-058.
+
+- **Observed gap.** A finding owned by another running agent waited for a human
+  relay: the SAIPEN protocolist heard of the T-108 defects only after the operator
+  asked, and the host cross-session message expired unapproved.
+- **Target.** `saimail-local saipen telegram` sends one telegram in one call. The
+  sender is the acting seat, the TOPIC is the SAIPEN Work id, the kind comes from
+  the closed SENV2 set, and the body is a claim or an S2 citation.
+  `saimail-local saipen telegrams` is the bounded, header-only turn-entry read.
+- **Non-goals.** No `TELEGRAM` kind, no importance field, no daemon, no network, no
+  auto-open, no Work created by arrival, no agent discovery registry, no SAIPEN
+  change from this repository.
+- **Acceptance evidence.** `tests/test_saitelemes.py` green; full canonical suite
+  green; SAIPEN protocolist notified live and in its case file
+  (`_SAIPEN/future_gate/FUTURE GATE — SAITELEMES AUTOMATIC AGENT
+  TELEGRAMS_20260922.md`), with receipt acknowledged.
+- **Stop condition.** One send and one turn-entry read, seat-guarded, on existing
+  wire. The SAIPEN-side automatic trigger is the protocolist's to triage. Stop.
+
+## 13. SAIPEN Work Desk v0 (T-110)
+
+**DONE via T-110; development checkout only.**
+
+The operator's new improvement request (SRC-099), clarified as SAIMAIL with
+HUMBOX as the guide, selects a work desk connected to SAIPEN. Later steering
+requires SAIPEN participation at entry.
+
+- **Implemented:** `saipen enter` checks local project lineage and workspace
+  seat; `saipen brief` joins observed work with one bounded unread page,
+  preserving other topics and detecting context changes across continuation.
+  SAIPEN `init` and `telegram` use the same participation prerequisite.
+- **Authority:** this is local admission, not proof of SAIPEN compliance;
+  standalone APIs remain available. SENV2 authentication is unchanged.
+- **Evidence:** `tests/test_saipen_brief.py`, existing S2/SAITELEMES/I1 suites.
+  Full regression: 2477 passed; focused review: 116 passed. An initial run had
+  eight fixture errors from one Windows rename refusal; a fresh short temporary
+  path passed the affected 22 tests and the complete suite. Disabling the entry
+  gate in an isolated process made all four admission controls fail as expected.
+  Contract: `spec/27-SAIPEN-WORK-DESK-v0.md`; operator guide:
+  `humbox/SAIPEN-WORK-DESK.md`.
+- **Boundary:** checkout-only, outside frozen `0.0.2a3`; no publish, extension
+  registration, automatic send/open, or SAIPEN memory writes.
+- **Next evaluation at T-110 closure (historical):** V6-02 receiver reread continuity, then a SAIPEN-owned
+  turn-entry hook. Neither is started in T-110. T-107 release-control repair
+  remains separate work.
+- **Later closure:** T-113 implemented receiver re-read continuity (§14).
+  T-114 DONE (E-1541) reconciled capability/recovery truth. T-114 did not
+  implement the SAIPEN-owned turn-entry hook; SAIPEN T-1497 did, and its
+  evaluation is V6-03 (§15).
+
+## 14. V6-02 — Receiver re-read continuity (T-113)
+
+| Lane | Status | Closure Work | Evidence |
+|---|---|---|---|
+| V6-02 | DONE | T-113 | E-1521, E-1524, E-1527 |
+
+T-113 resolves READ_REREAD_GAP in the development checkout. The distinct
+`PostOfficeSession.reopen_message`, `workspace.reopen_message`, CLI `reopen`
+and GUI `Reopen` support an explicit later read. Open remains UNREAD-only;
+Reopen requires durable READ and preserves it. Reopen is budgeted, fail-closed,
+verifies sender/recipient plus receipt/index under the lifecycle lock, and
+persists no plaintext. Selection, refresh and restart never decrypt.
+
+Historical proof: 25 T-113 controls in `tests/test_reread_continuation.py`;
+full suite 2549 passed / 0 failed / 0 errors / 0 skipped at E-1521;
+independent review PASS E-1524; T-113 DONE E-1527. T-115 DONE E-1518 records
+the D3 historical-evidence monotonicity repair (44 focused / 2522 full at
+E-1514). Contracts: spec/03, spec/25 §4.3; API: `lab/stable_local_api.json`.
+
+Release boundary: checkout-only. Frozen `0.0.2a3` does not contain T-113;
+its wheel and historical evidence remain unchanged. G13 `PENDING_EXTERNAL`,
+G17 `ABSENT`, publication `NONE`. T-114 DONE (E-1541) reconciled
+capability/recovery truth without a second implementation of T-113. T-114 did
+not implement the SAIPEN-owned turn-entry hook; its evaluation is V6-03 (§15).
+
+## 15. V6-03 — SAIPEN turn-entry hook evaluation (T-117)
+
+| Lane | Status | Work | Evidence |
+|---|---|---|---|
+| V6-03 | IMPLEMENTED (checkout) | T-117 | SRC-106; E-1565 SCOUT; `.saipen/evidence/T-117-turn-entry/` |
+
+Lifecycle facts for T-117 (phase, closure event) are in STATE, BOARD and LOG,
+never in this table.
+
+- **Observed.** The SAIPEN side of the gate already existed: SAIPEN T-1497
+  (SAIPEN SRC-113) runs `saimail-local --json saipen telegrams --workspace
+  $SAIMAIL_WORKSPACE --scan-budget 200` inside `continue`/`status` and reports
+  counts only. Live end to end against this checkout: `unread 2,
+  on_current_work 1, complete true`. Automatic send (future-gate parts 1-2)
+  remains SAIPEN-owned and unauthorized.
+- **Gap found.** The SAIMAIL read performed the full workspace load. In os-store
+  custody that took both private keys out of the OS credential store at every
+  automatic turn entry, only to count headers, and a locked store turned the
+  count into `CUSTODY_ACCESS_FAILED`. Probe: 2 secret reads per call.
+- **Target.** Header-only reads hold no secret. `load_workspace_headers` returns
+  `WorkspaceHeaders`, a public-key-only view with every public check of the full
+  load and no credential-store access. `inbox`, `saipen telegrams`, `saipen
+  enter` and `saipen brief` use it; open, reopen, send, reply and `saipen
+  telegram` keep the full fail-closed load. Contract `spec/26-SAITELEMES-v0.md`
+  §7, decision D-059.
+- **Non-goals.** No SAIPEN change from this repository; no wire, index, custody
+  or Post Office change; no automatic send, open or Work creation; no GUI change;
+  no version bump, rebuild, tag, push or publication. Frozen `0.0.2a3` does not
+  contain it.
+- **Acceptance evidence.** `tests/test_turn_entry_headers.py` green (zero store
+  reads for all five header commands; locked store still counts while `open`
+  refuses; results identical to the full load; brief context shared across
+  loads; every public refusal identical; the private-identity boundary stated;
+  SAIPEN-consumed fields pinned). Red controls: 7 of 8 controls fail on the exact
+  pre-T-117 bytes; a marker-only loader fails both parity controls. Full
+  canonical suite green.
+- **Cross-project findings (SAIPEN-owned, recorded only).** SAIPEN reads a
+  refusal from `code`; SAIMAIL's `LOCAL_WORKSPACE_COMMAND_1` carries it in
+  `status`, so the SAIPEN `ERROR` detail never names the cause. The `read_command`
+  hint interpolates paths unquoted. The count does not compare the answer's
+  `workspace.seat` with the acting seat. Filed in the SAIPEN protocol-incidents
+  inbox (`SAI-DEFECT-20260924-turn-entry-telegrams-refusal-code-and-read-command`).
+- **Stop condition.** One end-to-end run of the SAIPEN hook, one secret-free
+  header path with red controls, a pinned consumer contract and a green canonical
+  suite. Stop; no further gate was selected at that point (the operator later
+  chose the §16 wave).
+
+## 16. SAITELEMES reliable autonomous delivery v1 (wave, SRC-108)
+
+The operator supplied a new wave goal (SRC-108) after V6-03: make agent-to-agent
+telegrams operationally dependable, so that crash, retry, duplicate, stale state,
+wrong seat and temporary unavailability never lose a message or cause a wrong
+action. Operator decisions: order 1 -> 3 -> 4 -> 5 -> 2 (automatic send last);
+SAIPEN code changes as separate Work in the SAIPEN project; automatic send is
+authorized for a closed trigger set only. Target chain: SAIPEN event -> policy
+gate -> durable outbox -> authenticated SAITELEME -> recipient dedup -> bounded
+header awareness -> explicit open/action -> receipt -> audit.
+
+| Gate | Wave item | Status | Work | Repository |
+|---|---|---|---|---|
+| V6-04 | 1: SAIPEN consumer contract (refusal code from `status`, copy-safe `read_command`, seat check) and the reverify livelock | WAITING: the SAIPEN project held a live foreign claim when the wave started | SAIPEN Work, created when that project is free | `_SAIPEN` |
+| V6-05 | 3: durable outbox and idempotency | IMPLEMENTED (checkout) | T-119 | SAIMAIL |
+| V6-06 | 4: project-local participant registry | IMPLEMENTED (checkout) | T-120 | SAIMAIL |
+| V6-07 | 5: S4 registration and capability negotiation, DEGRADED instead of failure | PLANNED | T-121 (SAIMAIL half), SAIPEN Work | both |
+| V6-08 | 2: automatic notify on a closed trigger set | PLANNED | T-122 (SAIMAIL half), SAIPEN Work | both |
+| policy | inter-agent workshop policy (operator text, SRC-107) | RECORDED for later | T-118 | both |
+
+Lifecycle facts for every Work named here (phase, closure event) live in STATE,
+BOARD and LOG, never in this table.
+
+Not in this wave (recorded from SRC-108 for later): an agent acknowledgement
+protocol that keeps DELIVERED, OBSERVED_HEADER, OPENED and ACTED distinct; agent
+backpressure beyond the notify budget; the crash/concurrency torture matrix at
+2/4/8/12 agents with stale locks, abandoned leases and mailbox rotation; full
+health telemetry; external adapters (SAIRELAY).
+
+### V6-05 — durable outbox (T-119)
+
+- **Observed.** Sealing is randomized and receiver dedup is by the ENVELOPE_ID of
+  exact bytes, so a caller retry after a crash re-sealed a second logical message.
+  Measured on the pre-existing path: two `send_message` calls, two messages.
+- **Built.** `saimail.outbox` and `saimail-local outbox send|resume|retry|status`:
+  intent keyed by an idempotency key, PENDING -> SEALED -> DELIVERED | FAILED,
+  seal once and persist before delivery, replay exact bytes, plaintext removed at
+  SEALED, one OS-backed outbox lock, deterministic backoff for transient failures,
+  terminal failures only re-armed by `retry`, keyless sealed delivery and status.
+  Contract `spec/28-DURABLE-OUTBOX-v0.md`, decision D-060.
+- **Evidence.** `tests/test_outbox.py` (24 controls: real `os._exit` kills at four
+  transitions, a lock-exclusion control, 6-process same-key and 8-process
+  distinct-key races, offline backoff, quarantine, rebound alias, tampered
+  intents, keyless status). Red controls: the pre-T-119 retry duplicates; source
+  mutants without the lock, re-sealing on retry, keeping plaintext or treating
+  transient failures as terminal each turn controls red.
+- **Boundary.** Additive; `send`, `reply`, the wire and frozen `0.0.2a3` are
+  unchanged. No daemon: delivery resumes when something calls it.
+
+### V6-06 — project-local participant registry (T-120)
+
+- **Observed.** `peers.json` maps aliases to mailboxes but not project membership;
+  automatic routing could only guess a recipient by name.
+- **Built.** `saimail.participants` and `saimail-local saipen participant
+  admit|revoke|resolve|list`: per SAIPEN project lineage, explicitly admitted
+  seats, each bound to a registered alias with its identity pinned and its
+  admitted notify triggers; the closed trigger set (`blocker`, `finding`,
+  `dependency`, `ownership`, `handoff`, `reply`) with a fixed existing SENV2 kind
+  each. Resolution refuses unknown project or seat, trigger outside the
+  admission, self-address and identity drift. The CLI takes the lineage from the
+  admitted SAIPEN binding; registry work is keyless. Contract
+  `spec/29-PARTICIPANT-REGISTRY-v0.md`, decision D-061.
+- **Evidence.** `tests/test_participants.py` (12 controls); five source mutants
+  caught (`.saipen/evidence/T-120-registry/`).
+- **Boundary.** Receiver-owned trust unchanged: admission grants nothing at the
+  receiver, which still quarantines an unregistered sender.
+
+## 10. Restart / context-loss entry
+
+1. `humbox/CURRENT-STATE.md` — where the project is and which roadmap is current.
+2. `humbox/FUTURE-GATES-V6.md` (this file) — the current roadmap authority.
+3. `humbox/FUTURE-GATES-V5.md` — completed Roadmap v5 (historical evidence).
+4. `humbox/FUTURE-GATES-V4.md`, `-V3.md`, `-V2.md`, `FUTURE-GATES.md` — historical.
+5. `.saipen/STATE.md`, the current BOARD row and the LOG tail.
+6. `<saipen_home>/saipen/UI.md` — the canonical visual authority.
+7. `spec/25-DESKTOP-LOCAL-MESSENGER-v0.md`, `spec/17-LOCAL-WORKSPACE-v0.md`,
+   `spec/20-LOCAL-KEY-CUSTODY-v0.md` — product contracts.
+
+Recovery checklist: current roadmap is v6; V6-01 is DONE via T-104; T-106 is
+historical DONE and T-107 DONE at E-1502; T-108/T-109/T-110 are DONE;
+T-113 DONE E-1527, T-115 DONE E-1518 and T-114 DONE E-1541. Active Work and
+its phase come only from STATE/BOARD/LOG; when STATE is DONE with task none,
+no Work owns execution. Do not redo the saved T-113 design.
+Candidate `0.0.2a3` remains frozen and `NOT_PUBLISHED`; final G15/G16 evidence
+records local repair after SRC-102's exact-asset manifest. G13 is
+`PENDING_EXTERNAL`, G17 `ABSENT`, publication `NONE`; V6-02 is DONE via T-113.
+S2 SAIPEN seam bridge is DONE via T-108 (checkout-only, ahead of frozen
+`0.0.2a3`, §11); SAITELEMES v0 is DONE via T-109 (§12); Work Desk v0 is DONE
+via T-110 (§13); V6-03 turn-entry evaluation is implemented by T-117 (§15);
+the §16 wave gates and their Work are listed in its table; completed gates (v1–v5)
+must not be reopened.
+The frozen `0.0.2a2`
+candidate is externally proven and `NOT_PUBLISHED`; the frozen `0.0.2a1`
+candidate is historical and immutable. Publication remains a separate operator
+action (G17 ABSENT).

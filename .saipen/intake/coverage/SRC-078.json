@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-078:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-90 closed with verification evidence in LOG: RUN: verify -> PASS [target: T-90] conf: high -- python -m pytest -q --junitxml=V:\\_TEMP_\\opencode\\T-90-full-suite.xml: 2185 passed, 0 failed, 0 errors, 0 skipped in 89.79s (2175 inherited + 9 release-decision tests + 1 locale-mirror consistency test); focused D1/repo-consistency/release/workspace/custody/clean-install/FG05/FG06/V2-02/manifest suites 197 passed; ruff --select E4,E7,E9,F touched fi",
+      "text": "Execute Roadmap v3 gate D1 \u2014 RELEASE DECISION PACKET (mission file V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260920_2235.md)",
+      "verification": "the Work this request created reached its own verification gate; see the T-90 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-90"
+    }
+  },
+  "schema_version": 1
+}

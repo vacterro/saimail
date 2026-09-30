@@ -1,0 +1,906 @@
+# SAIMAIL CURRENT STATE
+
+> **T-110 DONE (2026-09-23, development checkout):** SAIPEN Work Desk v0 adds
+> `saipen enter` and `saipen brief`: local participation/seat checks, current
+> work plus all unread topics within one bounded page, and context-checked
+> continuation. SAIPEN `init`/`telegram` now require project IDENTITY.
+> Guide: `humbox/SAIPEN-WORK-DESK.md`; contract: `spec/27-SAIPEN-WORK-DESK-v0.md`;
+> roadmap: v6 §13. Checkout-only, beyond frozen `0.0.2a3`. T-107 DONE
+> at E-1502 after independent review. SRC-102 confirms `humbox/SAIGIMN.mp3` is user-owned
+> and must remain; the exact-path/hash/size manifest is bound to SRC-102.
+> Lossless stream-copy did not reduce its size. T-107 passed 2514 tests and
+> the 111-test independent review; final evidence is under `release/evidence/a3/`. T-110 product
+> regression: 2477 tests passed; targeted review:
+> 116 passed. `READ_REREAD_GAP` remains open.
+
+> **Restart note:** this map records the checkout as observed on 2026-09-21,
+> after FG-02 closed via T-79, FG-03 via T-78, FG-04A via T-80, FG-04B via T-81,
+> FG-05 via T-82, FG-06 via T-83, V2-01 via T-85, V2-04 via T-86/T-87,
+> V2-02 via T-88, V3-01 via T-89, D1 via T-90, D2 via T-91/T-92, P1 via T-93,
+> U1 via T-94, V4-01 via T-95, V2-03 via T-96 and **V5-01 via T-97**.
+> T-78/T-80/T-81/T-82/T-83 are DONE; T-85 through T-94 are DONE; T-95 (V4-01),
+> T-96 (V2-03) and T-97 (V5-01) are DONE; Roadmap v4 is complete and its latest
+> gate selection found no next gate, so the operator's new GUI product goal
+> created Roadmap v5; the later GitHub identity/presentation goal created
+> Roadmap v6, the current authority. **V6-01 is DONE via T-104.**
+> `humbox/FUTURE-GATES.md` is the **completed Roadmap v1**;
+> `humbox/FUTURE-GATES-V2.md` (T-84) is the **completed Roadmap v2**;
+> `humbox/FUTURE-GATES-V3.md` is the **completed Roadmap v3** (all non-optional
+> gates DONE after U1); `humbox/FUTURE-GATES-V4.md` is the **completed Roadmap
+> v4** (V4-01 DONE via T-95, V2-03 DONE via T-96, no selected next gate);
+> `humbox/FUTURE-GATES-V6.md` is the **current roadmap authority** added by
+> T-104 after the operator supplied a new GitHub identity/presentation goal
+> (V6-01 selected under T-104). `humbox/FUTURE-GATES-V5.md` completed with
+> V5-01 DONE via T-97.
+> V2-01, V2-02, V2-04, V3-01, D1, D2, P1, U1, V4-01, V5-01 are DONE; T-97
+> (V5-01) is DONE; T-104 (V6-01) is DONE; T-106 created the frozen `0.0.2a3`
+> candidate; T-107 DONE after T-108/T-109/T-110 completed. SRC-102
+> authorizes retaining the exact user audio asset through a narrow manifest;
+> local release-control reconciliation is complete. G13 is `PENDING_EXTERNAL`,
+> G17 `ABSENT`, publication `NONE`.
+> **S2 SAIPEN seam bridge is DONE via T-108** (`spec/04` S2, D-057,
+> `humbox/FUTURE-GATES-V6.md` §11): checkout-only, so the checkout is now ahead
+> of frozen `0.0.2a3` by S2. **SAITELEMES v0 is DONE via T-109** (`spec/26`,
+> D-058, `humbox/FUTURE-GATES-V6.md` §12), also checkout-only. T-107 (D3
+> release-control repair) closed at E-1502. Its external-proof wait is not
+> an active implementation ticket. Read `.saipen/STATE.md` for later work.
+> S2 (T-108) has since moved the checkout ahead of frozen a3 by its
+> checkout-only SAIPEN seam bridge.
+>
+> **READ IN THIS ORDER:**
+> 1. `humbox/CURRENT-STATE.md`
+> 2. `humbox/FUTURE-GATES-V6.md` (current roadmap)
+> 3. `humbox/FUTURE-GATES-V5.md` (completed Roadmap v5, historical)
+> 4. `humbox/FUTURE-GATES-V4.md` (completed Roadmap v4, historical)
+> 5. `humbox/FUTURE-GATES-V3.md` (completed Roadmap v3, historical)
+> 6. `humbox/FUTURE-GATES-V2.md` (completed Roadmap v2, historical)
+> 7. `humbox/FUTURE-GATES.md` (completed Roadmap v1, historical)
+> 8. `.saipen/STATE.md`
+> 9. current BOARD row
+> 10. tail of `.saipen/LOG.md`
+> 11. `lab/analysis/v202_selector_coverage_closure.md` (V2-02 negative result)
+> 12. `lab/analysis/u1_watched_coverage_closure.md` (U1 result)
+> 13. `lab/analysis/reviewer_structured_output_closure.md` (V2-03 negative result)
+>
+> **THEN ONLY IF RELEVANT:**
+> - `.saipen/evidence/T-65-closure.md`
+> - `.saipen/evidence/T-75-inherited-audit-review.md`
+> - `spec/13-EXPERIMENT-REPRODUCIBILITY-v0.md`
+> - `lab/analysis/project_corpus_budget4096_closure.md`
+> - `.saipen/evidence/T-97-v5-01-closure.md`
+> - `spec/25-DESKTOP-LOCAL-MESSENGER-v0.md`
+> - `SECURITY.md`
+> - `humbox/GITHUB-SETTINGS-V6.md`
+>
+> ## CURRENT ROADMAP
+
+- **Current roadmap authority:** `humbox/FUTURE-GATES-V6.md` (Roadmap v6,
+  added by T-104 after the operator supplied a GitHub identity/presentation
+  goal). Before v6, `humbox/FUTURE-GATES-V5.md` was the current Roadmap v5
+  authority (V5-01 DONE via T-97); before v5, `humbox/FUTURE-GATES-V4.md` was
+  the current Roadmap v4; before v4, `humbox/FUTURE-GATES-V3.md` was the
+  current Roadmap v3; each successor was added/replaced by the next generation
+  after the previous one's gates closed.
+- **Completed roadmap authorities:** `humbox/FUTURE-GATES-V4.md` = completed
+  Roadmap v4 (V4-01 DONE via T-95, V2-03 DONE via T-96);
+  `humbox/FUTURE-GATES-V3.md` = completed Roadmap v3 (V3-01 DONE, D1 DONE,
+  D2 DONE, P1 DONE, U1 DONE; the v3 roadmap is complete for its selected
+  gates); `humbox/FUTURE-GATES-V2.md` = completed Roadmap v2 (V2-01 DONE,
+  V2-02 DONE, V2-04 DONE; V2-03 optional research); `humbox/FUTURE-GATES.md` =
+  completed Roadmap v1, kept intact as historical evidence. Roadmap v1 SHA256:
+  `569bcbd2846b4bc9a34950beaca213207e1821b3cf9543596f6a90691e90e660`.
+- **Roadmap v4 position (COMPLETED):** V4-01 (DONE via T-95) and V2-03 (DONE
+  via T-96, measured negative `REVIEWER_BAD_JSON`) closed Roadmap v4; no next
+  gate was selected after V4-01, and no new practical product gap was observed
+  in the CLI-only local workflow. Roadmap v5 superseded v4 as the current
+  authority when the operator supplied the new GUI product goal.
+- **Roadmap v5 position (COMPLETED):** V5-01 — Desktop Local Messenger Alpha —
+  is DONE via T-97. Roadmap v6 superseded v5 as the current authority when the
+  operator supplied the GitHub identity/presentation goal.
+- **Roadmap v6 position (CURRENT): current Roadmap v6.** V6-01 — GitHub
+  Identity and Presentation Sync — is **DONE via T-104**. The operator-owned
+  remainder is the GitHub Settings click (`MANUAL_GITHUB_SETTINGS_REQUIRED`,
+  `humbox/GITHUB-SETTINGS-V6.md`). D3 local control repair is complete; T-107 DONE.
+  SRC-102 authorizes retaining `humbox/SAIGIMN.mp3` through one exact
+  path/hash/size manifest; V6-02 remains NOT STARTED.
+- **FG-00 DONE** (T-77: state/navigation closure artifact; LOG E-910–E-918).
+- **FG-01 diagnosed / externally blocked.** T-75 cannot inherit the unrecorded
+  T-41 publication; SRC-017/T-41 and SRC-036 are separately carried SAIPEN
+  core debt. No repair was performed in FG-02/FG-03.
+- **FG-02 DONE via T-79** (this ticket): one additive manifest contract,
+  historical/current/live authorities mechanically separated.
+- **FG-03 DONE via T-78**: receiver-owned adoption intent, explicit LEGACY
+  recovery, idempotent exact retry, conflict refusal, LEG1 unchanged.
+- **FG-04A DONE via T-80**: additive `spec/14-REFERENCE-TELEMETRY-v0.md`
+  contract and LAB-only `lab/reference_telemetry.py`; the synthetic matrix and
+  product-gate parity are proved offline with zero model/network calls.
+  T-74 exact bad-ref class remains **UNKNOWN**.
+- **FG-04B DONE via T-81** (this ticket): one newly registered bounded live
+  JSON_SCHEMA experiment. Policy `CORPUS_ENUM`; the schema enumerates the exact
+  frozen B-018 evidence refs before the unchanged product reference gate.
+  Result: R1 (generator A, deepseek) produced a schema-valid candidate that
+  PASSED the product reference gate and the event floor and reached an actual
+  semantic reviewer invocation — a first for this research line — but the
+  reviewer reply was not one parseable JSON document
+  (`ALLY_LAB_BAD_JSON`, 3801 bytes, `finish_reason=stop`), so the outcome is
+  `REVIEWER_ERROR` with zero semantic verdicts; R2 (generator B) returned
+  `NO_ADVICE` with zero reviewer calls. Five calls of six; no retry, repair or
+  replacement; admission proved before the first network call. Semantic review
+  is still not demonstrated, now because of the reviewer's own reply shape.
+- **FG-05 DONE via T-82**: one deterministic two-participant offline scenario
+  composes source → typed record → signed/sealed envelope → delivery → dedup →
+  budgeted header scan → explicit open → separate promotion, then proves
+  restart, TTL/tombstone non-resurrection, LEGACY succession provenance,
+  HUMAN_PRIVATE seal/store/open + attention reserve/ACK, NO_ADVICE/unverified
+  non-delivery, six injected durable-write failures and exact side-effect
+  counts. Zero network/model calls, no hardware provisioning, no production
+  `saimail/*` change. Artifacts: `lab/local_scenario.py`,
+  `tests/test_local_scenario.py`, `spec/15-LOCAL-SCENARIO-v0.md`.
+- **FG-06 DONE via T-83**: a deterministic offline `TOTAL_FRICTION` benchmark
+  (`lab/utility_friction.py`) measures the working local path against a fair
+  information-equivalent baseline over five frozen workloads (low/moderate/high
+  open rate, fallback-heavy, and the FG-05 recovery workload). Result:
+  `UTILITY_CONDITIONAL` — a real cost win at low open rate, neutral at
+  moderate/high and fallback-heavy, source identified as selective resolution
+  plus the zero-inference header scan. A minimal installable entrypoint
+  (`saimail-local`) reuses FG-05, a machine-readable stable API/failure map
+  ships, and clean-wheel installation is proven. Zero network/model calls.
+- **V2-01 DONE via T-85**: one persistent local workspace contract
+  (`spec/17-LOCAL-WORKSPACE-v0.md`), the production `saimail/workspace.py`
+  engine and workspace subcommands on the installable `saimail-local`
+  entrypoint (init, identity, recipient add/list, send, inbox, open,
+  acceptance). Two separately initialized persistent workspaces exchange
+  public identity cards, register each other and run a real local
+  send → deliver → metadata-only list → explicit open with restart persistence
+  and canonical duplicate suppression. The result contracts
+  `LOCAL_WORKSPACE_COMMAND_1` and `LOCAL_WORKSPACE_RESULT_1` are versioned and
+  bounded; zero network/model calls; no FG-05/FG-06 contract changed.
+- **V2-04 DONE via T-86 / T-87:** frozen `0.0.2a1` has local and genuine
+  external installed-package evidence. The supplied Linux / Python 3.13.5
+  proof is `LOCAL_ALPHA_VERIFICATION_1 v1 PASS`: FG-05 PASS, FG-06
+  `UTILITY_CONDITIONAL`, V2-01 PASS and direct workspace command CREATED;
+  privacy PASS with no private key material; zero runtime network/model/provider
+  calls. Original: `.saipen/evidence/SAIMAIL_V2-04_external_linux_verification.json`;
+  byte-identical copy: `release/evidence/SAIMAIL_V2-04_external_linux_verification.json`.
+  Proof SHA256: `819f3fcf445c051aec20864098960ccb37a69c8ce6aced0872f2198a96b95f94`.
+  Wheel SHA256: `ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a`.
+  Acceptance and lineage: `release/evidence/external_proof_acceptance.json` and
+  `release/evidence/T87-T86-closure.md`. Linux evidence is additive; the frozen
+  candidate and its advertised platform scope remain unchanged. NOT_PUBLISHED.
+- **V2-02 DONE via T-88 (measured negative).** One preregistered offline
+  selector-coverage experiment on frozen labelled fixtures, both directions,
+  testing exactly one receiver-owned `HeaderInterest.ignore_topics` change
+  (`{noise}` -> `{noise, ci-ok}`). Outcome `CANDIDATE_REJECTED_SAFETY`:
+  aggregate fallback opens fell 246 -> 68, but the `TOPIC_DRIFT` workload lost
+  two relevant `ci-ok` messages per direction (`TOPIC_DRIFT-018`,
+  `TOPIC_DRIFT-019`), so the modeled saving was declared inadmissible. Static
+  receiver topic ignore cannot be relevance authority under semantic topic
+  drift. Evidence: `lab/out/V202_SELECTOR_COVERAGE_20260920T184536Z/`
+  (`result.json`, `report.md`), `lab/selector_coverage_registration.json`,
+  `lab/selector_coverage_manifest.json` (HISTORICAL_ONLY),
+  `lab/history/v202-selector-coverage/`,
+  `tests/test_selector_coverage.py`,
+  `lab/analysis/v202_selector_coverage_20260920T184536Z.md`,
+  `lab/analysis/v202_selector_coverage_closure.md`. R1 unknown-atom/opaque-claim
+  fallbacks are unchanged (51 cases; 7 unknown-atom, 8 opaque-claim, 0 false
+  ignores). Zero network/model/provider calls; no production promotion; frozen
+  `0.0.2a1` untouched; NOT_PUBLISHED.
+- **Roadmap position:** Roadmaps v1 through v5 are completed history.
+  **Roadmap v6 is current; V6-01 is DONE via T-104.** V2-01,
+  V2-02, V2-04, V3-01, D1, **D2 (DONE via T-92, `NOT_PUBLISHED`)**, **P1 (DONE
+  via T-93)**, **U1 (DONE via T-94, `COVERAGE_GAIN_WITH_EXTRA_OPENS`)**,
+  **V4-01 (DONE via T-95, one-hop correspondence continuation)**, **V5-01 (DONE
+  via T-97, desktop local messenger alpha)** and **V2-03 (DONE via T-96,
+  measured negative)** are DONE. No commit, tag, push or publication.
+
+## FORMALLY DONE
+
+- **T-65:** SAIMAIL's credential-assignment detector no longer joins a label
+  with a value across a blank line; adjacent and inline assignments remain
+  supported. Evidence: `.saipen/evidence/T-65-closure.md` and
+  `.saipen/evidence/T-65-core-validation.json`. Stored final proof is 1916
+  passed with zero failures/errors/skips; focused/review proof is 249 passed.
+  The uncommitted working tree contains this T-65 patch relative to HEAD; the
+  LOG places that code change before the frozen E-890 proof, and no later
+  relevant T-65 code change is identified. The frozen run is evidence for that
+  reviewed change, not a blanket certification of future checkout changes.
+- **T-74:** terminal research result is recorded below and in the immutable
+  artifacts indexed by `lab/LATEST.md`.
+- **T-76:** the seven-gate roadmap exists at `humbox/FUTURE-GATES.md`; it is a
+  plan, not execution of FG-01–FG-06.
+- **T-78 / FG-03:** the LEGACY partial-adoption debt (B-015) is closed:
+  receiver-owned immutable `adoption.intent`, explicit recovery, idempotent
+  exact retry, conflict refusal and a receiver lock; LEG1 and the
+  `provenance.json` schema are unchanged. Lifecycle evidence is in LOG
+  E-919–E-929. Focused regression 124 passed and the full suite passed.
+- **T-79 / FG-02:** experiment/reproducibility separation is closed:
+  `spec/13-EXPERIMENT-REPRODUCIBILITY-v0.md` defines EXPERIMENT-MANIFEST-1;
+  `lab/experiment_manifest.py` implements `verify_historical`,
+  `verify_current` and `admit_live` as three mechanically separate operations;
+  `lab/history/t71_manifest.json` is the HISTORICAL_ONLY T-71 control; and
+  `tests/test_experiment_manifest.py` carries the offline separation,
+  negative-control and regression matrix (34 passed). No live/model call was
+  made, and no production `saimail/*` module changed. Lifecycle evidence is in
+  LOG E-930 onward.
+- **T-80 / FG-04A:** offline reference telemetry is closed: the
+  REFERENCE-TELEMETRY-1 closed classification (`KNOWN_EVIDENCE_REF`,
+  `KNOWN_EVENT_REF_AS_EVIDENCE`, `CORPUS_ID_AS_EVIDENCE`,
+  `UNKNOWN_CANONICAL_REF`, `MALFORMED_REF`, `NON_TEXT_REF`),
+  domain-separated fingerprints for non-member tokens (no plaintext),
+  OBSERVED/COUNTEREVIDENCE field distribution, event-floor relation
+  MET/NOT_MET/NOT_EVALUABLE and the metadata-only corpus-ref relation are
+  implemented LAB-only with a closed serialization schema. Focused unit and
+  product-parity matrices pass offline; no production `saimail/*` module
+  changed, no historical artifact or registration was rewritten, and
+  no model/network call occurred in FG-04A. Lifecycle evidence is in LOG
+  E-944 onward.
+- **T-81 / FG-04B:** one registered bounded live JSON_SCHEMA experiment is
+  closed with a measured outcome. New registration under
+  EXPERIMENT-MANIFEST-1 (`LIVE_ELIGIBLE`), exact schema bytes hash-pinned,
+  policy `CORPUS_ENUM`, admission (`verify_current` + `admit_live`) proved
+  before the first network call, five calls of six, zero retries/repairs/
+  replacements, no plaintext persisted. R1 reached the reviewer; the reviewer
+  reply was unparseable strict JSON; R2 was `NO_ADVICE`. Full details:
+  `lab/analysis/project_corpus_jsonschema_closure.md`.
+- **T-82 / FG-05:** the end-to-end local scenario is closed: `spec/15-LOCAL-SCENARIO-v0.md`
+  defines the two-participant contract and the `LOCAL_SCENARIO_RESULT_1` schema,
+  `lab/local_scenario.py` runs it offline in one command, and
+  `tests/test_local_scenario.py` proves every acceptance area against the
+  machine-readable result. Restart, dedup, TTL/tombstone, LEGACY, HUMAN_PRIVATE,
+  attention, NO_ADVICE/unverified, six durable-write injections and the exact
+  side-effect counts all pass with zero model/network calls. Lifecycle evidence
+  is in LOG E-968 onward.
+- **T-83 / FG-06:** the utility and local-entrypoint gate is closed:
+  `spec/16-UTILITY-AND-LOCAL-ENTRYPOINT-v0.md` defines the fair baseline, the
+  information-equivalence boundary, the five workloads and the declared
+  TOTAL_FRICTION model; `lab/utility_friction.py` implements the offline
+  benchmark (`FG06_UTILITY_RESULT_1`); `saimail_local.py` is the minimal
+  installable entrypoint (demo/utility/version/api-map) reusing FG-05;
+  `tools/fg05_local_scenario.py` delegates to it; `lab/stable_local_api.json`
+  is the stable API/type/failure map. The measured outcome is
+  `UTILITY_CONDITIONAL`; T-9B per-message syntax disadvantage and the
+  selective-resolution advantage are reconciled, and no fake universal scalar
+  is presented. Clean-wheel install and the offline tripwire are proven.
+
+## V2-04 LOCAL ALPHA CANDIDATE (T-86)
+
+- **Contract and decision:** `spec/18-LOCAL-ALPHA-v0.md` and
+  `spec/DECISIONS-D052.md` (candidate identity, scope, version policy,
+  integrity/privacy gates, publication status).
+- **Candidate identity:** version `0.0.2a1` (PEP 440 prerelease; no fake final
+  release). Frozen wheel `saimail-0.0.2a1-py3-none-any.whl`, SHA-256
+  `ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a`,
+  370,976 bytes, 57 members, content digest
+  `d060491b6fe865e6844f353aaa691d97eaa92db7e1a75c13617e658993bdab8f`.
+  `publication_status = NOT_PUBLISHED`.
+- **Bundle:** `release/local-alpha/` — wheel, `local_alpha_candidate.json`
+  (`LOCAL_ALPHA_CANDIDATE_1` v1), `SHA256SUMS.txt`,
+  `README-LOCAL-ALPHA.md`, `verify_local_alpha.py`.
+- **Evidence:** `release/evidence/local_alpha_verification.json`
+  (`LOCAL_ALPHA_VERIFICATION_1`, PASS, wheel hash match, FG-05 PASS, FG-06
+  `UTILITY_CONDITIONAL`, V2-01 acceptance PASS, zero runtime network/model),
+  `release/evidence/privacy_scan.json` (PASS),
+  `release/evidence/red_controls.json` (corrupted wheel FAIL, corrupted hash
+  FAIL, planted privacy marker FAIL, real bundle PASS, real privacy PASS),
+  `release/evidence/reproducibility.json` (two clean builds content-identical
+  to the frozen candidate; byte inequality limited to packaging timestamps).
+- **Tooling:** `tools/local_alpha_release.py`,
+  `tools/verify_local_alpha.py`, `tools/scan_local_alpha_privacy.py`;
+  focused tests in `tests/test_local_alpha_release.py`; clean-install
+  assertions updated to `0.0.2a1`.
+- **External gate: CLOSED.** The original request remains historical evidence
+  in `release/evidence/EXTERNAL_VERIFICATION_REQUEST.md`. T-87 accepted the
+  supplied Linux / Python 3.13.5 proof, stored byte-identically under
+  `release/evidence/SAIMAIL_V2-04_external_linux_verification.json`.
+  No further operator action is required; the candidate is NOT published.
+
+## VERIFIED BUT NOT FORMALLY CLOSED
+
+- **T-75 / SRC-062:** all 16 audit clauses were mapped to existing fixes and
+  verified by the inherited evidence (349 focused tests; 1785 full tests).
+- Closure is blocked exactly because historical **T-41 release/publication
+  evidence naming that Work is missing**. This is provenance/accounting debt,
+  not a reason to reimplement any of the 16 findings. Preserve `SRC-062`,
+  `audit/1.md`, and the blocked T-75 row.
+
+## CURRENT SAIPEN CORE DEBT
+
+- **SRC-017 / T-41:** unresolved source/closure provenance and release linkage.
+- **SRC-036:** SAIPEN source-credential gate remains unresolved.
+- **Improve-report fingerprint:** `tools/validate.py --gate core` reports a
+  stale `improve-report` protocol/tree fingerprint from the earlier improve
+  cycle; pre-existing, untouched by FG-04B.
+- **SAIPEN_DIGEST_DRIFT:** `.saipen/kitchen/digest.md` still reads
+  `remaining: T-78` while canonical BOARD/STATE place T-78 and later tickets
+  DONE. This is SAIPEN lifecycle/navigation debt observed during T-79; it was
+  deliberately not hand-edited by this ticket.
+
+**SAIMAIL T-65 fix != SAIPEN SRC-036 fix.** T-65 changed the SAIMAIL-side
+assignment detector only; SAIPEN core validation is **NOT VALID** and retains
+these two separate carried failures.
+
+## RESEARCH FRONTIER
+
+**T-74, bounded observation only:**
+
+- R1: `4096 -> finish_reason=stop -> strict JSON CANDIDATE ->
+  ALLY_GENERATED_REF_OUTSIDE_CORPUS -> reviewer 0`.
+- R2: `NO_ADVICE -> reviewer 0`.
+
+The 4096 budget removed the observed length blocker for R1 and the candidate
+parsed, but the outside-corpus reference stopped it. Semantic review was not
+reached, so semantic-review reachability remains **NOT DEMONSTRATED**. FG-04A
+is closed offline: the reference diagnostic layer exists and is proved
+against synthetic controls and the T-74 exact bad-ref class remains
+**UNKNOWN**. FG-04B is closed with a live measured outcome: under
+`CORPUS_ENUM` JSON_SCHEMA the R1 candidate passed the product reference gate
+and event floor (`CLEAN`, 7 known refs, 4 declared events) and the reviewer was
+actually invoked once; its reply was not one parseable JSON document
+(`ALLY_LAB_BAD_JSON`) so no semantic dimension was decided. R2 was
+`NO_ADVICE`. T-74's exact bad-ref cause is still not claimed. Future
+hypothesis (recorded, not executed): reviewer structured-output formatting
+at 2048 tokens — a new registration would be required.
+
+## PUBLICATION / GIT STATE
+
+- Current HEAD: `3fa8f2295f564a6a75733905388ddee55b2f73b8`.
+- Latest local tag: `v0.0.1` at `2ca4900b4dda2890e8e74c6e82003af30f86eb4f`.
+- Working tree: **uncommitted changes present** (including pre-existing shared
+  changes and the FG-02/FG-03/FG-04A/FG-04B files; this map does not claim
+  ownership of them). FG-04A and FG-04B performed no commit, tag, push or
+  publication.
+- The current HEAD is after the local `v0.0.1` tag, so post-v0.0.1 work has
+  no local tag/release proof. Remote publication is **UNKNOWN / NOT VERIFIED**;
+  no publication is inferred from DONE ticket rows. No publish action was
+  performed here.
+- T-82 / FG-05 performed no commit, tag, push or publication; the FG-05 files
+  remain uncommitted in the working tree.
+
+## LIFECYCLE OBSERVATION
+
+- T-65 is under `DONE`, has terminal `closure_mode: own_patch`, and is not
+  active. Its evidence files exist and its stored closure claim matches the
+  stored test evidence.
+- T-75 remains `BLOCKED`.
+- T-34 remains untouched by FG-00/FG-02/FG-03/FG-04A.
+- T-77 / FG-00, T-78 / FG-03, T-79 / FG-02, T-80 / FG-04A and T-81 / FG-04B
+  have recorded terminal lifecycles. No lifecycle rows were manually edited.
+
+## T-74 IMMUTABLE ARTIFACT PINS
+
+- `lab/out/project_corpus_budget4096_live_20260920T005752Z.json` —
+  `0af0735ade363c9e2fc96d84de1a5768263031053c52b15b805bbd4d2bd61474`
+- `lab/out/PROJECT_CORPUS_BUDGET4096_REPORT_20260920T005752Z.md` —
+  `bdbb9158d3073ea7df809c755195d1cf467adeeee0fdaf86c33ddde92a290982`
+- `lab/analysis/project_corpus_budget4096_20260920T005752Z.md` —
+  `bdbb9158d3073ea7df809c755195d1cf467adeeee0fdaf86c33ddde92a290982`
+- `lab/analysis/project_corpus_budget4096_closure.md` —
+  `28c182a1698f1293cf5da72636176480766377f8232e2992a3dbcf1ed1af0ea4`
+
+## FG-02 ARTIFACTS (T-79)
+
+- `spec/13-EXPERIMENT-REPRODUCIBILITY-v0.md` — manifest contract and the
+  future decision-journal policy (physical `spec/decisions/` migration
+  deferred).
+- `lab/experiment_manifest.py` — LAB-only implementation of the three
+  separated operations.
+- `lab/history/t71_manifest.json` — HISTORICAL_ONLY T-71 control manifest.
+- `tests/test_experiment_manifest.py` — offline negative controls and
+  historical/current/live separation matrix.
+- Immutability kept: the historical T-71 registration and both
+  `tests/fixtures/t71/*` fixtures are unchanged.
+
+## FG-04A ARTIFACTS (T-80)
+
+- `spec/14-REFERENCE-TELEMETRY-v0.md` — closed reference classification,
+  privacy fingerprint rule, field distribution, event-floor and corpus-ref
+  relations, synthetic matrix C1-C13 and the T-74 historical control.
+- `lab/reference_telemetry.py` — LAB-only `observe_raw_references` and
+  `observe_candidate_references`; closed serialization schema reusing
+  `lab/parse_shape.validate`; no filesystem, network or model surface.
+- `tests/test_reference_telemetry.py`,
+  `tests/test_reference_telemetry_integration.py` — classification, privacy,
+  bounds and product-parity matrices; offline only, fake transport doubles.
+- `lab/analysis/reference_telemetry_fg04a.md` — deterministic offline report.
+- Immutability kept: the T-74 live artifact, machine report, analysis and
+  closure are unchanged and stay hash-pinned; the exact T-74 bad-ref class
+  remains UNKNOWN.
+
+## FG-04B ARTIFACTS (T-81)
+
+- `lab/project_corpus_jsonschema_registration.json` — frozen plan: policy
+  `CORPUS_ENUM`, exact schema hash, budgets 4096/2048/16, routes, roles,
+  prompts, manifest binding, attempt marker, artifact paths.
+- `lab/project_corpus_jsonschema_schema.json` — the exact registered JSON
+  Schema; `EVIDENCE_REFS` enum equals the eight frozen B-018 evidence refs.
+- `lab/project_corpus_jsonschema_manifest.json` — EXPERIMENT-MANIFEST-1,
+  `LIVE_ELIGIBLE`, two whole-file inputs and nine implementation bindings.
+- `lab/project_corpus_jsonschema.py` — LAB harness (registration gate,
+  admission, bounded dispatch, outcome matrix, telemetry, artifacts).
+- `tests/test_project_corpus_jsonschema.py` — registration/schema/admission/
+  ceiling/no-retry/outcome/privacy controls, offline.
+- `lab/out/project_corpus_jsonschema_live_20260920T155227Z.json` — the one
+  live artifact; `lab/out/PROJECT_CORPUS_JSONSCHEMA_REPORT_20260920T155227Z.md`
+  and `lab/analysis/project_corpus_jsonschema_20260920T155227Z.md` — its
+  report and analysis copies; `lab/analysis/project_corpus_jsonschema_closure.md`
+  — consolidated closure.
+- Immutability kept: no T-74 artifact, historical registration or fixture was
+  rewritten; production `saimail/*` modules carry no schema/telemetry surface.
+
+## FG-05 ARTIFACTS (T-82)
+
+- `spec/15-LOCAL-SCENARIO-v0.md` — two-participant offline contract, proof
+  areas and the `LOCAL_SCENARIO_RESULT_1` schema.
+- `lab/local_scenario.py` — the pure deterministic offline engine and the
+  `LOCAL_SCENARIO_RESULT_1` builder (no CLI, no socket, no shutil).
+- `tools/fg05_local_scenario.py` — the documented one-command entrypoint
+  `python tools/fg05_local_scenario.py` (`--out`, `--keep`); owns the temporary
+  roots and the zero-network socket tripwire.
+- Six durable-write injections live in the engine; zero model/network calls.
+- `tests/test_local_scenario.py` — focused integration matrix asserting the
+  machine-readable result per acceptance area.
+- Immutability kept: no production `saimail/*` module changed; no historical
+  registration, fixture or live artifact was rewritten.
+
+## FG-06 ARTIFACTS (T-83)
+
+- `spec/16-UTILITY-AND-LOCAL-ENTRYPOINT-v0.md` — baseline/equivalence contract,
+  workloads, TOTAL_FRICTION model, entrypoint and the "does not promise" list.
+- `lab/utility_friction.py` — offline `FG06_UTILITY_RESULT_1` benchmark.
+- `lab/stable_local_api.json` — machine-readable stable API/type/failure map.
+- `saimail_local.py` — installable minimal local entrypoint.
+- `tools/fg05_local_scenario.py` — repository shim delegating to the entrypoint.
+- `tests/test_utility_friction.py`, `tests/test_local_entrypoint.py`,
+  `tests/test_clean_install.py` — focused areas A–N.
+- `pyproject.toml` — `saimail-local` console script, `lab` package and
+  `saimail_local` module, API-map package data.
+
+## V2-01 ARTIFACTS (T-85)
+
+- `spec/17-LOCAL-WORKSPACE-v0.md` — the persistent workspace contract: layout,
+  commands, identity cards, the local delivery boundary, result schemas,
+  privacy/atomicity rules and the honest key-at-rest limitation.
+- `saimail/workspace.py` — production engine: workspace init/reopen, public
+  identity card export, explicit recipient mapping, seal-and-deliver through
+  the unchanged envelope/Post Office path, metadata-only listing, explicit
+  open, exact replay and bounded machine results.
+- `saimail_local.py` — additive workspace subcommands (init, identity,
+  recipient add/list, send, inbox, open, acceptance) on the existing
+  installable entrypoint; legacy demo/utility flags unchanged.
+- `tests/test_local_workspace.py`, `tests/test_local_workspace_acceptance.py` —
+  focused areas A-J and the one-command isolated harness.
+- `tests/test_clean_install.py` — the wheel proof now also runs the V2-01
+  workflow from a clean venv outside the checkout.
+- `lab/stable_local_api.json` — additive `saimail.workspace` API entries and
+  the `local_workspace` failure-code group.
+- Immutability kept: `LOCAL_SCENARIO_RESULT_1` and `FG06_UTILITY_RESULT_1` are
+  unchanged; no historical artifact was rewritten.
+
+## V3-01 ARTIFACTS (T-89)
+
+- `spec/20-LOCAL-KEY-CUSTODY-v0.md` — the custody threat model (cases A–G), the
+  objective `WORKSPACE_DIRECTORY_COPY_ALONE_DOES_NOT_REVEAL_PRIVATE_IDENTITY_KEYS`,
+  the option comparison, the identity schema v2 handles contract, failure
+  semantics, migration ordering and the claim boundaries.
+- `spec/DECISIONS-D053.md` — **D-053**: `OS_STORE_CUSTODY_SELECTED`; raw stays
+  the documented default for new workspaces (zero-dependency core), protected
+  custody is explicit (`init --custody os-store`, `custody migrate`) and
+  requires the `credentials` extra.
+- `saimail/custody.py` — workspace custody engine: separate
+  `credential://saimail-workspace/...` namespace, checked backend, named
+  `CUSTODY_*` failures, no secret in any error.
+- `saimail/workspace.py` — additive identity schema `SAIMAIL_LOCAL_IDENTITY_2`
+  (v2: handles + public material only), `init_workspace(..., custody=...)`,
+  `load_workspace(..., store=...)` fail-closed protected loading,
+  `migrate_workspace_custody` (transactional, fingerprint-preserving) and
+  `custody_status`; raw v1 workspaces unchanged.
+- `saimail_local.py` — `init --custody raw|os-store` and `custody status` /
+  `custody migrate` subcommands; every command still runs under the
+  zero-network tripwire.
+- `tests/test_workspace_custody.py` — 28 focused tests, all with injected
+  stores; the canonical suite never writes into the real credential store.
+- `lab/stable_local_api.json` — additive `saimail.custody` API entries and the
+  `local_custody` failure-code group.
+- `README.md`, `spec/17` section 10 addendum — the honest limitation is now
+  mode-specific; the protected claims are narrower than the mechanism.
+- Result: `OS_STORE_CUSTODY_IMPLEMENTED` (opt-in). Real-host evidence:
+  `keyring.backends.Windows.WinVaultKeyring` classified read-only; one
+  disposable real-vault smoke (init protected, load, delete both entries,
+  verified absent, workspace removed; zero residue). Full suite 2175 passed;
+  SAIPEN validation 3 FAIL 21 WARN (inherited only); frozen `0.0.2a1` wheel
+  unchanged (`ed930e38…`).
+
+## D1 RELEASE DECISION PACKET (T-90)
+
+- **Outcome:** `NEW_CANDIDATE_REQUIRED`. The frozen `0.0.2a1` wheel is the
+  pre-V3-01 historical alpha; the current checkout is not externally verified.
+- **Packet:** `release/evidence/release_decision.json`
+  (`SAIMAIL_RELEASE_DECISION_1` v1), inputs
+  `release/evidence/release_decision_inputs.json`
+  (`SAIMAIL_RELEASE_DECISION_INPUTS_1` v1), human report
+  `release/evidence/RELEASE-DECISION.md`; contract
+  `spec/21-RELEASE-DECISION-v0.md`; tooling `tools/release_decision.py`; tests
+  `tests/test_release_decision.py`.
+- **Frozen artifact:** `saimail-0.0.2a1-py3-none-any.whl`, SHA-256
+  `ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a`,
+  immutable, `NOT_PUBLISHED`; mechanically verified to lack
+  `saimail/custody.py`, identity schema v2 and the custody CLI surface.
+- **Delta:** `POST_CANDIDATE_SOURCE_DELTA = V3-01`; external Linux /
+  Python 3.13.5 proof stays bound to the frozen wheel bytes only.
+- **Custody default decision:** `KEEP_RAW_DEFAULT` for the next distributable
+  candidate; os-store stays the explicit opt-in (D-054). The first-run custody
+  warning requirement and the re-evaluation trigger belong to D2.
+- **Version decision:** frozen `0.0.2a1` unchanged; next candidate
+  `NEXT_CANDIDATE_VERSION = 0.0.2a2`; the source keeps declaring `0.0.2a1`
+  until D2 owns the bump; artifact identity is the wheel SHA-256 (D-052).
+- **Publication:** `publication = NONE`, `publication_authorization = ABSENT`;
+  G17 (explicit operator authorization) is required and not present.
+  Publication mechanics are documented in the packet and were NOT executed.
+- **Metadata:** locale README mirrors corrected to `v0.0.2a1` with a
+  repo-consistency test deriving the expected value from `VERSION`.
+
+## D2 POST-V3-01 RELEASE CANDIDATE REFRESH (T-91)
+
+- **Outcome:** `DONE` via T-92. The exact `0.0.2a2` candidate is built, frozen,
+  locally proven and now externally proven in a genuine separate environment
+  (G13 PASS); publication authorization stays ABSENT.
+- **External proof (T-92 closure):** the supplied Linux / Python 3.13.5
+  `LOCAL_ALPHA_VERIFICATION_1` v1 `PASS` for the exact frozen wheel is stored
+  byte-identically at
+  `release/evidence/a2/external_linux_verification.json` (SHA-256
+  `2d77e13dd1e414e8642fb5a1b60e216e2136bb267bf1789c7e1169adfaa1d5c2`); the
+  acceptance record `release/evidence/a2/external_verification_record.json`
+  binds the proof to the wheel and links the Windows os-store authority.
+  `release/evidence/a2/gate_evaluation.json` now reads G1–G16 PASS, G17 ABSENT,
+  terminal `DONE`; `release/evidence/a2/claim_matrix.json` records the base
+  path as externally proven. The proof reports `os_store_platform_verification:
+  NOT_TESTED_HERE`; Linux os-store support is **not** claimed and the Windows
+  installed-wheel `WinVaultKeyring` evidence remains the platform-specific
+  authority.
+- **Candidate:** `release/candidates/0.0.2a2/`, wheel
+  `saimail-0.0.2a2-py3-none-any.whl`, SHA-256
+  `d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d`,
+  59 members, content digest
+  `4ab122b6ebb25e4b33b7dceaee83d0a8a53bc1ac492b6a31b04b0782d5093cd3`,
+  `NOT_PUBLISHED`. The build tooling refuses to touch `release/local-alpha`
+  (historical a1, wheel `ed930e38…`, unchanged) or to overwrite any frozen
+  candidate.
+- **Version surfaces:** `VERSION` / `pyproject.toml` / `saimail_local`
+  fallback / stable API map / README mirrors all `0.0.2a2`; `CHANGELOG.md`
+  carries the 0.0.2a2 section.
+- **First-run custody notice (D-054):** `init` of a NEW workspace returns one
+  bounded `SAIMAIL_CUSTODY_NOTICE_1` notice — `RAW_CUSTODY_DEFAULT` for raw
+  (implicit and explicit alike) and `OS_STORE_CUSTODY` for protected mode;
+  `ALREADY_EXISTS` and later commands carry none; the human rendering prints a
+  `NOTICE:` line.
+- **Installed-wheel verification (base):**
+  `release/evidence/a2/local_alpha_verification.json` PASS — clean install
+  outside the checkout, modules resolve inside the created environment,
+  version `0.0.2a2`, raw default + first-run notice, identity export,
+  recipient registration, send/list/open/restart/dedup, FG-05 PASS, FG-06
+  `UTILITY_CONDITIONAL`, V2-01 acceptance PASS, zero runtime network/model
+  calls.
+- **Installed-wheel Windows os-store proof:**
+  `release/evidence/a2/windows_os_store_proof.json` PASS — backend
+  `keyring.backends.Windows.WinVaultKeyring`, protected init, identity schema
+  v2 with no raw key material in the workspace, restart and custody-status
+  stability, live send/list/open, both vault entries deleted and mechanically
+  proven absent (zero residue), temporary workspace removed; the migration
+  proof with an injected durable store preserves exact fingerprints, removes
+  raw values, repeats as `CUSTODY_ALREADY_PROTECTED`, and a failed migration
+  leaves the raw workspace usable.
+- **Other evidence:** `reproducibility.json` (two clean builds
+  content-identical; byte inequality limited to packaging metadata),
+  `privacy_controls.json` and `integrity_controls.json` (both PASS with red
+  controls), `external_linux_verification.json` (the supplied proof, byte
+  identical) and `external_verification_record.json` (external acceptance),
+  `claim_matrix.json`, `gate_evaluation.json` (G1–G16 PASS; G15 PASS
+  2211/0/0/0; G16 inherited SAIPEN 3 FAIL / 21 WARN with no new
+  candidate-attributable failure; G17 ABSENT; terminal DONE).
+- **Publication:** `publication = NONE`, `publication_authorization = ABSENT`;
+  nothing was committed, tagged, pushed or published in D2.
+- **Historical a1:** unchanged and still verifies (`ed930e38…`); the a2
+  external proof is bound to the a2 wheel only and is never inherited by a1.
+
+## P1 LOCAL INBOX QUERY (T-93)
+
+- **Outcome:** `DONE` via T-93. A deterministic, bounded, metadata-only query
+  over the existing canonical Post Office index. No new protocol semantics, no
+  database, no new persisted index, no payload access.
+- **Contract:** `spec/22-LOCAL-INBOX-QUERY-v0.md`; implementation
+  `saimail/inbox_query.py` (a separate module: the frozen V2-02/FG-04B
+  registrations hash-pin `saimail/postoffice.py`, so P1 must not rewrite it and
+  reuses its streaming primitives instead), projection
+  `saimail.workspace.query_inbox`, CLI `saimail-local inbox [filters]`.
+- **Filters (exact, AND only):** sender seat (`--from-seat`), topic, kind,
+  state (`UNREAD`/`READ`/`EXPIRED`), ref, `--since` (inclusive) and `--before`
+  (exclusive) over receiver-local `received_at`. No full-text, substring,
+  regex, fuzzy, ranking, embedding or semantic search.
+- **Bounds:** `--scan-budget` default 100, hard maximum 10000; a validated
+  byte-offset `--cursor` resumes exactly after the last examined row and never
+  re-reads the prefix. Abnormal lifecycle states (`NEITHER`, `BOTH`,
+  `EXPIRY_RECONCILIATION_REQUIRED`, tombstone conflicts) stay fail-closed.
+- **Proof:** no payload path is reached (red-control poisoning of
+  `_read_bundle_container`, `_verify_bundle`, `envelope.parse_header`,
+  `envelope.verify`, `envelope.open`, `PostOfficeSession.open_message`,
+  `workspace.open_message`); the `mail/` tree is byte-identical before/after;
+  a selector-ignored topic remains findable; legacy unfiltered `inbox` is
+  unchanged; continuation pages are disjoint and complete; large-index work is
+  bounded by the budget.
+- **POST_A2_SOURCE_DELTA = P1.** The checkout is now ahead of the frozen
+  `0.0.2a2` release candidate by this P1 work only. The a2 wheel
+  (`d1f97537…`) and the a1 wheel (`ed930e38…`) are byte-for-byte unchanged;
+  no a2/a1 evidence was modified; the a2 external proof is never inherited by
+  the post-P1 source. `publication = NONE`; publication authorization (G17)
+  is ABSENT.
+- **Suites:** full canonical suite 2237 passed / 0 failed / 0 errors / 0
+  skipped (2211 inherited + 26 additive: 23 focused query + 2 acceptance + 1
+  auto-discovered `saimail/` module parametrization); ruff `--select E4,E7,E9,F`
+  clean on touched files. SAIPEN core validation 3 FAIL / 21 WARN inherited
+  only, no P1-attributable failure.
+
+## U1 DRIFT-SAFE WATCHED COVERAGE (T-94)
+
+- **Outcome:** `DONE` via T-94. One preregistered offline R1 selector experiment
+  on frozen labelled fixtures, both directions, testing exactly one
+  receiver-owned variable, `Interest.watched` (`{}` -> `{WATCHED_TARGET}`).
+  Terminal outcome `COVERAGE_GAIN_WITH_EXTRA_OPENS`.
+- **Contract:** `spec/23-DRIFT-SAFE-WATCHED-COVERAGE-v0.md`; registration
+  `lab/watched_coverage_registration.json`
+  (`WATCHED_RELATION_COVERAGE_REGISTRATION_1`); manifest
+  `lab/watched_coverage_manifest.json` (EXPERIMENT-MANIFEST-1, `HISTORICAL_ONLY`);
+  harness `lab/watched_coverage.py`; entrypoint
+  `tools/watched_coverage_experiment.py`; fixtures
+  `lab/watched_coverage_fixtures.json`; historical input copies
+  `lab/history/u1-watched-coverage/`; tests `tests/test_watched_coverage.py`.
+- **Measured (both directions):** 18 relevant attention upgrades (14 of them
+  relevant drift rescues), 24 irrelevant attention upgrades, 0 downward
+  attention changes, 0 new false ignores, 0 new missed relevant messages, 0
+  baseline required-open downgrades. Extra-open cost: 14 relation-spam opens and
+  10 noise-overlap opens; 0 unnecessary extra opens.
+- **Interpretation:** a receiver-owned watched set can use sender-asserted
+  relations as a conservative attention-escalation hint (**OPEN MORE**, never
+  **IGNORE MORE**). A relation to a watched target does not prove relevance.
+  Bounded by the V2-02 `CANDIDATE_REJECTED_SAFETY` negative; U1 numbers are R1
+  attention coverage and are never compared to V2-02 transport/header fallback.
+- **Proof:** the `R0-WATCHED` production rule is used unchanged; no new ignore
+  authority, no production default change. `OTHER_TARGET` and
+  `NO_RELATION_RELEVANT` show bounded scope; `NOISE_OVERLAP` measures the
+  pre-existing R0-before-R4 ordering honestly.
+- **Evidence:** `lab/out/U1_WATCHED_COVERAGE_20260920T211411Z/` (`result.json`
+  SHA-256 `a1c3699d619f412cf21c57c60a52d7459b3ed525f5adaac7f27095c3cceb2434`,
+  `report.md` SHA-256 `e05cd9fd0bf3f9d2072d3bb039f5d8151596342642a872ca51f40f5decd87cc7`);
+  `lab/analysis/u1_watched_coverage_closure.md`. R1 stress control: 51 cases, 4
+  watched-relation cases, 7 unknown-atom, 8 opaque-claim, 0 false ignores.
+- **POST_A2_RESEARCH_EVIDENCE = U1.** `POST_A2_PRODUCT_DELTA` stays **P1** (U1 is
+  lab/spec/tests/docs only). `publication = NONE`; G17 ABSENT. Frozen `0.0.2a2`
+  (`d1f97537…`) and `0.0.2a1` (`ed930e38…`) are byte-for-byte unchanged and were
+  not modified or rebuilt.
+- **Suites:** full canonical suite 2264 passed / 0 failed / 0 errors / 0 skipped
+  (2237 inherited + 27 additive `tests/test_watched_coverage.py`); ruff
+  `--select E4,E7,E9,F` clean on touched Python files. SAIPEN core validation
+  3 FAIL / 21 WARN inherited only, no U1-attributable failure.
+
+## V4-01 LOCAL CORRESPONDENCE CONTINUATION (T-95)
+
+- **Outcome:** `DONE` via T-95. One explicit local `reply` operation continues
+  an already-explicitly-opened message through the unchanged SENV2 seal/deliver
+  path. No new wire field, no thread store, no automatic correspondence and no
+  invented SAILANG semantic relation.
+- **Roadmap contract correction (T-95):** `humbox/FUTURE-GATES-V4.md` section 8
+  now states the corrected contract: generic correspondence uses the existing
+  SENV2 `REF` = original `ENVELOPE_ID`, while SAILANG `SUPPORTS` / `REFUTES` /
+  `CON` stay semantic-only (`REPLY != SUPPORTS`, `REPLY != REFUTES`,
+  `REPLY != CON`).
+- **Contract:** `spec/24-LOCAL-CORRESPONDENCE-CONTINUATION-v0.md`; engine
+  `saimail.workspace.reply_message` (sharing one narrow `_seal_deliver` with
+  `send_message`); CLI `saimail-local reply --workspace DIR --envelope ID
+  (--claim TEXT | --record FILE) [--subject] [--topic] [--kind]`.
+- **Target prerequisite:** the target must already be in durable `READ` state.
+  `UNREAD` is `REPLY_TARGET_UNREAD` (stays `UNREAD`, nothing decrypted, no reply
+  created); `EXPIRED` is `REPLY_TARGET_EXPIRED` (no resurrection); `BOTH`,
+  `NEITHER` and expiry reconciliation keep their existing fail-closed codes.
+  `TARGET_PAYLOAD_READS_DURING_REPLY = 0`.
+- **Recipient authority:** the reply recipient is the original sender resolved
+  from the canonical index row (`from` seat **and** `from_kid` sender key)
+  through the explicit peer registry; there is no `--to`. A seat-only match is
+  refused (`REPLY_RECIPIENT_MISMATCH`) and a missing peer is
+  `REPLY_RECIPIENT_UNKNOWN`.
+- **Result:** `LOCAL_WORKSPACE_COMMAND_1` v1, `command = "reply"`, with
+  `target` / `reply` / `recipient` / `delivery` blocks. No plaintext, no claim
+  and no key material.
+- **Proof:** `tests/test_local_correspondence.py` (18 focused) and
+  `tests/test_local_correspondence_acceptance.py` (2; multi-invocation restart
+  acceptance: reply refuses `UNREAD`, `Y` refs `X`, A finds `Y` with
+  `inbox --ref X` and does not open it, `Z` refs `Y`, redelivering `Y` is
+  `DUPLICATE`, correspondence metadata is unchanged across restarts, zero
+  network/model calls).
+- **POST_A2_PRODUCT_DELTA = P1 + V4-01.** `POST_A2_RESEARCH_EVIDENCE = U1`.
+  Frozen `0.0.2a2` (`d1f97537…`) and `0.0.2a1` (`ed930e38…`) are unchanged; a2
+  evidence and the frozen V2-02/U1 inputs are untouched; `publication = NONE`;
+  G17 ABSENT. No version bump, no candidate rebuild.
+- **Suites:** focused 20 passed; full canonical suite green (see FINAL REPORT);
+  ruff `--select E4,E7,E9,F` clean on touched Python files; SAIPEN validation
+  inherits 3 FAIL / 21 WARN with no V4-01-attributable failure.
+
+## V2-03 REVIEWER STRUCTURED OUTPUT (T-96)
+
+- **Outcome:** `DONE` via T-96 with a measured **negative**: `REVIEWER_BAD_JSON`
+  (R1) and `NO_ADVICE` (R2). This was operator-selected **optional research**
+  after Roadmap v4 reached its product STOP; it never became a product
+  dependency.
+- **Single variable:** reviewer `response_format` ABSENT -> `JSON_SCHEMA`.
+  Generator route/format/schema, reviewer route, roles, corpus, prompts, rubric,
+  budgets (probe 16 / generator 4096 / reviewer 2048), gates, parser semantics
+  and retry/repair/replacement/fallback policy are all frozen; generator schema
+  bytes are the exact FG-04B bytes
+  (`84304f73399c35f3dc755a1cf19780e4b66ba1a93308c8a81e04d95f8ca285ef`).
+- **Reviewer schema:** `lab/reviewer_structured_output_schema.json`, template
+  sha256 `8db0e5b00c8d817ce9130814ee5a952c6d1ead344539e7ce6aa4acdba6396bb9`,
+  wrapper name `saimail_ally_review_report`, `strict: true`. It expresses the
+  existing reviewer parser contract narrowly (four top-level fields, exactly
+  eight dimension rows, closed dimension/verdict enums, bounded rationale and
+  evidence_refs, candidate/corpus/rubric pinned per invocation). Exact coverage
+  and uniqueness stay the `SemanticReviewReport` constructor's authority; the
+  schema is not a second semantic reviewer.
+- **Live result:** one reviewer call (ordinal 4), which carried the registered
+  reviewer `json_schema` (`response_format_sha256` `91a32e66…`, request body
+  35907 bytes) and still returned a 4178-byte non-strict-JSON reply
+  (`ALLY_LAB_BAD_JSON`); zero semantic dimensions reached. R1 candidate had
+  passed the reference gate (`CLEAN`) and event floor (`MET`, 4 declared events).
+- **Budget:** 5/6 calls (2 probe + 2 generation + 1 review); retries 0; repairs
+  0; replacements 0; fallbacks 0; admission `CURRENT_MATCH` proved before the
+  first network call; `fg04b_configuration_reconstructable` true.
+- **Claim boundary:** one registered reviewer invocation did not produce a
+  parseable product-valid document. No reliability, correctness, provider
+  enforcement or production readiness is claimed. `REQUEST SENT WITH SCHEMA !=
+  PROVIDER ENFORCED SCHEMA`; provider enforcement remains `NOT_PROVEN`.
+- **Artifacts:** `lab/reviewer_structured_output.py`,
+  `lab/reviewer_structured_output_registration.json`,
+  `lab/reviewer_structured_output_manifest.json`,
+  `lab/out/reviewer_structured_output_dry_run.json`,
+  `lab/out/reviewer_structured_output_live_20260920T221857Z.json`,
+  `lab/out/REVIEWER_STRUCTURED_OUTPUT_REPORT_20260920T221857Z.md`,
+  `lab/analysis/reviewer_structured_output_20260920T221857Z.md`,
+  `lab/analysis/reviewer_structured_output_closure.md`,
+  `tests/test_reviewer_structured_output.py`.
+- **POST_A2_PRODUCT_DELTA = P1 + V4-01** (V2-03 is LAB/spec/tests/docs only).
+  `POST_A2_RESEARCH_EVIDENCE = U1 + V2-03`. Frozen `0.0.2a2` (`d1f97537…`) and
+  `0.0.2a1` (`ed930e38…`) are byte-identical; `publication = NONE`; G17 ABSENT.
+  No version bump, no candidate rebuild.
+- **Suites:** focused 22 passed; full canonical suite green (see FINAL REPORT);
+  ruff `--select E4,E7,E9,F` clean on touched Python files; SAIPEN validation
+  inherits 3 FAIL / 21 WARN with no V2-03-attributable failure.
+
+## V5-01 DESKTOP LOCAL MESSENGER ALPHA (T-97)
+
+**V5-01 DONE via T-97.**
+
+- **Outcome:** `DONE` via T-97. One native desktop application presents the
+  proven local workflow through a presentation-only adapter over the existing
+  tested public API. Visual authority is the canonical
+  `<saipen_home>/saipen/UI.md` Golden Default system (21 closed tokens, Vintage
+  Golden, Verdana, 2px bevel, 640x480 usable); see
+  `spec/25-DESKTOP-LOCAL-MESSENGER-v0.md`.
+- **Framework boundary:** PySide6 is an **optional extra only**
+  (`gui = ["PySide6>=6.7,<7"]`, lazy import); core `dependencies` stay `[]` and
+  the base install works without Qt. `saimail-gui` exits with one bounded
+  actionable line when the extra is absent. `saimail-local` unchanged and
+  Qt-free.
+- **Presentation adapter:** `saimail/gui_adapter.py` holds the closed
+  application state set (`NO_WORKSPACE`, `WORKSPACE_LOADED`,
+  `MESSAGE_SELECTED_UNREAD`, `MESSAGE_SELECTED_READ`,
+  `MESSAGE_OPENED_CURRENT_SESSION`, `COMPOSING_NEW`, `COMPOSING_REPLY`, `BUSY`,
+  `ERROR`), explicit `Open` (the only decryption path), explicit `Refresh`
+  (the only way the visible page changes), AND-only filters with visible active
+  state and Reset, bounded paging with an explicit `Load More`, READ-gated
+  Reply with a fixed backend-resolved recipient, and a persistent status strip
+  that never auto-hides. It invents no domain semantics.
+- **Recorded backend-capability gap (not faked):**
+  `workspace.open_message` is the one decryption path and refuses
+  `ALREADY_READ`, so an already-READ message cannot be re-opened to re-display
+  its content in a later session. The GUI reports this honestly rather than
+  pretending to re-read it.
+- **saiui:** spawned, adopted (UI-001), produced the Task/Action-State/Gap
+  maps and the `saimail/gui_theme.py` Golden Default transcription; collected
+  as Core review hypothesis T-98 (package identity
+  `sha256:43c79c3d…768387`), applied verbatim after verification.
+- **Proof:** `tests/test_gui_surface.py` (adapter + offscreen Qt surface,
+  semantic/layout assertions), `tests/test_gui_acceptance.py` (the full
+  two-workspace offline acceptance through the GUI layer under a socket
+  tripwire), `tests/test_local_entrypoint.py` + `tests/test_clean_install.py`
+  (dependency boundary and clean base/GUI installs). Full canonical suite
+  `2357 passed / 0 failed / 0 errors / 0 skipped` (2307 inherited + 50
+  additive); ruff `--select E4,E7,E9,F` clean on touched files.
+- **POST_A2_PRODUCT_DELTA = P1 + V4-01 + V5-01.** Frozen `0.0.2a2`
+  (`d1f97537…`) and `0.0.2a1` (`ed930e38…`) are byte-identical; no version
+  bump, no rebuild; `publication = NONE`; G17 ABSENT; nothing committed,
+  tagged, pushed or published.
+- **SAIPEN validation:** inherits the carried baseline; the only
+  V5-01-attributable item (saiui STATE `next_action` shape) was fixed in
+  T-99; no V5-01-attributable failure remains.
+
+## S2 SAIPEN SEAM BRIDGE (T-108)
+
+**S2 DONE via T-108.**
+
+- **Outcome:** `DONE` via T-108 (operator request SRC-096). `spec/04` stage S2
+  exists as code: `saimail.saipen_bridge` plus
+  `saimail-local saipen status|init|cite|verify`. Contract: `spec/04-SAIPEN-SEAM.md`
+  "S2 as built", D-057, `humbox/FUTURE-GATES-V6.md` §11.
+- **Boundary:** the library reads only the STATE / IDENTITY / LOG files its
+  caller names and writes none of them; it never names SAIPEN memory (I1
+  structural test). The SAIPEN layout lives in the entrypoint. The workspace
+  root is caller-supplied (`--workspace`); no mailbox lives in any project tree.
+- **Seat:** `--seat` > `SAIPEN_AGENT` > `STATE.agent`, reported as
+  `seat_source`. Found live: with `SAIPEN_AGENT` unset, SAIPEN itself labelled
+  this session's events E-1359..E-1365 `astra` although astra was not running.
+  Corrected by DEC E-1366 and an explicit handover `astra -> opus` (E-1368).
+  Incident filed with SAIPEN:
+  `SAI-DEFECT-20260922-silent-actor-inheritance-misattribution`.
+- **Citation:** one `KIND:O` record, `EV` = sha256 of the exact LOG line,
+  claim limited to "the LOG carries this line"; the line text never travels.
+  `verify` re-derives the whole record. REVIEW pass 1 found the EV-only
+  verifier accepting forged `SUBJ`/`CLAIM`; 7 regression tests red before the
+  fix, green after.
+- **Proof:** `tests/test_saipen_bridge.py`; `tests/test_i1_inert_payload.py`
+  green for the new module; full canonical suite `2430 passed / 0 failed /
+  0 errors / 0 skipped`; live E-1362 cited, sealed `opus -> reviewer`, `READ`,
+  `CITATION_VERIFIED`.
+- **Release truth:** checkout-only. Frozen `0.0.2a3` (`6427feab…`) is untouched
+  and does not contain S2; no version bump, rebuild, tag, push or publication.
+
+## SAITELEMES v0 (T-109)
+
+**SAITELEMES v0 DONE via T-109.**
+
+- **Outcome:** `saimail-local saipen telegram` (one call; the acting seat only;
+  TOPIC = SAIPEN Work id; closed SENV2 kind; claim or S2 citation body) and
+  `saimail-local saipen telegrams` (bounded header-only UNREAD turn-entry read,
+  no SAIPEN project needed). Contract `spec/26-SAITELEMES-v0.md`, D-058.
+- **Boundary:** no `TELEGRAM` kind, no importance field, no daemon, no network,
+  no auto-open, no Work by arrival. `SAIPEN_SEAT_MISMATCH` refuses a send from a
+  workspace that is not the acting seat.
+- **SAIPEN side:** the automatic trigger and the turn-entry hook are protocol work.
+  They are filed as `_SAIPEN/future_gate/FUTURE GATE — SAITELEMES AUTOMATIC AGENT
+  TELEGRAMS_20260922.md` and delivered live to the SAIPEN protocolist, which
+  acknowledged receipt and triages after its T-1344.
+- **Release truth:** checkout-only, not inside frozen `0.0.2a3`.
+
+## NEXT EXECUTABLE STEP
+
+**Roadmap v6 (`humbox/FUTURE-GATES-V6.md`) is the current authority; V6-01 is
+DONE via T-104; S2 SAIPEN seam bridge is DONE via T-108 (§11); SAITELEMES v0 is
+DONE via T-109 (§12); T-110 is DONE (§13). T-107 DONE at E-1502.**
+T-106 remains the historical candidate-build ticket. Candidate `0.0.2a3` at
+`release/candidates/0.0.2a3/` (wheel
+`6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc`, 65 members,
+content digest `2f75bdb7d421a6838b8ab292f667a85bb51e207017f0760caf71c9c1e59c061d`)
+remains frozen and `NOT_PUBLISHED`. Local required gates passed; final G14/G15/G16
+records are in `release/evidence/a3/`. G13 is `PENDING_EXTERNAL`, G17
+is `ABSENT`, and publication is `NONE`. V6-02 is NOT STARTED. The checkout is
+ahead of frozen a3 by checkout-only T-108, T-109 and T-110 work.
+Publication remains a separate operator decision (G17 ABSENT) and no publication
+task is created. FG-01 / SAIPEN debt remains separate (T-41 release-linkage FAIL,
+SRC-017 credential gate, inherited actor naming, stale improve-report fingerprint are the known inherited
+SAIPEN failures).
+
+Release-evidence model maintains strict separation:
+1. Frozen candidate evidence (`0.0.2a3` wheel and candidate bundle): immutable historical package.
+2. T-107 historical closure (E-1502): monotonic historical evidence bound via `t107_closure_context.json`.
+3. Current development checkout: live development tree, where `VERSION` matches `0.0.2a3` baseline.
+4. Later checkout-only product work: T-108, T-109, T-110, and subsequent T-113 re-read continuity, which live in the repository but do not alter or invalidate historical frozen a3 closure evidence.
+
+For the frozen candidate, the next operator action is
+`release/evidence/a3/EXTERNAL_VERIFICATION_REQUEST.md`: run the exact a3 verifier
+on a genuinely separate machine/VM/host and return its raw JSON. Local repair
+is complete and no implementation ticket is kept active to wait for G13.
+SRC-102/SRC-103 separately authorize subsequent checkout product improvements;
+T-114 owns that continuation, with the saved T-113 re-read design as its first
+candidate. V6-02 remains NOT STARTED at this T-107 closure boundary.
+
+The earlier E-1461/E-1462 blocked snapshot and its 2512/1 suite result are
+historical. SRC-102 now authorizes retaining the exact user-provided audio asset;
+`humbox/media-assets.json` permits only its exact path, size and SHA256.
+Decoded audio was unchanged by the tested stream-copy, which increased the file
+by four bytes.

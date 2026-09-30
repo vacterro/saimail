@@ -1,0 +1,151 @@
+...FFFFFFFFFFF.FF........................................FF............. [ 98%]
+.                                                                        [100%]
+================================== FAILURES ===================================
+_ test_every_explicit_receiver_outcome_can_teach_the_original_sender[ACCEPTED-ACTION_PLANNED] _
+tests\test_correspondence.py:156: in test_every_explicit_receiver_outcome_can_teach_the_original_sender
+    first = co.report(b, eid, lineage=LINEAGE, project_root=root, clock=CLOCK)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail\correspondence.py:300: in report
+    _reject(LETTER_DECISION_INVALID, "report requires an evidence-backed receiver resolution")
+saimail\correspondence.py:89: in _reject
+    raise SailangError(code, detail)
+E   sailang.errors.SailangError: LETTER_DECISION_INVALID: report requires an evidence-backed receiver resolution
+_ test_every_explicit_receiver_outcome_can_teach_the_original_sender[DEFERRED-OUTSIDE_CURRENT_WORK] _
+tests\test_correspondence.py:156: in test_every_explicit_receiver_outcome_can_teach_the_original_sender
+    first = co.report(b, eid, lineage=LINEAGE, project_root=root, clock=CLOCK)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail\correspondence.py:300: in report
+    _reject(LETTER_DECISION_INVALID, "report requires an evidence-backed receiver resolution")
+saimail\correspondence.py:89: in _reject
+    raise SailangError(code, detail)
+E   sailang.errors.SailangError: LETTER_DECISION_INVALID: report requires an evidence-backed receiver resolution
+_ test_every_explicit_receiver_outcome_can_teach_the_original_sender[DEFERRED-WAITING_DEPENDENCY] _
+tests\test_correspondence.py:156: in test_every_explicit_receiver_outcome_can_teach_the_original_sender
+    first = co.report(b, eid, lineage=LINEAGE, project_root=root, clock=CLOCK)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail\correspondence.py:300: in report
+    _reject(LETTER_DECISION_INVALID, "report requires an evidence-backed receiver resolution")
+saimail\correspondence.py:89: in _reject
+    raise SailangError(code, detail)
+E   sailang.errors.SailangError: LETTER_DECISION_INVALID: report requires an evidence-backed receiver resolution
+_ test_every_explicit_receiver_outcome_can_teach_the_original_sender[DECLINED-ALREADY_KNOWN] _
+tests\test_correspondence.py:156: in test_every_explicit_receiver_outcome_can_teach_the_original_sender
+    first = co.report(b, eid, lineage=LINEAGE, project_root=root, clock=CLOCK)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail\correspondence.py:300: in report
+    _reject(LETTER_DECISION_INVALID, "report requires an evidence-backed receiver resolution")
+saimail\correspondence.py:89: in _reject
+    raise SailangError(code, detail)
+E   sailang.errors.SailangError: LETTER_DECISION_INVALID: report requires an evidence-backed receiver resolution
+_ test_every_explicit_receiver_outcome_can_teach_the_original_sender[DECLINED-NOT_ACTIONABLE] _
+tests\test_correspondence.py:156: in test_every_explicit_receiver_outcome_can_teach_the_original_sender
+    first = co.report(b, eid, lineage=LINEAGE, project_root=root, clock=CLOCK)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail\correspondence.py:300: in report
+    _reject(LETTER_DECISION_INVALID, "report requires an evidence-backed receiver resolution")
+saimail\correspondence.py:89: in _reject
+    raise SailangError(code, detail)
+E   sailang.errors.SailangError: LETTER_DECISION_INVALID: report requires an evidence-backed receiver resolution
+_ test_every_explicit_receiver_outcome_can_teach_the_original_sender[DECLINED-OUTSIDE_SCOPE] _
+tests\test_correspondence.py:156: in test_every_explicit_receiver_outcome_can_teach_the_original_sender
+    first = co.report(b, eid, lineage=LINEAGE, project_root=root, clock=CLOCK)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail\correspondence.py:300: in report
+    _reject(LETTER_DECISION_INVALID, "report requires an evidence-backed receiver resolution")
+saimail\correspondence.py:89: in _reject
+    raise SailangError(code, detail)
+E   sailang.errors.SailangError: LETTER_DECISION_INVALID: report requires an evidence-backed receiver resolution
+_ test_every_explicit_receiver_outcome_can_teach_the_original_sender[DECLINED-WRONG_RECIPIENT] _
+tests\test_correspondence.py:156: in test_every_explicit_receiver_outcome_can_teach_the_original_sender
+    first = co.report(b, eid, lineage=LINEAGE, project_root=root, clock=CLOCK)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail\correspondence.py:300: in report
+    _reject(LETTER_DECISION_INVALID, "report requires an evidence-backed receiver resolution")
+saimail\correspondence.py:89: in _reject
+    raise SailangError(code, detail)
+E   sailang.errors.SailangError: LETTER_DECISION_INVALID: report requires an evidence-backed receiver resolution
+_ test_every_explicit_receiver_outcome_can_teach_the_original_sender[RESOLVED-ACTION_TAKEN] _
+tests\test_correspondence.py:160: in test_every_explicit_receiver_outcome_can_teach_the_original_sender
+    assert first["feedback"]["decision"] == decision and first["feedback"]["reason"] == reason
+           ^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback'
+_ test_every_explicit_receiver_outcome_can_teach_the_original_sender[STALE-CONDITION_CHANGED] _
+tests\test_correspondence.py:156: in test_every_explicit_receiver_outcome_can_teach_the_original_sender
+    first = co.report(b, eid, lineage=LINEAGE, project_root=root, clock=CLOCK)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail\correspondence.py:300: in report
+    _reject(LETTER_DECISION_INVALID, "report requires an evidence-backed receiver resolution")
+saimail\correspondence.py:89: in _reject
+    raise SailangError(code, detail)
+E   sailang.errors.SailangError: LETTER_DECISION_INVALID: report requires an evidence-backed receiver resolution
+_ test_every_explicit_receiver_outcome_can_teach_the_original_sender[STALE-EVIDENCE_CHANGED] _
+tests\test_correspondence.py:156: in test_every_explicit_receiver_outcome_can_teach_the_original_sender
+    first = co.report(b, eid, lineage=LINEAGE, project_root=root, clock=CLOCK)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail\correspondence.py:300: in report
+    _reject(LETTER_DECISION_INVALID, "report requires an evidence-backed receiver resolution")
+saimail\correspondence.py:89: in _reject
+    raise SailangError(code, detail)
+E   sailang.errors.SailangError: LETTER_DECISION_INVALID: report requires an evidence-backed receiver resolution
+_ test_every_explicit_receiver_outcome_can_teach_the_original_sender[STALE-EXPIRED] _
+tests\test_correspondence.py:156: in test_every_explicit_receiver_outcome_can_teach_the_original_sender
+    first = co.report(b, eid, lineage=LINEAGE, project_root=root, clock=CLOCK)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail\correspondence.py:300: in report
+    _reject(LETTER_DECISION_INVALID, "report requires an evidence-backed receiver resolution")
+saimail\correspondence.py:89: in _reject
+    raise SailangError(code, detail)
+E   sailang.errors.SailangError: LETTER_DECISION_INVALID: report requires an evidence-backed receiver resolution
+_ test_corrected_result_emits_a_new_feedback_event_without_rewriting_the_first _
+tests\test_correspondence.py:191: in test_corrected_result_emits_a_new_feedback_event_without_rewriting_the_first
+    second = co.report(b, eid, lineage=LINEAGE, project_root=root, clock=CLOCK)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail\correspondence.py:319: in report
+    result = dispatch(workspace, response, lineage=lineage, sender_work=response["sender_work"],
+saimail\correspondence.py:155: in dispatch
+    return notify.notify(workspace, lineage=lineage, work=letter["recipient_work"],
+saimail\notify.py:149: in notify
+    sent = outbox.submit_send(workspace, resolved["alias"], record_path=path,
+saimail\outbox.py:374: in submit_send
+    _reject(IDEMPOTENCY_KEY_CONFLICT,
+saimail\outbox.py:102: in _reject
+    raise SailangError(code, detail)
+E   sailang.errors.SailangError: IDEMPOTENCY_KEY_CONFLICT: idempotency key 'notify:lineage-abababababababababababababababab:T-7:reply:builder:la96da66d14bcb1eed4c57e66' already names a different request
+__ test_reason_metrics_are_keyless_scoped_feedback_not_an_improvement_score ___
+tests\test_correspondence.py:213: in test_reason_metrics_are_keyless_scoped_feedback_not_an_improvement_score
+    assert metrics["reasons"]["DECLINED"]["ALREADY_KNOWN"] == 2
+           ^^^^^^^^^^^^^^^^^^
+E   KeyError: 'reasons'
+______ test_work_brief_associates_only_this_project_letter_on_every_page ______
+tests\test_saipen_work_desk.py:52: in test_work_brief_associates_only_this_project_letter_on_every_page
+    assert relations == ["current_topic", "current_topic", "other_topics", "other_topics"]
+E   AssertionError: assert ['current_top...other_topics'] == ['current_top...other_topics']
+E     
+E     At index 1 diff: 'other_topics' != 'current_topic'
+E     Use -v to get more diff
+____ test_real_cli_brief_counts_namespaced_and_legacy_work_without_opening ____
+tests\test_saipen_work_desk.py:63: in test_real_cli_brief_counts_namespaced_and_legacy_work_without_opening
+    assert result["brief"]["counts"] == {"current_topic": 2, "other_topics": 2}
+E   AssertionError: assert {'current_top...er_topics': 3} == {'current_top...er_topics': 2}
+E     
+E     Differing items:
+E     {'other_topics': 3} != {'other_topics': 2}
+E     {'current_topic': 1} != {'current_topic': 2}
+E     Use -v to get more diff
+=========================== short test summary info ===========================
+FAILED tests/test_correspondence.py::test_every_explicit_receiver_outcome_can_teach_the_original_sender[ACCEPTED-ACTION_PLANNED]
+FAILED tests/test_correspondence.py::test_every_explicit_receiver_outcome_can_teach_the_original_sender[DEFERRED-OUTSIDE_CURRENT_WORK]
+FAILED tests/test_correspondence.py::test_every_explicit_receiver_outcome_can_teach_the_original_sender[DEFERRED-WAITING_DEPENDENCY]
+FAILED tests/test_correspondence.py::test_every_explicit_receiver_outcome_can_teach_the_original_sender[DECLINED-ALREADY_KNOWN]
+FAILED tests/test_correspondence.py::test_every_explicit_receiver_outcome_can_teach_the_original_sender[DECLINED-NOT_ACTIONABLE]
+FAILED tests/test_correspondence.py::test_every_explicit_receiver_outcome_can_teach_the_original_sender[DECLINED-OUTSIDE_SCOPE]
+FAILED tests/test_correspondence.py::test_every_explicit_receiver_outcome_can_teach_the_original_sender[DECLINED-WRONG_RECIPIENT]
+FAILED tests/test_correspondence.py::test_every_explicit_receiver_outcome_can_teach_the_original_sender[RESOLVED-ACTION_TAKEN]
+FAILED tests/test_correspondence.py::test_every_explicit_receiver_outcome_can_teach_the_original_sender[STALE-CONDITION_CHANGED]
+FAILED tests/test_correspondence.py::test_every_explicit_receiver_outcome_can_teach_the_original_sender[STALE-EVIDENCE_CHANGED]
+FAILED tests/test_correspondence.py::test_every_explicit_receiver_outcome_can_teach_the_original_sender[STALE-EXPIRED]
+FAILED tests/test_correspondence.py::test_corrected_result_emits_a_new_feedback_event_without_rewriting_the_first
+FAILED tests/test_correspondence.py::test_reason_metrics_are_keyless_scoped_feedback_not_an_improvement_score
+FAILED tests/test_saipen_work_desk.py::test_work_brief_associates_only_this_project_letter_on_every_page
+FAILED tests/test_saipen_work_desk.py::test_real_cli_brief_counts_namespaced_and_legacy_work_without_opening
+15 failed, 58 passed in 8.11s

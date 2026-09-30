@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-090:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "V6-01 GitHub Identity and Presentation Sync: canonical logo SAIMAIL2, social preview 1280x640, README hero refresh, GUI discoverability, repo hygiene/metadata, roadmap v6; no protocol change, no release"
+    }
+  },
+  "derived_at": "2026-09-25T17:56:28Z",
+  "derived_from": "SRC-090",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "8ea3418275ae8c24938f391b209f3144729f8fe14b8d8fedb3cc8d8562a04db8"
+}

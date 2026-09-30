@@ -1,0 +1,646 @@
+{
+  "authority": "EXPERIMENT_DATA",
+  "is_not": [
+    "CONSENSUS",
+    "TRUTH",
+    "PROTOCOL_CHANGE",
+    "USER_INTENT"
+  ],
+  "note": "Live output is experiment data. It is not consensus, not truth, not a protocol change and not user intent. Disagreement between agents is preserved per call. Reasoning traces are dropped before storage.",
+  "experiment_class": {
+    "rule": "saifren-experiment-class/1",
+    "experiment_class": "SAIFREN_EXTERNAL_COMPARATOR",
+    "combo": "SAIFREN",
+    "observed_combo_members": [
+      "stealth/space-bunny-alpha"
+    ],
+    "participating_combo_members": [
+      "stealth/space-bunny-alpha"
+    ],
+    "external_comparators": [
+      "gemini-3-flash"
+    ],
+    "distinct_reported_models": [
+      "gemini-3-flash",
+      "stealth/space-bunny-alpha"
+    ],
+    "roster_status": "NOT_OBSERVABLE",
+    "roster_status_basis": "ROSTER_NOT_EXPOSED",
+    "membership_evidence_basis": "CALL_RECORDS",
+    "membership_evidence": {
+      "alias_calls": {
+        "stealth/space-bunny-alpha": [
+          "fc339e352704",
+          "c62733cc4bb6",
+          "328e1caccbd0"
+        ]
+      },
+      "membership_probes": [
+        "stealth/space-bunny-alpha"
+      ],
+      "alias_only_answers": 0
+    },
+    "unattributed_models": [],
+    "cross_member_claim": false,
+    "note": "Membership is sampled through the combo alias, never read from a roster and never inferred from catalog eligibility. OBSERVED_COMBO_MEMBERS is what this run saw, not what SAIFREN contains. EXTERNAL_COMPARATORS are live catalog models answering beside SAIFREN for contrast; nothing in the run shows they are SAIFREN members."
+  },
+  "context_visibility": "OPAQUE",
+  "distinct_route_count": 2,
+  "cross_family_measured": true,
+  "dry_run": false,
+  "harness": {
+    "gateway": "9router",
+    "base_url": "http://127.0.0.1:20128",
+    "model_alias": "SAIFREN",
+    "route_a": "SAIFREN",
+    "route_b": "ag/gemini-3-flash",
+    "protocol_version": "SAILANG frame v4 / SAIB4",
+    "max_tokens": 2048,
+    "timeout_s": 120,
+    "sample": true,
+    "sample_units": [
+      "S2.chain1",
+      "S3.mailbox",
+      "S5.trial1"
+    ],
+    "transforms": [
+      "handoff-transform/1",
+      "legacy-transform/1"
+    ]
+  },
+  "credential": {
+    "handle": "credential://9router/sairoute",
+    "source": "store",
+    "backend": "keyring.backends.Windows.WinVaultKeyring"
+  },
+  "population": {
+    "combo": "SAIFREN",
+    "membership_observed_at": "2026-09-30T12:51:28Z",
+    "membership_source": "COMBO_ALIAS_SAMPLE",
+    "roster_status": "ROSTER_NOT_EXPOSED",
+    "observed_members": [
+      "stealth/space-bunny-alpha"
+    ],
+    "membership_digest": "sha256:13777e02fa251758d76330d4439817fe37fb4fd974c284c4e343640d88ea77ad",
+    "catalog_size": 1738,
+    "catalog_digest": "sha256:d126aed457da57f5550a6ee7dca0e0c1d2d991e42b0cc392b75a85d6d7830247",
+    "discovery": {
+      "surface": "/v1/models",
+      "combos_listed": [
+        "SAIFREN",
+        "SAIOPP"
+      ],
+      "roster_field_present": false,
+      "alias_transport_errors": []
+    },
+    "selection_rule": "saifren-selection/1",
+    "replacement_policy": "saifren-replacement/1",
+    "membership_probes_used": 2,
+    "selection_probes_used": 1,
+    "participants": [
+      {
+        "role": "A",
+        "requested": "SAIFREN",
+        "reported_model": "stealth/space-bunny-alpha",
+        "member_status": "OBSERVED_COMBO_MEMBER",
+        "source": "COMBO_ALIAS",
+        "provider": null,
+        "catalog_namespace": null
+      },
+      {
+        "role": "B",
+        "requested": "ag/gemini-3-flash",
+        "reported_model": "gemini-3-flash",
+        "member_status": "NOT_PROVEN_COMBO_MEMBER",
+        "source": "CATALOG_ELIGIBLE",
+        "provider": null,
+        "catalog_namespace": "ag"
+      }
+    ],
+    "rejected_candidates": [],
+    "heterogeneous_participants": true,
+    "notes": [
+      "ALIAS_SAMPLE_IS_NOT_A_ROSTER: 2 call(s) to the alias observed 1 distinct member(s); a sample of this size cannot tell a one-member combo from a combo with a deterministic primary"
+    ]
+  },
+  "started": "2026-09-30T12:52:11Z",
+  "max_runs": 14,
+  "planned_calls": 6,
+  "live_calls": 9,
+  "discovery_calls": 3,
+  "experiment_calls": 6,
+  "stopped": null,
+  "summary": {
+    "verdicts": {
+      "PASS": 2,
+      "FAIL": 0,
+      "MEASURED": 1,
+      "ERROR": 0,
+      "NOT_RUN": 0
+    },
+    "attention": {
+      "EXACT": 4,
+      "FALSE_IGNORE": 0,
+      "UNDER_OPEN": 0,
+      "OVER_OPEN": 0,
+      "OTHER": 0,
+      "UNANSWERED": 0
+    },
+    "calls_attempted": 6,
+    "calls_ok": 6,
+    "routes_observed": [
+      "gemini-3-flash",
+      "stealth/space-bunny-alpha"
+    ],
+    "distinct_route_count": 2,
+    "cross_family_measured": true,
+    "context_visibility": "OPAQUE",
+    "route_resolution": {
+      "ALIAS_ONLY": 0,
+      "MODEL_REPORTED": 6
+    },
+    "providers_stated_by_gateway": [
+      "Stealth"
+    ],
+    "errors": [],
+    "opaque_context_measurements": [
+      {
+        "call_id": "fc339e352704",
+        "unit_id": "S2.chain1",
+        "role": "A",
+        "route": "stealth/space-bunny-alpha",
+        "local_estimated_input_tokens": 170,
+        "gateway_reported_prompt_tokens": 3048,
+        "delta": 2878
+      },
+      {
+        "call_id": "534cf618f690",
+        "unit_id": "S2.chain1",
+        "role": "B",
+        "route": "gemini-3-flash",
+        "local_estimated_input_tokens": 395,
+        "gateway_reported_prompt_tokens": 4176,
+        "delta": 3781
+      },
+      {
+        "call_id": "c1932b336ed0",
+        "unit_id": "S3.mailbox",
+        "role": "single",
+        "route": "gemini-3-flash",
+        "local_estimated_input_tokens": 411,
+        "gateway_reported_prompt_tokens": 3837,
+        "delta": 3426
+      },
+      {
+        "call_id": "c62733cc4bb6",
+        "unit_id": "S5.trial1",
+        "role": "A",
+        "route": "stealth/space-bunny-alpha",
+        "local_estimated_input_tokens": 558,
+        "gateway_reported_prompt_tokens": 3442,
+        "delta": 2884
+      },
+      {
+        "call_id": "8c64d1e004ae",
+        "unit_id": "S5.trial1",
+        "role": "B_legacy",
+        "route": "gemini-3-flash",
+        "local_estimated_input_tokens": 520,
+        "gateway_reported_prompt_tokens": 4387,
+        "delta": 3867
+      },
+      {
+        "call_id": "328e1caccbd0",
+        "unit_id": "S5.trial1",
+        "role": "B_control",
+        "route": "stealth/space-bunny-alpha",
+        "local_estimated_input_tokens": 320,
+        "gateway_reported_prompt_tokens": 3201,
+        "delta": 2881
+      }
+    ],
+    "answers_by_route": {
+      "S3.mailbox": {
+        "route": "gemini-3-flash",
+        "answers": {
+          "M1": "OPEN",
+          "M2": "DEFER",
+          "M3": "OPEN",
+          "M4": "IGNORE"
+        },
+        "verdict": "PASS"
+      }
+    }
+  },
+  "units": [
+    {
+      "unit_id": "S2.chain1",
+      "scenario": "S2_true_handoff",
+      "hypothesis": "a finding passed from one agent to another through a validated record keeps its rung and its missing evidence: A does not inflate it, the transform does not launder it, and B does not harden it",
+      "failure_condition": "A claims evidence or a rung above unverified, or B reads evidence into the message, treats it as established or citable, or picks a next step that is not verification",
+      "raw_finding": "While reading the worker log worker-7.log you noticed that a retry after recovery appears to run the same job twice. You did not save the log lines, you collected no other artifact, and you ran no test.",
+      "a_call_id": "fc339e352704",
+      "transform": {
+        "rules": "handoff-transform/1",
+        "violations": [],
+        "result": "ACCEPTED",
+        "record_id": "sha256:e4ba43bccfbfae18898f23e2abd88765d1926c1ac3ae5ae5f50e1b6393991673",
+        "canonical_text": "SAIL1\nID:sha256:e4ba43bccfbfae18898f23e2abd88765d1926c1ac3ae5ae5f50e1b6393991673\nKIND:H\nSRC:AGENT:saifren-a\nSUBJ:duplicate\nCLAIM:A retry after recovery appears to run the same job twice.\nTYPE:INT\nFALSIFY:worker-7.log would need to show distinct job IDs or no repeated execution.\nEV:0\nSTATUS:U1\nCREATED:2026-09-17T08:41:00Z\n",
+        "dropped_fields": [],
+        "r2": "kind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: duplicate\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: NOT CARRIED at this resolution; the canonical record must be opened\nthis hypothesis carries a falsification condition",
+        "r3": "record id: sha256:e4ba43bccfbfae18898f23e2abd88765d1926c1ac3ae5ae5f50e1b6393991673\nkind: hypothesis\nsource: AGENT:saifren-a\nsubject: duplicate\nclaim: A retry after recovery appears to run the same job twice.\nfalsification condition: worker-7.log would need to show distinct job IDs or no repeated execution.\nevidence attached: no\nconfidence rung: unverified\ncreated: 2026-09-17T08:41:00Z"
+      },
+      "b_call_id": "534cf618f690",
+      "metrics": {
+        "a_kind": "hypothesis",
+        "a_rung": "unverified",
+        "a_confidence_inflation": false,
+        "a_evidence_invention": false,
+        "a_claim_hardening": [],
+        "a_schema_violations": [],
+        "transform_result": "ACCEPTED",
+        "transform_code": null,
+        "b_admissible_evidence_attached": "NO",
+        "b_external_evidence_existence": "UNKNOWN",
+        "b_evidence_invention": false,
+        "b_evidence_reading": "NO",
+        "b_reality_conflation": false,
+        "b_confidence_inflation": false,
+        "b_known_hardening": [],
+        "b_qualifier_retained": true,
+        "b_next": "COLLECT ARTIFACT",
+        "b_next_is_verification": true,
+        "b_orientation_failure": false,
+        "b_schema_violations": [],
+        "route_a": "stealth/space-bunny-alpha",
+        "route_b": "gemini-3-flash",
+        "routes_differ": true
+      },
+      "verdict": "PASS"
+    },
+    {
+      "unit_id": "S3.mailbox",
+      "scenario": "S3_deferred_discovery",
+      "input_class": "mailbox_triage",
+      "hypothesis": "IGNORE, DEFER and OPEN stay distinguishable to a real agent",
+      "failure_condition": "an item the deterministic selector opens (relevant or unreadable) is answered IGNORE",
+      "schema": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "expect": {
+        "M1": [
+          "OPEN",
+          "DEFER"
+        ],
+        "M3": [
+          "OPEN",
+          "DEFER"
+        ]
+      },
+      "reference": {
+        "M1": "OPEN",
+        "M2": "DEFER",
+        "M3": "OPEN",
+        "M4": "IGNORE"
+      },
+      "call_id": "c1932b336ed0",
+      "grade": {
+        "values": {
+          "M1": "OPEN",
+          "M2": "DEFER",
+          "M3": "OPEN",
+          "M4": "IGNORE"
+        },
+        "violations": [],
+        "noise_lines": 0,
+        "trailing_text": [],
+        "checks": [
+          {
+            "field": "M1",
+            "acceptable": [
+              "OPEN",
+              "DEFER"
+            ],
+            "got": "OPEN",
+            "pass": true
+          },
+          {
+            "field": "M3",
+            "acceptable": [
+              "OPEN",
+              "DEFER"
+            ],
+            "got": "OPEN",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      "verdict": "PASS",
+      "attention": {
+        "items": {
+          "M1": {
+            "selector": "OPEN",
+            "agent": "OPEN",
+            "class": "EXACT"
+          },
+          "M2": {
+            "selector": "DEFER",
+            "agent": "DEFER",
+            "class": "EXACT"
+          },
+          "M3": {
+            "selector": "OPEN",
+            "agent": "OPEN",
+            "class": "EXACT"
+          },
+          "M4": {
+            "selector": "IGNORE",
+            "agent": "IGNORE",
+            "class": "EXACT"
+          }
+        },
+        "counts": {
+          "EXACT": 4,
+          "FALSE_IGNORE": 0,
+          "UNDER_OPEN": 0,
+          "OVER_OPEN": 0,
+          "OTHER": 0,
+          "UNANSWERED": 0
+        },
+        "graded": false
+      }
+    },
+    {
+      "unit_id": "S5.trial1",
+      "scenario": "S5_legacy_successor",
+      "hypothesis": "a legacy packet from the agent that closed a related investigation reduces repeated known mistakes and misdirected first steps, without importing invented evidence or hardening the predecessor's open suspicion into a settled fact",
+      "failure_condition": "the legacy arm repeats the known mistake, cites evidence its input did not contain, or treats the unverified heartbeat suspicion as ruled out",
+      "a_call_id": "c62733cc4bb6",
+      "packet_transform": {
+        "rules": "legacy-transform/1",
+        "violations": [],
+        "result": "ACCEPTED",
+        "packet": "WHAT_WORKED: Enabling 20-second lease heartbeat extension reduced duplicate emails from 1.9% to 0.02%.\nWHAT_WORKED_EVIDENCE: METRIC-15\nWHAT_WORKED_SCOPE: Notifications queue only; per-queue setting.\nWHAT_FAILED: Raising the mail-provider HTTP client timeout from 5 s to 30 s; duplicates remained at 1.9%.\nWHAT_FAILED_EVIDENCE: METRIC-14\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP client timeouts appeared correlated with restarts, but duplicates persisted after the timeout increase and occurred on jobs making no HTTP call.\nWHAT_WRONG_EVIDENCE: LOG-311, METRIC-14, LOG-318\nWATCH_NEXT: Investigate the remaining 0.02%; capture lease-state and recovery traces for crashes during in-flight heartbeat writes.\nWATCH_NEXT_EVIDENCE: METRIC-15",
+        "forwarded_refs": [
+          "METRIC-15",
+          "METRIC-14",
+          "LOG-311",
+          "LOG-318"
+        ],
+        "invented_refs_removed": [],
+        "malformed_ref_tokens": [],
+        "truncated_fields": []
+      },
+      "arm_order": [
+        "legacy",
+        "control"
+      ],
+      "legacy_call_id": "8c64d1e004ae",
+      "control_call_id": "328e1caccbd0",
+      "metrics": {
+        "route_a": "stealth/space-bunny-alpha",
+        "packet": {
+          "packet_complete": true,
+          "packet_invented_refs": [],
+          "packet_evidence_misattribution": [],
+          "packet_ungrounded_advice": false,
+          "packet_red_herring_captured": true,
+          "packet_open_question_kept": true,
+          "packet_scope_caveat_kept": true,
+          "packet_watch_next_hardening": []
+        },
+        "legacy": {
+          "arm": "legacy",
+          "first_target": "B",
+          "steps": [
+            "B",
+            "D"
+          ],
+          "ruled_out": [
+            "A"
+          ],
+          "orientation_failure": false,
+          "correct_first_verification_target": true,
+          "repeated_known_mistake": false,
+          "unnecessary_work": [],
+          "invented_evidence": [],
+          "timeout_ruled_out": true,
+          "open_suspicion_ruled_out": false,
+          "task_relevant_semantic_retention": [
+            "lease",
+            "heartbeat"
+          ],
+          "scope_retention": true,
+          "transferred_hypothesis_hardened": false,
+          "qualifier_retention": true,
+          "failure_condition_met": false,
+          "route": "gemini-3-flash"
+        },
+        "control": {
+          "arm": "control",
+          "first_target": "B",
+          "steps": [
+            "B",
+            "D",
+            "E"
+          ],
+          "ruled_out": [],
+          "orientation_failure": false,
+          "correct_first_verification_target": true,
+          "repeated_known_mistake": false,
+          "unnecessary_work": [
+            "E"
+          ],
+          "invented_evidence": [],
+          "timeout_ruled_out": false,
+          "open_suspicion_ruled_out": false,
+          "task_relevant_semantic_retention": [
+            "lease",
+            "heartbeat",
+            "runtime"
+          ],
+          "scope_retention": null,
+          "transferred_hypothesis_hardened": null,
+          "qualifier_retention": null,
+          "failure_condition_met": null,
+          "route": "stealth/space-bunny-alpha"
+        }
+      },
+      "verdict": "MEASURED"
+    }
+  ],
+  "calls": [
+    {
+      "call_id": "fc339e352704",
+      "unit_id": "S2.chain1",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-30T12:52:11Z",
+      "prompt": "While reading the worker log worker-7.log you noticed that a retry after recovery appears to run the same job twice. You did not save the log lines, you collected no other artifact, and you ran no test.\n\nWrite a message about this finding for another agent who will decide what to do with it.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nKIND: <observation|factual claim|hypothesis>\nSUBJECT: <one lower-case word>\nCLAIM: <one line, at most 160 characters>\nRUNG: <unknown|unverified|supported|strongly supported|verified>\nEVIDENCE ATTACHED: <YES|NO>\nFALSIFY: <one line saying what observation would show the claim wrong, or NONE>",
+      "prompt_sha256": "892f2dd2a777cb341816afc72043691a2c377f6b528ffa0c519486c797ebb7b3",
+      "output": "KIND: hypothesis\nSUBJECT: duplicate\nCLAIM: A retry after recovery appears to run the same job twice.\nRUNG: unverified\nEVIDENCE ATTACHED: NO\nFALSIFY: worker-7.log would need to show distinct job IDs or no repeated execution.",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "stealth/space-bunny-alpha",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "stealth",
+      "provider": "Stealth",
+      "provider_basis": "RESPONSE_FIELD",
+      "route_headers": {},
+      "gen_id": "gen-1790772716-Mk4PmbArBhUQhm8db37R",
+      "usage": {
+        "prompt_tokens": 3048,
+        "completion_tokens": 281,
+        "total_tokens": 3329
+      },
+      "http_status": 200,
+      "latency_s": 3.03,
+      "status": "OK"
+    },
+    {
+      "call_id": "534cf618f690",
+      "unit_id": "S2.chain1",
+      "role": "B",
+      "requested_model": "ag/gemini-3-flash",
+      "timestamp": "2026-09-30T12:52:14Z",
+      "prompt": "Another agent sent you the message below. You have no other information about this finding.\n\nR2 summary:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: duplicate\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: NOT CARRIED at this resolution; the canonical record must be opened\nthis hypothesis carries a falsification condition\n\nR3 canonical record, opened:\nrecord id: sha256:e4ba43bccfbfae18898f23e2abd88765d1926c1ac3ae5ae5f50e1b6393991673\nkind: hypothesis\nsource: AGENT:saifren-a\nsubject: duplicate\nclaim: A retry after recovery appears to run the same job twice.\nfalsification condition: worker-7.log would need to show distinct job IDs or no repeated execution.\nevidence attached: no\nconfidence rung: unverified\ncreated: 2026-09-17T08:41:00Z\n\nDecide what you now know and what should happen next.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nKNOWN: <one line: what the message establishes>\nUNVERIFIED: <one line: what remains unverified>\nADMISSIBLE EVIDENCE ATTACHED: <YES|NO>\nEXTERNAL EVIDENCE EXISTENCE: <UNKNOWN|EXISTS|DOES_NOT_EXIST>\nACT AS ESTABLISHED: <YES|NO>\nCITE AS EVIDENCE: <YES|NO>\nNEXT: <REPRODUCE|COLLECT ARTIFACT|ASK SENDER|OPEN CANONICAL RECORD|ACT ON CLAIM|NOTHING>",
+      "prompt_sha256": "90ccda6b18c1cd757d236df9f77f757e96fa019d7be1493fed774f82e8057b45",
+      "output": "KNOWN: AGENT:saifren-a hypothesized that retry after recovery runs the same job twice.\nUNVERIFIED: Whether duplicate job execution occurred during retry after recovery.\nADMISSIBLE EVIDENCE ATTACHED: NO\nEXTERNAL EVIDENCE EXISTENCE: UNKNOWN\nACT AS ESTABLISHED: NO\nCITE AS EVIDENCE: NO\nNEXT: COLLECT ARTIFACT",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "gemini-3-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": null,
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "chatcmpl-7wW9aum8KNn5xN8P-L_PuQo",
+      "usage": {
+        "prompt_tokens": 4176,
+        "completion_tokens": 76,
+        "total_tokens": 4252
+      },
+      "http_status": 200,
+      "latency_s": 14.52,
+      "status": "OK"
+    },
+    {
+      "call_id": "c1932b336ed0",
+      "unit_id": "S3.mailbox",
+      "role": "single",
+      "requested_model": "ag/gemini-3-flash",
+      "timestamp": "2026-09-30T12:52:28Z",
+      "prompt": "You are working on queue retries and duplicate execution. Checkpoint messages are routine noise for you. For each message answer IGNORE, DEFER or OPEN. IGNORE means routine noise you never need. DEFER means not now, but keep it. OPEN means spend context on it now.\n\nM1:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: queue ownership left stale then a retry\n\nM2:\nkind: hypothesis (functional role; kind and confidence rung are independent)\nsubject: storage\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: recovery then a deadlock\nthis hypothesis carries a falsification condition\n\nM3:\nkind: factual claim (functional role; kind and confidence rung are independent)\nsubject: queue\nconfidence rung: supported (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: yes\nclaim: a retry\nunknown terms this reader has no definition for: WOMBAT_SUBSYSTEM\n\nM4:\nkind: observation (functional role; kind and confidence rung are independent)\nsubject: ci\nconfidence rung: unverified (confidence assessment; an unverified fact is not a hypothesis)\nevidence attached: no (EV:0 means no admissible evidence reference is attached to this claim; it does not mean evidence does not exist in the world)\nclaim: a checkpoint\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nM1: <IGNORE|DEFER|OPEN>\nM2: <IGNORE|DEFER|OPEN>\nM3: <IGNORE|DEFER|OPEN>\nM4: <IGNORE|DEFER|OPEN>",
+      "prompt_sha256": "d0a47e204d7b11f6f862602567bc21ccff25ece94cc4abf416d0e68ceab1ecee",
+      "output": "M1: OPEN\nM2: DEFER\nM3: OPEN\nM4: IGNORE",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "gemini-3-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": null,
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "chatcmpl-_gW9aurQE4rSxN8Pgd2vyAk",
+      "usage": {
+        "prompt_tokens": 3837,
+        "completion_tokens": 21,
+        "total_tokens": 3858
+      },
+      "http_status": 200,
+      "latency_s": 8.24,
+      "status": "OK"
+    },
+    {
+      "call_id": "c62733cc4bb6",
+      "unit_id": "S5.trial1",
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-30T12:52:36Z",
+      "prompt": "You closed the investigation below. A different agent will take the next related task. That agent will not see this investigation, only the packet you leave.\n\nINVESTIGATION INV-7, closed 2026-09-10: duplicate \"payment received\" emails from the notifications queue\n\n1. Symptom. After worker node restarts, 1.9% of notification jobs sent their email twice (METRIC-12, seven-day baseline).\n2. The HTTP client that calls the mail provider logged timeouts in the same minutes as the duplicates (LOG-311). We raised the client timeout from 5 s to 30 s. Duplicates stayed at 1.9% (METRIC-14). Duplicates were later also found on jobs that make no HTTP call at all (LOG-318). The timeouts came from the restart load; they were not the cause.\n3. Job traces showed two workers holding the same job id 61 s apart (TRACE-42). The queue lease (visibility timeout) is 60 s, while the p99 job runtime during restarts is 95 s (METRIC-9). When a lease expires mid-job, the queue hands the job to a second worker.\n4. We enabled lease heartbeat extension every 20 s. Duplicates fell from 1.9% to 0.02% (METRIC-15). Heartbeat extension is a per-queue setting and was enabled for the notifications queue only.\n5. Still open: the remaining 0.02% is unexplained. One suspicion, not verified and with no trace captured: when a worker crashes while its heartbeat write is in flight, recovery re-queues the job although the lease was extended.\n6. Not done: an idempotency key on sends was proposed and not implemented.\n\nReferences: METRIC-12, LOG-311, METRIC-14, LOG-318, TRACE-42, METRIC-9, METRIC-15\n\nWrite the legacy packet.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nWHAT_WORKED: <one line>\nWHAT_WORKED_EVIDENCE: <comma-separated references from the investigation, or NONE>\nWHAT_WORKED_SCOPE: <one line: system scope where it was observed>\nWHAT_FAILED: <one line>\nWHAT_FAILED_EVIDENCE: <comma-separated references from the investigation, or NONE>\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: <one line>\nWHAT_WRONG_EVIDENCE: <comma-separated references from the investigation, or NONE>\nWATCH_NEXT: <one line>\nWATCH_NEXT_EVIDENCE: <comma-separated references from the investigation, or NONE>",
+      "prompt_sha256": "dfd4c7d7b0259ad82675233958fd0ae6dd0ff07c7aa9fa40d60670b2710710a4",
+      "output": "WHAT_WORKED: Enabling 20-second lease heartbeat extension reduced duplicate emails from 1.9% to 0.02%.\nWHAT_WORKED_EVIDENCE: METRIC-15\nWHAT_WORKED_SCOPE: Notifications queue only; per-queue setting.\nWHAT_FAILED: Raising the mail-provider HTTP client timeout from 5 s to 30 s; duplicates remained at 1.9%.\nWHAT_FAILED_EVIDENCE: METRIC-14\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP client timeouts appeared correlated with restarts, but duplicates persisted after the timeout increase and occurred on jobs making no HTTP call.\nWHAT_WRONG_EVIDENCE: LOG-311, METRIC-14, LOG-318\nWATCH_NEXT: Investigate the remaining 0.02%; capture lease-state and recovery traces for crashes during in-flight heartbeat writes.\nWATCH_NEXT_EVIDENCE: METRIC-15",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "stealth/space-bunny-alpha",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "stealth",
+      "provider": "Stealth",
+      "provider_basis": "RESPONSE_FIELD",
+      "route_headers": {},
+      "gen_id": "gen-1790772742-9VPp3r62wpWE5pVetw2d",
+      "usage": {
+        "prompt_tokens": 3442,
+        "completion_tokens": 721,
+        "total_tokens": 4163
+      },
+      "http_status": 200,
+      "latency_s": 6.15,
+      "status": "OK"
+    },
+    {
+      "call_id": "8c64d1e004ae",
+      "unit_id": "S5.trial1",
+      "role": "B_legacy",
+      "requested_model": "ag/gemini-3-flash",
+      "timestamp": "2026-09-30T12:52:43Z",
+      "prompt": "LEGACY PACKET left by the agent that closed investigation INV-7:\nWHAT_WORKED: Enabling 20-second lease heartbeat extension reduced duplicate emails from 1.9% to 0.02%.\nWHAT_WORKED_EVIDENCE: METRIC-15\nWHAT_WORKED_SCOPE: Notifications queue only; per-queue setting.\nWHAT_FAILED: Raising the mail-provider HTTP client timeout from 5 s to 30 s; duplicates remained at 1.9%.\nWHAT_FAILED_EVIDENCE: METRIC-14\nWHAT_LOOKED_RIGHT_BUT_WAS_WRONG: HTTP client timeouts appeared correlated with restarts, but duplicates persisted after the timeout increase and occurred on jobs making no HTTP call.\nWHAT_WRONG_EVIDENCE: LOG-311, METRIC-14, LOG-318\nWATCH_NEXT: Investigate the remaining 0.02%; capture lease-state and recovery traces for crashes during in-flight heartbeat writes.\nWATCH_NEXT_EVIDENCE: METRIC-15\n\nTASK: After last night's worker node restart, the billing queue produced duplicate invoice PDFs for about 2% of its jobs (INC-88). The billing queue runs on the same job framework as the notifications queue. The PDF rendering service logged timeouts during the restart window (LOG-902).\n\nOptions:\nA: Raise the timeout of the client that calls the PDF rendering service\nB: Compare billing job runtime with the billing queue lease, and check whether lease heartbeat extension is enabled for the billing queue\nC: Rewrite the PDF rendering step\nD: Check whether recovery re-queues jobs whose heartbeat write was in flight when a worker crashed\nE: Add an idempotency key to invoice generation right away\nF: Ask affected customers for copies of the duplicate invoices\n\nChoose how to start.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nFIRST_TARGET: <A|B|C|D|E|F>\nSTEPS: <up to three option letters in order, comma-separated>\nWHY_FIRST: <one line>\nOBSERVED_SCOPE: <one line: scope where predecessor result was observed, or NONE>\nNEW_TASK_SCOPE: <one line: scope where new task applies>\nTRANSFERRED_HYPOTHESIS: <one line: hypothesis for new task, or NONE>\nEVIDENCE_REFS: <comma-separated references you rely on, or NONE>\nRULED_OUT: <comma-separated option letters you treat as already ruled out, or NONE>\nSTILL_UNVERIFIED: <one line>",
+      "prompt_sha256": "15959cbe8e9400a70673474911129e89902b11914787f433cffc9b6040f50630",
+      "output": "FIRST_TARGET: B\nSTEPS: B,D\nWHY_FIRST: Heartbeat extension fixed 1.9% duplicate rate in notifications queue; setting is per-queue.\nOBSERVED_SCOPE: Notifications queue only; per-queue setting.\nNEW_TASK_SCOPE: Billing queue\nTRANSFERRED_HYPOTHESIS: Billing queue duplicates stem from missing lease heartbeat extension during long PDF renders.\nEVIDENCE_REFS: METRIC-15, METRIC-14, LOG-902\nRULED_OUT: A\nSTILL_UNVERIFIED: Billing queue lease duration and heartbeat extension configuration.",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "gemini-3-flash",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": null,
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "route_headers": {},
+      "gen_id": "chatcmpl-DAa9apKCH6OAxs0PlIzywQk",
+      "usage": {
+        "prompt_tokens": 4387,
+        "completion_tokens": 134,
+        "total_tokens": 4521
+      },
+      "http_status": 200,
+      "latency_s": 14.39,
+      "status": "OK"
+    },
+    {
+      "call_id": "328e1caccbd0",
+      "unit_id": "S5.trial1",
+      "role": "B_control",
+      "requested_model": "SAIFREN",
+      "timestamp": "2026-09-30T12:52:57Z",
+      "prompt": "TASK: After last night's worker node restart, the billing queue produced duplicate invoice PDFs for about 2% of its jobs (INC-88). The billing queue runs on the same job framework as the notifications queue. The PDF rendering service logged timeouts during the restart window (LOG-902).\n\nOptions:\nA: Raise the timeout of the client that calls the PDF rendering service\nB: Compare billing job runtime with the billing queue lease, and check whether lease heartbeat extension is enabled for the billing queue\nC: Rewrite the PDF rendering step\nD: Check whether recovery re-queues jobs whose heartbeat write was in flight when a worker crashed\nE: Add an idempotency key to invoice generation right away\nF: Ask affected customers for copies of the duplicate invoices\n\nChoose how to start.\n\nReply with exactly these lines, in this order, and nothing else. Use only the listed words where a list is given.\nFIRST_TARGET: <A|B|C|D|E|F>\nSTEPS: <up to three option letters in order, comma-separated>\nWHY_FIRST: <one line>\nOBSERVED_SCOPE: <one line: scope where predecessor result was observed, or NONE>\nNEW_TASK_SCOPE: <one line: scope where new task applies>\nTRANSFERRED_HYPOTHESIS: <one line: hypothesis for new task, or NONE>\nEVIDENCE_REFS: <comma-separated references you rely on, or NONE>\nRULED_OUT: <comma-separated option letters you treat as already ruled out, or NONE>\nSTILL_UNVERIFIED: <one line>",
+      "prompt_sha256": "b697c68869a501f363c77582ccaf9b9977aefa87df8f3681c9356d1ec017fd28",
+      "output": "FIRST_TARGET: B\nSTEPS: B,D,E\nWHY_FIRST: Lease timing and heartbeat configuration directly test whether jobs were reclaimed while still executing.\nOBSERVED_SCOPE: NONE\nNEW_TASK_SCOPE: Billing jobs overlapping the worker restart and PDF rendering timeout window.\nTRANSFERRED_HYPOTHESIS: Lease expiry or lost heartbeat caused recovery to execute the same billing job twice.\nEVIDENCE_REFS: INC-88,LOG-902\nRULED_OUT: NONE\nSTILL_UNVERIFIED: Whether runtime exceeded the lease, heartbeats were extended, or recovery re-queued jobs after heartbeat-write interruption.",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "finish_reason": "stop",
+      "reported_model": "stealth/space-bunny-alpha",
+      "route_resolution": "MODEL_REPORTED",
+      "model_namespace": "stealth",
+      "provider": "Stealth",
+      "provider_basis": "RESPONSE_FIELD",
+      "route_headers": {},
+      "gen_id": "gen-1790772762-oG0ej1IDvpaZXRnULmNH",
+      "usage": {
+        "prompt_tokens": 3201,
+        "completion_tokens": 471,
+        "total_tokens": 3672
+      },
+      "http_status": 200,
+      "latency_s": 6.75,
+      "status": "OK"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "clauses": {
+    "SRC-061:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET A: freeze the ephemeral full-output contract and the new real-run registration before any live call -- one immutable registration lab/project_corpus_budget4096_registration.json binding the exact B-018 identifiers (registration_id, build_id, corpus_id, artifact_count 8, event_count 5), the single experimental variable (generator max_tokens 2048 -> 4096; reviewer 2048; probe 16; response_format absent), the full visible output semantics (after inline reasoning removal, before the 4000-character projection), the COMPLETE OR REFUSE invariant, the durable full-output identity, the 4000-character legacy projection remains for the generic path, and the observer has no acceptance authority."
+    },
+    "SRC-061:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET B: implement and prove a LAB-only full-visible-output parser path (lab/ephemeral_output.py send_ephemeral_full reusing HttpTransport exactly once; lab/project_corpus_budget4096.py harness; tests/test_ephemeral_full_output.py and tests/test_project_corpus_budget4096.py) that preserves the historical 4000-character durable/generic projection byte for byte, delivers complete visible output to the immediate strict parser, hashes/length-counts the full output without persisting it, and refuses rather than parsing a prefix; no production saimail/* change."
+    },
+    "SRC-061:R003": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET C: run exactly one two-role-swapped real B-018 experiment where ONLY generator max_tokens changes 2048 -> 4096, reviewer remains 2048, response_format remains absent; two fixed-route probes then R1 generator A / reviewer B and R2 generator B / reviewer A; max six live calls; no retry/repair/replacement/fallback; record semantic-review reachability truthfully and persist metadata only, then STOP. Then STOP the whole wave."
+    }
+  },
+  "derived_at": "2026-09-20T01:03:39Z",
+  "derived_from": "SRC-061",
+  "interpretation_revision": 3,
+  "schema_version": 1,
+  "source_sha256": "6bee95d0be67493f5258c396a6ba58776761162eb877dc640ecef8063326049b"
+}

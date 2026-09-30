@@ -1,0 +1,51 @@
+{
+  "ticket": "T-73",
+  "stamp": "20260920T001732Z",
+  "checks": {
+    "registration_digest_pinned": true,
+    "registration_routes_and_order": true,
+    "implementation_binding": true,
+    "attempt_binding": true,
+    "dry_control": true,
+    "live_budget": true,
+    "calls_frozen_order": true,
+    "one_dispatch_per_probe": true,
+    "output_hash_and_conformance": true,
+    "request_body_evidence_matches_registered_spec": true,
+    "report_is_deterministic_render": true,
+    "analysis_is_deterministic_render": true,
+    "native_enforcement_not_claimed": true,
+    "real_4096_not_claimed_safe": true,
+    "local_cap_recorded": true,
+    "side_effects_zero": true,
+    "privacy_flags_false": true,
+    "context_bands": true,
+    "protected_inputs_unchanged": true,
+    "no_auth_header_or_key_shape": true,
+    "prompt_hash_is_the_synthetic_one": true
+  },
+  "protected": {
+    "lab/ally_generation_live.py": true,
+    "lab/saifren_run.py": true,
+    "lab/parse_shape.py": true,
+    "lab/project_corpus_generation_pilot.py": true,
+    "saimail/ally_advice.py": true,
+    "saimail/ally_generation.py": true,
+    "saimail/credentials.py": true,
+    "saimail/publish.py": true,
+    "saimail/project_corpus.py": true,
+    "saimail/acceptance.py": true,
+    "saimail/human_attention.py": true
+  },
+  "hashes": {
+    "registration": "e696db4c786ea60b9764b50e924fd93ed505efdf1b8b366529600ac100c4ffdf",
+    "module": "f0dad1cce747fd006cea2ecf3e91f8669c9bc5909803714f0319a3db83a7ae58",
+    "dry": "e4e29d6948868cf37866ed85c87075bc0d702398c426eadf48a1571368450c93",
+    "live": "687da1f27d95d5287f8d217d172407d76930b73849caa3910528fc18420bb40d",
+    "report": "511dea08ab7b95be28da62665c45201643a7b6854db6909891dc75a7d69ddc99",
+    "analysis": "36de55bdfb9c9c9103c8427d0d1cb2a78a0bfa0e235c63f229b483f28d3d48cd",
+    "attempt_marker": "51a8af777554ec0cf33a6abafce9e7391723eed22af3757600cfcb5ab4ecf635"
+  },
+  "method": "independent fresh process: reloaded the frozen registration, recomputed every request-body hash from the registered probes, re-rendered the report and analysis from the artifact, re-checked all protected file digests, the dry/attempt/implementation bindings, the six-call budget, the closed vocabulary, the 4000-character local cap and the zero side effects",
+  "ok": true
+}

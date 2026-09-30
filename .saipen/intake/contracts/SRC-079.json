@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-079:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute Roadmap v3 gate D2 - POST-V3-01 RELEASE CANDIDATE REFRESH: build and freeze SAIMAIL 0.0.2a2 from post-V3-01 source, implement D-054 first-run custody warning, preserve historical 0.0.2a1 artifact untouched"
+    }
+  },
+  "derived_at": "2026-09-20T20:29:15Z",
+  "derived_from": "SRC-079",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "f124f2f3b9504ed214c59129084132c4bd969b5e592d780748b07ca6f3036950"
+}

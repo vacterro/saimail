@@ -1,0 +1,79 @@
+{
+  "schema": "WATCHED_COVERAGE_FIXTURES_1",
+  "version": 1,
+  "experiment_id": "U1-WATCHED-COVERAGE",
+  "directions": ["A_TO_B", "B_TO_A"],
+  "truth_authority": "Receiver need declared by the fixture row, independent of the selector verdict; a sender-asserted relation is only an attention hint, never relevance truth.",
+  "relation_meanings": {
+    "WATCHED": "the row's relation target is the receiver-owned watched canonical target",
+    "OTHER": "the row's relation target is another valid canonical target the receiver does not watch",
+    "null": "no relation is declared"
+  },
+  "workloads": [
+    {
+      "id": "DRIFT_RESCUE",
+      "purpose": "Relevant messages whose vocabulary/subjects are outside the receiver's ordinary interest but carry SUPPORTS/REFUTES/CON pointing at WATCHED_TARGET.",
+      "expected": "baseline lower non-open verdict (DEFER); treatment OPEN_R3 through R0-WATCHED",
+      "messages": [
+        {"count": 3, "subject": "envelope", "claim": "SIGNATURE>ENVELOPE", "flag": "SUPPORTS", "target": "WATCHED", "evidence": false, "status": "U1", "relevant": true, "why": "unrelated vocabulary but support for the watched record"},
+        {"count": 2, "subject": "db", "claim": "DATABASE>METADATA", "flag": "CON", "target": "WATCHED", "evidence": false, "status": "U1", "relevant": true, "why": "unrelated vocabulary but a conflict with the watched record"},
+        {"count": 2, "subject": "loader", "claim": "CONFIGURATION>REGRESSION", "flag": "REFUTES", "target": "WATCHED", "evidence": false, "status": "U1", "relevant": true, "why": "unrelated vocabulary but a refutation of the watched record"}
+      ]
+    },
+    {
+      "id": "OTHER_TARGET",
+      "purpose": "Same structural relation shape but the relation points at another valid canonical target the receiver does not watch.",
+      "expected": "no treatment change",
+      "messages": [
+        {"count": 3, "subject": "db", "claim": "DATABASE>METADATA", "flag": "REFUTES", "target": "OTHER", "evidence": false, "status": "U1", "relevant": false, "why": "relation to an unwatched target must not rescue"}
+      ]
+    },
+    {
+      "id": "NO_RELATION_RELEVANT",
+      "purpose": "Relevant drifted messages with no relation to WATCHED_TARGET.",
+      "expected": "no magical rescue",
+      "messages": [
+        {"count": 3, "subject": "loader", "claim": "PERFORMANCE>REGRESSION", "flag": null, "target": null, "evidence": false, "status": "U1", "relevant": true, "why": "relevant and drifted but no relation, so watching cannot find it"}
+      ]
+    },
+    {
+      "id": "RELATION_SPAM",
+      "purpose": "Irrelevant messages that assert SUPPORTS/REFUTES/CON against WATCHED_TARGET.",
+      "expected": "treatment raises them to OPEN_R3; this is the sender-caused extra-open cost",
+      "messages": [
+        {"count": 4, "subject": "maintenance", "claim": "MAINTENANCE>PERFORMANCE", "flag": "SUPPORTS", "target": "WATCHED", "evidence": false, "status": "U1", "relevant": false, "why": "sender-controlled attention inflation: supports"},
+        {"count": 3, "subject": "filesystem", "claim": "FILESYSTEM>ENVELOPE", "flag": "REFUTES", "target": "WATCHED", "evidence": false, "status": "U1", "relevant": false, "why": "sender-controlled attention inflation: refutes"}
+      ]
+    },
+    {
+      "id": "NOISE_OVERLAP",
+      "purpose": "Messages whose claim atoms are all receiver-declared noise, and which also relate to WATCHED_TARGET.",
+      "expected": "baseline IGNORE (R4-NOISE); treatment OPEN_R3 (R0-WATCHED before R4-NOISE), reported honestly",
+      "messages": [
+        {"count": 3, "subject": "session", "claim": "CHECKPOINT>TIMESTAMP", "flag": "CON", "target": "WATCHED", "evidence": false, "status": "U1", "relevant": false, "why": "declared noise that also carries a watched relation"},
+        {"count": 2, "subject": "db", "claim": "METADATA>TIMESTAMP", "flag": "SUPPORTS", "target": "WATCHED", "evidence": false, "status": "U1", "relevant": false, "why": "declared noise that also carries a watched relation"}
+      ]
+    },
+    {
+      "id": "MANDATORY_OPEN_CONTROL",
+      "purpose": "Messages already requiring OPEN_R2 or OPEN_R3 through existing higher-information rules.",
+      "expected": "treatment never reduces their depth",
+      "messages": [
+        {"count": 3, "subject": "queue", "claim": "RETRY>DUPLICATE_EXECUTION", "flag": null, "target": null, "evidence": true, "status": "U3", "relevant": true, "why": "R7-ACTIONABLE floor OPEN_R3"},
+        {"count": 2, "subject": "queue", "claim": "QUEUE_OWNERSHIP_STALE>RECOVERY", "flag": null, "target": null, "evidence": false, "status": "U0", "relevant": true, "why": "R8-RELEVANT floor OPEN_R2"},
+        {"count": 2, "subject": "queue", "claim": "RETRY>DUPLICATE_EXECUTION", "flag": "REFUTES", "target": "OTHER", "evidence": true, "status": "U4", "relevant": true, "why": "R6-CONTRADICTION floor OPEN_R3"},
+        {"count": 2, "subject": "queue", "claim": "DUPLICATE_EXECUTION>RETRY", "flag": "REFUTES", "target": "WATCHED", "evidence": true, "status": "U4", "relevant": true, "why": "already OPEN_R3 by R6; treatment must not reduce it"},
+        {"count": 2, "subject": "queue", "claim": "WOMBAT_LEASE>RETRY", "flag": "SUPPORTS", "target": "WATCHED", "evidence": false, "status": "U1", "relevant": true, "why": "baseline OPEN_R2 by R2-UNKNOWN; treatment raises to OPEN_R3"}
+      ]
+    },
+    {
+      "id": "UNKNOWN_OPAQUE_CONTROL",
+      "purpose": "Preserve the existing conservative fallback behaviour; the watched treatment must not weaken it.",
+      "expected": "baseline and treatment both OPEN_R2; unchanged",
+      "messages": [
+        {"count": 3, "subject": "queue", "claim": "GRIFFIN_MODE>RETRY", "flag": null, "target": null, "evidence": false, "status": "U1", "relevant": true, "why": "unknown wire token must never be dropped"},
+        {"count": 3, "subject": "notes", "claim": "an unfamiliar narrative about the envelope layer", "flag": null, "target": null, "evidence": false, "status": "U1", "relevant": true, "why": "a claim the frame cannot carry must never be dropped"}
+      ]
+    }
+  ]
+}

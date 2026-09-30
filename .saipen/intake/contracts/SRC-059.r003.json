@@ -1,0 +1,24 @@
+{
+  "clauses": {
+    "SRC-059:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET A: freeze the capability contract before any live call -- one immutable registration (lab/structured_output_capability_registration.json) with exact route pair (A SAIFREN, B goat/MiniMaxAI/MiniMax-M3), three probes per route (BUDGET_4096 max_tokens 4096 response_format absent; JSON_OBJECT max_tokens 128 response_format json_object; JSON_SCHEMA max_tokens 128 exact registered strict schema), max 6 live calls, zero retries/repairs/replacements/fallbacks, no discovery, NATIVE_ENFORCEMENT_PROVEN false, and the closed result vocabulary."
+    },
+    "SRC-059:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET B: implement a LAB-only capability harness (lab/structured_output_capability.py) with exact request-body evidence, one dispatch per probe, no fallback or retry, privacy-safe error projection (error_class, http_status, error_sha256, error_bytes only), a deterministic local 4000-character output-cap control that is recorded and not raised, and no production saimail/* change; tests in tests/test_structured_output_capability.py and tests/test_structured_output_transport.py."
+    },
+    "SRC-059:R003": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET C: perform exactly six synthetic live probes in the frozen order (A/BUDGET_4096, B/BUDGET_4096, A/JSON_OBJECT, B/JSON_OBJECT, A/JSON_SCHEMA, B/JSON_SCHEMA), write the immutable capability artifact, matrix and report answering the twelve questions, claim no model ranking and no enforcement proof, transmit no real corpus, then STOP; no commit/tag/push/publish."
+    }
+  },
+  "derived_at": "2026-09-20T00:06:27Z",
+  "derived_from": "SRC-059",
+  "interpretation_revision": 3,
+  "schema_version": 1,
+  "source_sha256": "7a9477ffb9fee56cf894630ec952ff71adae388bcbe0d70eb1a5a63ab64b1a1c"
+}

@@ -1,0 +1,230 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                                          [100%]
+================================== FAILURES ===================================
+__ test_two_seats_keep_local_decisions_separate_from_the_returned_assessment __
+tests\test_feedback_origin.py:84: in test_two_seats_keep_local_decisions_separate_from_the_returned_assessment
+    assert metric["feedback_origin"] == KNOWN
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback_origin'
+__ test_origin_read_is_keyless_and_does_not_create_state_or_open_unread_mail __
+tests\test_feedback_origin.py:95: in test_origin_read_is_keyless_and_does_not_create_state_or_open_unread_mail
+    assert measured(box)["feedback_origin"] == KNOWN
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback_origin'
+____ test_actual_cli_and_client_preserve_origin_and_existing_bases[False] _____
+tests\test_feedback_origin.py:108: in test_actual_cli_and_client_preserve_origin_and_existing_bases
+    assert value["state"] == "OK" and value["feedback_origin"] == KNOWN
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback_origin'
+_____ test_actual_cli_and_client_preserve_origin_and_existing_bases[True] _____
+tests\test_feedback_origin.py:108: in test_actual_cli_and_client_preserve_origin_and_existing_bases
+    assert value["state"] == "OK" and value["feedback_origin"] == KNOWN
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback_origin'
+_ test_older_cycle_or_compact_peer_has_unknown_origin_despite_other_known_metadata[False] _
+tests\test_feedback_origin.py:123: in test_older_cycle_or_compact_peer_has_unknown_origin_despite_other_known_metadata
+    assert result["state"] == "OK" and result["feedback_origin"] == UNKNOWN
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback_origin'
+_ test_older_cycle_or_compact_peer_has_unknown_origin_despite_other_known_metadata[True] _
+tests\test_feedback_origin.py:123: in test_older_cycle_or_compact_peer_has_unknown_origin_despite_other_known_metadata
+    assert result["state"] == "OK" and result["feedback_origin"] == UNKNOWN
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback_origin'
+_ test_malformed_present_origin_is_named_degradation_without_retry[None-False] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[None-True] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[WORKSPACE_RECEIVER-False] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[WORKSPACE_RECEIVER-True] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad2-False] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad2-True] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad3-False] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad3-True] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad4-False] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad4-True] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad5-False] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad5-True] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad6-False] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad6-True] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad7-False] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad7-True] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad8-False] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad8-True] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad9-False] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+_ test_malformed_present_origin_is_named_degradation_without_retry[bad9-True] _
+tests\test_feedback_origin.py:141: in test_malformed_present_origin_is_named_degradation_without_retry
+    assert result["state"] == "DEGRADED"
+E   AssertionError: assert 'OK' == 'DEGRADED'
+E     
+E     - DEGRADED
+E     + OK
+___ test_origin_is_rebuilt_locally_and_peer_text_is_ignored[origin0-False] ____
+tests\test_feedback_origin.py:154: in test_origin_is_rebuilt_locally_and_peer_text_is_ignored
+    assert result["state"] == "OK" and result["feedback_origin"] == origin
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback_origin'
+____ test_origin_is_rebuilt_locally_and_peer_text_is_ignored[origin0-True] ____
+tests\test_feedback_origin.py:154: in test_origin_is_rebuilt_locally_and_peer_text_is_ignored
+    assert result["state"] == "OK" and result["feedback_origin"] == origin
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback_origin'
+___ test_origin_is_rebuilt_locally_and_peer_text_is_ignored[origin1-False] ____
+tests\test_feedback_origin.py:154: in test_origin_is_rebuilt_locally_and_peer_text_is_ignored
+    assert result["state"] == "OK" and result["feedback_origin"] == origin
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback_origin'
+____ test_origin_is_rebuilt_locally_and_peer_text_is_ignored[origin1-True] ____
+tests\test_feedback_origin.py:154: in test_origin_is_rebuilt_locally_and_peer_text_is_ignored
+    assert result["state"] == "OK" and result["feedback_origin"] == origin
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback_origin'
+___ test_provenance_is_an_optional_contract_feature_with_unchanged_commands ___
+tests\test_feedback_origin.py:161: in test_provenance_is_an_optional_contract_feature_with_unchanged_commands
+    assert contract["features"]["feedback_origin"] == 1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'feedback_origin'
+- generated xml file: V:\___VAC\__K\__CODE\_AI_STUFF_AGENTIC\__SAIMAIL__\.saipen\evidence\T-143-feedback-provenance\restored-before.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_feedback_origin.py::test_two_seats_keep_local_decisions_separate_from_the_returned_assessment
+FAILED tests/test_feedback_origin.py::test_origin_read_is_keyless_and_does_not_create_state_or_open_unread_mail
+FAILED tests/test_feedback_origin.py::test_actual_cli_and_client_preserve_origin_and_existing_bases[False]
+FAILED tests/test_feedback_origin.py::test_actual_cli_and_client_preserve_origin_and_existing_bases[True]
+FAILED tests/test_feedback_origin.py::test_older_cycle_or_compact_peer_has_unknown_origin_despite_other_known_metadata[False]
+FAILED tests/test_feedback_origin.py::test_older_cycle_or_compact_peer_has_unknown_origin_despite_other_known_metadata[True]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[None-False]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[None-True]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[WORKSPACE_RECEIVER-False]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[WORKSPACE_RECEIVER-True]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad2-False]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad2-True]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad3-False]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad3-True]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad4-False]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad4-True]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad5-False]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad5-True]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad6-False]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad6-True]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad7-False]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad7-True]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad8-False]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad8-True]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad9-False]
+FAILED tests/test_feedback_origin.py::test_malformed_present_origin_is_named_degradation_without_retry[bad9-True]
+FAILED tests/test_feedback_origin.py::test_origin_is_rebuilt_locally_and_peer_text_is_ignored[origin0-False]
+FAILED tests/test_feedback_origin.py::test_origin_is_rebuilt_locally_and_peer_text_is_ignored[origin0-True]
+FAILED tests/test_feedback_origin.py::test_origin_is_rebuilt_locally_and_peer_text_is_ignored[origin1-False]
+FAILED tests/test_feedback_origin.py::test_origin_is_rebuilt_locally_and_peer_text_is_ignored[origin1-True]
+FAILED tests/test_feedback_origin.py::test_provenance_is_an_optional_contract_feature_with_unchanged_commands

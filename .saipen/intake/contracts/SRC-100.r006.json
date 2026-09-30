@@ -1,0 +1,39 @@
+{
+  "clauses": {
+    "SRC-100:R001": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "The supplied archive was audited read-only and must not be modified or returned as an edited archive."
+    },
+    "SRC-100:R002": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not create a wrapper ticket."
+    },
+    "SRC-100:R003": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not reopen T-106."
+    },
+    "SRC-100:R004": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not start V6-02."
+    },
+    "SRC-100:R005": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not rebuild or replace the frozen 0.0.2a3 candidate unless a genuine package-byte defect is independently demonstrated."
+    },
+    "SRC-100:R006": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not publish, tag, push, create a GitHub release, upload to PyPI, or manufacture external proof."
+    }
+  },
+  "derived_at": "2026-09-23T04:25:08Z",
+  "derived_from": "SRC-100",
+  "interpretation_revision": 6,
+  "schema_version": 1,
+  "source_sha256": "eb6777f1191f72da996b3a98594400dc762631bfb07ddc8602f61056877b4e24"
+}

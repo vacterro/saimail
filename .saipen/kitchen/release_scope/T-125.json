@@ -1,0 +1,13 @@
+{
+  "op_id": "scope-daab919473ad4e89995359e9568b1ce7",
+  "paths": {
+    ".saipen/BOARD.md": "8c2a509462e163dc51d2b7d6f6719f061c2dc4e81975ddd8b5ec0c4128a35815"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-25T16:31:18Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:8b5376574aa5f803b4d48b6863a90b58aa658d9684c6b42332a8762015a5763f",
+  "ticket": "T-125"
+}

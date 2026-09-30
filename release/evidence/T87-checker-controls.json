@@ -1,0 +1,9 @@
+{
+  "duplicate_key": "REJECTED",
+  "non_finite": "REJECTED",
+  "trailing_document": "REJECTED",
+  "missing_braces": "REJECTED",
+  "valid_json": "ACCEPTED",
+  "wrong_expected_proof_hash": "EXTERNAL_PROOF_CANDIDATE_MISMATCH",
+  "original_artifact": "PASS"
+}

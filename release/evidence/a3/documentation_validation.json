@@ -1,0 +1,52 @@
+{
+  "authoritative_documents_sha256": {
+    "closure_context": "ac429ce931eba9849864b7faedd2ed912c66ae26c787d0c920a5331f4173fb2e",
+    "current_state": "70cf251d43cf130896c5206b83539113a0e68673ce3fa2cbfe7295f79d2ffb49",
+    "external_request": "bc41cc9289e44397041f2098719d7ed73a94bc6c66b2bcb43d50906c70e4a72a",
+    "roadmap": "3681db95aa165b39e7ce0738ea79fc316cb0233ff6a1f6afee8eeba5677e95b2"
+  },
+  "candidate": {
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a3",
+    "wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+    "wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc"
+  },
+  "checks": {
+    "canonical_t106_done": true,
+    "canonical_t107_status_known": true,
+    "canonical_t108_t110_done": true,
+    "closure_context_valid": true,
+    "current_candidate_exact": true,
+    "current_g13_pending": true,
+    "current_g17_absent": true,
+    "current_publication_none": true,
+    "current_t107_status_matches": true,
+    "current_v602_not_started": true,
+    "no_t106_active_claim": true,
+    "request_candidate_exact": true,
+    "request_g13_pending": true,
+    "request_g17_absent": true,
+    "request_has_one_bounded_external_procedure": true,
+    "request_not_publication": true,
+    "request_waits_for_local_closure": true,
+    "roadmap_candidate_exact": true,
+    "roadmap_g13_pending": true,
+    "roadmap_g17_absent": true,
+    "roadmap_publication_none": true,
+    "roadmap_t107_status_matches": true,
+    "roadmap_v602_not_started": true,
+    "sources_readable": true
+  },
+  "closure_context_sha256": "ac429ce931eba9849864b7faedd2ed912c66ae26c787d0c920a5331f4173fb2e",
+  "created_utc": "2026-09-23T18:50:11Z",
+  "failures": [],
+  "schema": "SAIMAIL_D3_DOCUMENTATION_VALIDATION_1",
+  "source_files_sha256": {
+    "closure_context": "ac429ce931eba9849864b7faedd2ed912c66ae26c787d0c920a5331f4173fb2e",
+    "current_state": "70cf251d43cf130896c5206b83539113a0e68673ce3fa2cbfe7295f79d2ffb49",
+    "external_request": "bc41cc9289e44397041f2098719d7ed73a94bc6c66b2bcb43d50906c70e4a72a",
+    "roadmap": "3681db95aa165b39e7ce0738ea79fc316cb0233ff6a1f6afee8eeba5677e95b2"
+  },
+  "status": "PASS",
+  "version": 1
+}

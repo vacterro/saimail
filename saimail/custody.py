@@ -32,10 +32,8 @@ handle is a location label, not a secret.
 from __future__ import annotations
 
 import re
-from typing import Optional
 
 from sailang import SailangError
-
 from saimail.credentials import (
     BackendError,
     CredentialStore,
@@ -43,12 +41,13 @@ from saimail.credentials import (
     get_credential_store,
 )
 
-#: The two custody modes. ``raw`` is the V2-01 legacy layout; ``os-store``
+#: Three custody modes. ``raw`` is the V2-01 legacy layout; ``os-store``
 #: keeps the private bytes in the OS credential store and only handles plus
-#: public material in the workspace.
+#: public material in the workspace. ``master-key`` stores password-wrapped keys.
 CUSTODY_RAW = "raw"
 CUSTODY_OS_STORE = "os-store"
-CUSTODY_MODES = (CUSTODY_RAW, CUSTODY_OS_STORE)
+CUSTODY_MASTER_KEY = "master-key"
+CUSTODY_MODES = (CUSTODY_RAW, CUSTODY_OS_STORE, CUSTODY_MASTER_KEY)
 
 #: The service segment of a workspace custody handle. Deliberately not
 #: ``9router``: SAIRoute transport credentials and workspace identity custody
@@ -140,7 +139,7 @@ def _map_backend_error(exc: BaseException, *, doing: str, handle: str) -> None:
                 f"the credential store failed while {doing} {handle}: {exc}")
 
 
-def resolve_store(store: Optional[CredentialStore] = None) -> CredentialStore:
+def resolve_store(store: CredentialStore | None = None) -> CredentialStore:
     return store if store is not None else get_credential_store()
 
 
@@ -157,7 +156,7 @@ def _require_available(store: CredentialStore) -> None:
                 "(install with pip install -e .[credentials])")
 
 
-def classify_backend(store: Optional[CredentialStore] = None) -> str:
+def classify_backend(store: CredentialStore | None = None) -> str:
     """The dotted backend name that would answer, or a named refusal.
 
     Checked rather than assumed, exactly as in the SAIRoute resolver: keyring
@@ -180,7 +179,7 @@ def classify_backend(store: Optional[CredentialStore] = None) -> str:
     raise AssertionError("unreachable")
 
 
-def read_key(store: Optional[CredentialStore], handle: str) -> str:
+def read_key(store: CredentialStore | None, handle: str) -> str:
     """Retrieve one private key value; absence and backend failure stay distinct."""
     classify_backend(store)
     s = resolve_store(store)
@@ -200,7 +199,7 @@ def read_key(store: Optional[CredentialStore], handle: str) -> str:
     return value
 
 
-def write_key(store: Optional[CredentialStore], handle: str, value: str) -> bool:
+def write_key(store: CredentialStore | None, handle: str, value: str) -> bool:
     """Store one private key value without overwriting a different identity.
 
     Returns ``True`` when the entry was created by this call, ``False`` when an
@@ -237,7 +236,7 @@ def write_key(store: Optional[CredentialStore], handle: str, value: str) -> bool
     return True
 
 
-def release_keys(store: Optional[CredentialStore], handles) -> list[str]:
+def release_keys(store: CredentialStore | None, handles) -> list[str]:
     """Best-effort removal of entries this run created, for failed attempts.
 
     Returns the handles that could not be removed. Never raises: the caller is
@@ -254,7 +253,7 @@ def release_keys(store: Optional[CredentialStore], handles) -> list[str]:
     return remaining
 
 
-def key_present(store: Optional[CredentialStore], handle: str) -> Optional[bool]:
+def key_present(store: CredentialStore | None, handle: str) -> bool | None:
     """Presence only, for a diagnostic; ``None`` when the store cannot answer."""
     s = resolve_store(store)
     try:
@@ -264,13 +263,14 @@ def key_present(store: Optional[CredentialStore], handle: str) -> Optional[bool]
 
 
 __all__ = [
-    "CUSTODY_ALREADY_PROTECTED",
     "CUSTODY_ACCESS_FAILED",
+    "CUSTODY_ALREADY_PROTECTED",
     "CUSTODY_BACKEND_UNAVAILABLE",
     "CUSTODY_BACKEND_UNSUITABLE",
     "CUSTODY_CODES",
     "CUSTODY_KEY_MISMATCH",
     "CUSTODY_KEY_MISSING",
+    "CUSTODY_MASTER_KEY",
     "CUSTODY_MIGRATION_CONFLICT",
     "CUSTODY_MODES",
     "CUSTODY_OS_STORE",

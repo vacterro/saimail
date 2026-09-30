@@ -1,0 +1,43 @@
+{
+  "protected_files": 90,
+  "changed_protected_files": [],
+  "adapter_executable_function_ast": "IDENTICAL",
+  "changed_files": [
+    {
+      "path": ".saipen/kitchen/T-113-reread-continuation.md",
+      "sha256": "65392daa8e5b52759b982f0b18c46ff4e5eb96f583cfbba71526e8a079909607"
+    },
+    {
+      "path": "humbox/CURRENT-STATE.md",
+      "sha256": "17c47b63952ef9684d284775ffeb6390035d71351645bdeb44ee58c2a693f1c3"
+    },
+    {
+      "path": "humbox/FUTURE-GATES-V6.md",
+      "sha256": "53818fc8d3488267b82d11995fd4912c2dfb57c9740147d3e5c75cc9bd34b664"
+    },
+    {
+      "path": "humbox/SAIPEN-WORK-DESK.md",
+      "sha256": "e2e119615cd7af6d607ad0d3d0d7820482044165032478ca6aaecb1cbceaf3a3"
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "sha256": "45d4fa4d270465fa63f524cc5ea2b62443d22e2b02f93262bb1fd8e05f6bd7e4"
+    },
+    {
+      "path": "spec/25-DESKTOP-LOCAL-MESSENGER-v0.md",
+      "sha256": "712e95b8b8b72eea08998c8490b644e9bebd2391a15588d4dd728e95f2da4bb1"
+    },
+    {
+      "path": "tests/test_gui_acceptance.py",
+      "sha256": "899527b89d9e287f8283c8deacb166442e5253cdd55b62e59826bce095cec8bb"
+    },
+    {
+      "path": "tests/test_gui_surface.py",
+      "sha256": "714db444af25077b666a90e4619520eb67aaa24582d968c7ed52d4911a14b760"
+    },
+    {
+      "path": "tests/test_repo_consistency.py",
+      "sha256": "1fb26df5ea124af61232614b74964703e425b1985391d6b6234f7bbad8820397"
+    }
+  ]
+}

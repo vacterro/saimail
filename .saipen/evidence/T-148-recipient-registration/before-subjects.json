@@ -1,0 +1,18 @@
+{
+  "schema": "T148_BEFORE_1",
+  "kind": "PRODUCT_FIXTURE_NOT_STUDY",
+  "subjects": {
+    "saimail/workspace.py": "93ac851e04fbd6e03c01ed35c321f453d11dc90200cfb58d2d9313a36744fbe6",
+    "saimail/postoffice.py": "de45fc8448e3a4200ef01b4c687ab1f9492f8f13b5b9c7a60160c5f89b6304b4"
+  },
+  "reproduction": {
+    "expected": [
+      "beta",
+      "gamma"
+    ],
+    "actual": [
+      "gamma"
+    ],
+    "errors": []
+  }
+}

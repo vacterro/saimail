@@ -1,0 +1,223 @@
+{
+  "blocked_local_gates": null,
+  "candidate": {
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a3",
+    "wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+    "wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc"
+  },
+  "consumed_evidence": {
+    "documentation": {
+      "created_utc": "2026-09-23T18:50:11Z",
+      "logical_id": "documentation",
+      "path": "release/evidence/a3/documentation_validation.json",
+      "schema": "SAIMAIL_D3_DOCUMENTATION_VALIDATION_1",
+      "sha256": "e7933dc9acabd4614870bfcbbd2d7542ec0d02b9d8555b6587d8992b4520d7b6"
+    },
+    "full_suite": {
+      "created_utc": "2026-09-23T18:47:13Z",
+      "logical_id": "full_suite",
+      "path": "release/evidence/a3/full_suite.json",
+      "schema": "SAIMAIL_D3_FULL_SUITE_1",
+      "sha256": "c2cfc2d9dcb0d5bc91a4d0ccaecfdd7c5f776fad591d55829e67966cd6b68dc0"
+    },
+    "gui_matrix": {
+      "created_utc": "2026-09-22T13:15:08Z",
+      "logical_id": "gui_matrix",
+      "path": "release/evidence/a3/gui_install_matrix.json",
+      "schema": "SAIMAIL_D3_GUI_INSTALL_MATRIX_1",
+      "sha256": "909ce98126d25f673bfa5666665df6528ec52476fd62c9b307ab037ed2132c9e"
+    },
+    "integrity": {
+      "created_utc": "2026-09-23T05:01:21Z",
+      "logical_id": "integrity",
+      "path": "release/evidence/a3/integrity_controls.json",
+      "schema": "SAIMAIL_D3_RED_CONTROLS_1",
+      "sha256": "90b081c2f572ffe03793452351609e7f3d16b3360bc0c7c133940ba7ec2abf6d"
+    },
+    "osstore_proof": {
+      "created_utc": "2026-09-22T13:07:38Z",
+      "logical_id": "osstore_proof",
+      "path": "release/evidence/a3/windows_os_store_proof.json",
+      "schema": "SAIMAIL_D3_WINDOWS_OS_STORE_PROOF_1",
+      "sha256": "18f14009a0e279c9d1e544b07e98513344305d9624103a6c97f5d52291ff6854"
+    },
+    "privacy": {
+      "created_utc": "2026-09-23T05:25:58Z",
+      "logical_id": "privacy",
+      "path": "release/evidence/a3/privacy_controls.json",
+      "schema": "SAIMAIL_D3_RED_CONTROLS_1",
+      "sha256": "5ffa6dd32c880f88c9c073ee98389192358c64d1d19fc7effa79a0bbb4e2616f"
+    },
+    "repro": {
+      "created_utc": "2026-09-23T05:01:42Z",
+      "logical_id": "repro",
+      "path": "release/evidence/a3/reproducibility.json",
+      "schema": "SAIMAIL_D3_REPRODUCIBILITY_1",
+      "sha256": "fd77950d822dd81f23e8d6b20d66aceb6bf8ba1a24994764de8da112d28da322"
+    },
+    "saipen": {
+      "created_utc": "2026-09-23T18:49:49Z",
+      "logical_id": "saipen",
+      "path": "release/evidence/a3/saipen_validation.json",
+      "schema": "SAIMAIL_D3_SAIPEN_VALIDATION_1",
+      "sha256": "ecec2b07d231355b343b81851a395732df1113c3f46d262464a8bfab1f4f7455"
+    },
+    "verification": {
+      "created_utc": null,
+      "logical_id": "verification",
+      "path": "release/evidence/a3/local_alpha_verification.json",
+      "schema": "LOCAL_ALPHA_VERIFICATION_1",
+      "sha256": "bf59fcdaf291a595fa6f8c9bbaf8cf37785307b0283095f062089f0fc897df53"
+    }
+  },
+  "created_utc": "2026-09-23T18:50:21Z",
+  "g17_note": "G17 ABSENT does not block D3 engineering closure; publication stays forbidden",
+  "gates": [
+    {
+      "evidence": "VERSION, wheel metadata, saimail-local --version",
+      "id": "G1",
+      "name": "VERSION CONSISTENCY",
+      "status": "PASS"
+    },
+    {
+      "evidence": "manifest content_proof (custody + product_delta P1/V4-01/V5-01) + two-build content identity",
+      "id": "G2",
+      "name": "PACKAGE CONTENT",
+      "status": "PASS"
+    },
+    {
+      "evidence": "manifest custody.default + verifier first_run_notice",
+      "id": "G3",
+      "name": "CUSTODY DEFAULT",
+      "status": "PASS"
+    },
+    {
+      "evidence": "installed-wheel os-store proof",
+      "id": "G4",
+      "name": "CUSTODY SECURITY",
+      "status": "PASS"
+    },
+    {
+      "evidence": "LOCAL_ALPHA_VERIFICATION_1 install + module resolution",
+      "id": "G5",
+      "name": "CLEAN INSTALL",
+      "status": "PASS"
+    },
+    {
+      "evidence": "V2-01 acceptance from the installed wheel",
+      "id": "G6",
+      "name": "LOCAL WORKFLOW",
+      "status": "PASS"
+    },
+    {
+      "evidence": "installed FG-05 result",
+      "id": "G7",
+      "name": "FG-05",
+      "status": "PASS"
+    },
+    {
+      "evidence": "installed FG-06 verdict UTILITY_CONDITIONAL preserved",
+      "id": "G8",
+      "name": "FG-06",
+      "status": "PASS"
+    },
+    {
+      "evidence": "installed-wheel Windows os-store acceptance + migration proof",
+      "id": "G9",
+      "name": "CUSTODY ACCEPTANCE",
+      "status": "PASS"
+    },
+    {
+      "evidence": "a3 bundle integrity + wheel/hash/checksum red controls",
+      "id": "G10",
+      "name": "INTEGRITY",
+      "status": "PASS"
+    },
+    {
+      "evidence": "a3 candidate privacy scan + planted marker/key-material red controls",
+      "id": "G11",
+      "name": "PRIVACY",
+      "status": "PASS"
+    },
+    {
+      "evidence": "runtime counters zero on the verification path",
+      "id": "G12",
+      "name": "RUNTIME NETWORK/MODEL",
+      "status": "PASS"
+    },
+    {
+      "evidence": "no genuinely separate environment on this host; blocked until the exact a3 wheel (sha256 6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc) runs in one (READY_FOR_EXTERNAL_INSTALL_PROOF)",
+      "id": "G13",
+      "name": "EXTERNAL INSTALL",
+      "status": "PENDING_EXTERNAL"
+    },
+    {
+      "evidence": "candidate-bound documentation validation of canonical ticket state, current-state, roadmap and external request",
+      "id": "G14",
+      "name": "DOCUMENTATION",
+      "status": "PASS"
+    },
+    {
+      "evidence": "canonical full pytest run with parsed JUnit counts and current source fingerprint",
+      "id": "G15",
+      "name": "FULL SUITE",
+      "status": "PASS"
+    },
+    {
+      "evidence": "canonical SAIPEN validation bound to current source fingerprint and baseline",
+      "id": "G16",
+      "name": "SAIPEN",
+      "status": "PASS"
+    },
+    {
+      "evidence": "operator authorization absent; publication forbidden, not an engineering blocker",
+      "id": "G17",
+      "name": "PUBLICATION AUTHORIZATION",
+      "status": "ABSENT"
+    },
+    {
+      "evidence": "installed-wheel P1 query proof + manifest product_delta",
+      "id": "G18",
+      "name": "P1 PRODUCT SURFACE",
+      "status": "PASS"
+    },
+    {
+      "evidence": "installed-wheel V4-01 reply proof + manifest product_delta",
+      "id": "G19",
+      "name": "V4-01 PRODUCT SURFACE",
+      "status": "PASS"
+    },
+    {
+      "evidence": "GUI clean-install matrix (gui extra installs PySide6, saimail-gui entrypoint, offscreen acceptance over the canonical local API)",
+      "id": "G20",
+      "name": "V5-01 GUI PRODUCT SURFACE",
+      "status": "PASS"
+    }
+  ],
+  "publication": "NONE",
+  "required_local_gates": [
+    "G1",
+    "G10",
+    "G11",
+    "G12",
+    "G14",
+    "G15",
+    "G16",
+    "G18",
+    "G19",
+    "G2",
+    "G20",
+    "G3",
+    "G4",
+    "G5",
+    "G6",
+    "G7",
+    "G8",
+    "G9"
+  ],
+  "schema": "SAIMAIL_D3_GATE_EVALUATION_1",
+  "status": "PASS",
+  "terminal": "READY_FOR_EXTERNAL_INSTALL_PROOF",
+  "version": 1
+}

@@ -1,0 +1,24 @@
+--- .saipen/evidence/T-121-capabilities/workspace.before.py	2026-09-24 10:00:56.789720600 +0300
++++ saimail/workspace.py	2026-09-24 10:01:28.995269500 +0300
+@@ -1421,6 +1421,21 @@
+                      + ")")
+         if intent.get("envelope_id"):
+             lines.append(f"ENVELOPE:   {intent.get('envelope_id')}")
++    caps = result.get("capabilities") or {}
++    if caps.get("schema") == "SAIMAIL_CAPABILITIES_1":
++        lines.append(f"CHANNEL:    {caps.get('overall')}"
++                     + (f" ({', '.join(caps.get('reasons') or [])})" if caps.get("reasons")
++                        else ""))
++        seat = caps.get("seat") or {}
++        lines.append(f"SEAT:       acting {seat.get('acting')} / mailbox {seat.get('workspace')}")
++        for name, entry in sorted((caps.get("capabilities") or {}).items()):
++            lines.append(f"CAPABILITY: {name} {entry.get('state')}"
++                         + (f" ({entry.get('reason')})" if entry.get("reason") else ""))
++        awareness = caps.get("awareness") or {}
++        if awareness:
++            lines.append(f"AWARENESS:  {awareness.get('unread')} unread header(s), "
++                         f"{awareness.get('on_current_topic')} on {awareness.get('current_topic')}"
++                         + ("" if awareness.get("complete") else " (page incomplete)"))
+     participant = result.get("participant") or {}
+     if participant.get("seat"):
+         lines.append(f"PARTICIPANT: {participant.get('seat')} in {participant.get('lineage')} "

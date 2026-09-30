@@ -1,0 +1,30 @@
+--- .saipen/evidence/T-120-registry/test_repo_consistency.py.before	2026-09-24 09:44:08.708001500 +0300
++++ tests/test_repo_consistency.py	2026-09-24 09:44:08.770222700 +0300
+@@ -1205,6 +1205,27 @@
+         assert callable(getattr(outbox, symbol))
+ 
+ 
++def test_v606_participant_registry_is_recorded():
++    """T-120 / V6-06: roadmap row, spec/29, D-061, API map and module agree; the
++    registry never names SAIPEN memory and its triggers use existing kinds."""
++    from saimail import envelope, participants
++
++    roadmap = read(ROOT / "humbox" / "FUTURE-GATES-V6.md")
++    current = " ".join(read(ROOT / "humbox" / "CURRENT-STATE.md").split())
++    assert "D-061" in decision_ids()
++    rows = [[cell.strip() for cell in line.strip("|").split("|")]
++            for line in roadmap.splitlines() if line.startswith("| V6-06 |")]
++    assert len(rows) == 1 and rows[0][3] == "T-120" and "IMPLEMENTED" in rows[0][2]
++    assert "spec/29-PARTICIPANT-REGISTRY-v0.md" in current
++    assert ".saipen" not in read(ROOT / "saimail" / "participants.py")
++    assert set(participants.TRIGGERS.values()) <= envelope.KINDS
++    api = json.loads(read(ROOT / "lab/stable_local_api.json"))
++    exported = {(item["module"], item["symbol"]) for item in api["apis"]}
++    for symbol in ("admit_participant", "resolve_participant", "list_participants",
++                   "revoke_participant"):
++        assert ("saimail.participants", symbol) in exported
++
++
+ def test_gui_read_capability_language_matches_explicit_reopen():
+     """Qt-independent oracle: first-Open refusal must point to real Reopen."""
+     from saimail import gui_adapter, workspace

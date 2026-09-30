@@ -1,0 +1,75 @@
+{
+  "schema": "SAIMAIL_ACTUAL_COMPACT_CLI_ENTRY_1",
+  "work": "T-141",
+  "command_result": {
+    "command": "agent-focus",
+    "detail": "metadata only; host chooses whether to review or continue",
+    "focus": {
+      "authority": "INFORMATION_ONLY",
+      "automatic_execution": false,
+      "context": "sha256:437d1996a9edbb50cec93e602006b8f9f2a45fb2a58f43ce523b73efe951b2cf",
+      "continuation": null,
+      "coverage": {
+        "cases_examined": 0,
+        "complete": true,
+        "complete_from_start": true,
+        "rows_examined": 0
+      },
+      "decisions": {
+        "ACCEPTED": 0,
+        "DECLINED": 0,
+        "DEFERRED": 0,
+        "PENDING": 0,
+        "RESOLVED": 0,
+        "STALE": 0
+      },
+      "feedback": [],
+      "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+      "feedback_scope": "LIFETIME_HISTORY",
+      "feedback_signals": {
+        "active": [],
+        "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+        "excluded": {
+          "FUTURE_ASSESSMENT": 0,
+          "LETTER_EXPIRED": 0,
+          "OUTSIDE_WINDOW": 0,
+          "PENDING": 0
+        },
+        "observed_at": "2026-09-30T10:10:11Z",
+        "state": "KNOWN",
+        "window_days": 7,
+        "window_start": "2026-09-23T10:10:11Z"
+      },
+      "host": {
+        "blocker": null,
+        "last_event": "2079",
+        "lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+        "phase": "BUILD",
+        "seat": "saipen-cli",
+        "task": "T-141"
+      },
+      "model_improvement_proven": false,
+      "next_action": {
+        "action": "CONTINUE_WORK"
+      },
+      "reading": [],
+      "retained": 0,
+      "reviewed": 0,
+      "schema": "SAIMAIL_HOST_FOCUS_1",
+      "scope": [
+        "saimail_local.py"
+      ],
+      "state": "OK",
+      "work": "T-141"
+    },
+    "network_attempts": 0,
+    "ok": true,
+    "operator_action_required": false,
+    "schema": "LOCAL_WORKSPACE_COMMAND_1",
+    "status": "OK",
+    "version": 1
+  },
+  "normalized_command_bytes": 1286,
+  "memory_unchanged": true,
+  "claim_boundary": "One actual configured read-only CLI entry; empty observations do not establish receiver benefit."
+}

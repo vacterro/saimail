@@ -1,0 +1,18 @@
+{
+  "inherited_baseline": {
+    "fail": 3,
+    "warn": 22
+  },
+  "current": {
+    "fail": 3,
+    "warn": 21
+  },
+  "new_v204_failures": [],
+  "status": "NO_NEW_V204_FAILURE",
+  "carried_failures": [
+    "SRC-017/T-41 source linkage",
+    "SRC-036 source credential gate",
+    "stale improve-report fingerprint"
+  ],
+  "note": "Global SAIPEN validation remains FAIL. Current warning count was already 21 in the first validation of this turn; no warning repair is claimed."
+}

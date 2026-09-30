@@ -1,0 +1,32 @@
+{
+  "candidate_version": "0.0.2a3",
+  "candidate_wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+  "candidate_wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc",
+  "command": [
+    "C:\\Users\\vac34\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-m",
+    "pytest",
+    "-q",
+    "-o",
+    "addopts=",
+    "--basetemp",
+    "V:\\_TEMP_\\saimail-d3-pytest-umso0m_g",
+    "--tb=short",
+    "--junitxml",
+    "V:\\_TEMP_\\saimail-d3-pytest-umso0m_g\\junit.xml"
+  ],
+  "created_utc": "2026-09-23T18:47:13Z",
+  "errors": 0,
+  "failed_tests": [],
+  "failures": 0,
+  "junit_sha256": "c6863766671cf9d369cd213c0c31ecce097c7491c0adfd25530207cc836d0f17",
+  "note": "Canonical Windows repository suite; counts parsed from its JUnit report.",
+  "run_returncode": 0,
+  "schema": "SAIMAIL_D3_FULL_SUITE_1",
+  "skipped": 0,
+  "source_tree_fingerprint": "f7ccf88d57ecc5e4f21fabcdfa2339996e0b1365463df1793ad56303c8298a59",
+  "source_tree_unchanged_during_run": true,
+  "status": "PASS",
+  "tests": 2522,
+  "version": 1
+}

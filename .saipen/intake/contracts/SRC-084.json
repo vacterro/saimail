@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-084:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute optional research gate V2-03 reviewer output-format bounded experiment per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260921_0111.md"
+    }
+  },
+  "derived_at": "2026-09-20T22:29:11Z",
+  "derived_from": "SRC-084",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "dcacf1c40225c91bbcae27cd31732eddc9c1a1e441c8581ef4f0e8ab228679c4"
+}

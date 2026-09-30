@@ -1,0 +1,34 @@
+{
+  "clauses": {
+    "SRC-115:R001": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not reinterpret it as authorization to:"
+    },
+    "SRC-115:R002": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not treat the inherited 25 warnings as product blockers. Do not open cleanup Work merely to remove warning counts unless a warning is independently shown to cause an actual SAIMAIL defect."
+    },
+    "SRC-115:R003": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not push, tag, or publish."
+    },
+    "SRC-115:R004": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not reopen completed tickets just for cosmetic commit structure."
+    },
+    "SRC-115:R005": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not invent new Work merely to keep the agent busy."
+    }
+  },
+  "derived_at": "2026-09-30T18:00:59Z",
+  "derived_from": "SRC-115",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "77771d93eed0b8330adf87e0c5dad0de97ffc6df17f12c0749f9833ca08523da"
+}

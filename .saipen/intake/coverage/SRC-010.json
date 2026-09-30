@@ -1,4 +1,14 @@
 {
-  "requirements": {},
+  "requirements": {
+    "SRC-010:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "IMPLEMENTED",
+      "evidence": "The stop boundary recorded on this ticket has moved. All nine declared dependencies (T-35, T-36, T-37, T-39, T-40, T-41, T-10, T-8, T-42) are DONE. The two items the blocker called intentionally unstarted, T-5 Post Office and T-7 TTL sweep, are both DONE. The named next act, the T-5 attention-floor decision B-014, is DECIDED under D-036 recorded by SRC-020/T-43, and spec/03-POST-OFFICE.md section 8 carries ATTENTION_FLOOR: DECIDED.",
+      "text": "\u0425\u043e\u0440\u043e\u0448\u043e, \u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0430\u0439 \u0434\u043e \u043a\u043e\u043d\u0446\u0430. \u0414\u0430\u0432\u0430\u0439 \u043f\u043e\u0441\u0442\u0440\u043e\u0438\u043c \u044d\u0442\u043e\u0442 \u0438\u043d\u0441\u0442\u0438\u0442\u0443\u0442 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u043e \u0441\u0442\u043e\u044f\u0449\u0438\u043c.",
+      "verification": "Re-run on current bytes: tests/test_repo_consistency.py::test_the_attention_floor_is_decided_before_a_post_office_exists and ::test_the_attention_floor_decision_is_recorded_and_non_downgradable both pass, the full repository suite reports 2639 passed exit 0, and the canonical validator reports CURRENT_PASS with zero blocking problems.",
+      "work": "T-34"
+    }
+  },
   "schema_version": 1
 }

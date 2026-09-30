@@ -1,0 +1,69 @@
+{
+  "schema": "SAIMAIL_CLI_FOCUS_COST_CONTROL_1",
+  "verifier_sha256": "33d9e9f808d9cab67935c9f01bf26169c5f335a14630d3d531c15fb942a55b9e",
+  "before_sha256": "5887a1dc5a04ece0a6e61c314be72c876eefbc84cd6a54f5dc8455360318d46e",
+  "after_path": "lab\\out\\CLI_FOCUS_T141\\attempt-003\\result.json",
+  "after_sha256": "38cfe7c29ce0d1571eb6893ec04532439341ed8e817919d249796572ea76a809",
+  "before_subject_sha256": {
+    "host_contract.py": "57161ba58bc90bdf542dd2e31c62ca607fcaa0a28be5cad39aeae23f53e97026",
+    "saimail_host.py": "1a9a56279ed9df285fc9cc1cf818aec45e689ce71906d5e214cd1ba5b1b204fc",
+    "saimail_local.py": "8b4d45b17b8094d1806f3e530255f7cf1f37987a5d1fac045a7045e9c43eefc9"
+  },
+  "subject_sha256": {
+    "saimail_local.py": "fde32d57108d18a30de8aceda58a43b44d8e828a979ad12290639a0bad05cde1",
+    "saimail_host.py": "ca2eba850847f276cf97782fd2cf1ac8b4e02fa5516d33a59ebed492221de328",
+    "saimail/host_contract.py": "b26a4c612619c5268bf0764296b6a29434741bf29e87f8d1f0284aac293db3f8"
+  },
+  "before": {
+    "status": "FAIL",
+    "checks": {
+      "three_registered_repetitions": true,
+      "same_two_invocations": true,
+      "visible_context_preserved": true,
+      "discovery_and_temporal_controls": true,
+      "wire_below_75_percent_of_cycle": false
+    },
+    "cycle_wire": [
+      4791,
+      4791,
+      4791
+    ],
+    "focus_wire": [
+      4791,
+      4791,
+      4791
+    ],
+    "agent_visible": [
+      1279,
+      1279,
+      1279
+    ]
+  },
+  "after": {
+    "status": "PASS",
+    "checks": {
+      "three_registered_repetitions": true,
+      "same_two_invocations": true,
+      "visible_context_preserved": true,
+      "discovery_and_temporal_controls": true,
+      "wire_below_75_percent_of_cycle": true
+    },
+    "cycle_wire": [
+      4841,
+      4841,
+      4841
+    ],
+    "focus_wire": [
+      2643,
+      2643,
+      2643
+    ],
+    "agent_visible": [
+      1279,
+      1279,
+      1279
+    ]
+  },
+  "claim_boundary": "Same fixed cost criterion over retained actual T-140 and current registered measurements; no receiver-utility or model improvement claim.",
+  "status": "PASS"
+}

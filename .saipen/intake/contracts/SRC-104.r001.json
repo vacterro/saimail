@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-104:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Continue T-114 only; read prescribed state/log/contracts and checkpoint complete A-E stale-language classification before edits; no T-113 reimplementation."
+    }
+  },
+  "derived_at": "2026-09-23T22:43:47Z",
+  "derived_from": "SRC-104",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "f6464515728a13ab747fe14d15f078816a80900f8526096bbbf1b7d22e893012"
+}

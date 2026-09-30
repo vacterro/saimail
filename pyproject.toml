@@ -31,7 +31,7 @@ lab = ["keyring>=24"]
 # zero-dependency suite must never need it, and `saimail-local` keeps working
 # without it. `saimail-gui` exits with one actionable line when this extra is
 # absent instead of raising a traceback.
-gui = ["PySide6>=6.7,<7"]
+gui = ["PySide6>=6.7,<7", "cryptography>=41,<47"]
 # Hardware custody (D-043) is optional and lazy; the distribution that ships
 # the supported `yubikit` API is yubikey-manager. The core install and the
 # canonical suite never need it, and nothing installs at runtime.
@@ -51,7 +51,7 @@ addopts = "-q"
 
 [tool.setuptools]
 packages = ["sailang", "saimail", "lab"]
-py-modules = ["saimail_local"]
+py-modules = ["saimail_local", "saimail_host", "saimail_project"]
 
 [tool.setuptools.package-data]
 sailang = ["dictionary/*.json"]

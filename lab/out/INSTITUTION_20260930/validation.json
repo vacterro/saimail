@@ -1,0 +1,25 @@
+{
+  "schema": "SAIMAIL_MECHANICAL_VALIDATION_1",
+  "status": "PASS",
+  "test_command": [
+    "C:\\Users\\vac34\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-m",
+    "pytest",
+    "tests/test_correspondence.py",
+    "-o",
+    "addopts=",
+    "-q"
+  ],
+  "exit_code": 0,
+  "baseline_command": "python -m pytest tests/test_correspondence.py::test_shared_mailbox_same_work_isolated_by_lineage_on_every_page -o addopts= -q",
+  "baseline_exit_code": 1,
+  "baseline_failure": "Foreign lineage envelope was present in desk items after following all continuation pages. Observed before the routing correction in this session.",
+  "correction": "Namespace new letter topics with project lineage plus recipient Work; verify authenticated body against the header.",
+  "artifacts": {
+    "saimail/correspondence.py": "f4aa254726875498bd3120aa4c7030e1139dab5c1987ad6f96a2068b1348a656",
+    "saimail/notify.py": "7477445e2da4ac74f362b5f17fcffd4fadff0c661868332c37271aea325ae5c3",
+    "saimail/letters.py": "6ceb7172ae308ca17699fc85161c62135c15f9ed7ffdeefba512dc1730cb3051",
+    "tests/test_correspondence.py": "d01e6bb9d83998e9f880347a11b2e56f3313a6b45b34c8c62947501f0380e7d5",
+    "lab\\out\\INSTITUTION_20260930\\validation-output.txt": "9aa4c3c4483b009c95d675cfaf422cba02052be61cdfeb6a003768a7b52abc08"
+  }
+}

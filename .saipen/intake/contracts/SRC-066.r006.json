@@ -1,0 +1,39 @@
+{
+  "clauses": {
+    "SRC-066:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "One additive manifest contract exists (spec/13, EXPERIMENT-MANIFEST-1) and no historical registration B-018/T-63/T-69/T-71/T-74 is rewritten."
+    },
+    "SRC-066:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Historical, current and live verification are mechanically separate operations verify_historical, verify_current and admit_live in the LAB-only lab/experiment_manifest.py."
+    },
+    "SRC-066:R003": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Selected-input identity is EXTRACTED_SHA256 and unrelated container bytes outside a registered selector cannot invalidate it."
+    },
+    "SRC-066:R004": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "PUBLIC_ARCHIVABLE fixtures preserve historical replay; fixture substitution fails closed; PRIVATE_EPHEMERAL plaintext is never archived and unavailable private history reports HISTORICAL_INPUT_UNAVAILABLE_BY_DESIGN."
+    },
+    "SRC-066:R005": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Historical verification cannot authorize live execution; a HISTORICAL_ONLY manifest is refused; current input drift blocks live admission before network with zero network calls."
+    },
+    "SRC-066:R006": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "The real T-71 quarantine and legacy fixtures are indexed by a HISTORICAL_ONLY manifest while current saimail/quarantine.py and saimail/legacy.py may legitimately differ."
+    }
+  },
+  "derived_at": "2026-09-20T14:58:39Z",
+  "derived_from": "SRC-066",
+  "interpretation_revision": 6,
+  "schema_version": 1,
+  "source_sha256": "f6b6402087a6bfdaba55565d7e174edad53f8a8f6b1ee34386a4cfaac1e9611f"
+}

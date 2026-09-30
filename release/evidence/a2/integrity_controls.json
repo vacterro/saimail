@@ -1,0 +1,54 @@
+{
+  "created_utc": "2026-09-20T20:00:27Z",
+  "frozen_candidate_untouched": true,
+  "integrity": {
+    "candidate_version": "0.0.2a2",
+    "checks": {
+      "checksums_ok": true,
+      "manifest_ok": true,
+      "version_surface_ok": true,
+      "wheel_content_digest_ok": true,
+      "wheel_hash_ok": true
+    },
+    "failures": [],
+    "schema": "LOCAL_ALPHA_INTEGRITY_1",
+    "status": "PASS",
+    "version": 1,
+    "wheel_filename": "saimail-0.0.2a2-py3-none-any.whl",
+    "wheel_sha256": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d"
+  },
+  "red_controls": [
+    {
+      "control": "corrupt_wheel",
+      "expected": "FAIL",
+      "failures": [
+        "wheel sha256 9e088cbde21a001cfa7fbc1aba62f41b544a440b93a23de9690e56ee9e6d56b6 != manifest d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d",
+        "checksums mismatch for saimail-0.0.2a2-py3-none-any.whl"
+      ],
+      "observed": "FAIL",
+      "ok": true
+    },
+    {
+      "control": "corrupt_recorded_wheel_hash",
+      "expected": "FAIL",
+      "failures": [
+        "wheel sha256 d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d != manifest 0000000000000000000000000000000000000000000000000000000000000000",
+        "checksums mismatch for local_alpha_candidate.json"
+      ],
+      "observed": "FAIL",
+      "ok": true
+    },
+    {
+      "control": "corrupt_checksum_entry",
+      "expected": "FAIL",
+      "failures": [
+        "checksums mismatch for README-LOCAL-ALPHA.md"
+      ],
+      "observed": "FAIL",
+      "ok": true
+    }
+  ],
+  "schema": "SAIMAIL_A2_RED_CONTROLS_1",
+  "status": "PASS",
+  "version": 1
+}

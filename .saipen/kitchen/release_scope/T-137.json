@@ -1,0 +1,28 @@
+{
+  "op_id": "scope-7ada5c3274a84ac1a3bf13c947469d09",
+  "paths": {
+    ".saipen/evidence/T-137-cycle/after-context.json": "a18dd73bc2bc206407f3f703732dc920bd3e9572bfde8f78967e59c6d3432c0c",
+    ".saipen/evidence/T-137-cycle/before-context.json": "f631cc98c105907b113e94dbd6939d8c6aba6aa11fc41096473bad50d7a50c01",
+    ".saipen/evidence/T-137-cycle/cli_context_control.py": "9febd8d11ef8818f1c00e4966f8a4460dbc8ae9914dd9aee50ed1bf52b2e1be8",
+    "CHANGELOG.md": "4dbb9f17bac4612ce5a9c1bf733296c5e74eeb6db78d40531050d8879714fef0",
+    "humbox/CURRENT-STATE.md": "40376a6762dc6e9105be57396032230246924222c103e3678297d05e302e8d4b",
+    "humbox/EVOLUTION.md": "7a7477e42d83306777fc81fe61bb5751914e4783154a920c636e12ee008bba8d",
+    "humbox/FUTURE-GATES-V6.md": "5c92dc3bf4825f824c50a8ffc95fc712597734f815f4f42062ec76491c4f48d1",
+    "lab/stable_local_api.json": "43000eb2bc89010fab8ce1bae956f2ab860bcf71f27a1b8069f976bcf6dbc74e",
+    "saimail/agent_cycle.py": "750ae50bb27e573b5774d4190a556156588be6fb45f6aae42efd7afbcd873a50",
+    "saimail/host_contract.py": "b7a89ace7e979162d1220cdb9ff5f36e93a85ae03af965739f45a6ab08b98e84",
+    "saimail_host.py": "6cb3d8fb4ad6b8a2605fe16ae09771fdea8e024875e3b504b44827d3a7e1a0c5",
+    "saimail_local.py": "8b4d45b17b8094d1806f3e530255f7cf1f37987a5d1fac045a7045e9c43eefc9",
+    "spec/33-USEFUL-CORRESPONDENCE-v1.md": "b5b5558601cf4c489d7138809355fb805363f24918f23087167c8ecc0f7c153c",
+    "tests/test_agent_cycle.py": "94257204b88a94f04172ba5f8b086039c9f0989d3674fd7b773aa2931ce27191",
+    "tests/test_host_client.py": "bc31aa918175a88c6939a8f31566c99ae1595228cd712d11c385c3c3ae46e035",
+    "tests/test_provenance.py": "e320e290d44d2a3808f34808fdf1fb43145283b629fb8fb0d64305cdc0df079f"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-30T07:57:13Z",
+  "schema_version": 2,
+  "source_head": "36f8836931a322435fb70060bc7f219b571dfd49",
+  "source_tree_fingerprint": "git-delta-v1:f8eb3ad84137584c27589927e425c623d46e20e78dfb4b6535f52c30f93c574d",
+  "ticket": "T-137"
+}

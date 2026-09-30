@@ -1,0 +1,22 @@
+{
+  "ticket": "T-73",
+  "phase": "SCOUT",
+  "last_event": 850,
+  "debt": "DEBT-000066",
+  "verdict": "CURRENT_FAIL",
+  "exit_code": 1,
+  "failure_count": 3,
+  "warning_count": 22,
+  "failures": [
+    "FAIL: source receipts -- DONE Work T-41 has unresolved source receipt SRC-017",
+    "FAIL: source receipts -- source credential gate: SOURCE_CREDENTIALS_UNSAFE credential pattern in exact active source SRC-036; supply a user-authorized replacement or amendment before release",
+    "FAIL: cross-doc drift [schemas] -- board.schema.json does not describe ['superseded_by', 'supersession_authority', 'supersession_evidence'], which RFC § 1.2 recognises as ticket fields and this validator already parses"
+  ],
+  "output_file": ".saipen/evidence/T-73-validation-baseline.txt",
+  "output_note": "normalized (LF) copy of the exact validator stdout captured at SCOUT; the two source-recipient failures plus the validator-side schema cross-doc drift are the carried DEBT-000066 baseline",
+  "focused_baseline": {
+    "command": "python -m pytest -q tests/test_parse_shape.py tests/test_parse_shape_resource_bounds.py tests/test_project_corpus_reachability.py tests/test_project_corpus_generation_pilot.py tests/test_project_corpus_generation_privacy.py",
+    "passed": 145
+  },
+  "closure_requirement": "no new validator failure; the exact three failures above must remain, reported as CURRENT_FAIL CARRIED_DEBT_UNCHANGED"
+}

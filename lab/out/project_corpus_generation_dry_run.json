@@ -1,0 +1,457 @@
+{
+  "authority": "EXPERIMENT_DATA",
+  "is_not": [
+    "CONSENSUS",
+    "TRUTH",
+    "PROTOCOL_CHANGE",
+    "USER_INTENT"
+  ],
+  "note": "Live output is experiment data. It is not consensus, not truth, not a protocol change and not user intent. Disagreement between agents is preserved per call. Reasoning traces are dropped before storage.",
+  "pilot_version": "PROJECT-CORPUS-GENERATION-PILOT-1",
+  "status": "DRY_RUN",
+  "reason": null,
+  "dry_run": true,
+  "live_registration": {
+    "id": "sha256:5d750a8aaf166a02d7f1bc13c98f7bbde91728dd616083a0d2cde563e1f40b6e",
+    "file": "project_corpus_generation_registration.json",
+    "file_sha256": "sha256:5d750a8aaf166a02d7f1bc13c98f7bbde91728dd616083a0d2cde563e1f40b6e",
+    "registered_under": {
+      "source_receipt": "SRC-052",
+      "ticket": "T-69"
+    }
+  },
+  "b018_input": {
+    "registration_id": "sha256:dfd8b48dded34de8426181f309032da31c86e83f675412add15076fc421a096f",
+    "build_id": "sha256:0e05460aae1645b6bdfeec887f02a978a185026422faf74c90238f0938bd4e35",
+    "corpus_id": "sha256:b009bdf3a8efd28f29be76d0dfd9c2809c0e7dd010af8e92c94a97fbeeec19ac",
+    "project_scope": "project:saimail",
+    "artifact_count": 8,
+    "event_count": 5,
+    "built_from_b018_registration_path": "lab/project_corpus_pilot_registration.json",
+    "completeness": "NOT_PROVEN"
+  },
+  "experiment_class": {
+    "rule": "saifren-experiment-class/1",
+    "experiment_class": "NOT_MEASURED",
+    "combo": "SAIFREN",
+    "observed_combo_members": [],
+    "participating_combo_members": [],
+    "external_comparators": [],
+    "distinct_reported_models": [],
+    "roster_status": "NOT_OBSERVABLE",
+    "roster_status_basis": "ROSTER_NOT_EXPOSED",
+    "membership_evidence_basis": "CALL_RECORDS",
+    "membership_evidence": {
+      "alias_calls": {},
+      "membership_probes": [],
+      "alias_only_answers": 0
+    },
+    "unattributed_models": [],
+    "cross_member_claim": false,
+    "note": "Membership is sampled through the combo alias, never read from a roster and never inferred from catalog eligibility. OBSERVED_COMBO_MEMBERS is what this run saw, not what SAIFREN contains. EXTERNAL_COMPARATORS are live catalog models answering beside SAIFREN for contrast; nothing in the run shows they are SAIFREN members."
+  },
+  "harness": {
+    "gateway": "9router",
+    "base_url": "http://127.0.0.1:20128",
+    "model_alias": "SAIFREN",
+    "protocol_version": "SAILANG frame v4 / SAIB4",
+    "max_tokens": 2048,
+    "timeout_s": 120,
+    "replicates": [
+      1,
+      2
+    ],
+    "pilot_version": "PROJECT-CORPUS-GENERATION-PILOT-1"
+  },
+  "credential": {
+    "handle": null,
+    "source": null,
+    "backend": null
+  },
+  "population": {
+    "combo": "SAIFREN",
+    "membership_observed_at": "2026-09-19T22:05:18Z",
+    "membership_source": "SAIFREN_MEMBERSHIP_NOT_OBSERVABLE",
+    "roster_status": "ROSTER_NOT_EXPOSED",
+    "observed_members": [],
+    "membership_digest": "",
+    "catalog_size": 0,
+    "catalog_digest": "",
+    "discovery": {
+      "surface": "/v1/models",
+      "queried": false
+    },
+    "selection_rule": "saifren-selection/1",
+    "replacement_policy": "saifren-replacement/1",
+    "membership_probes_used": 0,
+    "selection_probes_used": 0,
+    "participants": [
+      {
+        "role": "A",
+        "requested": "SAIFREN",
+        "reported_model": null,
+        "member_status": "OBSERVED_COMBO_MEMBER",
+        "source": "COMBO_ALIAS",
+        "provider": null,
+        "catalog_namespace": null
+      },
+      {
+        "role": "B",
+        "requested": "UNRESOLVED_EXTERNAL_COMPARATOR",
+        "reported_model": null,
+        "member_status": "NOT_PROVEN_COMBO_MEMBER",
+        "source": "CATALOG_ELIGIBLE",
+        "provider": null,
+        "catalog_namespace": null
+      }
+    ],
+    "rejected_candidates": [],
+    "heterogeneous_participants": false,
+    "notes": [
+      "SAIFREN_MEMBERSHIP_NOT_OBSERVABLE: a dry run makes no call"
+    ]
+  },
+  "participants_frozen": [
+    {
+      "role": "A",
+      "requested": "SAIFREN",
+      "reported_model": null,
+      "member_status": "OBSERVED_COMBO_MEMBER",
+      "source": "COMBO_ALIAS",
+      "provider": null
+    },
+    {
+      "role": "B",
+      "requested": "UNRESOLVED_EXTERNAL_COMPARATOR",
+      "reported_model": null,
+      "member_status": "NOT_PROVEN_COMBO_MEMBER",
+      "source": "CATALOG_ELIGIBLE",
+      "provider": null
+    }
+  ],
+  "role_assignment": {
+    "R1": {
+      "generator": "A",
+      "reviewer": "B"
+    },
+    "R2": {
+      "generator": "B",
+      "reviewer": "A"
+    }
+  },
+  "started": "2026-09-19T22:05:18Z",
+  "stopped": null,
+  "call_budget": {
+    "declared_max": 12,
+    "planned_calls_max": 12,
+    "discovery_max": 8,
+    "real_generation_max": 2,
+    "real_review_max": 2,
+    "spent_total": 0,
+    "spent_discovery": 0,
+    "spent_generation": 0,
+    "spent_review": 0,
+    "retries": 0,
+    "repair_calls": 0
+  },
+  "replicates": [
+    {
+      "unit_id": "R1",
+      "replicate": 1,
+      "generator": {
+        "role": "A",
+        "requested_model": "SAIFREN",
+        "reported_model": null,
+        "transport_status": "OK",
+        "parse_status": "OK",
+        "calls": 1
+      },
+      "reviewer": {
+        "role": "B",
+        "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+        "reported_model": null,
+        "transport_status": "OK",
+        "parse_status": "OK"
+      },
+      "same_reported_model_pair": false,
+      "same_reported_model_label": null,
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "OK",
+        "GENERATOR_RESULT": "CANDIDATE",
+        "ALLY1_STRUCTURAL_GATE": "PASS",
+        "CORPUS_REF_GATE": "PASS",
+        "EVENT_FLOOR_GATE": "PASS",
+        "EVIDENCE_RESOLUTION": "PASS",
+        "REVIEWER_TRANSPORT": "OK",
+        "REVIEWER_PARSE": "OK",
+        "SEMANTIC_REVIEW": "PASS",
+        "FINAL_GATE_OUTCOME": "APPROVED"
+      },
+      "outcome": {
+        "status": "APPROVED",
+        "code": null
+      },
+      "error": null,
+      "reviewer_calls": 1,
+      "candidate": {
+        "candidate_id": "sha256:2a78edf81ee28c986fb78f93e5b233418ac7977c6da931406e6512765c7ddbca",
+        "observed_scope": "project:saimail",
+        "observed_item_count": 2,
+        "observed_evidence_refs": [
+          "sha256:0c4d8190d42036d5e43d11fe2dd2a2510e20118b28f0ad26091adc680e1dca6b",
+          "sha256:25cf1d478c1fb0b930e6336f1ab41df98c9e03f06cee00225565ddb1bb99928a",
+          "sha256:470467bf49b1609e5ffc5cf33a71ceadc8a49462b0864b36c54f7b1c5b5d9db4",
+          "sha256:77a0bf1f67abe52a7be10af84746adb20db8762e7a0a2ca6ddb193d1cd58cc92"
+        ],
+        "observed_event_refs": [
+          "sha256:77b3cc53850a1e942cd4fe5043fdf59dc56c10c4aa945f8db5cb4c0fca2daa4f",
+          "sha256:c3a72d9c171876a8b5bfbf6f636c9730e46b0953ba06381b7743346174637b57",
+          "sha256:f838da4914db0597df13da821cb5e3187e7d20a3284f857e6ac66095f0093aab"
+        ],
+        "counterevidence_item_count": 1,
+        "counterevidence_evidence_refs": [
+          "sha256:0c4d8190d42036d5e43d11fe2dd2a2510e20118b28f0ad26091adc680e1dca6b"
+        ],
+        "counterevidence_event_refs": [
+          "sha256:f838da4914db0597df13da821cb5e3187e7d20a3284f857e6ac66095f0093aab"
+        ],
+        "guidance_mode": "CONSIDER_CHANGE"
+      },
+      "review": {
+        "verdicts": [
+          {
+            "dimension": "OBSERVATION_SUPPORT",
+            "verdict": "PASS",
+            "evidence_refs": [
+              "sha256:0c4d8190d42036d5e43d11fe2dd2a2510e20118b28f0ad26091adc680e1dca6b"
+            ]
+          },
+          {
+            "dimension": "COUNTEREVIDENCE_ADEQUACY",
+            "verdict": "PASS",
+            "evidence_refs": [
+              "sha256:0c4d8190d42036d5e43d11fe2dd2a2510e20118b28f0ad26091adc680e1dca6b"
+            ]
+          },
+          {
+            "dimension": "SCOPE_DISCIPLINE",
+            "verdict": "PASS",
+            "evidence_refs": []
+          },
+          {
+            "dimension": "NO_MOTIVE_INFERENCE",
+            "verdict": "PASS",
+            "evidence_refs": []
+          },
+          {
+            "dimension": "NO_FLATTERY",
+            "verdict": "PASS",
+            "evidence_refs": []
+          },
+          {
+            "dimension": "NO_COMPLIANCE_PRESSURE",
+            "verdict": "PASS",
+            "evidence_refs": []
+          },
+          {
+            "dimension": "UNCERTAINTY_ADEQUACY",
+            "verdict": "PASS",
+            "evidence_refs": []
+          },
+          {
+            "dimension": "RECIPIENT_AGENCY",
+            "verdict": "PASS",
+            "evidence_refs": []
+          }
+        ]
+      },
+      "outside_corpus_refs": [],
+      "refs_confined_to_corpus": true,
+      "observed_scope_exact": true
+    },
+    {
+      "unit_id": "R2",
+      "replicate": 2,
+      "generator": {
+        "role": "B",
+        "requested_model": "UNRESOLVED_EXTERNAL_COMPARATOR",
+        "reported_model": null,
+        "transport_status": "OK",
+        "parse_status": "OK",
+        "calls": 1
+      },
+      "reviewer": {
+        "role": "A",
+        "requested_model": "SAIFREN",
+        "reported_model": null,
+        "transport_status": "NOT_ATTEMPTED",
+        "parse_status": "NOT_ATTEMPTED"
+      },
+      "same_reported_model_pair": false,
+      "same_reported_model_label": null,
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "OK",
+        "GENERATOR_RESULT": "NO_ADVICE",
+        "ALLY1_STRUCTURAL_GATE": "NOT_REACHED",
+        "CORPUS_REF_GATE": "NOT_REACHED",
+        "EVENT_FLOOR_GATE": "NOT_REACHED",
+        "EVIDENCE_RESOLUTION": "NOT_REACHED",
+        "REVIEWER_TRANSPORT": "NOT_REACHED",
+        "REVIEWER_PARSE": "NOT_REACHED",
+        "SEMANTIC_REVIEW": "SKIPPED",
+        "FINAL_GATE_OUTCOME": "NO_ADVICE"
+      },
+      "outcome": {
+        "status": "NO_ADVICE",
+        "code": null
+      },
+      "error": null,
+      "reviewer_calls": 0,
+      "candidate": null,
+      "review": null,
+      "outside_corpus_refs": [],
+      "refs_confined_to_corpus": null,
+      "observed_scope_exact": null
+    }
+  ],
+  "dry_run_proofs": [
+    {
+      "unit_id": "PROOF.ONE_EVENT",
+      "defect": "one declared event, three artifacts",
+      "outcome": {
+        "status": "REJECTED",
+        "code": "ALLY_GEN_INSUFFICIENT_DISTINCT_EVENTS"
+      },
+      "generator_calls": 1,
+      "reviewer_calls": 0,
+      "reviewed_state": false,
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "OK",
+        "GENERATOR_RESULT": "CANDIDATE",
+        "ALLY1_STRUCTURAL_GATE": "PASS",
+        "CORPUS_REF_GATE": "PASS",
+        "EVENT_FLOOR_GATE": "FAIL",
+        "EVIDENCE_RESOLUTION": "NOT_REACHED",
+        "REVIEWER_TRANSPORT": "NOT_REACHED",
+        "REVIEWER_PARSE": "NOT_REACHED",
+        "SEMANTIC_REVIEW": "SKIPPED",
+        "FINAL_GATE_OUTCOME": "REJECTED"
+      }
+    },
+    {
+      "unit_id": "PROOF.REVIEW_FAIL",
+      "defect": "scripted reviewer verdict",
+      "outcome": {
+        "status": "REJECTED",
+        "code": "ALLY_GEN_REVIEW_REJECTED"
+      },
+      "generator_calls": 1,
+      "reviewer_calls": 1,
+      "reviewed_state": false,
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "OK",
+        "GENERATOR_RESULT": "CANDIDATE",
+        "ALLY1_STRUCTURAL_GATE": "PASS",
+        "CORPUS_REF_GATE": "PASS",
+        "EVENT_FLOOR_GATE": "PASS",
+        "EVIDENCE_RESOLUTION": "PASS",
+        "REVIEWER_TRANSPORT": "OK",
+        "REVIEWER_PARSE": "OK",
+        "SEMANTIC_REVIEW": "PASS",
+        "FINAL_GATE_OUTCOME": "REJECTED"
+      }
+    },
+    {
+      "unit_id": "PROOF.REVIEW_UNKNOWN",
+      "defect": "scripted reviewer verdict",
+      "outcome": {
+        "status": "REJECTED",
+        "code": "ALLY_GEN_REVIEW_UNCERTAIN"
+      },
+      "generator_calls": 1,
+      "reviewer_calls": 1,
+      "reviewed_state": false,
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "OK",
+        "GENERATOR_RESULT": "CANDIDATE",
+        "ALLY1_STRUCTURAL_GATE": "PASS",
+        "CORPUS_REF_GATE": "PASS",
+        "EVENT_FLOOR_GATE": "PASS",
+        "EVIDENCE_RESOLUTION": "PASS",
+        "REVIEWER_TRANSPORT": "OK",
+        "REVIEWER_PARSE": "OK",
+        "SEMANTIC_REVIEW": "PASS",
+        "FINAL_GATE_OUTCOME": "REJECTED"
+      }
+    },
+    {
+      "unit_id": "PROOF.MALFORMED_JSON",
+      "defect": "non-JSON generator output",
+      "outcome": {
+        "status": "ERROR",
+        "code": "ALLY_GEN_PROVIDER_ERROR"
+      },
+      "generator_calls": 1,
+      "reviewer_calls": 0,
+      "reviewed_state": false,
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "SCHEMA_ERROR",
+        "GENERATOR_RESULT": "ERROR",
+        "ALLY1_STRUCTURAL_GATE": "NOT_REACHED",
+        "CORPUS_REF_GATE": "NOT_REACHED",
+        "EVENT_FLOOR_GATE": "NOT_REACHED",
+        "EVIDENCE_RESOLUTION": "NOT_REACHED",
+        "REVIEWER_TRANSPORT": "NOT_REACHED",
+        "REVIEWER_PARSE": "NOT_REACHED",
+        "SEMANTIC_REVIEW": "NOT_REACHED",
+        "FINAL_GATE_OUTCOME": "ERROR"
+      }
+    }
+  ],
+  "calls": [],
+  "hidden_context_observation": {
+    "measured_calls": 0,
+    "delta_min": null,
+    "delta_max": null,
+    "statement": "a positive delta is reported only as opaque/hidden upstream context or accounting not represented in the local prompt; its contents are never inferred and accessible chain-of-thought is never claimed"
+  },
+  "privacy": {
+    "local_raw_generator_output_persistence": false,
+    "local_reviewer_rationale_persistence": false,
+    "local_prompt_persistence": false,
+    "provider_side_retention": "NOT_VERIFIED_BY_SAIMAIL",
+    "provider_side_training_use": "NOT_VERIFIED_BY_SAIMAIL",
+    "external_inference_privacy_equals_local_non_persistence": false,
+    "in_process_ephemeral_equals_cryptographic_memory_erasure": false
+  },
+  "plaintext_retention": {
+    "prompt": false,
+    "generator_output": false,
+    "candidate_prose": false,
+    "reviewer_rationale": false,
+    "provider_error_bodies": false,
+    "discovery_probe_output": false,
+    "only_hashes_lengths_and_metadata": true
+  },
+  "side_effects": {
+    "reviewed_ally_to_human_private_calls": 0,
+    "hlet1_created": 0,
+    "henv1_created": 0,
+    "human_private_store_writes": 0,
+    "attention_admissions": 0,
+    "operator_presentation_of_generated_advice": 0
+  },
+  "limits": [
+    "n=1 generation sample per role assignment is not a model property",
+    "no model ranking and no winner exists in this experiment",
+    "APPROVED means only one actual reviewer invocation returned PASS on all frozen B-016 dimensions for that exact candidate/corpus",
+    "EVENT_REF is caller-declared, not truth; corpus completeness is NOT_PROVEN",
+    "a reviewer PASS is not truth and NO_ADVICE is a successful result"
+  ]
+}

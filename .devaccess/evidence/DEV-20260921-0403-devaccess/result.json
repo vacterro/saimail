@@ -1,0 +1,43 @@
+{
+  "schema": "DEV_ACCESS_RESULT_1",
+  "dev_id": "DEV-20260921-0403-devaccess",
+  "status": "DEV_COMPLETE",
+  "finished_at": "2026-09-21T02:16:31Z",
+  "base_hashes": {
+    ".devaccess/ACTIVE.json": "133f78f1767dfc269683be673d439d71f79cdf022762303d8a1086d66e7a505f",
+    "tools/dev_access.py": "44ff15c522082998684a8995b4bbd5ae586de788f587785ddd87bc1f82dd1be9"
+  },
+  "final_hashes": {
+    ".devaccess/ACTIVE.json": "b54b24c55f6f992857fc5c949f2ae21b773c27069bd1db3ca1b386453d563df5",
+    "tools/dev_access.py": "ce2ed15e01b90be806b280c1fe409630f161427e67b25ec10dc4f5f6201ce128",
+    ".devaccess/evidence/DEV-20260921-0403-devaccess/RECONCILE.md": "b5f950aa74dbdf9d433ae3abc2dc7aeee8e7c6b1c125aa1b0d63555460309d54",
+    ".devaccess/evidence/DEV-20260921-0403-devaccess/baseline.json": "b8e06649f99283ea814a18a3566eb3cad9515142585f318503dc3e30116c42d5",
+    ".devaccess/evidence/DEV-20260921-0403-devaccess/result.json": "f857628e1a5472f71a4870e5b034169b20bff66eff3aeebe014fbabbcf6516ef",
+    ".devaccess/work/DEV-20260921-0403-devaccess.json": "8452e3b5f8272c5c9b253c6e04f2b93653d7d2f6821d5553c7d507b26222c036",
+    ".devaccess/work/DEV-20260921-0423-devaccess-hardening.json": "8da2d866af54500c33ad1ebe93e6e9bfe36625b94d7778dd5bfce8c4b994bdc9",
+    "tests/test_dev_access.py": "f22c997c6f71a89a15705946eb0527f0117b5ec81f5e9f66fe4a6175487fe7a6"
+  },
+  "changed_files": [
+    ".devaccess/ACTIVE.json",
+    "tools/dev_access.py"
+  ],
+  "created_files": [
+    ".devaccess/evidence/DEV-20260921-0403-devaccess/RECONCILE.md",
+    ".devaccess/evidence/DEV-20260921-0403-devaccess/baseline.json",
+    ".devaccess/evidence/DEV-20260921-0403-devaccess/result.json",
+    ".devaccess/work/DEV-20260921-0403-devaccess.json",
+    ".devaccess/work/DEV-20260921-0423-devaccess-hardening.json",
+    "tests/test_dev_access.py"
+  ],
+  "deleted_files": [],
+  "focused_tests": "python -m pytest tests/test_dev_access.py -q -> 14 passed",
+  "regression_tests": "python -m pytest tests/test_repo_consistency.py -q -> PASS; full suite run follows in T-100 VERIFY",
+  "lint": "ruff -> All checks passed; py_compile -> PASS",
+  "known_limitations": [
+    "forbidden_snapshot re-measured after the original baseline was found corrupt; starting_hashes preserved from the original record"
+  ],
+  "no_publication_assertion": true,
+  "no_canonical_state_mutation_assertion": true,
+  "canonical_surface_unchanged": true,
+  "reconciliation_required": true
+}

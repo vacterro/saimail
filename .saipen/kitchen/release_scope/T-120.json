@@ -1,0 +1,24 @@
+{
+  "op_id": "scope-e3bd1d28908f4c27ac52d268fb0365bb",
+  "paths": {
+    "CHANGELOG.md": "72c6be7f579e9338bc1bf644432f08fe06d10d56901a737bd362c10acf47d995",
+    "humbox/CURRENT-STATE.md": "17b5dbc704d58e8c8362bb81f5bda89c67bfdb3660c091140ae824aa55ae72fd",
+    "humbox/FUTURE-GATES-V6.md": "122b670ba395b62cb50ba40270e123879e81ca529b490a214a57bfc6ddac350b",
+    "lab/stable_local_api.json": "971b691c439d860434ad3b536125f0f4cd2c3495d81d81b3dce7ab0241958e76",
+    "saimail/participants.py": "70947bfa25ada1785cbbc0d0af2cdd0bb6f63d0219ef224713c770a6d2458ffb",
+    "saimail/workspace.py": "76f90f57b313e092e98c8cac81d50945491b0d336556d43a2e3284bed657d6ef",
+    "saimail_local.py": "0aeef271896f2def5bec977497ef5c58a640fbf2fd4875848bc048c2317cad5c",
+    "spec/29-PARTICIPANT-REGISTRY-v0.md": "f6504f5c2dc021ea05b02f40596d059065be8b703ca2d042b52f1dcbc3a9c00b",
+    "spec/DECISIONS-D061.md": "3e6675b2ddf1fc6fecb392c23c7b9524d0a28159943ec0cb0a1edff25d4bfd15",
+    "tests/test_participants.py": "770daeb706d7dab576e176fd5b0e6f70ea0b5f1aeeb162d0272e67aa24a0095c",
+    "tests/test_repo_consistency.py": "560031cebf04052521fc589f72cff388e99d6c49ec0ad12628f6dbc52b8b27fc",
+    "tests/test_turn_entry_headers.py": "6c2b7d4b12601ac0519408b1fa13329722a5316bdd7344b019d4bab51efb99f4"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-24T06:59:08Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:7e554fcbc6fc415699e4dbaaa1600f969a07f7ed8605a88b2162dc3ac2dd7d95",
+  "ticket": "T-120"
+}

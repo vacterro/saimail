@@ -1,0 +1,34 @@
+{
+  "dev_id": "DEV-20260921-0423-devaccess-hardening",
+  "operator_request": "Harden DEV ACCESS v1 to v2: schema bump, admit command, state parser, self-expiry, delta-tracking, finish-check",
+  "starting_canonical_state": {
+    "phase": "VERIFY",
+    "task": "T-99"
+  },
+  "writable_paths": [
+    ".devaccess/**",
+    "tools/dev_access.py"
+  ],
+  "forbidden_paths": [
+    ".saipen/STATE.md",
+    ".saipen/BOARD.md",
+    ".saipen/LOG.md",
+    ".saipen/intake/**",
+    ".saipen/kitchen/**",
+    ".saipen/evidence/**",
+    "humbox/CURRENT-STATE.md",
+    "humbox/FUTURE-GATES*.md",
+    "release/local-alpha/**",
+    "release/candidates/0.0.2a2/**",
+    "release/evidence/a2/**"
+  ],
+  "started_at": "2026-09-21T01:52:21Z",
+  "status": "reconciled",
+  "changed_files": [],
+  "created_files": [],
+  "deleted_files": [],
+  "tests": {},
+  "schema_version": 2,
+  "reconciled_at": "2026-09-21T21:18:01Z",
+  "reconciled_reason": "overlay_disabled_before_completion"
+}

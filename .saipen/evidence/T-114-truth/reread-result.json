@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_reread_continuation.py"
+  ],
+  "exit_code": 0,
+  "tests": 25,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "passed": 25,
+  "report_note": "Original Windows PYTEST_ADDOPTS backslashes were consumed by shlex; recovered actual XML unchanged, counts derived from it; runner now uses forward slashes."
+}

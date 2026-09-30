@@ -96,18 +96,37 @@ def _budget_gate(seat: str, work: str, now: str):
 
 
 def notify(workspace, *, lineage: str, work: str, trigger: str, to_seat: str, claim=None,
-           citation=None, event=None, clock=None) -> dict:
+           citation=None, event=None, letter=None, clock=None) -> dict:
     """Send one automatic notification exactly once, or suppress it by budget.
 
     Exactly one body: ``claim`` (one line) or ``citation`` (the S2 record of
     ``event``). The recipient, kind and alias come from the participant registry;
     the key makes every repeat of the same fact the same message.
     """
-    if (claim is None) == (citation is None):
-        _reject(_workspace.BAD_INPUT, "a notification carries exactly one of a claim or a citation")
+    if sum(body is not None for body in (claim, citation, letter)) != 1:
+        _reject(_workspace.BAD_INPUT, "a notification carries exactly one body")
     resolved = participants.resolve_participant(workspace, lineage, to_seat,
                                                 trigger=trigger)["participant"]
-    if citation is not None:
+    topic = work  # legacy claims/citations keep their established wire contract
+    if letter is not None:
+        from sailang import Record
+        from saimail import letters
+
+        letters.validate(letter, lineage=lineage, recipient_work=work)
+        topic = letters.topic(lineage, work)
+        if letter["trigger"] != trigger:
+            _reject(letters.BAD_LETTER, "letter trigger differs from its routing trigger")
+        # Stable issue identity prevents a reworded decision from becoming a
+        # second letter. A changed request must be an explicit new decision.
+        basis = "l" + hashlib.sha256(
+            (letter["sender_work"] + ":" + letter["issue"]).encode("utf-8")).hexdigest()[:24]
+        identity = {"form": "letter", "letter": letter}
+        citation = Record.create(
+            KIND="O", SRC="AGENT:" + workspace.seat, SUBJ=work,
+            CLAIM=letters.encode(letter), TYPE="OBS", STATUS="U1",
+            EV=("sha256:" + letter["evidence"][0]["sha256"] if letter["evidence"] else "0"),
+            CREATED=(clock or postoffice.utc_now)())
+    elif citation is not None:
         if not isinstance(event, str) or not _EVENT_RE.match(event):
             _reject(_workspace.BAD_INPUT, "a citation names its event id E-<number>")
         basis = event
@@ -119,8 +138,8 @@ def notify(workspace, *, lineage: str, work: str, trigger: str, to_seat: str, cl
         identity = None
     key = notify_key(lineage, work, trigger, to_seat, basis)
     now = (clock or postoffice.utc_now)()
-    kwargs = {"key": key, "subject": work, "topic": work, "kind": resolved["kind"],
-              "content_identity": identity, "gate": _budget_gate(to_seat, work, now),
+    kwargs = {"key": key, "subject": work, "topic": topic, "kind": resolved["kind"],
+              "content_identity": identity, "gate": _budget_gate(to_seat, topic, now),
               "clock": clock}
     try:
         if citation is not None:
@@ -143,6 +162,7 @@ def notify(workspace, *, lineage: str, work: str, trigger: str, to_seat: str, cl
     result = dict(sent)
     result.update(command="saipen-notify", notify=_view(trigger, to_seat, resolved, work, key),
                   resumed=resumed)
+    result["notify"]["content_contract"] = "SAIMAIL_LETTER_1" if letter is not None else "UNASSESSED"
     return result
 
 

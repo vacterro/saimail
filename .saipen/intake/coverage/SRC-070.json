@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-070:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "FG-06 closed; focused 20, regression 675, full suite 2082 passed 0 failures errors skips; benchmark, entrypoint, API map and clean-wheel install proven offline",
+      "text": "FG-06 utility total friction and local entrypoint",
+      "verification": "Work reached its verification gate; see T-83 VERIFY cycle in LOG.md",
+      "work": "T-83"
+    }
+  },
+  "schema_version": 1
+}

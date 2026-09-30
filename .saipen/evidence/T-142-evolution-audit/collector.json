@@ -1,0 +1,7 @@
+{
+  "observed_source": "capture_observed.txt",
+  "observed_sha256": "a7525f3a2732c48ef0b74b439025869f9d01c7a685353749552ed7bd82889e95",
+  "current_source": "capture.py",
+  "current_sha256": "79feebb2a55d53c07612f1d0120356f07cb7538be018d1bb7b74068d3d8e3981",
+  "reason": "After the retained observation, removed one unused import, used UTC aliases and made check=False explicit. The actual observation was not rerun or replaced."
+}

@@ -1,0 +1,23 @@
+{
+  "op_id": "scope-b5fc87a68d93493eb05ab8d7f6a7eb23",
+  "paths": {
+    "README.md": "8a0df55f22bdc3f6c5dc899239d4218cf30eba63c858510fa3ddec5b4c46b5ab",
+    "humbox/CURRENT-STATE.md": "174d742c9dda2770eab4119bc40ee90ea0f33e0e34ded3e4e77db707ba08e046",
+    "humbox/FUTURE-GATES-V3.md": "40be54dbdd0fee065b0830d6a492842112cbc98e1027a104e8441d322ee1e70d",
+    "lab/stable_local_api.json": "6e0431895f56ff313195f3dae7d60ca463214296808a8181ece98d9daf453af9",
+    "saimail/custody.py": "ca79fb443c2004b1d8eede85bb0a3147556fd1d88dc4ab7df17335ad18a567ca",
+    "saimail/workspace.py": "6c4e570dd1ec981b635d644e15db1da81e96d3557f57ff2b49c792152534c117",
+    "saimail_local.py": "1b5a9844eddf2a1a14b7a30739860d577af50d9aa46c88f9c9bb20c9b4f8b5fe",
+    "spec/17-LOCAL-WORKSPACE-v0.md": "6ed43f5006c2a673213fd0abbbc2f29d876fcc0d35c4930c3d5f2c4c99494d6f",
+    "spec/20-LOCAL-KEY-CUSTODY-v0.md": "3096d69225179aeba39d0cf7344c5f3bb6ed02c48cfb767edefc37a830c4f603",
+    "spec/DECISIONS-D053.md": "b2f4afce64243531b7356506f470cd71a21f42c2ce242183a8f6d3aa0776a3d2",
+    "tests/test_workspace_custody.py": "48e1e7d02474ca7db27a3d64c4732d8855b771bcc291177b3eb7a4b0f467ec53"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-20T19:20:31Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:b6cfde5ac3424fe2c1e544cbbc5fe22732f596d9cdf89877689133097039204b",
+  "ticket": "T-89"
+}

@@ -1,0 +1,58 @@
+{
+  "byte_identical_wheels": false,
+  "byte_inequality_cause": "setuptools embeds per-build RECORD/timestamp metadata; content identity is compared member-by-member",
+  "candidate": {
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a3",
+    "wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+    "wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc"
+  },
+  "checks": {
+    "content_digest_identical": true,
+    "content_proof_both_pass": true,
+    "installed_behavior_identical": true,
+    "member_content_hashes_identical": true,
+    "member_names_identical": true,
+    "metadata_version_identical": true,
+    "package_version_identical": true
+  },
+  "created_utc": "2026-09-23T05:01:42Z",
+  "first": {
+    "bundle": "release\\candidates\\0.0.2a3",
+    "content_digest_sha256": "2f75bdb7d421a6838b8ab292f667a85bb51e207017f0760caf71c9c1e59c061d",
+    "member_count": 65,
+    "metadata_version": "0.0.2a3",
+    "sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc",
+    "size_bytes": 436853,
+    "wheel": "saimail-0.0.2a3-py3-none-any.whl"
+  },
+  "installed_behavior": {
+    "first": {
+      "api_map_release": "0.0.2a3",
+      "fg05": "PASS",
+      "fg06": "UTILITY_CONDITIONAL",
+      "v201_acceptance": "PASS",
+      "version": "0.0.2a3"
+    },
+    "second": {
+      "api_map_release": "0.0.2a3",
+      "fg05": "PASS",
+      "fg06": "UTILITY_CONDITIONAL",
+      "v201_acceptance": "PASS",
+      "version": "0.0.2a3"
+    }
+  },
+  "schema": "SAIMAIL_D3_REPRODUCIBILITY_1",
+  "second": {
+    "bundle": "V:\\_TEMP_\\a3-build2-fresh",
+    "content_digest_sha256": "2f75bdb7d421a6838b8ab292f667a85bb51e207017f0760caf71c9c1e59c061d",
+    "member_count": 65,
+    "metadata_version": "0.0.2a3",
+    "sha256": "7cf20138f8c9d8935ecc5bb442b465b054dadaaa90c4ee11ca32f9877461f26b",
+    "size_bytes": 436853,
+    "wheel": "saimail-0.0.2a3-py3-none-any.whl"
+  },
+  "selected_candidate": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc",
+  "status": "PASS",
+  "version": 1
+}

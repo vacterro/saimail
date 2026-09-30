@@ -1,0 +1,140 @@
+{
+  "alpha_scope": "local filesystem messaging only; persistent V2-01 workspaces; explicit public identity-card exchange; deterministic recipient registration; current SENV2/PostOffice semantics with duplicate suppression and explicit open; raw default identity custody with explicit os-store opt-in (V3-01); the documented saimail-local command workflow; local inbox query/triage (P1), explicit local correspondence continuation (V4-01) and the optional desktop local messenger GUI (V5-01, PySide6 optional extra; Qt never a base dependency)",
+  "content_proof": {
+    "checks": {
+      "cli_custody_flag": true,
+      "cli_custody_migrate": true,
+      "cli_custody_status": true,
+      "custody_module": true,
+      "first_run_notice": true,
+      "identity_schema_v2": true,
+      "os_store_mode": true,
+      "p1_cli_inbox_filters": true,
+      "p1_inbox_query_module": true,
+      "p1_query_projection": true,
+      "pyside6_not_core_dependency": true,
+      "v401_cli_reply": true,
+      "v401_correspondence_continuation": true,
+      "v501_gui_adapter": true,
+      "v501_gui_app": true,
+      "v501_gui_entrypoint": true,
+      "v501_gui_extra_declares_pyside6": true,
+      "v501_gui_theme": true,
+      "workspace_module": true
+    },
+    "failures": [],
+    "product_delta": {
+      "checks": {
+        "p1_cli_inbox_filters": true,
+        "p1_inbox_query_module": true,
+        "p1_query_projection": true,
+        "pyside6_not_core_dependency": true,
+        "v401_cli_reply": true,
+        "v401_correspondence_continuation": true,
+        "v501_gui_adapter": true,
+        "v501_gui_app": true,
+        "v501_gui_entrypoint": true,
+        "v501_gui_extra_declares_pyside6": true,
+        "v501_gui_theme": true
+      },
+      "failures": [],
+      "schema": "LOCAL_ALPHA_WHEEL_PRODUCT_DELTA_PROOF_1",
+      "status": "PASS",
+      "version": 1
+    },
+    "schema": "LOCAL_ALPHA_WHEEL_CONTENT_PROOF_1",
+    "status": "PASS",
+    "version": 1
+  },
+  "created_utc": "2026-09-22T11:45:45Z",
+  "custody": {
+    "default": "raw",
+    "does_not_protect": [
+      "malware running as the same OS user",
+      "admin/kernel compromise",
+      "hardware attack",
+      "physical presence",
+      "human identity proof"
+    ],
+    "not_provided": [
+      "hardware custody",
+      "key rotation",
+      "automatic recovery",
+      "forward secrecy beyond the existing SENV2 envelope"
+    ],
+    "os_store_platform_evidence": "Windows only (WinVaultKeyring classification and one disposable installed-wheel acceptance); no second platform is claimed",
+    "os_store_requires": "the credentials extra (keyring>=24) and a checked persistent backend",
+    "os_store_selection": "explicit opt-in: init --custody os-store, or custody migrate",
+    "protected_private_material": "the OS credential store under credential://saimail-workspace/...",
+    "protected_workspace_metadata": "handles plus public material only",
+    "protects": "workspace-directory-copy exposure",
+    "raw_storage": "private Ed25519 signing and X25519 decryption software keys in workspace identity/identity.json as raw hex; a copied workspace directory carries the identity",
+    "silent_fallback": "never; requested protected custody fails closed with a named CUSTODY_* code"
+  },
+  "historical_candidate_a1": {
+    "bundle_dir": "release/local-alpha",
+    "classification": "HISTORICAL_VERIFIED_ALPHA",
+    "note": "immutable historical artifact; its external proof binds its own wheel bytes only and is never inherited by this candidate",
+    "publication_status": "NOT_PUBLISHED",
+    "sha256": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+    "version": "0.0.2a1",
+    "wheel": "saimail-0.0.2a1-py3-none-any.whl"
+  },
+  "historical_candidate_a2": {
+    "bundle_dir": "release/candidates/0.0.2a2",
+    "classification": "HISTORICAL_VERIFIED_ALPHA",
+    "note": "immutable historical artifact; its local, custody, reproducibility and external proof bind its own wheel bytes only and are never inherited by this candidate",
+    "publication_status": "NOT_PUBLISHED",
+    "sha256": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d",
+    "version": "0.0.2a2",
+    "wheel": "saimail-0.0.2a2-py3-none-any.whl"
+  },
+  "limitations": {
+    "identity": "LOCAL_ALPHA_LIMITATIONS_1",
+    "reference": "README-LOCAL-ALPHA.md#limitations-and-security",
+    "utility_verdict": "UTILITY_CONDITIONAL"
+  },
+  "package_name": "saimail",
+  "package_version": "0.0.2a3",
+  "platform_proof_scope": "CPython 3.11 on win32 (the host that produced the clean-install and verification evidence); no broader portability claimed",
+  "publication_status": "NOT_PUBLISHED",
+  "python_scope": ">=3.11",
+  "result_schemas": {
+    "fg05": "LOCAL_SCENARIO_RESULT_1 v1",
+    "fg06": "FG06_UTILITY_RESULT_1 v1",
+    "v201_acceptance": "LOCAL_WORKSPACE_RESULT_1 v1",
+    "v201_command": "LOCAL_WORKSPACE_COMMAND_1 v1"
+  },
+  "schema": "LOCAL_ALPHA_CANDIDATE_1",
+  "security_limitations": [
+    "raw custody is the default for new workspaces: private software keys are workspace files, not encrypted at rest",
+    "os-store custody is an explicit opt-in requiring the credentials extra and a checked backend; it is not the default",
+    "no protection is claimed in any mode against same-user malware, admin/kernel compromise, hardware attack, physical presence or human-identity proof",
+    "hardware custody, key rotation and automatic recovery are not provided for this identity family",
+    "os-store backend evidence is Windows-specific (WinVaultKeyring) unless new proof establishes more",
+    "delivery requires write access to the recipient workspace (shared local filesystem path, not a network service)",
+    "no key discovery: both sides must exchange public identity cards explicitly and register each other",
+    "the alpha is not a production communication service and is not published"
+  ],
+  "source_identity": {
+    "git_dirty": true,
+    "git_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+    "note": "the worktree is dirty; no commit uniquely identifies this candidate, so the exact wheel SHA-256 is the candidate identity",
+    "package_version_source": "VERSION"
+  },
+  "verification": {
+    "identity": "LOCAL_ALPHA_VERIFICATION_1 v1",
+    "procedure": "verify_local_alpha.py",
+    "verifier_version": 1
+  },
+  "version": 1,
+  "wheel": {
+    "content_digest_sha256": "2f75bdb7d421a6838b8ab292f667a85bb51e207017f0760caf71c9c1e59c061d",
+    "filename": "saimail-0.0.2a3-py3-none-any.whl",
+    "member_count": 65,
+    "sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc",
+    "size_bytes": 436853
+  },
+  "zero_model_calls_expected": true,
+  "zero_runtime_network_expected": true
+}

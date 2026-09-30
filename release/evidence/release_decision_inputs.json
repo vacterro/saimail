@@ -1,0 +1,142 @@
+{
+  "artifact_identity": {
+    "bundle_dir": "release/local-alpha",
+    "checksums_include_wheel": true,
+    "external_proof": {
+      "acceptance": {
+        "candidate_sha256": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+        "checks": {
+          "api_map.path_exists": true,
+          "api_map.release": true,
+          "api_map.release_matches": true,
+          "api_map.schema": true,
+          "candidate.publication_status": true,
+          "candidate_identity": true,
+          "environment.platform": true,
+          "environment.python_version": true,
+          "environment.verifier_version": true,
+          "failures": true,
+          "fg05.network_attempts": true,
+          "fg05.schema": true,
+          "fg05.status": true,
+          "fg06.network_attempts": true,
+          "fg06.outcome_category": true,
+          "fg06.schema": true,
+          "install.status": true,
+          "installed_module_paths": true,
+          "integrity.failures": true,
+          "integrity.manifest_schema": true,
+          "integrity.status": true,
+          "limitations.acknowledged": true,
+          "limitations.identity": true,
+          "limitations.utility_verdict": true,
+          "manifest_not_published": true,
+          "module_resolution.resolved_inside_environment": true,
+          "privacy.findings": true,
+          "privacy.private_key_material_found": true,
+          "privacy.status": true,
+          "proof_sha256": true,
+          "runtime_counters.model_calls": true,
+          "runtime_counters.network_attempts": true,
+          "runtime_counters.provider_calls": true,
+          "saimail_local_version.expected": true,
+          "saimail_local_version.reported": true,
+          "saimail_local_version.status": true,
+          "schema": true,
+          "status": true,
+          "stored_copy_byte_identical": true,
+          "strict_json": true,
+          "v201_acceptance.network_attempts": true,
+          "v201_acceptance.schema": true,
+          "v201_acceptance.status": true,
+          "v201_direct_command.network_attempts": true,
+          "v201_direct_command.schema": true,
+          "v201_direct_command.status": true,
+          "version": true,
+          "wheel_sha256": true
+        },
+        "external_environment": {
+          "platform": "linux",
+          "python_version": "3.13.5",
+          "verified_utc": "2026-09-20T17:47:02Z",
+          "verifier_version": 1
+        },
+        "external_proof_sha256": "819f3fcf445c051aec20864098960ccb37a69c8ce6aced0872f2198a96b95f94",
+        "failures": [],
+        "frozen_bundle_sha256": {
+          "README-LOCAL-ALPHA.md": "d9a0f6e30af76aa5166f74434863ab66e75c2b28c4259b5260aa1348d214c072",
+          "SHA256SUMS.txt": "51afa9e2caf3e8f95dbae70a924693ff4148b5b3294c60ba4751e7cb4f294417",
+          "local_alpha_candidate.json": "376c4675da78cd7b14efe2a584961214cd7991b0d1b306f1ffe431bc762a485d",
+          "saimail-0.0.2a1-py3-none-any.whl": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+          "verify_local_alpha.py": "f35328d02a32db3473a946b8d8895d7305a408b47b597bc87d412e8f13a3be37"
+        },
+        "frozen_platform_proof_scope": "CPython 3.11 on win32 (the host that produced the clean-install and verification evidence); no broader portability claimed",
+        "publication": "NONE",
+        "schema": "V204_EXTERNAL_PROOF_ACCEPTANCE_1",
+        "source": ".saipen/evidence/SAIMAIL_V2-04_external_linux_verification.json",
+        "status": "PASS",
+        "stored_copy": "release/evidence/SAIMAIL_V2-04_external_linux_verification.json",
+        "support_scope_changed": false,
+        "version": 1
+      },
+      "acceptance_path": "release/evidence/external_proof_acceptance.json",
+      "proof_bytes_match": true,
+      "proof_bytes_sha256": "819f3fcf445c051aec20864098960ccb37a69c8ce6aced0872f2198a96b95f94"
+    },
+    "manifest_publication_status": "NOT_PUBLISHED",
+    "wheel_sha256_actual": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+    "wheel_sha256_agreement": true,
+    "wheel_sha256_recorded": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a"
+  },
+  "checkout_capability": {
+    "cli_custody_commands": true,
+    "cli_os_store": true,
+    "declared_version": "0.0.2a1",
+    "has_custody_module": true,
+    "identity_schemas": [
+      "SAIMAIL_LOCAL_IDENTITY_1",
+      "SAIMAIL_LOCAL_IDENTITY_2"
+    ],
+    "version_surfaces_agree": true
+  },
+  "created_utc": "2026-09-20T19:44:21Z",
+  "frozen_capability": {
+    "cli_custody_commands": false,
+    "cli_os_store": false,
+    "content_digest_sha256": "d060491b6fe865e6844f353aaa691d97eaa92db7e1a75c13617e658993bdab8f",
+    "filename": "saimail-0.0.2a1-py3-none-any.whl",
+    "has_custody_module": false,
+    "identity_schemas": [
+      "SAIMAIL_LOCAL_IDENTITY_1"
+    ],
+    "member_count": 57,
+    "sha256": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+    "size_bytes": 370976,
+    "wheel_metadata_version": "0.0.2a1"
+  },
+  "schema": "SAIMAIL_RELEASE_DECISION_INPUTS_1",
+  "source_lineage": {
+    "delta_classification": "CURRENT_SOURCE_CAPABILITY",
+    "external_evidence_scope": "FROZEN_WHEEL_ONLY",
+    "frozen_classification": "HISTORICAL_VERIFIED_ALPHA",
+    "post_candidate_source_delta": [
+      "V3-01"
+    ]
+  },
+  "version": 1,
+  "version_identity": {
+    "agreement": true,
+    "canonical": "0.0.2a1",
+    "canonical_authority": "VERSION",
+    "surfaces": {
+      "README.ded.md": "0.0.2a1",
+      "README.ee.md": "0.0.2a1",
+      "README.ja.md": "0.0.2a1",
+      "README.md": "0.0.2a1",
+      "VERSION": "0.0.2a1",
+      "lab/stable_local_api.json.release": "0.0.2a1",
+      "pyproject.toml": "0.0.2a1",
+      "saimail_local.py._VERSION_FALLBACK": "0.0.2a1"
+    }
+  }
+}

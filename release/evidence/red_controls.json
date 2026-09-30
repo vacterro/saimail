@@ -1,0 +1,40 @@
+{
+  "controls": {
+    "corrupt_hash": {
+      "exit_code": 1,
+      "expected": "FAIL",
+      "pass": true,
+      "status": "FAIL"
+    },
+    "corrupt_wheel": {
+      "exit_code": 1,
+      "expected": "FAIL",
+      "pass": true,
+      "status": "FAIL"
+    },
+    "privacy_planted": {
+      "exit_code": 1,
+      "expected": "FAIL",
+      "findings": [
+        "planted_marker"
+      ],
+      "pass": true,
+      "status": "FAIL"
+    },
+    "privacy_real": {
+      "exit_code": 0,
+      "expected": "PASS",
+      "pass": true,
+      "status": "PASS"
+    },
+    "real_bundle": {
+      "exit_code": 0,
+      "expected": "PASS",
+      "pass": true,
+      "status": "PASS"
+    }
+  },
+  "schema": "LOCAL_ALPHA_RED_CONTROLS_1",
+  "status": "PASS",
+  "version": 1
+}

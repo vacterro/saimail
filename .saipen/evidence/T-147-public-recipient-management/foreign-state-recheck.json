@@ -1,0 +1,17 @@
+{
+  "schema": "T147_FOREIGN_STATE_RECHECK_1",
+  "timestamp": "2026-09-30T14:41:54.369393+00:00",
+  "smoke_command_before_after_equal": true,
+  "smoke_sha256": "5d4ae2b4537518e19c92b4d4f0345ea12fa2f556b69cb7f1f06fa9ac65d4ee1c",
+  "current_sha256": "9a8f9b8a48feeaf82c5dab58a1f42406550b8aa39508d81c615920c9724c5962",
+  "interval_unchanged": false,
+  "current_state": "---\r\nphase: BUILD\r\ntask: T-1569\r\nnext_action: \"PHASE BUILD T-1569\"\r\nblocker: \"\"\r\ntransition_from: SCOUT\r\nsaipen_version: 8\r\nschema_version: 3\r\nlast_event: 10919\r\nstyle_contract: ded-6b950e75\r\nsaipen_home: \"V:\\\\___VAC\\\\__K\\\\__CODE\\\\_AI_STUFF_AGENTIC\\\\_SAIPEN\"\r\nagent: saipen-cli\r\nmode: full\r\nupdated: \"2026-09-30T14:28:32Z\"\r\nrequires:\r\n  - filesystem\r\n  - git\r\n  - python\r\nexecution_intent: goal\r\ngoal_waves: 0\r\ngoal_tickets: 1\r\n---\r\n",
+  "owner_log_events": [
+    10917,
+    10918,
+    10919
+  ],
+  "owner_context": "T-1569 SCOUT/BUILD; separately recorded owner transitions",
+  "attribution": "Owner log demonstrates intervening canonical progression; no whole-interval immutability claim",
+  "foreign_mutation_by_this_work": "NONE_REQUESTED"
+}

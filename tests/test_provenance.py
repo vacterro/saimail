@@ -64,6 +64,19 @@ def one_map(cls, receipt="R"):
                                 segments=(seg(cls, receipt=receipt),))}
 
 
+def receipt_body(name, source, expected_hash):
+    """Follow a canonical quarantine record without changing historical source pointers."""
+    path = ROOT / ".saipen/intake/distribution" / f"{name}.json"
+    if not path.is_file():
+        return ROOT / source
+    record = json.loads(path.read_text(encoding="utf-8"))
+    assert record["schema_version"] == 1 and record["receipt_id"] == name
+    assert record["state"] == "QUARANTINED" and record["authoritative_body_exported"] is False
+    assert record["source_sha256"] == expected_hash
+    assert record["body_ref"] == f".saipen/quarantine/source/{name}.md"
+    return ROOT / record["body_ref"]
+
+
 # ------------------------------------------------ receipts stay untouched
 
 
@@ -79,7 +92,7 @@ def test_receipts_are_not_modified_by_the_provenance_layer(maps):
     records = quarantine.load_records(QUARANTINE)
     for name, segment_map in maps.items():
         source = json.loads((PROV / f"{name}.json").read_text(encoding="utf-8"))["source_path"]
-        body = ROOT / source
+        body = receipt_body(name, source, segment_map.body_sha256)
         if not body.is_file() and name in records:
             # A normal distribution carries a quarantined receipt's identity, not its
             # bytes (D-023). The map must still describe exactly the quarantined digest.
@@ -253,7 +266,8 @@ def test_the_model_plan_cannot_adopt_itself(maps):
 def test_src_017_and_src_018_have_the_maps_the_correction_declares(maps):
     for name in ("SRC-017", "SRC-018"):
         assert name in maps, f"{name} has no segment map; unexamined is not attributed"
-        maps[name].verify_against((INTAKE / f"{name}.md").read_bytes())
+        body = receipt_body(name, f".saipen/intake/active/{name}.md", maps[name].body_sha256)
+        maps[name].verify_against(body.read_bytes())
     # correction 002: no capture at all -- the SRC-019 carrier claim was false
     assert maps["SRC-017"].capture is None, (
         "SRC-017 has no verifiable carrier; a capture object would re-assert one"

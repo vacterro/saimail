@@ -1,0 +1,77 @@
+{
+  "verdict": "DRIFT_SUSPECTED",
+  "counts": {
+    "blocked": 0,
+    "emitted": 0,
+    "held_provisional": 0,
+    "internal": 1,
+    "qualified": 0,
+    "total": 1
+  },
+  "coverage": {
+    "cursor_claims_more_than_receipts": [],
+    "episodes_final": 355,
+    "episodes_pending": 18081,
+    "episodes_provisional": 16,
+    "episodes_total": 18452,
+    "receipts_total": 383,
+    "sessions_truly_exhausted": 7,
+    "slices_final": 364,
+    "slices_pending": 18671,
+    "slices_provisional": 13,
+    "slices_total": 19048
+  },
+  "findings": [
+    {
+      "attribution": {
+        "models": [
+          "SAIFREN"
+        ],
+        "projects": [
+          "SAISPIN_20260903_2059.md review"
+        ],
+        "providers": [
+          "opencode"
+        ],
+        "sessions": [
+          "ses_f9791d8f0fferheoFdhBmSLWIy"
+        ]
+      },
+      "audit": null,
+      "causal_key": "carrier clos command declar outside recognize rout saipal saipen subcommand surface",
+      "change_target": "ENGINE",
+      "confidence": "MEDIUM",
+      "disposition_class": null,
+      "drift_class": "COMMAND_ROUTE_DRIFT",
+      "episode_finality": null,
+      "finding_id": "PAL-0001",
+      "harm_blocks": [],
+      "harm_warnings": [],
+      "occurrences": 1,
+      "owner_documents": [
+        "saipal/COMMANDS.md"
+      ],
+      "provisional_hold": null,
+      "recurrence": null,
+      "recurrence_guidance": null,
+      "root_cause": "command 'saipen gg v:\\\\___VAC\\\\__K\\\\__CODE\\\\__SAITULS\\\\SAISPIN_20260903_2059.md' routed outside the closed command surface; the carrier did not recognize it as a declared saipal subcommand",
+      "rule_ids": [
+        "PAL-CMD-01",
+        "PAL-CMD-02",
+        "PAL-CMD-03"
+      ],
+      "severity": "P3",
+      "state": "SUSPECTED"
+    }
+  ],
+  "sessions_conflict_current": 11,
+  "next_action": "1 internal finding(s) did not qualify for an audit; read them before deciding",
+  "this_cc": {
+    "semantic_carriers": 5,
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "finality": "PROVISIONAL",
+    "binding": "UNKNOWN",
+    "current_SAIMAIL": "NOT_EXAMINED",
+    "scope": "Five native-binding smoke episodes; existing global finding and conflicts are not attributed to current SAIMAIL"
+  }
+}

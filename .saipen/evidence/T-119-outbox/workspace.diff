@@ -1,0 +1,32 @@
+--- .saipen/evidence/T-119-outbox/workspace.before.py	2026-09-24 09:25:55.513441100 +0300
++++ saimail/workspace.py	2026-09-24 09:25:55.556203800 +0300
+@@ -1410,6 +1410,29 @@
+         lines.append(f"TELEGRAM:   {telegram.get('kind')} topic {telegram.get('topic')} "
+                      f"({telegram.get('form')}"
+                      + (f" {telegram.get('event')})" if telegram.get("event") else ")"))
++    intent = result.get("intent") or {}
++    if intent.get("key_id"):
++        lines.append(f"INTENT:     {intent.get('state')} key {intent.get('key')} -> "
++                     f"{intent.get('recipient_seat')} topic {intent.get('topic')} "
++                     f"(attempts {intent.get('attempts')}"
++                     + (f", last error {intent.get('last_error')}" if intent.get("last_error")
++                        else "")
++                     + (f", failure {intent.get('failure')}" if intent.get("failure") else "")
++                     + ")")
++        if intent.get("envelope_id"):
++            lines.append(f"ENVELOPE:   {intent.get('envelope_id')}")
++    outbox_block = result.get("outbox") or {}
++    if outbox_block.get("counts"):
++        lines.append(f"OUTBOX:     {outbox_block.get('pending')} pending "
++                     f"({outbox_block.get('retrying')} retrying), "
++                     f"{outbox_block['counts'].get('FAILED')} failed, "
++                     f"{outbox_block['counts'].get('DELIVERED')} delivered; oldest pending "
++                     f"{outbox_block.get('oldest_pending_seconds')} s; last error "
++                     f"{outbox_block.get('last_error')}")
++    if result.get("command") == "outbox-resume":
++        counts = result.get("counts") or {}
++        lines.append("RESUME:     " + ", ".join(f"{name} {value}"
++                                                for name, value in sorted(counts.items())))
+     if result.get("command") == "saipen-telegrams":
+         for item in result.get("items") or []:
+             lines.append(f"UNREAD:     {item.get('envelope_id')} from {item.get('from')} "

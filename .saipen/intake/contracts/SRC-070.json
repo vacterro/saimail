@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-070:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "FG-06 utility total friction and local entrypoint"
+    }
+  },
+  "derived_at": "2026-09-20T16:35:05Z",
+  "derived_from": "SRC-070",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "e0b0ad23f2f2211390a9ca2ca1f6cde22df1fa32141d5796c5ad7a2f6a8694be"
+}

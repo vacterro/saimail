@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-096:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "\u041f\u0440\u0438\u0432\u0435\u0442 \u041e\u043f\u0443\u0441. \u0412\u043e\u0437\u0432\u0435\u0434\u0438 \u0438 \u0441\u043e\u0435\u0434\u0438\u0433\u0438 \u0441 SAIPEN \u043a\u0430\u043a \u043d\u0438\u0431\u0443\u0434\u044c."
+    }
+  },
+  "derived_at": "2026-09-22T20:50:08Z",
+  "derived_from": "SRC-096",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "557f9dbf64e73fc479873656d61de9db7eb48058c96f923241512e92f004bfee"
+}

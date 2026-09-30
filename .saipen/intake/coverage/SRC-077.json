@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-077:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-89 closed with verification evidence in LOG: verify -> PASS [target: T-89] conf: high -- python -m pytest -q --junitxml=V:\\_TEMP_\\opencode\\T-89-full-suite.xml: 2175 passed, 0 failed, 0 errors, 0 skipped in 80.46s (2146 inherited + 28 custody tests + 1 saimail/custody.py I1 parameter); focused V3-01 28 passed; workspace/acceptance/credentials/V2-02 registration+reachability/experiment-manifest/FG-05/FG-06/PostOffice/SENV2/I1/repo-consistency ",
+      "text": "Execute Roadmap v3 gate V3-01 LOCAL KEY-AT-REST CUSTODY DECISION per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260920_2202.md",
+      "verification": "the Work this request created reached its own verification gate; see the T-89 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-89"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "T147_SAIFREN_AVAILABILITY_1",
+  "timestamp": "2026-09-30T14:34:14.110792+00:00",
+  "native_execution_context": "OBSERVED",
+  "native_session": "ses_f0d499707ffe15naRiJ1EvcJuR",
+  "baseline_before_source": true,
+  "independent_product_review": "INCOMPLETE_TIMEOUT",
+  "eligible_letter_peer_behavior": "UNAVAILABLE",
+  "study_receiver_assessment": "NOT_RUN",
+  "study_independent_revision": "NOT_RUN",
+  "study_successor_execution": "NOT_RUN",
+  "study_observation_created": false,
+  "provider_context": "OPAQUE",
+  "field_improvement": "UNPROVEN",
+  "completed_source_reads": 5,
+  "failed_source_reads": 1,
+  "goal_blocker": false,
+  "helper_observed_sha256": "fe1f3cdb412ed408b6095fd37ff41d6d5b081f7cc567c81a8d4f3c381d9b7aed",
+  "helper_current_sha256": "d4bbe7e23a482e3103184f30fba051312b29fba587ad80ad3cddf0e33ac1470d"
+}

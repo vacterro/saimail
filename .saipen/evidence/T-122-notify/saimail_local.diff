@@ -1,0 +1,102 @@
+--- .saipen/evidence/T-122-notify/saimail_local.before.py	2026-09-24 10:14:05.070958000 +0300
++++ saimail_local.py	2026-09-24 10:14:05.188414500 +0300
+@@ -127,6 +127,41 @@
+     return capabilities
+ 
+ 
++def _notify_engine():
++    from saimail import notify
++
++    return notify
++
++
++def _saipen_notify(args, project: dict) -> dict:
++    """V6-08: one automatic notification for a closed trigger, exactly once.
++
++    Without a readable signing key (a locked store) the intent is still recorded
++    durably from the secret-free view and a later full load seals it.
++    """
++    engine = _workspace_engine()
++    bridge = _saipen_engine()
++    notify = _notify_engine()
++    try:
++        workspace = engine.load_workspace(args.workspace)
++    except SailangError as exc:
++        if not exc.code.startswith("CUSTODY_"):
++            raise
++        workspace = engine.load_workspace_headers(args.workspace)
++    binding = bridge.enter(workspace, project["state"], project["identity"],
++                           seat=args.seat)["saipen"]
++    board = project["board"].read_text(encoding="utf-8") if project["board"].is_file() else ""
++    work = notify.resolve_work(binding.get("task"), args.work, notify.board_work_ids(board))
++    citation = None
++    if args.event is not None:
++        citation = bridge.cite_event(project["logs"], args.event, lineage=binding["lineage"])
++    result = notify.notify(workspace, lineage=binding["lineage"], work=work,
++                           trigger=args.trigger, to_seat=args.to, claim=args.claim,
++                           citation=citation, event=args.event)
++    result["saipen"] = binding
++    return result
++
++
+ def _saipen_capabilities(args) -> dict:
+     """V6-07: one never-failing, keyless capability document for SAIPEN entry.
+ 
+@@ -392,6 +427,7 @@
+     return {
+         "state": memory / "STATE.md",
+         "identity": memory / "IDENTITY.md",
++        "board": memory / "BOARD.md",
+         # Active LOG first, then the sealed segments; an event id is unique across all.
+         "logs": [memory / "LOG.md", *sorted((memory / "logs").glob("LOG-*.md"))],
+     }
+@@ -412,6 +448,8 @@
+             return bridge.telegrams(workspace, topic=args.topic,
+                                     scan_budget=args.scan_budget, cursor=args.cursor)
+         project = _saipen_project(args.project_root)
++        if args.saipen_action == "notify":
++            return _saipen_notify(args, project)
+         if args.saipen_action == "participant":
+             # V6-06: the project comes from the admitted SAIPEN binding, never a
+             # caller string; registry work needs no private key (header view).
+@@ -456,7 +494,8 @@
+ 
+     return _dispatch_workspace(f"saipen-{args.saipen_action}", action, as_json,
+                                bridge.OPERATOR_ACTION_CODES
+-                               | _participants_engine().OPERATOR_ACTION_CODES)
++                               | _participants_engine().OPERATOR_ACTION_CODES
++                               | _notify_engine().OPERATOR_ACTION_CODES)
+ 
+ 
+ def _acceptance_runner() -> str:
+@@ -911,6 +950,21 @@
+     saipen_enter_p.add_argument("--workspace", required=True)
+     saipen_enter_p.add_argument("--seat", default=None,
+                                 help="acting seat (default: SAIPEN_AGENT, else STATE.agent)")
++    saipen_notify_p = saipen_sub.add_parser(
++        "notify", help="automatic SAITELEME for a closed trigger to an admitted participant (V6-08)")
++    saipen_notify_p.add_argument("--workspace", required=True, help="the acting seat's workspace")
++    saipen_notify_p.add_argument("--trigger", required=True,
++                                 help="closed set: blocker, finding, dependency, ownership, "
++                                      "handoff, reply")
++    saipen_notify_p.add_argument("--to", required=True, help="admitted participant seat")
++    saipen_notify_body = saipen_notify_p.add_mutually_exclusive_group(required=True)
++    saipen_notify_body.add_argument("--claim", default=None, help="one line of text")
++    saipen_notify_body.add_argument("--event", default=None,
++                                    help="cite this SAIPEN LOG event instead (E-###)")
++    saipen_notify_p.add_argument("--work", default=None,
++                                 help="Work id on this project's BOARD (default: STATE.task)")
++    saipen_notify_p.add_argument("--seat", default=None,
++                                 help="acting seat (default: SAIPEN_AGENT, else STATE.agent)")
+     saipen_caps_p = saipen_sub.add_parser(
+         "capabilities", help="keyless capability and health document for SAIPEN entry (V6-07)")
+     saipen_caps_p.add_argument("--workspace", required=True, help="the acting seat's workspace")
+@@ -942,7 +996,7 @@
+         part_p.add_argument("--json", action="store_true", dest="sub_json")
+     for saipen_action_p in (saipen_status_p, saipen_init_p, saipen_cite_p, saipen_verify_p,
+                             saipen_tel_p, saipen_tels_p, saipen_brief_p, saipen_enter_p,
+-                            saipen_caps_p):
++                            saipen_caps_p, saipen_notify_p):
+         saipen_action_p.add_argument("--project-root", default=None,
+                                      help="SAIPEN project root (default: nearest with .saipen/)")
+         saipen_action_p.add_argument("--json", action="store_true", dest="sub_json")

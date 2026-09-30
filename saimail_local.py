@@ -133,6 +133,95 @@ def _notify_engine():
     return notify
 
 
+def _letter_engine():
+    from saimail import correspondence
+
+    return correspondence
+
+
+def _letter_work(board, work, seat):
+    """Check an explicit destination against canonical BOARD, including owner when recorded."""
+    import re
+
+    rows = [line for line in board.splitlines()
+            if re.match(r"^\s*- \[[ /!~-]\] " + re.escape(work) + r"\b", line)]
+    if len(rows) != 1:
+        raise SailangError("LETTER_CONTEXT_MISMATCH", "recipient Work is not uniquely listed as eligible on BOARD")
+    owner = re.search(r"\| owner: ([^ |]+)", rows[0])
+    if owner and owner[1] != seat:
+        raise SailangError("LETTER_CONTEXT_MISMATCH", "recipient differs from the Work's canonical owner")
+
+
+def _saipen_letter(args, project):
+    from saimail import letters
+
+    engine = _workspace_engine()
+    action = args.letter_action
+    if action in {"template", "evidence", "desk", "metrics", "cycle", "focus"}:
+        mailbox = engine.load_workspace_headers(args.workspace)
+    else:
+        try:
+            mailbox = engine.load_workspace(args.workspace)
+        except SailangError as exc:
+            if action != "dispatch" or not exc.code.startswith("CUSTODY_"):
+                raise
+            mailbox = engine.load_workspace_headers(args.workspace)
+    if action in {"cycle", "focus"}:
+        from saimail import agent_cycle
+
+        observed = agent_cycle.entry(mailbox, project["state"], project["identity"], seat=args.seat,
+                                     work=args.work, scope=args.scope, budget=args.budget,
+                                     continuation=args.continuation)
+        if action == "cycle":
+            return observed
+        from saimail_host import project_focus
+
+        try:
+            focused = project_focus(observed, observed["saipen"]["seat"], ["--budget", str(args.budget)])
+        except (KeyError, TypeError, ValueError, IndexError):
+            raise SailangError("INVALID_CYCLE", "cycle metadata cannot form a consistent focus") from None
+        return engine.command_result("agent-focus", "OK", focus=focused,
+                                     detail="metadata only; host chooses whether to review or continue")
+    binding = _saipen_engine().enter(mailbox, project["state"], project["identity"], seat=args.seat)["saipen"]
+    lineage = binding["lineage"]
+    root = project["state"].parent.parent
+    correspondence = _letter_engine()
+    if action == "template":
+        source = _notify_engine().resolve_work(binding.get("task"))
+        result = engine.command_result("letter-template", "OK", letter=letters.template(
+            lineage, source, args.recipient_work, trigger=args.trigger, issue=args.issue))
+    elif action == "evidence":
+        result = engine.command_result("letter-evidence", "OK", evidence=letters.evidence_ref(root, args.path))
+    elif action == "dispatch":
+        letter = letters.load(args.letter)
+        board = project["board"].read_text(encoding="utf-8")
+        source = _notify_engine().resolve_work(binding.get("task"))
+        _letter_work(board, source, mailbox.seat)
+        _letter_work(board, letter["recipient_work"], args.to)
+        result = correspondence.dispatch(mailbox, letter, lineage=lineage, sender_work=source,
+                                         to_seat=args.to, project_root=root)
+    elif action == "review":
+        result = correspondence.review(mailbox, args.envelope, lineage=lineage, project_root=root)
+    elif action == "decide":
+        result = correspondence.decide(
+            mailbox, args.envelope, lineage=lineage, project_root=root, decision=args.decision,
+            reason=args.reason, evidence=[letters.evidence_ref(root, p) for p in (args.result or [])],
+            revise=args.revise)
+    elif action == "retain":
+        result = correspondence.retain(mailbox, args.envelope, lineage=lineage, project_root=root)
+    elif action == "report":
+        result = correspondence.report(mailbox, args.envelope, lineage=lineage, project_root=root)
+    elif action == "metrics":
+        result = correspondence.metrics(mailbox, lineage=lineage)
+    else:
+        work = args.work or _notify_engine().resolve_work(binding.get("task"))
+        result = correspondence.desk(mailbox, lineage=lineage, work=work, scope=args.scope,
+                                     budget=args.budget, cursor=args.cursor, inbox_cursor=args.inbox_cursor,
+                                     context=args.context, continuation=args.continuation)
+    result["saipen"] = binding
+    return result
+
+
 def _saipen_notify(args, project: dict) -> dict:
     """V6-08: one automatic notification for a closed trigger, exactly once.
 
@@ -152,6 +241,18 @@ def _saipen_notify(args, project: dict) -> dict:
                            seat=args.seat)["saipen"]
     board = project["board"].read_text(encoding="utf-8") if project["board"].is_file() else ""
     work = notify.resolve_work(binding.get("task"), args.work, notify.board_work_ids(board))
+    if args.letter is not None:
+        from saimail import letters
+
+        letter = letters.load(args.letter)
+        if letter["trigger"] != args.trigger:
+            raise SailangError(letters.BAD_LETTER, "letter trigger differs from --trigger")
+        _letter_work(board, letter["recipient_work"], args.to)
+        result = _letter_engine().dispatch(
+            workspace, letter, lineage=binding["lineage"], sender_work=work,
+            to_seat=args.to, project_root=project["state"].parent.parent)
+        result["saipen"] = binding
+        return result
     citation = None
     if args.event is not None:
         citation = bridge.cite_event(project["logs"], args.event, lineage=binding["lineage"])
@@ -296,9 +397,12 @@ def _cmd_recipient(args, as_json: bool) -> int:
     engine = _workspace_engine()
 
     def action():
-        workspace = engine.load_workspace(args.workspace)
+        # Listing and explicitly registering public recipients do not sign,
+        # decrypt or send. Keep them usable while message custody is locked.
+        workspace = engine.load_workspace_headers(args.workspace)
         if args.recipient_action == "add":
-            card = json.loads(Path(args.card).read_text(encoding="utf-8"))
+            card = engine._read_json(Path(args.card), code=engine.RECIPIENT_MALFORMED,
+                                     what="recipient identity card")
             return engine.add_recipient(workspace, args.alias, card, args.peer_workspace)
         return engine.list_recipients(workspace)
 
@@ -423,14 +527,9 @@ def _saipen_project(explicit) -> dict:
             raise SailangError(bridge.SAIPEN_PROJECT_MISSING,
                                f"no {_SAIPEN_MEMORY}/STATE.md in {here} or any parent; "
                                "pass --project-root")
-    memory = root / _SAIPEN_MEMORY
-    return {
-        "state": memory / "STATE.md",
-        "identity": memory / "IDENTITY.md",
-        "board": memory / "BOARD.md",
-        # Active LOG first, then the sealed segments; an event id is unique across all.
-        "logs": [memory / "LOG.md", *sorted((memory / "logs").glob("LOG-*.md"))],
-    }
+    from saimail_project import project_paths
+
+    return project_paths(root)
 
 
 def _cmd_saipen(args, as_json: bool) -> int:
@@ -448,6 +547,8 @@ def _cmd_saipen(args, as_json: bool) -> int:
             return bridge.telegrams(workspace, topic=args.topic,
                                     scan_budget=args.scan_budget, cursor=args.cursor)
         project = _saipen_project(args.project_root)
+        if args.saipen_action == "letter":
+            return _saipen_letter(args, project)
         if args.saipen_action == "notify":
             return _saipen_notify(args, project)
         if args.saipen_action == "participant":
@@ -765,6 +866,7 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--keep", action="store_true", help="retain the temporary workspace and print its path")
     parser.add_argument("--json", action="store_true", help="print the machine-readable result to stdout")
     parser.add_argument("--api-map", action="store_true", help="print the shipped stable API map path")
+    parser.add_argument("--contract", action="store_true", help="versioned host interface for SAIPEN and ZAICODE")
 
     sub = parser.add_subparsers(dest="subcommand")
 
@@ -972,6 +1074,8 @@ def _build_parser() -> argparse.ArgumentParser:
     saipen_notify_body.add_argument("--claim", default=None, help="one line of text")
     saipen_notify_body.add_argument("--event", default=None,
                                     help="cite this SAIPEN LOG event instead (E-###)")
+    saipen_notify_body.add_argument("--letter", default=None,
+                                    help="evidence-bearing SAIMAIL_LETTER_1 file (recommended)")
     saipen_notify_p.add_argument("--work", default=None,
                                  help="Work id on this project's BOARD (default: STATE.task)")
     saipen_notify_p.add_argument("--seat", default=None,
@@ -1012,6 +1116,41 @@ def _build_parser() -> argparse.ArgumentParser:
                                      help="SAIPEN project root (default: nearest with .saipen/)")
         saipen_action_p.add_argument("--json", action="store_true", dest="sub_json")
 
+    letter_p = saipen_sub.add_parser("letter", help="substantive correspondence and successor evidence reserve")
+    letter_sub = letter_p.add_subparsers(dest="letter_action", required=True)
+    letter_parsers = {}
+    for name in ("template", "evidence", "dispatch", "desk", "review", "decide", "retain", "report", "metrics", "cycle", "focus"):
+        p = letter_sub.add_parser(name)
+        p.add_argument("--workspace", required=True)
+        p.add_argument("--project-root", default=None)
+        p.add_argument("--seat", default=None, help="acting seat; must match mailbox")
+        p.add_argument("--json", action="store_true", dest="sub_json")
+        letter_parsers[name] = p
+    letter_parsers["template"].add_argument("--recipient-work", required=True)
+    letter_parsers["template"].add_argument("--trigger", default="finding")
+    letter_parsers["template"].add_argument("--issue", required=True)
+    letter_parsers["evidence"].add_argument("--path", required=True, help="exact project-relative artifact path")
+    letter_parsers["dispatch"].add_argument("--letter", required=True)
+    letter_parsers["dispatch"].add_argument("--to", required=True, help="admitted recipient seat")
+    for name in ("review", "decide", "retain", "report"):
+        letter_parsers[name].add_argument("--envelope", required=True)
+    letter_parsers["decide"].add_argument("--decision", required=True)
+    letter_parsers["decide"].add_argument("--reason", required=True)
+    letter_parsers["decide"].add_argument("--result", action="append", help="result evidence file, project-relative; repeatable")
+    letter_parsers["decide"].add_argument("--revise", action="store_true", help="explicitly correct a terminal decision")
+    letter_parsers["desk"].add_argument("--work", default=None)
+    letter_parsers["desk"].add_argument("--scope", action="append", help="file being worked on; finds retained predecessor letters")
+    letter_parsers["desk"].add_argument("--budget", type=int, default=20)
+    letter_parsers["desk"].add_argument("--cursor", type=int, default=0)
+    letter_parsers["desk"].add_argument("--inbox-cursor", type=int, default=None)
+    letter_parsers["desk"].add_argument("--context", default=None)
+    letter_parsers["desk"].add_argument("--continuation", default=None)
+    for name in ("cycle", "focus"):
+        letter_parsers[name].add_argument("--work", default=None)
+        letter_parsers[name].add_argument("--scope", action="append", help="exact file scope for predecessor results")
+        letter_parsers[name].add_argument("--budget", type=int, default=20)
+        letter_parsers[name].add_argument("--continuation", default=None)
+
     accept_p = sub.add_parser("acceptance", help="run the isolated multi-invocation V2-01 acceptance")
     accept_p.add_argument("--root", default=None, help="fresh root for the two workspaces")
     accept_p.add_argument("--out", default=None, help="write the machine-readable result here")
@@ -1023,6 +1162,12 @@ def _build_parser() -> argparse.ArgumentParser:
 def main(argv=None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv)
+
+    if args.contract:
+        from saimail.host_contract import contract
+
+        print(json.dumps(contract(), indent=2, sort_keys=True))
+        return 0
 
     if args.version:
         print(f"saimail {_version()}")

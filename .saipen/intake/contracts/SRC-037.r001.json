@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-037:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "correct completed T-57 / B-011 without rewriting its DONE history"
+    }
+  },
+  "derived_at": "2026-09-19T18:20:28Z",
+  "derived_from": "SRC-037",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "cb89caae2ef9bf4e5b9a02b277e55566845ba6fbc517ec8e29647b563f9d4ac4"
+}

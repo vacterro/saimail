@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="6" time="9.495" timestamp="2026-09-24T14:09:54.014935+03:00" hostname="DESKTOP-TTH0L52"><testcase classname="tests.test_mailbox_lock_init" name="test_entering_a_lock_whose_byte_another_process_holds_waits_instead_of_failing" time="0.505"><failure message="AssertionError: a contended lock failed: PermissionError(13, 'Permission denied')&#10;assert 'error' not in {'error': PermissionError(13, 'Permission denied')}">tmp_path = WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-7218/test_entering_a_lock_whose_byt0')
+
+    def test_entering_a_lock_whose_byte_another_process_holds_waits_instead_of_failing(tmp_path):
+        import msvcrt
+    
+        path = tmp_path / "lifecycle.lock"
+        holder = os.open(path, os.O_RDWR | os.O_CREAT, 0o600)
+        msvcrt.locking(holder, msvcrt.LK_NBLCK, 1)  # byte 0 of a still empty file
+        outcome = {}
+    
+        def enter():
+            try:
+                with postoffice._OsFileLock(path, busy_code="LIFECYCLE_LOCK_TIMEOUT"):
+                    outcome["acquired_at"] = time.monotonic()
+            except BaseException as exc:  # noqa: BLE001 - the control reports what happened
+                outcome["error"] = exc
+    
+        waiter = threading.Thread(target=enter)
+        waiter.start()
+        time.sleep(0.5)
+&gt;       assert "error" not in outcome, f"a contended lock failed: {outcome.get('error')!r}"
+E       AssertionError: a contended lock failed: PermissionError(13, 'Permission denied')
+E       assert 'error' not in {'error': PermissionError(13, 'Permission denied')}
+
+tests\test_mailbox_lock_init.py:41: AssertionError</failure></testcase><testcase classname="tests.test_mesh" name="test_a_full_mesh_of_racing_retrying_agents_delivers_every_fact_once[2]" time="1.600" /><testcase classname="tests.test_mesh" name="test_a_full_mesh_of_racing_retrying_agents_delivers_every_fact_once[4]" time="1.705" /><testcase classname="tests.test_mesh" name="test_a_full_mesh_of_racing_retrying_agents_delivers_every_fact_once[8]" time="2.077" /><testcase classname="tests.test_mesh" name="test_a_full_mesh_of_racing_retrying_agents_delivers_every_fact_once[12]" time="2.726" /><testcase classname="tests.test_mesh" name="test_every_agent_killed_inside_the_outbox_lock_recovers_to_exactly_once" time="0.576" /></testsuite></testsuites>

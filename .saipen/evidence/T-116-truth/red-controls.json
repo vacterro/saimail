@@ -1,0 +1,91 @@
+{
+ "controls": [
+  {
+   "control": "R1-old-owner-sentence",
+   "doc": "humbox/CURRENT-STATE.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": "humbox/CURRENT-STATE.md"
+  },
+  {
+   "control": "R2-current-repair-owner",
+   "doc": "humbox/CURRENT-STATE.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": "humbox/CURRENT-STATE.md"
+  },
+  {
+   "control": "R3-pending-acceptance",
+   "doc": "humbox/CURRENT-STATE.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": "humbox/CURRENT-STATE.md"
+  },
+  {
+   "control": "R1-old-owner-sentence",
+   "doc": "humbox/FUTURE-GATES-V6.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": "humbox/FUTURE-GATES-V6.md"
+  },
+  {
+   "control": "R2-current-repair-owner",
+   "doc": "humbox/FUTURE-GATES-V6.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": "humbox/FUTURE-GATES-V6.md"
+  },
+  {
+   "control": "R3-pending-acceptance",
+   "doc": "humbox/FUTURE-GATES-V6.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": "humbox/FUTURE-GATES-V6.md"
+  },
+  {
+   "control": "R1-old-owner-sentence",
+   "doc": "humbox/SAIPEN-WORK-DESK.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": "humbox/SAIPEN-WORK-DESK.md"
+  },
+  {
+   "control": "R2-current-repair-owner",
+   "doc": "humbox/SAIPEN-WORK-DESK.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": "humbox/SAIPEN-WORK-DESK.md"
+  },
+  {
+   "control": "R3-pending-acceptance",
+   "doc": "humbox/SAIPEN-WORK-DESK.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": "humbox/SAIPEN-WORK-DESK.md"
+  },
+  {
+   "control": "R0-actual-post-T114-bytes",
+   "doc": "humbox/CURRENT-STATE.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": [
+    " Frozen 0.0.2a3 does not contain T-113. T-114 owns subsequent continuation; > .saipen/STAT",
+    "implement the saved T-113 design again. After truth reconciliation > is accepted, evaluate the separate SAIPEN-owned tur",
+    " turn-entry hook; do not > implement it inside this repair."
+   ]
+  },
+  {
+   "control": "R0-actual-post-T114-bytes",
+   "doc": "humbox/FUTURE-GATES-V6.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": [
+    "ty) is DONE via T-113, E-1527; see §14. T-114 owns subsequent continuation and the current",
+    " T-114 owns subsequent continuation and the current capability-truth repair.",
+    "13; the separate turn-entry hook is not part of this repair."
+   ]
+  },
+  {
+   "control": "R0-actual-post-T114-bytes",
+   "doc": "humbox/SAIPEN-WORK-DESK.md",
+   "outcome": "FAILED_AS_EXPECTED",
+   "detail": [
+    "T-114 owns subsequent continuation. After capabili",
+    "T-114 owns subsequent continuation. After capability/recovery truth reconciliation is accepted, evaluate the separate SAIPEN-owned tur",
+    " acceptance gate and is not implemented in this repair. Do not redo T-113."
+   ]
+  }
+ ],
+ "all_detected": true,
+ "restored_green": true,
+ "doc_bytes_unchanged": true
+}

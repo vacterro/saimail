@@ -1,0 +1,102 @@
+"""Capture the configured host path and a separate current-Work focus read.
+
+Evidence only: never seeds mail, opens bodies, changes decisions or assigns roles.
+The preregistration exists before observation. Existing records are not replaced.
+"""
+
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+from datetime import UTC, datetime
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+OUT = Path(__file__).resolve().parent
+HOST = ROOT.parent / "_SAIPEN"
+BOX = Path(os.environ.get("SAIMAIL_WORKSPACE") or
+           Path(os.environ["LOCALAPPDATA"]) / "saipen" / "saimail")
+MEMORY = ("STATE.md", "IDENTITY.md", "BOARD.md", "LOG.md")
+
+
+def digest(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def command(argv):
+    started = datetime.now(UTC).isoformat()
+    run = subprocess.run(argv, cwd=ROOT, capture_output=True, text=True, timeout=30, check=False,
+                         **({"creationflags": subprocess.CREATE_NO_WINDOW}
+                            if hasattr(subprocess, "CREATE_NO_WINDOW") else {}))
+    return {"argv": argv, "started": started, "exit_code": run.returncode,
+            "answer": json.loads(run.stdout),
+            "ended": datetime.now(UTC).isoformat()}
+
+
+def main():
+    destination = OUT / "runtime.json"
+    if destination.exists():
+        raise SystemExit("Existing observation retained; do not overwrite it.")
+    registration = OUT / "registration.json"
+    registered_hash = digest(registration)
+    assert json.loads(registration.read_text(encoding="utf-8"))["state"] == "REGISTERED"
+    before = {name: digest(ROOT / ".saipen" / name) for name in MEMORY}
+    foreign_before = digest(HOST / ".saipen" / "STATE.md")
+    executable = shutil.which("saimail-local")
+    assert executable, "Existing configured executable is required; no provisioning."
+    contract = command([executable, "--contract"])
+    launcher = HOST / "bin" / "saipen.cmd"
+    # The launcher is the verified canonical entry, not an invented module route.
+    entry = command(["powershell.exe", "-NoProfile", "-NonInteractive", "-Command",
+                     "& '" + str(launcher) + "' continue --json"])
+    focus = command([executable, "--json", "saipen", "letter", "focus",
+                     "--workspace", str(BOX), "--project-root", str(ROOT),
+                     "--seat", "saipen-cli", "--work", "T-142",
+                     "--scope", "humbox/EVOLUTION-AUDIT.md", "--budget", "20"])
+    after = {name: digest(ROOT / ".saipen" / name) for name in MEMORY}
+    assert before == after, "Actual observation must not change project memory."
+    assert foreign_before == digest(HOST / ".saipen" / "STATE.md")
+    assert registered_hash == digest(registration)
+    observed = focus["answer"].get("focus")
+    result = {
+        "schema": "SAIMAIL_EVOLUTION_AUDIT_OBSERVATION_1", "study": "T142_REAL_USE_1",
+        "entry": 1, "actor": "saipen-cli", "role": "ROOT_OBSERVER",
+        "independent_receiver": False, "independent_successor": False,
+        "registration_sha256": registered_hash, "work": "T-142",
+        "workspace": str(BOX), "contract": contract, "canonical_entry": entry,
+        "explicit_focus": focus, "memory_before": before, "memory_after": after,
+        "foreign_state_sha256": foreign_before,
+        "observation": ("EMPTY" if isinstance(observed, dict)
+                        and observed.get("state") == "OK" and not observed.get("reading")
+                        and observed.get("reviewed") == 0
+                        and observed.get("coverage", {}).get("complete_from_start") is True
+                        else "INSPECT_RECORDED_RESULT"),
+        "receiver_effort": "UNKNOWN_NO_RECEIVER_OPPORTUNITY",
+        "independent_revision": "NOT_RUN", "successor_execution": "NOT_RUN",
+        "field_improvement": "UNPROVEN",
+    }
+    destination.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    sources = {"local": {}, "foreign": {}}
+    for name in ("saimail/agent_cycle.py", "saimail/correspondence.py", "saimail/notify.py",
+                 "saimail/saipen_bridge.py", "saimail/host_contract.py", "saimail_local.py",
+                 "saimail_host.py", "lab/institution_run.py", "lab/saifren_run.py",
+                 "humbox/bee_like_idea1.md", "humbox/iniciative.md",
+                 "lab/out/INSTITUTION_20260930/plan.json",
+                 "lab/out/INSTITUTION_20260930/result.json",
+                 "lab/out/INSTITUTION_20260930/receiver.json",
+                 "lab/out/INSTITUTION_20260930/successor.json"):
+        sources["local"][name] = digest(ROOT / name)
+    for name in ("bin/saipen.cmd", "tools/saipen.py", "tools/saipen_engine/telegrams.py",
+                 "tools/saipen_engine/mailbox.py", ".saipen/STATE.md"):
+        sources["foreign"][name] = digest(HOST / name)
+    (OUT / "sources.json").write_text(json.dumps(sources, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"observation": result["observation"],
+                      "canonical_telegrams": entry["answer"].get("telegrams"),
+                      "focus_state": observed.get("state") if isinstance(observed, dict) else None,
+                      "memory_unchanged": before == after,
+                      "field_improvement": result["field_improvement"]}))
+
+
+if __name__ == "__main__":
+    main()

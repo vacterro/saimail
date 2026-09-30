@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-042:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-61 closed with verification evidence in LOG: verify -> PASS [target: T-61] conf: high -- focused generation 56 passed, B-012 regression 46 passed, relevant integration 129 passed, full suite 1368 passed, saipen validate VALID",
+      "text": "SAIMAIL START ingress for the ALLY_ADVICE generation/semantic-review handoff; the requested change is the T-61 B-016 bounded generation/review gate, captured verbatim as SRC-043",
+      "verification": "the Work this request created reached its own verification gate; see the T-61 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-61"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-098:R001": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not reopen T-106."
+    }
+  },
+  "derived_at": "2026-09-22T21:02:37Z",
+  "derived_from": "SRC-098",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "d07cc103c9c8e0d382a3a96d3236f380e03455e47215af205b5b3ea0720f54ae"
+}

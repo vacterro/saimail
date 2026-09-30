@@ -1,0 +1,50 @@
+{
+  "requirements": {
+    "SRC-115:R001": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "UNKNOWN",
+      "evidence": null,
+      "text": "Do not reinterpret it as authorization to:",
+      "verification": null,
+      "work": "T-149"
+    },
+    "SRC-115:R002": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "UNKNOWN",
+      "evidence": null,
+      "text": "Do not treat the inherited 25 warnings as product blockers. Do not open cleanup Work merely to remove warning counts unless a warning is independently shown to cause an actual SAIMAIL defect.",
+      "verification": null,
+      "work": "T-149"
+    },
+    "SRC-115:R003": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "UNKNOWN",
+      "evidence": null,
+      "text": "Do not push, tag, or publish.",
+      "verification": null,
+      "work": "T-149"
+    },
+    "SRC-115:R004": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "UNKNOWN",
+      "evidence": null,
+      "text": "Do not reopen completed tickets just for cosmetic commit structure.",
+      "verification": null,
+      "work": "T-149"
+    },
+    "SRC-115:R005": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "UNKNOWN",
+      "evidence": null,
+      "text": "Do not invent new Work merely to keep the agent busy.",
+      "verification": null,
+      "work": "T-149"
+    }
+  },
+  "schema_version": 1
+}

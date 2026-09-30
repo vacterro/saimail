@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-080:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Close T-91 / D2 using the genuine external verification proof for the exact frozen 0.0.2a2 candidate; closure-only continuation (no rebuild, no publish)"
+    }
+  },
+  "derived_at": "2026-09-20T20:29:41Z",
+  "derived_from": "SRC-080",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "ebf50a41661d6d2293f1fea06cfbc73805ab582a86b68ccf8886996138a79b02"
+}

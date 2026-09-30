@@ -1,0 +1,52 @@
+{
+  "schema": "T147_PRODUCT_SMOKE_1",
+  "kind": "PRODUCT_VALIDATION_NOT_STUDY_OBSERVATION",
+  "argv": [
+    "C:\\Users\\vac34\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-m",
+    "saimail_local",
+    "recipient",
+    "list",
+    "--workspace",
+    "C:\\Users\\vac34\\AppData\\Local\\saipen\\saimail",
+    "--json"
+  ],
+  "exit_code": 0,
+  "answer": {
+    "command": "recipient-list",
+    "detail": "0 recipient(s)",
+    "identity": {
+      "custody": "raw",
+      "recipient_kid": "sha256:f4fb2e7c93167f993382839979b72e0366268c40f29f7ef397467e2ee0e6289f",
+      "sender_kid": "sha256:4d639f2e5d4b27ffce78b3284d3ebfc08769ebf831d4f97b9d003c24ac9f9a53"
+    },
+    "network_attempts": 0,
+    "ok": true,
+    "operator_action_required": false,
+    "recipients": [],
+    "schema": "LOCAL_WORKSPACE_COMMAND_1",
+    "status": "OK",
+    "version": 1,
+    "workspace": {
+      "root": "C:\\Users\\vac34\\AppData\\Local\\saipen\\saimail",
+      "seat": "saipen-cli"
+    }
+  },
+  "before": {
+    "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\STATE.md": "c9e57d27045b8eb2a90128677868ce2a857dfce622463216485b95ba29ffd420",
+    "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\IDENTITY.md": "11c5d12d4ca4cf9817b2562c2800f0d9bbc2bfa3a97cabb9e790270d8f7409fd",
+    "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\BOARD.md": "9025eb1663a5953825908b16e2ae18f0a32d716c5f90d1f7cf5265343780ea3a",
+    "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\LOG.md": "8bab3e16b819c84ed6a7db6b1963e626b03280e9ea23d6c1e77791376c2768a7",
+    "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\.saipen\\STATE.md": "5d4ae2b4537518e19c92b4d4f0345ea12fa2f556b69cb7f1f06fa9ac65d4ee1c",
+    "C:\\Users\\vac34\\AppData\\Local\\saipen\\saimail\\peers.json": "a3dc278fd851217cb81b0d099942eae6b9d737c5b3111ee1c5734771958dcaad"
+  },
+  "after": {
+    "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\STATE.md": "c9e57d27045b8eb2a90128677868ce2a857dfce622463216485b95ba29ffd420",
+    "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\IDENTITY.md": "11c5d12d4ca4cf9817b2562c2800f0d9bbc2bfa3a97cabb9e790270d8f7409fd",
+    "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\BOARD.md": "9025eb1663a5953825908b16e2ae18f0a32d716c5f90d1f7cf5265343780ea3a",
+    "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\LOG.md": "8bab3e16b819c84ed6a7db6b1963e626b03280e9ea23d6c1e77791376c2768a7",
+    "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\.saipen\\STATE.md": "5d4ae2b4537518e19c92b4d4f0345ea12fa2f556b69cb7f1f06fa9ac65d4ee1c",
+    "C:\\Users\\vac34\\AppData\\Local\\saipen\\saimail\\peers.json": "a3dc278fd851217cb81b0d099942eae6b9d737c5b3111ee1c5734771958dcaad"
+  },
+  "study_entry_created": false
+}

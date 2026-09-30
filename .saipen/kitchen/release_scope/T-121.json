@@ -1,0 +1,24 @@
+{
+  "op_id": "scope-7539b6dd2917437786504bfc0461e410",
+  "paths": {
+    "CHANGELOG.md": "4385069d59f2b86328dd55d34f41b48d19b93fecd82fca28ec02deab05ebaa4f",
+    "humbox/CURRENT-STATE.md": "c27aa06b02bdfecb45b9e3580b9e2051a550aee83cfa9f3e05bde7a4cb15a3df",
+    "humbox/FUTURE-GATES-V6.md": "a5085c5846c8017d46fb8e6366d0159ff184a458b6ed798219251237b0b9989d",
+    "humbox/SAIPEN-WORK-DESK.md": "befb7274f1631b75de64f9b6bd5fc21a2e428bb43e303514c14a4dcf2ccdd244",
+    "lab/stable_local_api.json": "ce68e4da94c45866865d96652161d200e1c138c8f66c11704d2fa9a7b1c57dc6",
+    "saimail/capabilities.py": "13023be7e7b1683f17ecdbb430d4844b2d3e2a222294c962f45b77c2ed050409",
+    "saimail/workspace.py": "82abb03c168f26185394cd23e730d78ef4578323d378dc19b581c2cd26b05b53",
+    "saimail_local.py": "19968fde1bcf929dd9396fa0560c077b3381f260eb98cc78ef516def91a0cdca",
+    "spec/30-SAIPEN-CAPABILITIES-v0.md": "8d4895a61662964be38b87c9654ee3f08763ad226db4c3deb19a1e3d019398b8",
+    "spec/DECISIONS-D062.md": "64eea7fbe5e6138917aeee2493e9cd88bbbd5444e77c8349b0f3f9187716f284",
+    "tests/test_capabilities.py": "261e4e1effad168cb18431f6a04848ff86d2d22c3b7ccb751fc73dfde3dde023",
+    "tests/test_repo_consistency.py": "d56be7d3c3b8fd8de40ce18b2cd8516095a5b2ebe785bc273631382ec132161d"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-24T07:11:01Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:5d218c5444c89a0bd398c8d2eb0261ea6ee4558fd11194a686084d7e2a1be956",
+  "ticket": "T-121"
+}

@@ -440,9 +440,16 @@ def work_brief(workspace, state_path, identity_path=None, *, seat=None,
         _reject(SAIPEN_CONTEXT_CHANGED, "work context changed during the scan; restart brief")
     task = binding.get("task") or ""
     current_topic = task if task.lower() != "none" and _TOPIC_RE.fullmatch(task) else None
+    current_letter_topic = None
+    if current_topic is not None:
+        from saimail import letters
+
+        if letters._WORK.fullmatch(task) and len("l." + binding["lineage"].removeprefix("lineage-") + "." + task) <= 64:
+            current_letter_topic = letters.topic(binding["lineage"], task)
+    work_topics = {topic for topic in (current_topic, current_letter_topic) if topic is not None}
     counts = {"current_topic": 0, "other_topics": 0}
     for item in result["items"]:
-        relation = "current_topic" if current_topic and item["topic"] == current_topic else "other_topics"
+        relation = "current_topic" if item["topic"] in work_topics else "other_topics"
         item["work_relation"] = relation
         counts[relation] += 1
     result["command"] = "saipen-brief"
@@ -450,6 +457,7 @@ def work_brief(workspace, state_path, identity_path=None, *, seat=None,
     result["admission"] = admission["admission"]
     result["brief"] = {
         "schema": BRIEF_SCHEMA, "context": context_id, "current_topic": current_topic,
+        "current_letter_topic": current_letter_topic,
         "association": "TOPIC_ONLY", "counts_scope": "PAGE", "counts": counts,
         "scan_from_start": cursor in (None, 0),
         "complete_from_start": cursor in (None, 0) and not result["exhausted"],

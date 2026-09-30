@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-094:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute Roadmap v6 D3 POST-GUI RELEASE CANDIDATE / SOURCE IDENTITY ALIGNMENT per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260922_1320.md"
+    }
+  },
+  "derived_at": "2026-09-22T13:55:46Z",
+  "derived_from": "SRC-094",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "2230e129d90455dfa93422e41d698f6bd90965f6d78aec145d9bf958044af27b"
+}

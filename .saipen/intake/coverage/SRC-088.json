@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-088:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-102 closed with verification evidence in LOG: review -> PASS [target: T-102] conf: high -- independent second invocation of the focused selection: 21 passed, 0 skipped; check-integrity walk: tools/dev_access.py is one untracked module rewritten additively (status/begin/check/finish/disable preserved, admit and finish-check added, the state reader replaced), tests/test_dev_access.py is one untracked module whose 14 pre-existing controls keep i",
+      "text": "DEV ACCESS v1-to-v2 bootstrap migration for 0423",
+      "verification": "the Work this request created reached its own verification gate; see the T-102 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-102"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "pytest",
+    "-q"
+  ],
+  "exit_code": 0,
+  "tests": 2552,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "passed": 2552
+}

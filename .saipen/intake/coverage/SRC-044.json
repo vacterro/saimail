@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-044:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-62 closed with verification evidence in LOG: verify -> PASS [target: T-62] conf: high -- focused 138 passed (generation 70 + B-012 46 + consistency 22); full suite 1383 passed 0 failed 0 errors 0 skipped (junitxml); focused ruff clean; saipen validate VALID; tamper controls on production sha256 b2f4f26c: TAMPER-A (invocation sentinel removed -> authority/review red), TAMPER-B (evidence requirement removed -> authority red), both restored and",
+      "text": "SAIMAIL handoff: T-61/B-016 corrective closure - make real reviewer invocation the mint boundary for reviewed state, require corpus evidence refs for PASS on OBSERVATION_SUPPORT and COUNTEREVIDENCE_ADEQUACY; handoff file: V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260919_2241.md",
+      "verification": "the Work this request created reached its own verification gate; see the T-62 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-62"
+    }
+  },
+  "schema_version": 1
+}

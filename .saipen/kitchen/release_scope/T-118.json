@@ -1,0 +1,19 @@
+{
+  "op_id": "scope-7d891efd7fd44b7dbb28838de5f0ee3b",
+  "paths": {
+    "CHANGELOG.md": "a4631100fdf9198f4686bde7577a3eac0d831b042a41a7bd4d0fe2576c16bfd4",
+    "humbox/CURRENT-STATE.md": "82c9ee3d9fc6b785e2b12633ad35f9249ad74010a6d5d7cf99d989f8a3d54e86",
+    "humbox/FUTURE-GATES-V6.md": "39220706ff95a16617a6f5a2e4d93fe77e0b774b0d478487b9ac302cb39aabbe",
+    "humbox/SAIPEN-WORK-DESK.md": "a1865681f1afbbbef829b723384880c30a9f8b431dd553969544d341de5f69d0",
+    "spec/32-INTER-AGENT-WORKSHOP-POLICY-v0.md": "a76bf87e6b8f8973b34535986529f0c6d7c7f9eb1e568b98d5d505a9c674b1ea",
+    "spec/DECISIONS-D064.md": "5420adbd0a8e87c54bd35f5a9e8bcde087cadfdfb0e55ed8c894e92f0d2f11a6",
+    "tests/test_repo_consistency.py": "1e0459db25e50c06f05e9b9480d045e5412715f377b8ea47721e41b2c96ab339"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-24T07:34:05Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:9452a3868d60f85814c16042386f2716a558155cf88e5c31537a6d9d799fcab0",
+  "ticket": "T-118"
+}

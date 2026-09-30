@@ -1,0 +1,280 @@
+{
+  "version": "STRUCTURED-OUTPUT-CAPABILITY-1",
+  "registration_id": "sha256:e696db4c786ea60b9764b50e924fd93ed505efdf1b8b366529600ac100c4ffdf",
+  "implementation": {
+    "harness_sha256": "f0dad1cce747fd006cea2ecf3e91f8669c9bc5909803714f0319a3db83a7ae58"
+  },
+  "started": "2026-09-20T00:17:32Z",
+  "dry_run": false,
+  "status": "COMPLETED",
+  "routes": {
+    "A": "SAIFREN",
+    "B": "goat/MiniMaxAI/MiniMax-M3"
+  },
+  "budget": {
+    "max_live_calls": 6,
+    "spent": 6,
+    "dispatch_count": 6,
+    "retries": 0,
+    "repairs": 0,
+    "replacements": 0,
+    "fallbacks": 0,
+    "network_calls": 6
+  },
+  "matrix": {
+    "4096": {
+      "A": "REQUEST_ACCEPTED_CONFORMING",
+      "B": "REQUEST_ACCEPTED_CONFORMING"
+    },
+    "json_object": {
+      "A": "REQUEST_ACCEPTED_CONFORMING",
+      "B": "REQUEST_ACCEPTED_CONFORMING"
+    },
+    "json_schema": {
+      "A": "REQUEST_ACCEPTED_CONFORMING",
+      "B": "REQUEST_ACCEPTED_CONFORMING"
+    }
+  },
+  "context": {
+    "prompt_sha256": "0559b6e5583de1ef45559a469fdae6ee407d478ef2aecfd8b5a35f1653d9f4fc",
+    "prompt_bytes": 24829,
+    "local_prompt_tokens": 7734,
+    "historical_gateway_prompt_tokens": {
+      "A": 12065,
+      "B": 10973
+    },
+    "observed_gateway_prompt_tokens": {
+      "A": 11515,
+      "B": 10722
+    },
+    "ratio": {
+      "A": 0.95,
+      "B": 0.98
+    },
+    "band": {
+      "A": "CONTEXT_SHAPE_COMPARABLE",
+      "B": "CONTEXT_SHAPE_COMPARABLE"
+    }
+  },
+  "local_output_cap_chars": 4000,
+  "real_4096_run_safe_with_current_local_output_path": false,
+  "native_enforcement_proven": false,
+  "calls": [
+    {
+      "probe_id": "A/BUDGET_4096",
+      "route": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": {
+        "sha256": "6d0dcdfbe2d7fa1891744b4d7cb01c9523959bd052f9866984a7020c6f422f68",
+        "bytes": 26,
+        "known": "deepseek/deepseek-v4-flash"
+      },
+      "request_body_sha256": "425f404fb45ae07ad72614348b977cab5380f5364a834a406906d474240abe8e",
+      "request_body_bytes": 25040,
+      "prompt_sha256": "0559b6e5583de1ef45559a469fdae6ee407d478ef2aecfd8b5a35f1653d9f4fc",
+      "local_prompt_tokens": 7734,
+      "gateway_prompt_tokens": 11515,
+      "max_tokens": 4096,
+      "response_format_kind": "NONE",
+      "http_status": 200,
+      "sent": true,
+      "status": "REQUEST_ACCEPTED_CONFORMING",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 11515,
+        "completion_tokens": 22,
+        "total_tokens": 11537
+      },
+      "output_sha256": "24c32812054652162d83408afa02c104e0f741f63bfdb0d6d22e91672d6a9c63",
+      "output_bytes": 14,
+      "output_truncated": false,
+      "output_conformed": true,
+      "error_class": null,
+      "error_sha256": null,
+      "error_bytes": null
+    },
+    {
+      "probe_id": "B/BUDGET_4096",
+      "route": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": {
+        "sha256": "3fe8916ce3681f1b64311cccdf7078ae5a29c13e0c83dffd31276f78d55de524",
+        "bytes": 20,
+        "known": "MiniMaxAI/MiniMax-M3"
+      },
+      "request_body_sha256": "b5403096d8586a4b0c550087649280df8affcecec63ab769da5693e20ef249a1",
+      "request_body_bytes": 25058,
+      "prompt_sha256": "0559b6e5583de1ef45559a469fdae6ee407d478ef2aecfd8b5a35f1653d9f4fc",
+      "local_prompt_tokens": 7734,
+      "gateway_prompt_tokens": 10722,
+      "max_tokens": 4096,
+      "response_format_kind": "NONE",
+      "http_status": 200,
+      "sent": true,
+      "status": "REQUEST_ACCEPTED_CONFORMING",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 10722,
+        "completion_tokens": 6,
+        "total_tokens": 10728
+      },
+      "output_sha256": "24c32812054652162d83408afa02c104e0f741f63bfdb0d6d22e91672d6a9c63",
+      "output_bytes": 14,
+      "output_truncated": false,
+      "output_conformed": true,
+      "error_class": null,
+      "error_sha256": null,
+      "error_bytes": null
+    },
+    {
+      "probe_id": "A/JSON_OBJECT",
+      "route": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": {
+        "sha256": "6d0dcdfbe2d7fa1891744b4d7cb01c9523959bd052f9866984a7020c6f422f68",
+        "bytes": 26,
+        "known": "deepseek/deepseek-v4-flash"
+      },
+      "request_body_sha256": "da2ffbca1d5b951e74d38e6f2d17246ab71f50cc9579626b3994227cb1f53368",
+      "request_body_bytes": 218,
+      "prompt_sha256": "ad900e8a8650bbbc6dbb50eac1547251fa3e779039dc2897ea166a3fc4ca57e3",
+      "local_prompt_tokens": 15,
+      "gateway_prompt_tokens": 2824,
+      "max_tokens": 128,
+      "response_format_kind": "JSON_OBJECT",
+      "http_status": 200,
+      "sent": true,
+      "status": "REQUEST_ACCEPTED_CONFORMING",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 2824,
+        "completion_tokens": 7,
+        "total_tokens": 2831
+      },
+      "output_sha256": "24c32812054652162d83408afa02c104e0f741f63bfdb0d6d22e91672d6a9c63",
+      "output_bytes": 14,
+      "output_truncated": false,
+      "output_conformed": true,
+      "error_class": null,
+      "error_sha256": null,
+      "error_bytes": null
+    },
+    {
+      "probe_id": "B/JSON_OBJECT",
+      "route": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": {
+        "sha256": "3fe8916ce3681f1b64311cccdf7078ae5a29c13e0c83dffd31276f78d55de524",
+        "bytes": 20,
+        "known": "MiniMaxAI/MiniMax-M3"
+      },
+      "request_body_sha256": "b1cb358c2842cf3b6fee3278c72d48f3a312b55bef41433dc02ab29cd3c8cbac",
+      "request_body_bytes": 236,
+      "prompt_sha256": "ad900e8a8650bbbc6dbb50eac1547251fa3e779039dc2897ea166a3fc4ca57e3",
+      "local_prompt_tokens": 15,
+      "gateway_prompt_tokens": 2904,
+      "max_tokens": 128,
+      "response_format_kind": "JSON_OBJECT",
+      "http_status": 200,
+      "sent": true,
+      "status": "REQUEST_ACCEPTED_CONFORMING",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 2904,
+        "completion_tokens": 6,
+        "total_tokens": 2910
+      },
+      "output_sha256": "24c32812054652162d83408afa02c104e0f741f63bfdb0d6d22e91672d6a9c63",
+      "output_bytes": 14,
+      "output_truncated": false,
+      "output_conformed": true,
+      "error_class": null,
+      "error_sha256": null,
+      "error_bytes": null
+    },
+    {
+      "probe_id": "A/JSON_SCHEMA",
+      "route": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": {
+        "sha256": "6d0dcdfbe2d7fa1891744b4d7cb01c9523959bd052f9866984a7020c6f422f68",
+        "bytes": 26,
+        "known": "deepseek/deepseek-v4-flash"
+      },
+      "request_body_sha256": "fe25032797fb8e6f9c259acc5612a941b5e77cbaed884138b26a24fed6f69872",
+      "request_body_bytes": 432,
+      "prompt_sha256": "ad900e8a8650bbbc6dbb50eac1547251fa3e779039dc2897ea166a3fc4ca57e3",
+      "local_prompt_tokens": 15,
+      "gateway_prompt_tokens": 2913,
+      "max_tokens": 128,
+      "response_format_kind": "JSON_SCHEMA",
+      "http_status": 200,
+      "sent": true,
+      "status": "REQUEST_ACCEPTED_CONFORMING",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 2913,
+        "completion_tokens": 17,
+        "total_tokens": 2930
+      },
+      "output_sha256": "24c32812054652162d83408afa02c104e0f741f63bfdb0d6d22e91672d6a9c63",
+      "output_bytes": 14,
+      "output_truncated": false,
+      "output_conformed": true,
+      "error_class": null,
+      "error_sha256": null,
+      "error_bytes": null
+    },
+    {
+      "probe_id": "B/JSON_SCHEMA",
+      "route": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": {
+        "sha256": "3fe8916ce3681f1b64311cccdf7078ae5a29c13e0c83dffd31276f78d55de524",
+        "bytes": 20,
+        "known": "MiniMaxAI/MiniMax-M3"
+      },
+      "request_body_sha256": "0e0c8c5d2f486f20c9ef457c78f9666e8f7a036309e06bc65c0c805a2e88b514",
+      "request_body_bytes": 450,
+      "prompt_sha256": "ad900e8a8650bbbc6dbb50eac1547251fa3e779039dc2897ea166a3fc4ca57e3",
+      "local_prompt_tokens": 15,
+      "gateway_prompt_tokens": 2991,
+      "max_tokens": 128,
+      "response_format_kind": "JSON_SCHEMA",
+      "http_status": 200,
+      "sent": true,
+      "status": "REQUEST_ACCEPTED_CONFORMING",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 2991,
+        "completion_tokens": 6,
+        "total_tokens": 2997
+      },
+      "output_sha256": "24c32812054652162d83408afa02c104e0f741f63bfdb0d6d22e91672d6a9c63",
+      "output_bytes": 14,
+      "output_truncated": false,
+      "output_conformed": true,
+      "error_class": null,
+      "error_sha256": null,
+      "error_bytes": null
+    }
+  ],
+  "privacy": {
+    "prompt_persisted": false,
+    "output_persisted": false,
+    "error_body_persisted": false,
+    "auth_token_persisted": false
+  },
+  "side_effects": {
+    "mail": 0,
+    "seal": 0,
+    "store": 0,
+    "attention": 0,
+    "advice_presentation": 0,
+    "production_generation": 0,
+    "reviewer_calls": 0,
+    "b018_corpus_reads": 0
+  },
+  "stop_reason": null,
+  "provider_retention": "NOT_VERIFIED_BY_SAIMAIL"
+}

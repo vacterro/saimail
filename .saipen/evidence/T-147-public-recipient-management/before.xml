@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="14" skipped="0" tests="16" time="1.687" timestamp="2026-09-30T17:05:41.079121+03:00" hostname="DESKTOP-TTH0L52"><testcase classname="tests.test_public_recipient_management" name="test_empty_recipient_list_works_with_locked_custody" time="0.086"><failure message="assert (1 == 0)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_empty_recipient_list_work0/a'), WindowsPath('V:/_TEMP_/pytest-o...pty_recipient_list_work0/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660334450&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x0000018660334550&gt;
+
+    def test_empty_recipient_list_works_with_locked_custody(pair, capsys):
+        a, b, _, store = pair
+        before = snapshot(a), snapshot(b)
+        code, result = cli(capsys, "recipient", "list", "--workspace", a)
+&gt;       assert code == 0 and result["status"] == "OK"
+E       assert (1 == 0)
+
+tests\test_public_recipient_management.py:70: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_add_and_list_use_public_metadata_without_any_full_load" time="0.074"><failure message="AssertionError: public recipient management attempted a private-key load">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_add_and_list_use_public_m0/a'), WindowsPath('V:/_TEMP_/pytest-o...d_and_list_use_public_m0/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x000001865FD2D4D0&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x000001865FD2D190&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001865FD2F810&gt;
+
+    def test_add_and_list_use_public_metadata_without_any_full_load(pair, capsys, monkeypatch):
+        a, b, card, store = pair
+        before_b = snapshot(b)
+    
+        def never(*args, **kwargs):
+            raise AssertionError("public recipient management attempted a private-key load")
+    
+        monkeypatch.setattr(workspace, "load_workspace", never)
+&gt;       code, result = add(capsys, a, b, card)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_public_recipient_management.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_public_recipient_management.py:62: in add
+    return cli(capsys, "recipient", "add", "--workspace", a, "--alias", alias,
+tests\test_public_recipient_management.py:53: in cli
+    code = saimail_local.main([*map(str, args), "--json"])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail_local.py:1188: in main
+    return _cmd_recipient(args, as_json)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail_local.py:406: in _cmd_recipient
+    return _dispatch_workspace(f"recipient-{args.recipient_action}", action, as_json)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+saimail_local.py:359: in _dispatch_workspace
+    result = action()
+             ^^^^^^^^
+saimail_local.py:400: in action
+    workspace = engine.load_workspace(args.workspace)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+args = ('V:\\_TEMP_\\pytest-of-vac34\\pytest-71\\test_add_and_list_use_public_m0\\a',)
+kwargs = {}
+
+    def never(*args, **kwargs):
+&gt;       raise AssertionError("public recipient management attempted a private-key load")
+E       AssertionError: public recipient management attempted a private-key load
+
+tests\test_public_recipient_management.py:81: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_bad_card_returns_structured_error_without_mutation[missing]" time="0.096"><failure message="AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'&#10;  &#10;  - RECIPIENT_MALFORMED&#10;  + CUSTODY_ACCESS_FAILED)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_bad_card_returns_structur0/a'), WindowsPath('V:/_TEMP_/pytest-o...d_card_returns_structur0/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x000001865FD2EF90&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x00000186603A6490&gt;
+damage = 'missing'
+
+    @pytest.mark.parametrize("damage", ["missing", "directory", "encoding", "json", "array", "shape"])
+    def test_bad_card_returns_structured_error_without_mutation(pair, capsys, damage):
+        a, b, card, store = pair
+        if damage == "missing":
+            card.unlink()
+        elif damage == "directory":
+            card.unlink()
+            card.mkdir()
+        elif damage == "encoding":
+            card.write_bytes(b"\xff\xfe")
+        elif damage == "json":
+            card.write_text("{bad", encoding="utf-8")
+        elif damage == "array":
+            card.write_text("[]", encoding="utf-8")
+        else:
+            card.write_text("{}", encoding="utf-8")
+        before = snapshot(a), snapshot(b)
+        code, result = add(capsys, a, b, card)
+&gt;       assert code == 1 and result["status"] == workspace.RECIPIENT_MALFORMED
+E       AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'
+E         
+E         - RECIPIENT_MALFORMED
+E         + CUSTODY_ACCESS_FAILED)
+
+tests\test_public_recipient_management.py:113: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_bad_card_returns_structured_error_without_mutation[directory]" time="0.119"><failure message="AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'&#10;  &#10;  - RECIPIENT_MALFORMED&#10;  + CUSTODY_ACCESS_FAILED)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_bad_card_returns_structur1/a'), WindowsPath('V:/_TEMP_/pytest-o...d_card_returns_structur1/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660844A10&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x0000018660844910&gt;
+damage = 'directory'
+
+    @pytest.mark.parametrize("damage", ["missing", "directory", "encoding", "json", "array", "shape"])
+    def test_bad_card_returns_structured_error_without_mutation(pair, capsys, damage):
+        a, b, card, store = pair
+        if damage == "missing":
+            card.unlink()
+        elif damage == "directory":
+            card.unlink()
+            card.mkdir()
+        elif damage == "encoding":
+            card.write_bytes(b"\xff\xfe")
+        elif damage == "json":
+            card.write_text("{bad", encoding="utf-8")
+        elif damage == "array":
+            card.write_text("[]", encoding="utf-8")
+        else:
+            card.write_text("{}", encoding="utf-8")
+        before = snapshot(a), snapshot(b)
+        code, result = add(capsys, a, b, card)
+&gt;       assert code == 1 and result["status"] == workspace.RECIPIENT_MALFORMED
+E       AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'
+E         
+E         - RECIPIENT_MALFORMED
+E         + CUSTODY_ACCESS_FAILED)
+
+tests\test_public_recipient_management.py:113: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_bad_card_returns_structured_error_without_mutation[encoding]" time="0.113"><failure message="AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'&#10;  &#10;  - RECIPIENT_MALFORMED&#10;  + CUSTODY_ACCESS_FAILED)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_bad_card_returns_structur2/a'), WindowsPath('V:/_TEMP_/pytest-o...d_card_returns_structur2/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660AED0D0&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x0000018660AEC610&gt;
+damage = 'encoding'
+
+    @pytest.mark.parametrize("damage", ["missing", "directory", "encoding", "json", "array", "shape"])
+    def test_bad_card_returns_structured_error_without_mutation(pair, capsys, damage):
+        a, b, card, store = pair
+        if damage == "missing":
+            card.unlink()
+        elif damage == "directory":
+            card.unlink()
+            card.mkdir()
+        elif damage == "encoding":
+            card.write_bytes(b"\xff\xfe")
+        elif damage == "json":
+            card.write_text("{bad", encoding="utf-8")
+        elif damage == "array":
+            card.write_text("[]", encoding="utf-8")
+        else:
+            card.write_text("{}", encoding="utf-8")
+        before = snapshot(a), snapshot(b)
+        code, result = add(capsys, a, b, card)
+&gt;       assert code == 1 and result["status"] == workspace.RECIPIENT_MALFORMED
+E       AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'
+E         
+E         - RECIPIENT_MALFORMED
+E         + CUSTODY_ACCESS_FAILED)
+
+tests\test_public_recipient_management.py:113: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_bad_card_returns_structured_error_without_mutation[json]" time="0.063"><failure message="AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'&#10;  &#10;  - RECIPIENT_MALFORMED&#10;  + CUSTODY_ACCESS_FAILED)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_bad_card_returns_structur3/a'), WindowsPath('V:/_TEMP_/pytest-o...d_card_returns_structur3/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660A96150&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x0000018660A97DD0&gt;
+damage = 'json'
+
+    @pytest.mark.parametrize("damage", ["missing", "directory", "encoding", "json", "array", "shape"])
+    def test_bad_card_returns_structured_error_without_mutation(pair, capsys, damage):
+        a, b, card, store = pair
+        if damage == "missing":
+            card.unlink()
+        elif damage == "directory":
+            card.unlink()
+            card.mkdir()
+        elif damage == "encoding":
+            card.write_bytes(b"\xff\xfe")
+        elif damage == "json":
+            card.write_text("{bad", encoding="utf-8")
+        elif damage == "array":
+            card.write_text("[]", encoding="utf-8")
+        else:
+            card.write_text("{}", encoding="utf-8")
+        before = snapshot(a), snapshot(b)
+        code, result = add(capsys, a, b, card)
+&gt;       assert code == 1 and result["status"] == workspace.RECIPIENT_MALFORMED
+E       AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'
+E         
+E         - RECIPIENT_MALFORMED
+E         + CUSTODY_ACCESS_FAILED)
+
+tests\test_public_recipient_management.py:113: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_bad_card_returns_structured_error_without_mutation[array]" time="0.063"><failure message="AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'&#10;  &#10;  - RECIPIENT_MALFORMED&#10;  + CUSTODY_ACCESS_FAILED)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_bad_card_returns_structur4/a'), WindowsPath('V:/_TEMP_/pytest-o...d_card_returns_structur4/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660AFF6D0&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x00000186603FE690&gt;
+damage = 'array'
+
+    @pytest.mark.parametrize("damage", ["missing", "directory", "encoding", "json", "array", "shape"])
+    def test_bad_card_returns_structured_error_without_mutation(pair, capsys, damage):
+        a, b, card, store = pair
+        if damage == "missing":
+            card.unlink()
+        elif damage == "directory":
+            card.unlink()
+            card.mkdir()
+        elif damage == "encoding":
+            card.write_bytes(b"\xff\xfe")
+        elif damage == "json":
+            card.write_text("{bad", encoding="utf-8")
+        elif damage == "array":
+            card.write_text("[]", encoding="utf-8")
+        else:
+            card.write_text("{}", encoding="utf-8")
+        before = snapshot(a), snapshot(b)
+        code, result = add(capsys, a, b, card)
+&gt;       assert code == 1 and result["status"] == workspace.RECIPIENT_MALFORMED
+E       AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'
+E         
+E         - RECIPIENT_MALFORMED
+E         + CUSTODY_ACCESS_FAILED)
+
+tests\test_public_recipient_management.py:113: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_bad_card_returns_structured_error_without_mutation[shape]" time="0.059"><failure message="AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'&#10;  &#10;  - RECIPIENT_MALFORMED&#10;  + CUSTODY_ACCESS_FAILED)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_bad_card_returns_structur5/a'), WindowsPath('V:/_TEMP_/pytest-o...d_card_returns_structur5/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660A82E50&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x0000018660A83B90&gt;
+damage = 'shape'
+
+    @pytest.mark.parametrize("damage", ["missing", "directory", "encoding", "json", "array", "shape"])
+    def test_bad_card_returns_structured_error_without_mutation(pair, capsys, damage):
+        a, b, card, store = pair
+        if damage == "missing":
+            card.unlink()
+        elif damage == "directory":
+            card.unlink()
+            card.mkdir()
+        elif damage == "encoding":
+            card.write_bytes(b"\xff\xfe")
+        elif damage == "json":
+            card.write_text("{bad", encoding="utf-8")
+        elif damage == "array":
+            card.write_text("[]", encoding="utf-8")
+        else:
+            card.write_text("{}", encoding="utf-8")
+        before = snapshot(a), snapshot(b)
+        code, result = add(capsys, a, b, card)
+&gt;       assert code == 1 and result["status"] == workspace.RECIPIENT_MALFORMED
+E       AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'
+E         
+E         - RECIPIENT_MALFORMED
+E         + CUSTODY_ACCESS_FAILED)
+
+tests\test_public_recipient_management.py:113: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_card_read_permission_error_is_structured" time="0.058"><failure message="AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'&#10;  &#10;  - RECIPIENT_MALFORMED&#10;  + CUSTODY_ACCESS_FAILED)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_card_read_permission_erro0/a'), WindowsPath('V:/_TEMP_/pytest-o...rd_read_permission_erro0/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660A9ADD0&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x0000018660A9B410&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000018660A9AB90&gt;
+
+    def test_card_read_permission_error_is_structured(pair, capsys, monkeypatch):
+        a, b, card, store = pair
+        original = Path.read_text
+    
+        def denied(path, *args, **kwargs):
+            if path == card:
+                raise PermissionError("card access denied")
+            return original(path, *args, **kwargs)
+    
+        monkeypatch.setattr(Path, "read_text", denied)
+        before = snapshot(a), snapshot(b)
+        code, result = add(capsys, a, b, card)
+&gt;       assert code == 1 and result["status"] == workspace.RECIPIENT_MALFORMED
+E       AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_MALFORMED'
+E         
+E         - RECIPIENT_MALFORMED
+E         + CUSTODY_ACCESS_FAILED)
+
+tests\test_public_recipient_management.py:131: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_peer_public_identity_checks_remain_fail_closed[missing-DELIVERY_TARGET_UNAVAILABLE]" time="0.058"><failure message="AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'DELIVERY_TARGET_UNAVAILABLE'&#10;  &#10;  - DELIVERY_TARGET_UNAVAILABLE&#10;  + CUSTODY_ACCESS_FAILED)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_peer_public_identity_chec0/a'), WindowsPath('V:/_TEMP_/pytest-o...er_public_identity_chec0/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660AB4C90&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x0000018660A97050&gt;
+damage = 'missing', expected = 'DELIVERY_TARGET_UNAVAILABLE'
+
+    @pytest.mark.parametrize("damage, expected", [
+        ("missing", workspace.DELIVERY_TARGET_UNAVAILABLE),
+        ("seat", workspace.RECIPIENT_IDENTITY_MISMATCH),
+        ("fingerprint", workspace.INVALID_WORKSPACE),
+    ])
+    def test_peer_public_identity_checks_remain_fail_closed(pair, capsys, damage, expected):
+        a, b, card, store = pair
+        marker = b / workspace.MARKER_NAME
+        if damage == "missing":
+            marker.unlink()
+        else:
+            payload = json.loads(marker.read_text(encoding="utf-8"))
+            payload["seat" if damage == "seat" else "sender_kid"] = (
+                "other" if damage == "seat" else "sha256:" + "0" * 64)
+            marker.write_text(json.dumps(payload), encoding="utf-8")
+        before = snapshot(a), snapshot(b)
+        code, result = add(capsys, a, b, card)
+&gt;       assert code == 1 and result["status"] == expected
+E       AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'DELIVERY_TARGET_UNAVAILABLE'
+E         
+E         - DELIVERY_TARGET_UNAVAILABLE
+E         + CUSTODY_ACCESS_FAILED)
+
+tests\test_public_recipient_management.py:153: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_peer_public_identity_checks_remain_fail_closed[seat-RECIPIENT_IDENTITY_MISMATCH]" time="0.058"><failure message="AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_IDENTITY_MISMATCH'&#10;  &#10;  - RECIPIENT_IDENTITY_MISMATCH&#10;  + CUSTODY_ACCESS_FAILED)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_peer_public_identity_chec1/a'), WindowsPath('V:/_TEMP_/pytest-o...er_public_identity_chec1/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660ADDB50&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x0000018660ADDBD0&gt;
+damage = 'seat', expected = 'RECIPIENT_IDENTITY_MISMATCH'
+
+    @pytest.mark.parametrize("damage, expected", [
+        ("missing", workspace.DELIVERY_TARGET_UNAVAILABLE),
+        ("seat", workspace.RECIPIENT_IDENTITY_MISMATCH),
+        ("fingerprint", workspace.INVALID_WORKSPACE),
+    ])
+    def test_peer_public_identity_checks_remain_fail_closed(pair, capsys, damage, expected):
+        a, b, card, store = pair
+        marker = b / workspace.MARKER_NAME
+        if damage == "missing":
+            marker.unlink()
+        else:
+            payload = json.loads(marker.read_text(encoding="utf-8"))
+            payload["seat" if damage == "seat" else "sender_kid"] = (
+                "other" if damage == "seat" else "sha256:" + "0" * 64)
+            marker.write_text(json.dumps(payload), encoding="utf-8")
+        before = snapshot(a), snapshot(b)
+        code, result = add(capsys, a, b, card)
+&gt;       assert code == 1 and result["status"] == expected
+E       AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'RECIPIENT_IDENTITY_MISMATCH'
+E         
+E         - RECIPIENT_IDENTITY_MISMATCH
+E         + CUSTODY_ACCESS_FAILED)
+
+tests\test_public_recipient_management.py:153: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_peer_public_identity_checks_remain_fail_closed[fingerprint-INVALID_WORKSPACE]" time="0.053"><failure message="AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'INVALID_WORKSPACE'&#10;  &#10;  - INVALID_WORKSPACE&#10;  + CUSTODY_ACCESS_FAILED)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_peer_public_identity_chec2/a'), WindowsPath('V:/_TEMP_/pytest-o...er_public_identity_chec2/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660AE07D0&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x0000018660AE2750&gt;
+damage = 'fingerprint', expected = 'INVALID_WORKSPACE'
+
+    @pytest.mark.parametrize("damage, expected", [
+        ("missing", workspace.DELIVERY_TARGET_UNAVAILABLE),
+        ("seat", workspace.RECIPIENT_IDENTITY_MISMATCH),
+        ("fingerprint", workspace.INVALID_WORKSPACE),
+    ])
+    def test_peer_public_identity_checks_remain_fail_closed(pair, capsys, damage, expected):
+        a, b, card, store = pair
+        marker = b / workspace.MARKER_NAME
+        if damage == "missing":
+            marker.unlink()
+        else:
+            payload = json.loads(marker.read_text(encoding="utf-8"))
+            payload["seat" if damage == "seat" else "sender_kid"] = (
+                "other" if damage == "seat" else "sha256:" + "0" * 64)
+            marker.write_text(json.dumps(payload), encoding="utf-8")
+        before = snapshot(a), snapshot(b)
+        code, result = add(capsys, a, b, card)
+&gt;       assert code == 1 and result["status"] == expected
+E       AssertionError: assert (1 == 1 and 'CUSTODY_ACCESS_FAILED' == 'INVALID_WORKSPACE'
+E         
+E         - INVALID_WORKSPACE
+E         + CUSTODY_ACCESS_FAILED)
+
+tests\test_public_recipient_management.py:153: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_local_public_identity_corruption_still_refuses[list]" time="0.062" /><testcase classname="tests.test_public_recipient_management" name="test_local_public_identity_corruption_still_refuses[add]" time="0.054" /><testcase classname="tests.test_public_recipient_management" name="test_recipient_alias_conflict_cannot_overwrite_the_mapping" time="0.052"><failure message="assert 1 == 0">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_recipient_alias_conflict_0/a'), WindowsPath('V:/_TEMP_/pytest-o...cipient_alias_conflict_0/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660AC63D0&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x000001866082D290&gt;
+
+    def test_recipient_alias_conflict_cannot_overwrite_the_mapping(pair, capsys):
+        a, b, card, store = pair
+&gt;       assert add(capsys, a, b, card)[0] == 0
+E       assert 1 == 0
+
+tests\test_public_recipient_management.py:175: AssertionError</failure></testcase><testcase classname="tests.test_public_recipient_management" name="test_send_still_requires_private_custody_after_public_setup" time="0.050"><failure message="assert (1 == 0)">pair = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-71/test_send_still_requires_priva0/a'), WindowsPath('V:/_TEMP_/pytest-o...nd_still_requires_priva0/beta.card.json'), &lt;test_public_recipient_management.LockedStore object at 0x0000018660AA16D0&gt;)
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x0000018660AA15D0&gt;
+
+    def test_send_still_requires_private_custody_after_public_setup(pair, capsys):
+        a, b, card, store = pair
+&gt;       assert add(capsys, a, b, card)[0] == 0 and store.reads == 0
+E       assert (1 == 0)
+
+tests\test_public_recipient_management.py:187: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,41 @@
+{
+  "schema": "SAIMAIL_T136_REGRESSION_1",
+  "python": "3.11.9",
+  "pytest": "8.4.2",
+  "command": [
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_correspondence.py",
+    "tests/test_saipen_work_desk.py",
+    "tests/test_host_client.py",
+    "--tb=short"
+  ],
+  "before": {
+    "exit_code": 1,
+    "subject_files": {
+      "saimail/correspondence.py": "4d6454a67cda643946b06bcdc2837784b87a4bfdcc1ee6fd9a19c145dafbbbbe",
+      "saimail/saipen_bridge.py": "d811886ee440e89bf3bf431fe5336535ce126a802e6f96d6be9ff42cbe1176ea"
+    },
+    "verifier_files": {
+      "tests/test_correspondence.py": "660a964f3aeaa34fd632723dd0f693199fdfccb0e490638b57cd9a49806d0790",
+      "tests/test_saipen_work_desk.py": "7e50e38f90bdb21ccbb17be52ba143399d2f74ec5f491e0616d640bca77d32cb",
+      "tests/test_host_client.py": "9b19cda6c96dce0d3fd96a966bd1040590bb1e88c4f387dfbf4c57427c38b0b0"
+    }
+  },
+  "after": {
+    "exit_code": 0,
+    "subject_files": {
+      "saimail/correspondence.py": "c20c6a315208ad21c0dd5d504502c717c076961ef9e8ba9c786a2669c0f1f676",
+      "saimail/saipen_bridge.py": "97065c7d2138f5e387b28e4e65f6892e046be3e8bf739f8d796899a3528ae299"
+    },
+    "verifier_files": {
+      "tests/test_correspondence.py": "660a964f3aeaa34fd632723dd0f693199fdfccb0e490638b57cd9a49806d0790",
+      "tests/test_saipen_work_desk.py": "7e50e38f90bdb21ccbb17be52ba143399d2f74ec5f491e0616d640bca77d32cb",
+      "tests/test_host_client.py": "9b19cda6c96dce0d3fd96a966bd1040590bb1e88c4f387dfbf4c57427c38b0b0"
+    }
+  },
+  "same_oracle": true,
+  "baseline": "restored pre-T136 report, metrics and brief association",
+  "scope": "behavior restoration in isolated copy; unused additive metadata is preserved"
+}

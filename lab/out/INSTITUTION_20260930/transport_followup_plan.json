@@ -1,0 +1,10 @@
+{
+  "additional_call_budget": 1,
+  "original_plan_unchanged": true,
+  "phase": "review-followup",
+  "reason": "One recorded receiver transport timeout; preserve original prompt and failure.",
+  "registered_at": "2026-09-29T21:52:18Z",
+  "schema": "SAIMAIL_INSTITUTION_EXPERIMENT_1",
+  "semantic_retries": 0,
+  "timeout_seconds": 300
+}

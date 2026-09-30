@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-040:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Implement and close B-012 ALLY_ADVICE v0 exactly within Targets A/B/C: additive decision; canonical bounded ALLY1 with evidence and mandatory counterevidence floors, fixed uncertainty/proposal/agency markers and honest semantic limitations; caller-supplied evidence-existence resolver with non-transplantable proof; unchanged HLET1/HENV1 ciphertext-only private adapter; explicit receiver-owned HUMAN_PRIVATE attention admission; valid zero-letter path; no autonomous generation, profiling, scoring, plaintext store, compliance loop, hardware/UI/T-34/B-015 work, publication, or history rewrite; required tests, full suite and saipen validate green; then STOP."
+    }
+  },
+  "derived_at": "2026-09-19T18:47:01Z",
+  "derived_from": "SRC-040",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "bb1edb9de01cb5b6ba955f5f588ca7c6b352207ca8b1f75a8e0fe68f50b69ef7"
+}

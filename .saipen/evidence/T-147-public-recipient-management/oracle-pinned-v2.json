@@ -1,0 +1,8 @@
+{
+  "schema": "T147_REGRESSION_ORACLE_1",
+  "criteria_sha256": {
+    "tests/test_public_recipient_management.py": "fcace0d75efff4ad0e03431fc6a7f8bd2a99acb22c2543bac75b6296050e1bdc",
+    "pyproject.toml": "1c4604335ed3d5e6826c9448fa93205d882eb1fab6977814ed49967c0a69d1db"
+  },
+  "fixture_correction": "The valid alias-conflict control exports the other identity to its own card file; prior CARD_CONFLICT in test setup retained in oracle-after.xml. Criterion still refuses overwriting the recipient alias."
+}

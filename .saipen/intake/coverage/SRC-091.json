@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-091:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-105 closed with verification evidence in LOG: verify -> PASS [target: T-105] conf: high -- administrative wrapper only; SRC-091 authority preserved; T-104 row intact with SRC-089; zero product files touched; closing this seat consumes blocked_on reservation and restores T-104",
+      "text": "CONTINUE T-104 V6-01 GitHub Identity and Presentation Sync to canonical closure per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260922_0230.md",
+      "verification": "the Work this request created reached its own verification gate; see the T-105 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-105"
+    }
+  },
+  "schema_version": 1
+}

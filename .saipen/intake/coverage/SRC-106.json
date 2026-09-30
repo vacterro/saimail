@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-106:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-117 closed with verification evidence in LOG: review -> PASS [target: T-117] conf: high -- independent python -m pytest -q: first run 2566 passed + 1 known load-sensitive timing test (test_quarantine dense_body, untouched, isolated 5/5 pass); second quiescent run 2567 passed / 0 failed / 0 errors / 0 skipped; STATE/BOARD/LOG hash unchanged; oracle diff additive only; final-byte review clean; see REVIEW.md",
+      "text": "\u0425\u043e\u0440\u043e\u0448\u043e, \u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0430\u0439 \u043f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430 \u0434\u0430\u043b\u044c\u0448\u0435 \u043f\u043e \u0441\u043c\u044b\u0441\u043b\u0443. \u041c\u0430\u044f\u043a - humbox.",
+      "verification": "the Work this request created reached its own verification gate; see the T-117 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-117"
+    }
+  },
+  "schema_version": 1
+}

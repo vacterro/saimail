@@ -1,0 +1,33 @@
+{
+  "build_a": {
+    "content_digest_sha256": "d060491b6fe865e6844f353aaa691d97eaa92db7e1a75c13617e658993bdab8f",
+    "filename": "saimail-0.0.2a1-py3-none-any.whl",
+    "sha256": "c446f3e408ca0003395c1a9453f12ac160921cd8fe08867403d3555174dbe9b3",
+    "size_bytes": 370976
+  },
+  "build_b": {
+    "content_digest_sha256": "d060491b6fe865e6844f353aaa691d97eaa92db7e1a75c13617e658993bdab8f",
+    "filename": "saimail-0.0.2a1-py3-none-any.whl",
+    "sha256": "1eeef1ea04e736225c4587d2fdd157e044860ad621b82d95ae1a5fa559c91821",
+    "size_bytes": 370976
+  },
+  "byte_identical_between_builds": false,
+  "content_identical_between_builds": true,
+  "content_identical_to_frozen": true,
+  "differing_members_between_builds": [],
+  "frozen_wheel": {
+    "content_digest_sha256": "d060491b6fe865e6844f353aaa691d97eaa92db7e1a75c13617e658993bdab8f",
+    "filename": "saimail-0.0.2a1-py3-none-any.whl",
+    "sha256": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+    "size_bytes": 370976
+  },
+  "metadata_version": "0.0.2a1",
+  "note": "wheels are compared per member file; byte inequality caused by packaging-tool metadata/timestamps is documented, never faked as content equality; the frozen candidate is the exact hashed wheel",
+  "schema": "LOCAL_ALPHA_REPRODUCIBILITY_1",
+  "version": 1,
+  "zip_timestamp_difference_count": 2,
+  "zip_timestamp_differences_between_builds": [
+    "saimail-0.0.2a1.dist-info/entry_points.txt",
+    "saimail-0.0.2a1.dist-info/top_level.txt"
+  ]
+}

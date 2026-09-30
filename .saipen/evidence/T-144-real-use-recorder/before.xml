@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.361" timestamp="2026-09-30T15:17:23.141663+03:00" hostname="DESKTOP-TTH0L52"><testcase classname="tests.test_real_use_recorder" name="test_entry2_appends_and_preserves_history" time="0.056"><failure message="SystemExit: Existing observation retained; do not overwrite it.">study = (&lt;module 't142_test_capture' from 'V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\evidence\\T-142-e...nds_and_preser0/foreign'), WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-54/test_entry2_appends_and_preser0/box'), ...)
+
+    def test_entry2_appends_and_preserves_history(study):
+        cap, verify, evidence, *_ = study
+        before = {n: (evidence / n).read_bytes() for n in ("runtime.json", "registration.json")}
+&gt;       cap.main()
+
+tests\test_real_use_recorder.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def main():
+        destination = OUT / "runtime.json"
+        if destination.exists():
+&gt;           raise SystemExit("Existing observation retained; do not overwrite it.")
+E           SystemExit: Existing observation retained; do not overwrite it.
+
+.saipen\evidence\T-142-evolution-audit\capture.py:40: SystemExit</failure></testcase></testsuite></testsuites>

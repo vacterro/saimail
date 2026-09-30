@@ -1,0 +1,21 @@
+{
+  "module": "saimail/participants.py",
+  "test": "tests/test_participants.py",
+  "mutants": {
+    "no_identity_pin": [
+      ["    if (peer[\"sender_kid\"], peer[\"recipient_kid\"]) != (record[\"sender_kid\"],\n                                                       record[\"recipient_kid\"]):\n", "    if False:\n"]
+    ],
+    "no_project_scope": [
+      ["    record = _read(workspace).get(lineage, {}).get(seat)\n", "    record = next((seats[seat] for seats in _read(workspace).values() if seat in seats), None)\n"]
+    ],
+    "no_trigger_check": [
+      ["    if trigger not in record[\"triggers\"]:\n", "    if False:\n"]
+    ],
+    "self_allowed": [
+      ["    if seat == workspace.seat:\n        _reject(PARTICIPANT_SELF, \"a workspace does not address itself\")\n    record = _read", "    record = _read"]
+    ],
+    "lenient_file": [
+      ["    for lineage, seats in payload[\"projects\"].items():\n        if not _LINEAGE_RE.match(lineage)", "    for lineage, seats in ():\n        if not _LINEAGE_RE.match(lineage)"]
+    ]
+  }
+}

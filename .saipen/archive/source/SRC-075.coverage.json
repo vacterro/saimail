@@ -1,0 +1,41 @@
+{
+  "requirements": {
+    "SRC-075:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "release/evidence/external_proof_acceptance.json",
+      "text": "Recover state; verify the original external proof SHA256 and strict JSON, all nineteen acceptance checks and frozen wheel identity; retain original and byte-identical evidence copy.",
+      "verification": "python release/evidence/check_external_proof.py PASS; source/copy/wheel hashes match",
+      "work": "T-87"
+    },
+    "SRC-075:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "release/evidence/T87-T86-closure.md",
+      "text": "Preserve frozen candidate, supplied JSON and advertised platform scope; no rebuild of the frozen candidate, publication, commit, tag, push or V2-02 start.",
+      "verification": "All five frozen bundle file hashes unchanged; original proof hash unchanged; no Git write or V2-02 execution",
+      "work": "T-87"
+    },
+    "SRC-075:R003": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "release/evidence/T87-full-suite.xml",
+      "text": "Run focused release/integrity/repository checks, full suite and SAIPEN validation; compare against inherited 3 FAIL / 22 WARN and require no new V2-04 failure.",
+      "verification": "2123 passed 0 failed 0 errors 0 skipped; focused 40 passed; repo 33 passed; core 3 FAIL 21 WARN with same inherited problems",
+      "work": "T-87"
+    },
+    "SRC-075:R004": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "E-1069; release/evidence/T87-T86-closure.md; humbox/CURRENT-STATE.md; humbox/FUTURE-GATES-V2.md",
+      "text": "Close T-86/V2-04 canonically, update CURRENT-STATE and FUTURE-GATES-V2 truthfully; V2-01/V2-04 DONE, V2-02 next NOT STARTED, V2-03 optional NOT STARTED; final report and STOP.",
+      "verification": "T-86 canonically DONE at E-1069; T-87 resumed at E-1070; both roadmap maps name V2-01/V2-04 DONE and V2-02 selected NOT STARTED, V2-03 optional NOT STARTED; final evidence report prepared, explicit STOP/no-publication boundary retained.",
+      "work": "T-86"
+    }
+  },
+  "schema_version": 1
+}

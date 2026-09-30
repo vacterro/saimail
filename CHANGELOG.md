@@ -2,6 +2,81 @@
 
 ## Unreleased
 
+- Concurrent recipient registration (T-148): an OS lock covers fresh registry
+  admission and atomic persistence across API and CLI processes. Distinct
+  additions survive and competing identities cannot silently replace an alias.
+  Lock/persistence refusals are structured; failed lock acquisition closes its
+  descriptor. Listing stays read-only and registration stays keyless.
+
+- Public recipient management (T-147): recipient list/add use the validated
+  public workspace view and work with locked message custody. Invalid or
+  unreadable identity-card files return structured RECIPIENT_MALFORMED errors.
+  Public identity checks and alias conflicts remain fail-closed; sending still
+  requires private keys. Zero peers remain valid and the optional real-use
+  study does not block product development.
+
+- Real-use recorder repair (T-144): the unchanged T142_REAL_USE_1 registration
+  now admits a validated, bounded append-only observation sequence. Entry 1
+  remains byte-identical; later entries observe the actual owned Work and bind
+  canonical context and predecessor hashes. Repeated Work cannot inflate context
+  boundaries. Empty observations and unproven independent behavior remain valid.
+
+- Feedback provenance (T-143): metrics and host cycle/focus identify workspace
+  receiver decisions about received letters. Older peers retain UNKNOWN origin;
+  malformed present origin refuses projection. Sealed assessments of outgoing
+  proposals still require explicit receiver review. Counts and temporal rules
+  are unchanged; this establishes protocol semantics, not field improvement.
+
+- Evolution objective audit (T-142): twelve humbox directions mapped to current
+  source and behavioral evidence; controlled successor description separated
+  from real Work execution. An immutable six-entry real-use registration begins
+  with an empty configured T-142 observation. Host adoption and independently
+  measured receiver/revision/successor behavior remain open. Evidence:
+  `humbox/EVOLUTION-AUDIT.md`, `lab/analysis/evolution_audit_T142.md`.
+
+- Compact CLI transport (T-141): optional `saipen letter focus` and negotiated
+  `HostClient.focus(..., prefer_cli=True)` preserve metadata with independent
+  client validation and older-peer fallback. Registered wire bytes fall from
+  4841 to 2643 while calls and visible context stay unchanged. Existing focus
+  and full cycle remain available. Evidence: `lab/analysis/cli_focus_T141.md`.
+
+- Dated feedback (T-140): a host-owned seven-day assessment window separates
+  eligible informational guidance from lifetime history. Expired live decisions,
+  old and future assessments are counted explicitly; recent terminal corrections
+  remain assessment-only. Cycle shares one clock with desk/metrics; focus validates
+  the basis and marks older peers UNKNOWN. History, retries and sealed TTL stay
+  intact. Evidence: `lab/analysis/feedback_signal_age_T140.md`.
+
+- Compact agent context (T-139): opt-in `HostClient.focus` preserves current
+  Work, reading references, latest reason feedback and continuation/coverage
+  while reconstructing operations locally. Registered comparison reduces
+  agent-visible normalized JSON from 3319 to 978 bytes (70.5%); wire payload
+  and full cycle API stay available. Evidence: `lab/analysis/agent_focus_T139.md`.
+
+- Recurring host evaluation (T-138): preregistered fresh-process replay of real
+  T-137 evidence, equivalent separate-discovery/cycle measurements and 15
+  continuity/feedback controls. Cycle uses 2 rather than 3 CLI invocations;
+  normalized JSON grows 16.8%. Scripted choices and unfavorable outcomes remain
+  explicit in `lab/analysis/agent_cycle_T138.md`.
+
+- Agent cycle entry (T-137): one keyless observation over mail, unfinished
+  decisions, predecessor reserve and reason feedback; bounded context-bound
+  pagination, explicit reading suggestions and optional independent-host
+  negotiation through `HostClient.request("cycle", ...)`.
+
+- Receiver feedback loop (T-136): sealed replies for every explicit disposition,
+  distinct revision identities with stable retries, closed reason metrics and
+  informational communication hints. The existing keyless work brief recognizes
+  this project's namespaced letters. Workflow: `humbox/EVOLUTION.md`.
+
+- Useful correspondence and encrypted human desktop (D-066): structured utility
+  contracts, project-isolated recipient topics, explicit receiver outcomes,
+  result evidence/replies and successor reserve; negotiated bounded CLI host
+  adapter; Golden Default tabs, master-password custody, independent recovery
+  backup and restore. Real SAIFREN cycle and regression evidence are in
+  `lab/analysis/institution_20260930.md`. Current checkout only; frozen artifacts
+  and adjacent projects unchanged. Operator guide: `humbox/INSTITUTION.md`.
+
 - Letter etiquette (SRC-084): the operator's mailbox held two agent letters that were completion
   reports already written in the chat. `README.md` gains "When a letter is worth writing" (chat
   first; a letter only when the operator is not reading AND it changes what they must do or

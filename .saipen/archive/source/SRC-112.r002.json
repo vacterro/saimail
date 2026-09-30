@@ -1,0 +1,19 @@
+{
+  "clauses": {
+    "SRC-112:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Continue with the highest-value legitimate next SAIMAIL Work improving actual functionality or reliability; zero registered peers must not block product implementation."
+    },
+    "SRC-112:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Preserve the current zero-peer real-use result honestly without synthetic participants or fabricated peer evidence; peer-dependent observations remain unavailable or not run until real independent peers naturally exist."
+    }
+  },
+  "derived_at": "2026-09-30T14:15:41Z",
+  "derived_from": "SRC-112",
+  "interpretation_revision": 2,
+  "schema_version": 1,
+  "source_sha256": "a09492e7a6d5f806607d8bda33c38fbeb244f12693defca4c4b93ea890fd8665"
+}

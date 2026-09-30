@@ -1,0 +1,43 @@
+{
+  "manifest_version": "EXPERIMENT-MANIFEST-1",
+  "experiment_id": "T71-HISTORICAL-SOURCE-PINS",
+  "authority": "HISTORICAL_ONLY",
+  "inputs": [
+    {
+      "INPUT_ID": "T71-QUARANTINE-SOURCE",
+      "SENSITIVITY": "PUBLIC_ARCHIVABLE",
+      "SOURCE_KIND": "TEXT_FILE",
+      "EXTRACTION_KIND": "IMMUTABLE_FIXTURE",
+      "EXTRACTOR_VERSION": "IMMUTABLE-FIXTURE-1",
+      "EXTRACTED_SHA256": "0960dd992839ca149a81be3bdf80746fb6cd7397023ef2998d429cf03428b985",
+      "REQUIRED_FOR_LIVE": true,
+      "SOURCE_PATH": "saimail/quarantine.py",
+      "ARCHIVED_FIXTURE": "tests/fixtures/t71/quarantine.py.txt",
+      "CONTAINER_SHA256_AT_REGISTRATION": "0960dd992839ca149a81be3bdf80746fb6cd7397023ef2998d429cf03428b985"
+    },
+    {
+      "INPUT_ID": "T71-LEGACY-SOURCE",
+      "SENSITIVITY": "PUBLIC_ARCHIVABLE",
+      "SOURCE_KIND": "TEXT_FILE",
+      "EXTRACTION_KIND": "IMMUTABLE_FIXTURE",
+      "EXTRACTOR_VERSION": "IMMUTABLE-FIXTURE-1",
+      "EXTRACTED_SHA256": "6e519e624ad6e33a5509337f43d7e8d7f742e2af23aef9a8257b7b568821fe2a",
+      "REQUIRED_FOR_LIVE": true,
+      "SOURCE_PATH": "saimail/legacy.py",
+      "ARCHIVED_FIXTURE": "tests/fixtures/t71/legacy.py.txt",
+      "CONTAINER_SHA256_AT_REGISTRATION": "6e519e624ad6e33a5509337f43d7e8d7f742e2af23aef9a8257b7b568821fe2a"
+    }
+  ],
+  "implementation": [
+    {
+      "PATH": "lab/ally_generation_live.py",
+      "SHA256": "79f9ae4e651509458f6acc8eda3b7814ae0ad67733afdbb45c27305810f3fc4c",
+      "ROLE": "PARSER"
+    },
+    {
+      "PATH": "lab/project_corpus_reachability.py",
+      "SHA256": "8d6921cba270223bdc6b144d9c408ee4b77ef7c93838878fd3047a597363e1bb",
+      "ROLE": "RUNNER"
+    }
+  ]
+}

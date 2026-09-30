@@ -1,0 +1,68 @@
+{
+  "requirements": {
+    "SRC-066:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "IMPLEMENTED",
+      "evidence": "spec/13-EXPERIMENT-REPRODUCIBILITY-v0.md",
+      "text": "One additive manifest contract exists (spec/13, EXPERIMENT-MANIFEST-1) and no historical registration B-018/T-63/T-69/T-71/T-74 is rewritten.",
+      "verification": "tests/test_experiment_manifest.py",
+      "work": "T-79"
+    },
+    "SRC-066:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "IMPLEMENTED",
+      "evidence": "lab/experiment_manifest.py",
+      "text": "Historical, current and live verification are mechanically separate operations verify_historical, verify_current and admit_live in the LAB-only lab/experiment_manifest.py.",
+      "verification": "tests/test_experiment_manifest.py",
+      "work": "T-79"
+    },
+    "SRC-066:R003": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "IMPLEMENTED",
+      "evidence": "lab/experiment_manifest.py",
+      "text": "Selected-input identity is EXTRACTED_SHA256 and unrelated container bytes outside a registered selector cannot invalidate it.",
+      "verification": "tests/test_experiment_manifest.py",
+      "work": "T-79"
+    },
+    "SRC-066:R004": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "IMPLEMENTED",
+      "evidence": "lab/experiment_manifest.py + lab/history/t71_manifest.json",
+      "text": "PUBLIC_ARCHIVABLE fixtures preserve historical replay; fixture substitution fails closed; PRIVATE_EPHEMERAL plaintext is never archived and unavailable private history reports HISTORICAL_INPUT_UNAVAILABLE_BY_DESIGN.",
+      "verification": "tests/test_experiment_manifest.py",
+      "work": "T-79"
+    },
+    "SRC-066:R005": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "IMPLEMENTED",
+      "evidence": "lab/experiment_manifest.py",
+      "text": "Historical verification cannot authorize live execution; a HISTORICAL_ONLY manifest is refused; current input drift blocks live admission before network with zero network calls.",
+      "verification": "tests/test_experiment_manifest.py",
+      "work": "T-79"
+    },
+    "SRC-066:R006": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "disposition": "VERIFIED",
+      "evidence": "lab/history/t71_manifest.json + tests/fixtures/t71",
+      "text": "The real T-71 quarantine and legacy fixtures are indexed by a HISTORICAL_ONLY manifest while current saimail/quarantine.py and saimail/legacy.py may legitimately differ.",
+      "verification": "tests/test_experiment_manifest.py",
+      "work": "T-79"
+    },
+    "SRC-066:R007": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "IMPLEMENTED",
+      "evidence": "humbox/CURRENT-STATE.md + LOG E-930ff + saipen validate CURRENT_FAIL carried",
+      "text": "Negative controls C1-C7 and the required test matrix pass; CURRENT-STATE is refreshed truthfully; SAIPEN digest drift is recorded not hand-edited; no production saimail change and no model or network call.",
+      "verification": "python -m pytest -q; full suite 1955 passed",
+      "work": "T-79"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,41 @@
+1138a1139,1178
+> def test_v603_turn_entry_evaluation_is_recorded_and_header_reads_hold_no_secret():
+>     """T-117 / V6-03: humbox, spec/26 section 7, D-059 and the CLI agree that the
+>     SAIPEN turn-entry read and every header-only command load the secret-free view."""
+>     current = " ".join(read(ROOT / "humbox" / "CURRENT-STATE.md").split())
+>     roadmap = read(ROOT / "humbox" / "FUTURE-GATES-V6.md")
+>     spec = " ".join(read(ROOT / "spec" / "26-SAITELEMES-v0.md").split())
+>     decision = " ".join(read(ROOT / "spec" / "DECISIONS-D059.md").split())
+>     desk = " ".join(read(ROOT / "humbox" / "SAIPEN-WORK-DESK.md").split())
+> 
+>     assert "D-059" in decision_ids()
+>     assert "V6-03" in current and "T-1497" in current and "SAIMAIL_WORKSPACE" in desk
+>     rows = [[cell.strip() for cell in line.strip("|").split("|")]
+>             for line in roadmap.splitlines() if line.startswith("| V6-03 |")]
+>     assert len(rows) == 1 and rows[0][2] == "T-117" and "IMPLEMENTED" in rows[0][1]
+>     assert "## 15. V6-03" in roadmap
+>     assert "## 7. The SAIPEN turn-entry consumer" in spec
+>     for text in (spec, decision):
+>         assert "load_workspace_headers" in text and "status" in text
+>         assert "credential store" in text
+> 
+>     # The header-only commands load the view; the key-using ones keep the full load.
+>     entry = read(ROOT / "saimail_local.py")
+>     saipen = entry.split("def _cmd_saipen", 1)[1].split("\ndef ", 1)[0]
+>     for action in ("telegrams", "enter", "brief"):
+>         branch = saipen.split(f'args.saipen_action == "{action}"', 1)[1].split("return", 1)[0]
+>         assert "load_workspace_headers(" in branch, action
+>     telegram = saipen.split('args.saipen_action == "telegram"', 1)[1].split("return", 1)[0]
+>     assert "load_workspace(" in telegram and "load_workspace_headers(" not in telegram
+>     inbox = entry.split("def _cmd_inbox", 1)[1].split("\ndef ", 1)[0]
+>     assert "load_workspace_headers(" in inbox
+>     for command in ("_cmd_open", "_cmd_reopen", "_cmd_reply"):
+>         body = entry.split(f"def {command}", 1)[1].split("\ndef ", 1)[0]
+>         assert "load_workspace(" in body and "load_workspace_headers(" not in body, command
+> 
+>     api = json.loads(read(ROOT / "lab/stable_local_api.json"))
+>     exported = {(item["module"], item["symbol"]) for item in api["apis"]}
+>     assert ("saimail.workspace", "load_workspace_headers") in exported
+>     assert ("saimail.workspace", "WorkspaceHeaders") in exported
+> 
+> 

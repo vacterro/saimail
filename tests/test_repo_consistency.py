@@ -199,7 +199,7 @@ def test_dependency_surface_is_declared():
 def test_no_tokenizer_data_or_model_weights_are_vendored():
     declared_media = _validate_intentional_media_asset()
     for path in ROOT.rglob("*"):
-        if not path.is_file() or ".saipen" in path.parts:
+        if not path.is_file() or ".saipen" in path.parts or ".git" in path.parts:
             continue
         assert path.suffix not in {".bin", ".safetensors", ".gguf", ".pt", ".onnx"}, (
             f"{path} looks like vendored model data"
@@ -1012,9 +1012,12 @@ def test_v501_desktop_local_messenger_is_recorded():
                 assert not (node.module or "").startswith("PySide6"), path
     # The GUI module itself carries no network or background machinery.
     gui_source = read(ROOT / "saimail" / "gui_app.py")
-    for banned in ("QNetwork", "socket", "threading", "QThread", "QTimer",
+    for banned in ("QNetwork", "socket", "threading", "QTimer",
                    "requests", "urllib"):
         assert banned not in gui_source, f"gui_app must not carry {banned!r}"
+    # D-066 permits only user-requested KDF workers. The Qt surface test
+    # exercises their explicit launch, competing-action guard and shutdown.
+    assert "def _run_key_job" in gui_source and "self._key_job = None" in gui_source
 
 
 def test_v601_github_identity_and_presentation_sync_is_recorded():

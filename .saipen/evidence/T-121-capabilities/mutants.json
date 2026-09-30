@@ -1,0 +1,24 @@
+{
+  "module": "saimail/capabilities.py",
+  "test": "tests/test_capabilities.py",
+  "mutants": {
+    "counts_for_any_seat": [
+      ["    elif acting_seat != view.seat:\n", "    elif False:\n"]
+    ],
+    "crash_on_missing_workspace": [
+      ["    except SailangError as exc:\n        reason = WORKSPACE_MISSING", "    except ZeroDivisionError as exc:\n        reason = WORKSPACE_MISSING"]
+    ],
+    "failed_intents_ignored": [
+      ["        if health[\"failed\"]:\n", "        if False:\n"]
+    ],
+    "no_backlog_threshold": [
+      ["        elif (health[\"oldest_pending_seconds\"] or 0) > OUTBOX_BACKLOG_SECONDS:\n", "        elif False:\n"]
+    ],
+    "full_load_for_check": [
+      ["        view = _workspace.load_workspace_headers(workspace_root)\n", "        view = _workspace.load_workspace(workspace_root)\n"]
+    ],
+    "optimistic_overall": [
+      ["    return _finish(document, reasons, overall=DEGRADED if blocking or lineage is None\n                   else AVAILABLE)\n", "    return _finish(document, reasons, overall=AVAILABLE)\n"]
+    ]
+  }
+}

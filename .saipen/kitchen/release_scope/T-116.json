@@ -1,0 +1,17 @@
+{
+  "op_id": "scope-33ad4c0d63f54cf1911ee080a902f329",
+  "paths": {
+    ".saipen/kitchen/T-113-reread-continuation.md": "2b66f1419fff93b0c5a2f52dd87ad1e0d3b8f4e23efd4d34a06993233ca26946",
+    "humbox/CURRENT-STATE.md": "dd91b734b74fa0aaa65214cc0522ddad814ff1f11336db9f725802eadbb6d020",
+    "humbox/FUTURE-GATES-V6.md": "40603226f83728d96b95a1c91bf08106664e0d17d6d845d68feaae32cdf93a63",
+    "humbox/SAIPEN-WORK-DESK.md": "f784e9cb529212af13d00ad5b41916177a908a3c37bf20e3927b7fdf6ef55709",
+    "tests/test_repo_consistency.py": "1369147a7ffe25b931c6ecbc130a691a22a1b726713e1b62b48c5b4387aaac50"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-24T02:09:22Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:2f2280bc59dc6eef889a8241edd9005412dd67cc56c1973cc5e34372d6656bb5",
+  "ticket": "T-116"
+}

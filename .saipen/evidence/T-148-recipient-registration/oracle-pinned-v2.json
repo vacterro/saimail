@@ -1,0 +1,8 @@
+{
+  "schema": "T148_ORACLE_1",
+  "change": "Only Ruff annotations/context-manager formatting; assertions unchanged",
+  "sha256": {
+    "tests/test_recipient_registration_concurrency.py": "c31078bdd7b3440da24996c3d6982ab655020b8f67a372fb93426d51e36845a9",
+    "pyproject.toml": "1c4604335ed3d5e6826c9448fa93205d882eb1fab6977814ed49967c0a69d1db"
+  }
+}

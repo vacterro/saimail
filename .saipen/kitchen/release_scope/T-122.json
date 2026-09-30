@@ -1,0 +1,28 @@
+{
+  "op_id": "scope-e8e75161a36141ed95500bc22d80fa22",
+  "paths": {
+    "CHANGELOG.md": "505fe587888fc187bea0fc2e7ab0da1d73431f1ff8e05524c90b768258b4b80a",
+    "humbox/CURRENT-STATE.md": "a580c6c0f845791bf161c1b7a3c56c188fc95e4c21c885a03339492a1edfe0bd",
+    "humbox/FUTURE-GATES-V6.md": "5236a0264faaf690cd4222f7af6020b1cea2cf53f638dbd0afd2ffb2faff90f5",
+    "humbox/SAIPEN-WORK-DESK.md": "260ee373dfb5ad1e2b709542438f34741081d8e142af2e7a58f0b7034748237b",
+    "lab/stable_local_api.json": "f77f889b475259dee6731ea9b59be16dd73bb95b7f2278c56509d58bcf01660f",
+    "saimail/capabilities.py": "75cc72b91f4f86ee5fe7bbdcbd861c348d6b808c5efd9318e0b303172fe11dda",
+    "saimail/notify.py": "955d05b74a4a339f298a476079e451be55adbb826c58e5773c87f8adaa815762",
+    "saimail/outbox.py": "21aeb9ff37990431b4b905c5e7250347e8b8ac998d4d44bbb03aceed863388c4",
+    "saimail/workspace.py": "cd5483f1926d43578c21b525ce2373f3d8ce5e89c5a411da0a0fc081fcf10c63",
+    "saimail_local.py": "4f841a8b32c42cbca47f07e5b168268cf671c9b70890b751fb2a04f11c795d82",
+    "spec/26-SAITELEMES-v0.md": "70855131f173933fe9d9a66cd8e20bdbf697adebab401a7ead1115f31d23460e",
+    "spec/31-SAITELEMES-NOTIFY-v0.md": "19736f13b74be85cc6d70fa1ee0a705d070e988d3d2a8ac795aa8904fe01df35",
+    "spec/DECISIONS-D063.md": "42dc937044562bad5a8d429ef18d3c9cc7111a22273531b3a6bb61378aae2d99",
+    "tests/test_capabilities.py": "30301ca481dea2f2f0f80a626e0336bd102a4d3e07ad5d1c6e03414ab05fc6c0",
+    "tests/test_notify.py": "b0c283113d7d59cdd2282f0801f0d3f121f77cc1f5afe7cee12075eea2ca2fcf",
+    "tests/test_repo_consistency.py": "4566148bfd9a197edae284f41b5b9cc64c79b957d6bfe15d1e5b4298c0bc1138"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-24T07:27:16Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:2198d8822fd3ee2e6940c8ec19a66de10f912006057298a5fd8e9de095b95289",
+  "ticket": "T-122"
+}

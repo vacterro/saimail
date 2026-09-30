@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-073:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute V2-04 SCOPED LOCAL ALPHA RELEASE READINESS (MEGA HANDOFF) per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260920_2024.md"
+    }
+  },
+  "derived_at": "2026-09-20T18:15:10Z",
+  "derived_from": "SRC-073",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "fbce4551d4573e6d01cd352d687e2fa872ad80ac2afc1ed18efef7f455687e5d"
+}

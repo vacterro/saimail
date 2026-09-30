@@ -1,0 +1,25 @@
+{
+  "done_when": "With unread `T-9` messages for lineages A and B, `desk(lineage=A)` returns A only; repeated continuation-page queries still exclude B.",
+  "evidence": [
+    {
+      "path": "routing_before.py",
+      "sha256": "850d93bc3e712ff7ae21e9e79a3c11b346faf61c4e4df4c21f34e7e8283ee76a"
+    }
+  ],
+  "expires_at": "2026-10-29T21:46:04Z",
+  "impact": "When separate projects reuse `T-9`, the T-9 receiver's desk can return unread metadata from another lineage, contaminating its project-local work.",
+  "in_reply_to": null,
+  "issue": "project-topic-isolation",
+  "lineage": "lineage-c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3",
+  "observation": "`desk` filters cases by `lineage`, but `ws.query_inbox(... topic=work ...)` receives no lineage; `notify` stores shared-mailbox messages under topic `work` while lineage appears only in `notify_key`.",
+  "recipient_work": "T-9",
+  "request": "Add a lineage parameter to the inbox query contract; pass the checked lineage from `desk`. Add a shared-mailbox regression fixture with identical Work IDs across two lineages.",
+  "schema": "SAIMAIL_LETTER_1",
+  "scope": [
+    "saimail/correspondence.py",
+    "saimail/notify.py"
+  ],
+  "sender_work": "T-7",
+  "trigger": "finding",
+  "uncertainty": "`query_inbox` internals are omitted; it may already partition by lineage. If not, the missing filter permits cross-lineage routing."
+}

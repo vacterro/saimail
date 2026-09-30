@@ -1,0 +1,19 @@
+{
+  "clauses": {
+    "SRC-075:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Recover state; verify the original external proof SHA256 and strict JSON, all nineteen acceptance checks and frozen wheel identity; retain original and byte-identical evidence copy."
+    },
+    "SRC-075:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Preserve frozen candidate, supplied JSON and advertised platform scope; no rebuild of the frozen candidate, publication, commit, tag, push or V2-02 start."
+    }
+  },
+  "derived_at": "2026-09-20T18:14:28Z",
+  "derived_from": "SRC-075",
+  "interpretation_revision": 2,
+  "schema_version": 1,
+  "source_sha256": "e727a5e2303d7b05f4451eb97cd638b03babeb43bafe575c8f5c5af745537188"
+}

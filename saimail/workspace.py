@@ -20,16 +20,17 @@ written with a temp-file + atomic replace; an interrupted write leaves the
 previous complete file, never a partial one):
 
     saimail-workspace.json   public marker: schema, version, seat, fingerprints
-    identity/identity.json   identity in one of two custody modes:
+    identity/identity.json   identity in one of three custody modes:
                              v1 (raw)     software private keys in the file
                              v2 (os-store) public material + vault handles,
                                           private bytes in the OS credential
                                           store (V3-01; spec/20)
+                             v3 (master-key) password-wrapped software keys
     peers.json               explicit alias -> public identity + recipient root
     outbox/<envelope_id>.senv  sealed container copies kept for exact replay
     mail/...                 the Post Office's own durable state
 
-Custody is storage policy, not protocol: both modes carry the same public
+Custody is storage policy, not protocol: all modes carry the same public
 identity, the same envelope and the same Post Office semantics. A raw workspace
 keeps its raw layout until an explicit ``migrate_workspace_custody`` call; an
 ``os-store`` workspace fails closed when its store entry is missing or wrong and
@@ -137,6 +138,8 @@ RECIPIENT_CONFLICT = "RECIPIENT_CONFLICT"
 RECIPIENT_MALFORMED = "RECIPIENT_MALFORMED"
 RECIPIENT_UNKNOWN = "RECIPIENT_UNKNOWN"
 RECIPIENT_IDENTITY_MISMATCH = "RECIPIENT_IDENTITY_MISMATCH"
+RECIPIENT_LOCK_TIMEOUT = "RECIPIENT_LOCK_TIMEOUT"
+RECIPIENT_REGISTRY_UNAVAILABLE = "RECIPIENT_REGISTRY_UNAVAILABLE"
 DELIVERY_TARGET_UNAVAILABLE = "DELIVERY_TARGET_UNAVAILABLE"
 OUTBOX_MISSING = "OUTBOX_MISSING"
 OUTBOX_CONFLICT = "OUTBOX_CONFLICT"
@@ -184,7 +187,8 @@ OS_STORE_NOTICE_TEXT = (
 OPERATOR_ACTION_CODES = frozenset({
     WORKSPACE_MISSING, INVALID_WORKSPACE, WORKSPACE_CONFLICT, BAD_SEAT,
     CARD_CONFLICT, RECIPIENT_CONFLICT, RECIPIENT_MALFORMED, RECIPIENT_UNKNOWN,
-    RECIPIENT_IDENTITY_MISMATCH, DELIVERY_TARGET_UNAVAILABLE, OUTBOX_MISSING,
+    RECIPIENT_IDENTITY_MISMATCH, RECIPIENT_REGISTRY_UNAVAILABLE,
+    DELIVERY_TARGET_UNAVAILABLE, OUTBOX_MISSING,
     OUTBOX_CONFLICT, BAD_INPUT, REPLY_TARGET_UNKNOWN, REPLY_TARGET_UNREAD,
     REPLY_TARGET_EXPIRED, REPLY_RECIPIENT_UNKNOWN, REPLY_RECIPIENT_MISMATCH,
 }) | _custody.CUSTODY_CODES
@@ -485,6 +489,9 @@ class WorkspaceHeaders:
     and turns a locked store into a failed count. This view carries no private
     key and no way to obtain one, so it cannot open, reopen, send, reply or
     sign; those operations keep the full ``load_workspace``.
+
+    Explicit public recipient listing/registration also uses this view
+    (T-147); registration validates identities and never delivers a message.
     """
 
     root: Path
@@ -532,6 +539,10 @@ def custody_notice(mode: str) -> dict:
         notice_id, message = NOTICE_RAW_CUSTODY_DEFAULT, RAW_CUSTODY_NOTICE_TEXT
     elif mode == _custody.CUSTODY_OS_STORE:
         notice_id, message = NOTICE_OS_STORE_CUSTODY, OS_STORE_NOTICE_TEXT
+    elif mode == _custody.CUSTODY_MASTER_KEY:
+        notice_id, message = "MASTER_KEY_CUSTODY", (
+            "Private identity keys are encrypted with your master password. "
+            "Keep a recovery backup and its independent recovery key separately; back up sealed mail too.")
     else:
         _reject(BAD_INPUT, f"unknown custody mode {mode!r}; no notice exists for it")
     return {"schema": NOTICE_SCHEMA, "version": NOTICE_VERSION, "id": notice_id,
@@ -582,7 +593,7 @@ def _provision_protected(identity_payload: dict, entries, store, written: list) 
 
 
 def init_workspace(root, *, seat: str, custody: str = _custody.CUSTODY_RAW,
-                   store=None, clock=None) -> dict:
+                   store=None, clock=None, password=None) -> dict:
     """Create one durable workspace; refuse to overwrite or regenerate anything.
 
     Outcomes: ``CREATED``, ``ALREADY_EXISTS`` (an already-initialized valid
@@ -608,7 +619,7 @@ def init_workspace(root, *, seat: str, custody: str = _custody.CUSTODY_RAW,
         existing = _validate_marker(
             _read_json(marker, code=INVALID_WORKSPACE, what="workspace marker"),
             root=root)
-        loaded = load_workspace(root, store=store)
+        loaded = load_workspace(root, store=store, password=password)
         return command_result(
             "init", ALREADY_EXISTS, workspace=loaded,
             detail=f"workspace already initialized for seat {existing['seat']}")
@@ -641,6 +652,10 @@ def init_workspace(root, *, seat: str, custody: str = _custody.CUSTODY_RAW,
                 [(identity_payload["sender_handle"], sender_hex),
                  (identity_payload["recipient_handle"], recipient_hex)],
                 store, written)
+        elif custody == _custody.CUSTODY_MASTER_KEY:
+            from saimail import keyvault
+
+            identity_payload = keyvault.wrap(_marker_payload(projection), sender_hex, recipient_hex, password)
         else:
             identity_payload = _identity_v1_payload(seat, created, sender_hex, recipient_hex)
         root.mkdir(parents=True, exist_ok=True)
@@ -657,15 +672,15 @@ def init_workspace(root, *, seat: str, custody: str = _custody.CUSTODY_RAW,
         _atomic_write_bytes(marker, _canonical_json_bytes(_marker_payload(projection)))
     except BaseException as exc:  # noqa: BLE001 - cleanup, then the failure itself
         _raise_with_cleanup(store, written, exc)
-    return command_result("init", CREATED, workspace=load_workspace(root, store=store),
+    return command_result("init", CREATED, workspace=load_workspace(root, store=store, password=password),
                           notices=[custody_notice(custody)],
                           detail=f"workspace initialized for seat {seat} in {custody} custody")
 
 
-def load_workspace(root, *, store=None) -> Workspace:
+def load_workspace(root, *, store=None, password=None) -> Workspace:
     """Reopen one workspace from durable files only. Fails closed on any mismatch.
 
-    Raw (v1) and os-store (v2) identities both load here; the custody mode is
+    Raw (v1), os-store (v2) and master-key (v3) identities load here; the custody mode is
     read from the durable identity file and is never inferred from the platform,
     defaulted or switched. In os-store mode both private keys are retrieved from
     the custody store and must re-derive the durable public identity.
@@ -685,6 +700,16 @@ def load_workspace(root, *, store=None) -> Workspace:
             _reject(INVALID_WORKSPACE,
                     "workspace marker does not match the durable private identity; refusing "
                     "to serve a forged or stale workspace")
+    elif mode == _custody.CUSTODY_MASTER_KEY:
+        from saimail import keyvault
+
+        sender_hex, recipient_hex = keyvault.unwrap(identity, marker, password)
+        sender_private = Ed25519PrivateKey.from_private_bytes(bytes.fromhex(sender_hex))
+        recipient_private = X25519PrivateKey.from_private_bytes(bytes.fromhex(recipient_hex))
+        projection = _public_projection(marker["seat"], marker["created"],
+                                        sender_private.public_key(), recipient_private.public_key())
+        if _marker_payload(projection) != marker:
+            _reject(INVALID_WORKSPACE, "decrypted identity differs from its public fingerprints")
     else:
         sender_private, recipient_private = _load_protected_keys(identity, store=store)
     # Validate the durable mapping at load time; the property re-reads it on use.
@@ -750,6 +775,11 @@ def _read_durable_identity(root: Path) -> tuple[dict, dict, str]:
             and identity.get("version") == IDENTITY_VERSION_V2):
         _validate_identity_v2(identity, marker=marker)
         return marker, identity, _custody.CUSTODY_OS_STORE
+    if identity.get("schema") == "SAIMAIL_IDENTITY_3":
+        from saimail import keyvault
+
+        keyvault.validate(identity, marker)
+        return marker, identity, _custody.CUSTODY_MASTER_KEY
     _reject(INVALID_WORKSPACE, "workspace identity has an unknown schema or field set")
     raise AssertionError("unreachable")
 
@@ -827,6 +857,15 @@ def custody_status(root, *, store=None) -> dict:
         mode = _custody.CUSTODY_OS_STORE
         handles = {"sender": identity["sender_handle"],
                    "recipient": identity["recipient_handle"]}
+    elif identity.get("schema") == "SAIMAIL_IDENTITY_3":
+        from saimail import keyvault
+
+        keyvault.validate(identity, marker)
+        return command_result("custody-status", "OK", seat=marker["seat"],
+                              custody={"mode": _custody.CUSTODY_MASTER_KEY, "backend": None,
+                                       "backend_state": "MASTER_KEY_REQUIRED", "loadable": False,
+                                       "load_error": "MASTER_KEY_REQUIRED", "handles": None},
+                              detail="encrypted identity; unlock with the master password or restore a recovery backup")
     else:
         _reject(INVALID_WORKSPACE, "workspace identity has an unknown schema or field set")
     backend = None
@@ -887,8 +926,25 @@ def export_identity_card(workspace: Workspace, dest=None) -> dict:
                           detail="public identity card only; no private key material")
 
 
-def add_recipient(workspace: Workspace, alias: str, card: object, peer_workspace,
-                  *, clock=None) -> dict:
+class _RecipientRegistryLock(postoffice._OsFileLock):
+    """Use the existing OS lock, closing an entry failure's owned descriptor.
+
+    Cleanup is local to this registry. Historical experiments bind the shared
+    Post Office source, whose bytes and lock behavior remain unchanged.
+    """
+
+    def __enter__(self):
+        try:
+            return super().__enter__()
+        except BaseException:
+            if self._fd is not None:
+                os.close(self._fd)
+                self._fd = None
+            raise
+
+
+def add_recipient(workspace: Workspace | WorkspaceHeaders, alias: str, card: object,
+                  peer_workspace, *, clock=None) -> dict:
     """Bind one operator alias to one explicit public identity and delivery root."""
     clock = clock or postoffice.utc_now
     if not isinstance(alias, str) or not SEAT_RE.match(alias):
@@ -918,26 +974,40 @@ def add_recipient(workspace: Workspace, alias: str, card: object, peer_workspace
         "workspace": str(peer_root),
         "added_at": clock(),
     }
-    existing = workspace.peers.get(alias)
-    if existing is not None:
-        same = all(existing[field] == record[field] for field in
-                   ("seat", "sender_kid", "recipient_kid", "workspace"))
-        if same:
-            return command_result("recipient-add", RECIPIENT_ALREADY_REGISTERED,
-                                  workspace=workspace, recipient={"alias": alias, **record},
-                                  detail="identical recipient mapping already registered")
-        _reject(RECIPIENT_CONFLICT,
-                f"alias {alias!r} already maps to seat {existing['seat']} "
-                f"({existing['recipient_kid']}); no silent overwrite")
-    peers = dict(workspace.peers)
-    peers[alias] = record
-    _write_peers(workspace.root, peers)
+    # One fresh registry snapshot owns both conflict admission and persistence.
+    # Atomic replacement alone cannot prevent two writers losing each other's
+    # updates; the existing OS lock also coordinates separate CLI processes.
+    try:
+        with _RecipientRegistryLock(workspace.root / ".peers.lock",
+                                    busy_code=RECIPIENT_LOCK_TIMEOUT):
+            peers = workspace.peers
+            existing = peers.get(alias)
+            if existing is not None:
+                same = all(existing[field] == record[field] for field in
+                           ("seat", "sender_kid", "recipient_kid", "workspace"))
+                if same:
+                    return command_result("recipient-add", RECIPIENT_ALREADY_REGISTERED,
+                                          workspace=workspace, recipient={"alias": alias, **record},
+                                          detail="identical recipient mapping already registered")
+                _reject(RECIPIENT_CONFLICT,
+                        f"alias {alias!r} already maps to seat {existing['seat']} "
+                        f"({existing['recipient_kid']}); no silent overwrite")
+            peers[alias] = record
+            _write_peers(workspace.root, peers)
+    except SailangError as exc:
+        if exc.code == RECIPIENT_LOCK_TIMEOUT:
+            _reject(RECIPIENT_LOCK_TIMEOUT,
+                    "another process holds the recipient registry lock; retry registration")
+        raise
+    except OSError as exc:
+        _reject(RECIPIENT_REGISTRY_UNAVAILABLE,
+                f"recipient registry could not be locked or saved: {exc}")
     return command_result("recipient-add", RECIPIENT_ADDED, workspace=workspace,
                           recipient={"alias": alias, **record},
                           detail=f"recipient {alias!r} registered for seat {record['seat']}")
 
 
-def list_recipients(workspace: Workspace) -> dict:
+def list_recipients(workspace: Workspace | WorkspaceHeaders) -> dict:
     items = [{"alias": alias, **record} for alias, record in sorted(workspace.peers.items())]
     return command_result("recipient-list", "OK", workspace=workspace, recipients=items,
                           detail=f"{len(items)} recipient(s)")
@@ -1032,7 +1102,7 @@ def _build_content_record(workspace: Workspace, *, claim, record_path,
 
 def _seal_deliver(workspace: Workspace, message: Record, recipient: dict, *,
                   alias: str, kind: str, topic: str, created: str,
-                  ref: str = None, clock) -> dict:
+                  ref: str | None = None, clock) -> dict:
     """Seal one canonical record and deliver it through the unchanged path.
 
     Shared by ``send`` and ``reply``: one canonical record resolution, one
@@ -1493,6 +1563,28 @@ def render_command(result: dict) -> str:
             lines.append(f"EVIDENCE:   {cited.get('ev')} ({cited.get('src')})")
     if result.get("detail"):
         lines.append(f"DETAIL:     {result.get('detail')}")
+    letter = result.get("letter") or {}
+    if letter.get("schema") == "SAIMAIL_LETTER_1":
+        for field, label in (("observation", "OBSERVED"), ("impact", "WHY IT MATTERS"),
+                             ("request", "REQUEST"), ("done_when", "COMPLETE WHEN"),
+                             ("uncertainty", "UNCERTAINTY")):
+            lines.append(f"{label}: {letter.get(field, '')}")
+    for case in result.get("cases") or []:
+        lines.append(f"{case['match']}: {case['envelope_id']} [{case['decision']}] "
+                     f"from {case['sender']}, scope {', '.join(case['scope'])}")
+    case = result.get("case")
+    if case:
+        lines.append(f"DECISION:   {case['decision']} ({case.get('reason') or 'not decided'})")
+        lines.append(f"RESERVE:    {'retained' if case['retained'] else 'not retained'}; expired={case['expired']}")
+    for field, label in (("evidence", "ORIGINAL EVIDENCE"), ("result_evidence", "RESULT EVIDENCE")):
+        for ref in result.get(field) or []:
+            if isinstance(ref, dict) and "path" in ref:
+                lines.append(f"{label}: {ref['path']} [{ref.get('state', 'UNCHECKED')}] sha256:{ref['sha256']}")
+    if result.get("metrics"):
+        observed = result["metrics"]
+        lines.append(f"OUTCOMES:   {observed['reviewed']} reviewed; {observed['retained']} retained")
+        lines.extend(f"  {code}: {count}" for code, count in observed["decisions"].items())
+        lines.append("BASIS:      explicit receiver decisions; model improvement not measured")
     for notice in result.get("notices") or []:
         if isinstance(notice, dict) and notice.get("message"):
             lines.append(f"NOTICE:     {notice['message']}")
@@ -1504,11 +1596,6 @@ def render_command(result: dict) -> str:
 __all__ = [
     "ALREADY_EXISTS",
     "BAD_INPUT",
-    "NOTICE_OS_STORE_CUSTODY",
-    "NOTICE_RAW_CUSTODY_DEFAULT",
-    "NOTICE_SCHEMA",
-    "OS_STORE_NOTICE_TEXT",
-    "RAW_CUSTODY_NOTICE_TEXT",
     "CARD_CONFLICT",
     "CARD_SCHEMA",
     "COMMAND_SCHEMA",
@@ -1516,6 +1603,7 @@ __all__ = [
     "CREATED",
     "CUSTODY_MIGRATED",
     "DEFAULT_KIND",
+    "DEFAULT_REPLY_KIND",
     "DEFAULT_SUBJECT",
     "DEFAULT_TOPIC",
     "DELIVERY_TARGET_UNAVAILABLE",
@@ -1525,9 +1613,14 @@ __all__ = [
     "IDENTITY_VERSION_V2",
     "INVALID_WORKSPACE",
     "MARKER_NAME",
+    "NOTICE_OS_STORE_CUSTODY",
+    "NOTICE_RAW_CUSTODY_DEFAULT",
+    "NOTICE_SCHEMA",
+    "OS_STORE_NOTICE_TEXT",
     "OUTBOX_DIR",
     "OUTBOX_MISSING",
     "PEERS_SCHEMA",
+    "RAW_CUSTODY_NOTICE_TEXT",
     "RECIPIENT_ADDED",
     "RECIPIENT_ALREADY_REGISTERED",
     "RECIPIENT_CONFLICT",
@@ -1539,7 +1632,6 @@ __all__ = [
     "REPLY_TARGET_EXPIRED",
     "REPLY_TARGET_UNKNOWN",
     "REPLY_TARGET_UNREAD",
-    "DEFAULT_REPLY_KIND",
     "WORKSPACE_CONFLICT",
     "WORKSPACE_MISSING",
     "WORKSPACE_SCHEMA",

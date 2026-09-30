@@ -1,0 +1,123 @@
+# SAITELEMES v0 — telegrams between running agents
+
+Status: v0, implemented (T-109, SRC-097). Decision: D-058. Builds on the S2 seam
+bridge (`spec/04-SAIPEN-SEAM.md` "S2 as built", D-057).
+
+## 1. Why
+
+An agent's audit turns up a fact that belongs to another running agent: a SAIPEN
+defect found while working in SAIMAIL, for example. Before v0 that fact reached the
+other agent only through a human relay or a cold inbox, so the other agent kept
+working without it. T-108 measured both failures. The protocolist learned of three
+defects only after the operator asked for a telegram. The host's cross-session
+message then waited for approval in the recipient session and expired.
+
+A SAITELEME is the SAIMAIL answer. The acting seat tells one registered running agent
+one thing, in one call, at discovery time. Delivery goes into the recipient's own
+Post Office and needs no human relay and no network.
+
+## 2. What a telegram is
+
+An **ordinary sealed message**. Nothing on the wire is new:
+
+| Part | Value |
+|---|---|
+| sender | the workspace seat, which must equal the acting SAIPEN seat |
+| `K` | one kind from the closed SENV2 set; default `DISCOVERY` |
+| `TOPIC` | `--topic`, else the SAIPEN Work id (`STATE.task`), else `saitelemes` |
+| body | exactly one of: the ordinary one-line claim wrapper (`EV:0`, `U1`), or the S2 citation of one LOG event (`KIND:O`, `EV` = sha256 of the exact line) |
+| SUBJ | the Work id when it is one token, else `saitelemes` |
+
+There is **no `TELEGRAM` kind**: SENV2 kinds are a closed wire set (spec/02 §3). There
+is **no importance field**: attention stays receiver-owned (spec/07). Urgency is not
+something a sender can assert.
+
+## 3. Commands
+
+```
+saimail-local saipen telegram  --workspace WS --to ALIAS (--claim TEXT | --event E-###)
+                               [--kind K] [--topic T] [--seat S] [--project-root P]
+saimail-local saipen telegrams --workspace WS [--topic T] [--scan-budget N] [--cursor N]
+```
+
+`telegram` reads the acting seat and Work id through the S2 bridge. It seals and
+delivers through the unchanged `send_message` path. A citation body is written to a
+private temporary file for that one call and never inside the workspace layout.
+
+`telegrams` is the **turn-entry read**: the P1 metadata query with `state=UNREAD`,
+bounded by the declared scan budget, optionally filtered to one Work id. It never
+decrypts, opens, acknowledges or promotes anything, and it needs no SAIPEN project.
+Since T-117 it also holds no secret: it loads the public-key-only header view
+(section 7), so it never reads a private key or the OS credential store.
+
+## 4. Refusals
+
+The current checkout's [Work Desk admission](27-SAIPEN-WORK-DESK-v0.md)
+(T-110) also applies before `telegram`: project IDENTITY and minimum STATE
+facts are required; absent participation yields `SAIPEN_ADMISSION_REQUIRED`.
+The standalone header-only `telegrams` query remains available without a
+project. Use `brief` for an admitted query with current work context.
+
+| Code | When |
+|---|---|
+| `SAIPEN_SEAT_MISMATCH` | the acting seat (`--seat` > `SAIPEN_AGENT` > `STATE.agent`) is not the workspace seat. A telegram never goes out under another agent's name, the defect T-108 found in SAIPEN itself. |
+| `BAD_INPUT` | no body or two bodies; a kind outside the closed set (including `TELEGRAM`) |
+| every S2 and workspace code | unchanged (`SAIPEN_EVENT_UNKNOWN`, `RECIPIENT_UNKNOWN`, ...) |
+
+## 5. Invariants
+
+- **I1.** A telegram is data. Command-looking claim text is delivered and opened as
+  text; the turn-entry read carries headers only.
+- **No authority by arrival.** A telegram creates no Work, moves no claim, writes
+  nothing under SAIPEN memory and skips no WAIT.
+- **Receiver-owned acceptance.** The recipient must already be registered (`recipient
+  add`) and must accept the sender key. There is no discovery registry of agents.
+
+## 6. What v0 does not do
+
+It does not make sending **automatic inside SAIPEN**. The trigger ("a finding owned
+by another live agent emits a telegram") and a SAIPEN turn-entry call to
+`telegrams` belong to the SAIPEN protocol. They are filed with the protocolist:
+`_SAIPEN/future_gate/FUTURE GATE — SAITELEMES AUTOMATIC AGENT TELEGRAMS_20260922.md`.
+v0 makes the SAIMAIL side a single call on each end, so that hook stays small. There
+is no daemon, no push notification, no network transport and no flood control beyond
+the receiver's scan budget.
+
+Update (T-117): SAIPEN has since built the turn-entry call (SAIPEN T-1497). The
+automatic send trigger is still unauthorized on the SAIPEN side.
+
+## 7. The SAIPEN turn-entry consumer (T-117, D-059)
+
+SAIPEN T-1497 (`_SAIPEN/tools/saipen_engine/telegrams.py`) runs, at `continue` and
+`status`, only when the per-machine carrier `SAIMAIL_WORKSPACE` is set and
+`saimail-local` resolves on PATH:
+
+```
+saimail-local --json saipen telegrams --workspace $SAIMAIL_WORKSPACE --scan-budget 200
+```
+
+It reports counts, never sender text: `unread` from `match_count`, `on_current_work`
+from `items[].topic` equal to the SAIPEN Work id, and `complete` when `exhausted` is
+false. Any non-zero exit or non-object answer becomes its `ERROR` state.
+
+**Consumed fields are a contract.** `LOCAL_WORKSPACE_COMMAND_1` keeps, for this
+command: exit code 0 with `ok: true`, integer `match_count`, boolean `exhausted`,
+`items[].topic`; a refusal exits 1 with `ok: false` and its code in `status` (there
+is no `code` field). `tests/test_turn_entry_headers.py` pins these.
+
+**No secret at turn entry.** The read runs unattended on every SAIPEN turn, so it
+must not need a key. The CLI loads `saimail.workspace.load_workspace_headers`, a
+`WorkspaceHeaders` view that carries the recipient public key and fingerprints only.
+It runs every public check of the full load (marker fingerprints, identity field set
+and marker agreement, os-store public projection and handles) and never builds a
+private key or reads the credential store. A locked or prompting store therefore
+still yields counts. `inbox`, `saipen enter` and `saipen brief` use the same view;
+open, reopen, send, reply and `saipen telegram` keep the full fail-closed load. The
+view proves the public identity, not possession of the private one: a raw identity
+whose private key no longer matches the marker still lists headers, and every
+key-using load refuses it.
+
+| Refusal | When |
+|---|---|
+| `WORKSPACE_MISSING` | no marker at the supplied root |
+| `INVALID_WORKSPACE` | any public marker/identity/peers inconsistency, exactly as the full load |

@@ -1,0 +1,685 @@
+{
+  "version": "PROJECT-CORPUS-JSONSCHEMA-1",
+  "registration_id": "sha256:1e7784bb5efc91531ad23fa91ecafd87dc899a26198b8e5e443590a31fb3f978",
+  "registration_file_sha256": "1e7784bb5efc91531ad23fa91ecafd87dc899a26198b8e5e443590a31fb3f978",
+  "manifest": {
+    "file": "lab/project_corpus_jsonschema_manifest.json",
+    "identity": "70f3cd8c299c8ac22b9da3c7930b5c6d99031151a4a67acc1cd9946e2e8773fa",
+    "file_sha256": "121979de099e09633e5336d30dbde3237afbad62bd1e830b5c953500da5b08fe",
+    "authority": "LIVE_ELIGIBLE",
+    "experiment_id": "FG-04B-PROJECT-CORPUS-JSONSCHEMA-1"
+  },
+  "admission": null,
+  "implementation": {
+    "harness_sha256": "fbc7edbaf50f6a6d4abe2e16b4e32b1b068fb3d3fbe97c220e886da65f3d625d",
+    "observer_sha256": "e418b509c20bb0b893bff7335df1198c921a7768d0a60166e2479d5726bdcaec",
+    "transport_sha256": "03212cf0799f3e7822c2098105c39d94ad4d79ae833e8e5b2334f30de52a61de",
+    "parser_sha256": "79f9ae4e651509458f6acc8eda3b7814ae0ad67733afdbb45c27305810f3fc4c",
+    "prompts_sha256": "0b5c59f6f7cc0c5248adc17b95236f42c7d26088912afcdc695866fe2954a050",
+    "gates_sha256": "db5aac15b3fb9725b39eb101e2abebbb9a23bba10de80c9e1a375bee69a1b117",
+    "advice_sha256": "637236737b3e24932cb5b7f3efe1f093542566e7f102c9695e830b31bd8a3673",
+    "manifest_module_sha256": "fce731a27f8d316d18c569245ba21bd685dc8671b260c3188a7d3b58bfd76cf2",
+    "shape_sha256": "db84aa89ac35c75fa98012b604232bb7221458a842f1a9d3da1bd796240a5592"
+  },
+  "started": "2026-09-20T15:51:50Z",
+  "dry_run": true,
+  "status": "COMPLETED",
+  "input": {
+    "registration_id": "sha256:dfd8b48dded34de8426181f309032da31c86e83f675412add15076fc421a096f",
+    "build_id": "sha256:0e05460aae1645b6bdfeec887f02a978a185026422faf74c90238f0938bd4e35",
+    "corpus_id": "sha256:b009bdf3a8efd28f29be76d0dfd9c2809c0e7dd010af8e92c94a97fbeeec19ac",
+    "artifact_count": 8,
+    "event_count": 5,
+    "project_scope": "project:saimail"
+  },
+  "routes": {
+    "A": "SAIFREN",
+    "B": "goat/MiniMaxAI/MiniMax-M3"
+  },
+  "token_budgets": {
+    "probe": 16,
+    "generator": 4096,
+    "reviewer": 2048
+  },
+  "response_format": {
+    "probe": "JSON_SCHEMA",
+    "generator": "JSON_SCHEMA",
+    "reviewer": "ABSENT"
+  },
+  "schema": {
+    "policy": "CORPUS_ENUM",
+    "file": "lab/project_corpus_jsonschema_schema.json",
+    "sha256": "84304f73399c35f3dc755a1cf19780e4b66ba1a93308c8a81e04d95f8ca285ef",
+    "allowed_evidence_refs": [
+      "sha256:0c4d8190d42036d5e43d11fe2dd2a2510e20118b28f0ad26091adc680e1dca6b",
+      "sha256:25cf1d478c1fb0b930e6336f1ab41df98c9e03f06cee00225565ddb1bb99928a",
+      "sha256:470467bf49b1609e5ffc5cf33a71ceadc8a49462b0864b36c54f7b1c5b5d9db4",
+      "sha256:77a0bf1f67abe52a7be10af84746adb20db8762e7a0a2ca6ddb193d1cd58cc92",
+      "sha256:98afe4373bceb06a635b441723cc4772fcd8ddac1768a5ca7de54a8cf8c2152d",
+      "sha256:ddfdbb5ef8ff1df279496a3e13d906495f06e343c0b30fe6af6b0bd1d3e9ca21",
+      "sha256:e0649c6f4971f41c91937c85bf1b76d7a6e4cd739c8ccc0f47fe2b15c888bb5c",
+      "sha256:f8042d041c400a6fac9d692087e09db84b90adfeeb966676d7881f75111d9cd5"
+    ],
+    "response_format_kind": "json_schema",
+    "enum_constrained": true
+  },
+  "call_ceiling": {
+    "max_live_calls": 6,
+    "probe_max": 2,
+    "generation_max": 2,
+    "review_max": 2
+  },
+  "budget": {
+    "spent_total": 5,
+    "spent_probe": 2,
+    "spent_generation": 2,
+    "spent_review": 1,
+    "logical_dispatches": 5,
+    "retries": 0,
+    "repair_calls": 0,
+    "replacements": 0,
+    "fallbacks": 0,
+    "network_calls": 0
+  },
+  "probes": [
+    {
+      "probe_id": "A/PROBE",
+      "route": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": {
+        "sha256": "d399eb0f887592c61569e7c61ba28d0ccca00e7e8845c4ef25377133e25513ce",
+        "bytes": 7,
+        "known": "SAIFREN"
+      },
+      "transport_status": "OK",
+      "error_class": null,
+      "http_status": 200,
+      "sent": true,
+      "returned": true,
+      "structured_output_capability": "REQUEST_ACCEPTED",
+      "provider_claims_json_schema": true,
+      "provider_enforces_json_schema": "NOT_PROVEN",
+      "parse_result": "OK",
+      "schema_result": "VALID",
+      "response_format_kind": "JSON_SCHEMA",
+      "response_format_sha256": "84304f73399c35f3dc755a1cf19780e4b66ba1a93308c8a81e04d95f8ca285ef",
+      "request_body_sha256": "700fe062e229702dfe785008a8a8bc4558004d6562bff826ded08308d3c6ad2a",
+      "request_body_bytes": 181,
+      "prompt_sha256": "2e1fa885d5991f94821ae3063f7daaef450f7a799336ea1dbacdd0314e70c356",
+      "output_sha256": "82013c37e6f199b6c8dce378ffc7b5b35bd0ee3888c958bbfd08d0010346d070",
+      "output_bytes": 22,
+      "finish_reason": "stop",
+      "ordinal": 1,
+      "wrapper_retry": false
+    },
+    {
+      "probe_id": "B/PROBE",
+      "route": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": {
+        "sha256": "10fe10ac79eef3e8e8ff0b3facb64a327da40b875b3485468d52ba6edc0d2c39",
+        "bytes": 25,
+        "known": "goat/MiniMaxAI/MiniMax-M3"
+      },
+      "transport_status": "OK",
+      "error_class": null,
+      "http_status": 200,
+      "sent": true,
+      "returned": true,
+      "structured_output_capability": "REQUEST_ACCEPTED",
+      "provider_claims_json_schema": true,
+      "provider_enforces_json_schema": "NOT_PROVEN",
+      "parse_result": "OK",
+      "schema_result": "VALID",
+      "response_format_kind": "JSON_SCHEMA",
+      "response_format_sha256": "84304f73399c35f3dc755a1cf19780e4b66ba1a93308c8a81e04d95f8ca285ef",
+      "request_body_sha256": "46052e4823d0b84d15282376c81e4587a5c129c06aeb1f093f966de4a2670c1c",
+      "request_body_bytes": 199,
+      "prompt_sha256": "2e1fa885d5991f94821ae3063f7daaef450f7a799336ea1dbacdd0314e70c356",
+      "output_sha256": "82013c37e6f199b6c8dce378ffc7b5b35bd0ee3888c958bbfd08d0010346d070",
+      "output_bytes": 22,
+      "finish_reason": "stop",
+      "ordinal": 2,
+      "wrapper_retry": false
+    }
+  ],
+  "calls": [
+    {
+      "call_id": "6c48cf7670eb",
+      "ordinal": 1,
+      "category": "PROBE",
+      "function": "PROBE",
+      "purpose": "CAPABILITY_PROBE",
+      "replicate": 0,
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": {
+        "sha256": "d399eb0f887592c61569e7c61ba28d0ccca00e7e8845c4ef25377133e25513ce",
+        "bytes": 7,
+        "known": "SAIFREN"
+      },
+      "provider": {
+        "sha256": null,
+        "bytes": null
+      },
+      "provider_basis": "NOT_EXPOSED",
+      "request_max_tokens": 16,
+      "response_format_kind": "JSON_SCHEMA",
+      "response_format_sha256": "84304f73399c35f3dc755a1cf19780e4b66ba1a93308c8a81e04d95f8ca285ef",
+      "request_body_sha256": "700fe062e229702dfe785008a8a8bc4558004d6562bff826ded08308d3c6ad2a",
+      "request_body_bytes": 181,
+      "prompt_sha256": "2e1fa885d5991f94821ae3063f7daaef450f7a799336ea1dbacdd0314e70c356",
+      "sent": true,
+      "returned": true,
+      "wrapper_retry": false,
+      "status": "OK",
+      "error_class": null,
+      "error_body": {
+        "sha256": null,
+        "bytes": null
+      },
+      "http_status": 200,
+      "latency_s": 0.0,
+      "finish_reason": "stop",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "full_output_sha256": "82013c37e6f199b6c8dce378ffc7b5b35bd0ee3888c958bbfd08d0010346d070",
+      "full_output_bytes": 22,
+      "legacy_projection_would_truncate": false,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "local_estimated_input_tokens": 17,
+      "parse_shape": null,
+      "json_status": "OK",
+      "schema_status": "VALID",
+      "schema_error": null,
+      "parser_status": "NOT_ATTEMPTED",
+      "parser_error_code": null
+    },
+    {
+      "call_id": "284f6db7fba0",
+      "ordinal": 2,
+      "category": "PROBE",
+      "function": "PROBE",
+      "purpose": "CAPABILITY_PROBE",
+      "replicate": 0,
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": {
+        "sha256": "10fe10ac79eef3e8e8ff0b3facb64a327da40b875b3485468d52ba6edc0d2c39",
+        "bytes": 25,
+        "known": "goat/MiniMaxAI/MiniMax-M3"
+      },
+      "provider": {
+        "sha256": null,
+        "bytes": null
+      },
+      "provider_basis": "NOT_EXPOSED",
+      "request_max_tokens": 16,
+      "response_format_kind": "JSON_SCHEMA",
+      "response_format_sha256": "84304f73399c35f3dc755a1cf19780e4b66ba1a93308c8a81e04d95f8ca285ef",
+      "request_body_sha256": "46052e4823d0b84d15282376c81e4587a5c129c06aeb1f093f966de4a2670c1c",
+      "request_body_bytes": 199,
+      "prompt_sha256": "2e1fa885d5991f94821ae3063f7daaef450f7a799336ea1dbacdd0314e70c356",
+      "sent": true,
+      "returned": true,
+      "wrapper_retry": false,
+      "status": "OK",
+      "error_class": null,
+      "error_body": {
+        "sha256": null,
+        "bytes": null
+      },
+      "http_status": 200,
+      "latency_s": 0.0,
+      "finish_reason": "stop",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "full_output_sha256": "82013c37e6f199b6c8dce378ffc7b5b35bd0ee3888c958bbfd08d0010346d070",
+      "full_output_bytes": 22,
+      "legacy_projection_would_truncate": false,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "local_estimated_input_tokens": 17,
+      "parse_shape": null,
+      "json_status": "OK",
+      "schema_status": "VALID",
+      "schema_error": null,
+      "parser_status": "NOT_ATTEMPTED",
+      "parser_error_code": null
+    },
+    {
+      "call_id": "cf5a45e13607",
+      "ordinal": 3,
+      "category": "GENERATION",
+      "function": "GENERATOR",
+      "purpose": "GENERATOR_CANDIDATE",
+      "replicate": 1,
+      "role": "A",
+      "requested_model": "SAIFREN",
+      "reported_model": {
+        "sha256": "d399eb0f887592c61569e7c61ba28d0ccca00e7e8845c4ef25377133e25513ce",
+        "bytes": 7,
+        "known": "SAIFREN"
+      },
+      "provider": {
+        "sha256": null,
+        "bytes": null
+      },
+      "provider_basis": "NOT_EXPOSED",
+      "request_max_tokens": 4096,
+      "response_format_kind": "JSON_SCHEMA",
+      "response_format_sha256": "84304f73399c35f3dc755a1cf19780e4b66ba1a93308c8a81e04d95f8ca285ef",
+      "request_body_sha256": "b1ab81374748245c3bcddc0b7511134b9d9c8a94b29d41f1b770e3c7bda23005",
+      "request_body_bytes": 31039,
+      "prompt_sha256": "e83e1d8fd8d62f9966bbf06291f927e532698a9fd678450ac1d81a09f2f9d1e6",
+      "sent": true,
+      "returned": true,
+      "wrapper_retry": false,
+      "status": "OK",
+      "error_class": null,
+      "error_body": {
+        "sha256": null,
+        "bytes": null
+      },
+      "http_status": 200,
+      "latency_s": 0.0,
+      "finish_reason": "stop",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "full_output_sha256": "ab86e8cac30756644d687260734ac3da83511b6db761c9693bb229bfc5f6eff7",
+      "full_output_bytes": 953,
+      "legacy_projection_would_truncate": false,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "local_estimated_input_tokens": 7923,
+      "parse_shape": {
+        "version": "PARSE-SHAPE-1",
+        "input_kind": "TEXT",
+        "blank": false,
+        "fence_token_present": false,
+        "first_token": "OBJECT",
+        "syntax": "OK",
+        "root_type": "OBJECT",
+        "duplicate_key_count": 0,
+        "nonfinite_constant_count": 0,
+        "syntax_error": null,
+        "error_position": null,
+        "error_line": null,
+        "error_column": null,
+        "result_kind": "CANDIDATE",
+        "top_missing_count": 0,
+        "top_unknown_count": 0,
+        "top_type_mismatch_count": 0,
+        "nested_item_count": 3,
+        "nested_missing_count": 0,
+        "nested_unknown_count": 0,
+        "nested_type_mismatch_count": 0
+      },
+      "json_status": "OK",
+      "schema_status": "VALID",
+      "schema_error": null,
+      "parser_status": "OK",
+      "parser_error_code": null
+    },
+    {
+      "call_id": "e678643a4968",
+      "ordinal": 4,
+      "category": "REVIEW",
+      "function": "REVIEWER",
+      "purpose": "SEMANTIC_REVIEW",
+      "replicate": 1,
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": {
+        "sha256": "10fe10ac79eef3e8e8ff0b3facb64a327da40b875b3485468d52ba6edc0d2c39",
+        "bytes": 25,
+        "known": "goat/MiniMaxAI/MiniMax-M3"
+      },
+      "provider": {
+        "sha256": null,
+        "bytes": null
+      },
+      "provider_basis": "NOT_EXPOSED",
+      "request_max_tokens": 2048,
+      "response_format_kind": "NONE",
+      "response_format_sha256": null,
+      "request_body_sha256": "516919855ec48e267970e74ae8aa9903798d462315b12d50d392ba82485a21b5",
+      "request_body_bytes": 33058,
+      "prompt_sha256": "af7a476a6af1e54b049122d358c621ad550cbde9a610e4b34647433bb72be6b0",
+      "sent": true,
+      "returned": true,
+      "wrapper_retry": false,
+      "status": "OK",
+      "error_class": null,
+      "error_body": {
+        "sha256": null,
+        "bytes": null
+      },
+      "http_status": 200,
+      "latency_s": 0.0,
+      "finish_reason": "stop",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "full_output_sha256": "82de118eee9b6dde94d8a09c269f1ed4678058888bf9db2d64a3b89edb2744ea",
+      "full_output_bytes": 1414,
+      "legacy_projection_would_truncate": false,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "local_estimated_input_tokens": 8614,
+      "parse_shape": {
+        "version": "PARSE-SHAPE-1",
+        "input_kind": "TEXT",
+        "blank": false,
+        "fence_token_present": false,
+        "first_token": "OBJECT",
+        "syntax": "OK",
+        "root_type": "OBJECT",
+        "duplicate_key_count": 0,
+        "nonfinite_constant_count": 0,
+        "syntax_error": null,
+        "error_position": null,
+        "error_line": null,
+        "error_column": null,
+        "result_kind": "ABSENT",
+        "top_missing_count": 0,
+        "top_unknown_count": 0,
+        "top_type_mismatch_count": 0,
+        "nested_item_count": 8,
+        "nested_missing_count": 0,
+        "nested_unknown_count": 0,
+        "nested_type_mismatch_count": 0
+      },
+      "json_status": "OK",
+      "schema_status": "NOT_EVALUABLE",
+      "schema_error": null,
+      "parser_status": "OK",
+      "parser_error_code": null
+    },
+    {
+      "call_id": "b4bc4f936bbf",
+      "ordinal": 5,
+      "category": "GENERATION",
+      "function": "GENERATOR",
+      "purpose": "GENERATOR_CANDIDATE",
+      "replicate": 2,
+      "role": "B",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": {
+        "sha256": "10fe10ac79eef3e8e8ff0b3facb64a327da40b875b3485468d52ba6edc0d2c39",
+        "bytes": 25,
+        "known": "goat/MiniMaxAI/MiniMax-M3"
+      },
+      "provider": {
+        "sha256": null,
+        "bytes": null
+      },
+      "provider_basis": "NOT_EXPOSED",
+      "request_max_tokens": 4096,
+      "response_format_kind": "JSON_SCHEMA",
+      "response_format_sha256": "84304f73399c35f3dc755a1cf19780e4b66ba1a93308c8a81e04d95f8ca285ef",
+      "request_body_sha256": "0dfdaae7860dc85a0d0538a0b01dc055055894233996d771d7d05a4db4d1b85a",
+      "request_body_bytes": 31057,
+      "prompt_sha256": "e83e1d8fd8d62f9966bbf06291f927e532698a9fd678450ac1d81a09f2f9d1e6",
+      "sent": true,
+      "returned": true,
+      "wrapper_retry": false,
+      "status": "OK",
+      "error_class": null,
+      "error_body": {
+        "sha256": null,
+        "bytes": null
+      },
+      "http_status": 200,
+      "latency_s": 0.0,
+      "finish_reason": "stop",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "full_output_sha256": "82013c37e6f199b6c8dce378ffc7b5b35bd0ee3888c958bbfd08d0010346d070",
+      "full_output_bytes": 22,
+      "legacy_projection_would_truncate": false,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "local_estimated_input_tokens": 7923,
+      "parse_shape": {
+        "version": "PARSE-SHAPE-1",
+        "input_kind": "TEXT",
+        "blank": false,
+        "fence_token_present": false,
+        "first_token": "OBJECT",
+        "syntax": "OK",
+        "root_type": "OBJECT",
+        "duplicate_key_count": 0,
+        "nonfinite_constant_count": 0,
+        "syntax_error": null,
+        "error_position": null,
+        "error_line": null,
+        "error_column": null,
+        "result_kind": "NO_ADVICE",
+        "top_missing_count": 0,
+        "top_unknown_count": 0,
+        "top_type_mismatch_count": 0,
+        "nested_item_count": 0,
+        "nested_missing_count": 0,
+        "nested_unknown_count": 0,
+        "nested_type_mismatch_count": 0
+      },
+      "json_status": "OK",
+      "schema_status": "VALID",
+      "schema_error": null,
+      "parser_status": "OK",
+      "parser_error_code": null
+    }
+  ],
+  "replicates": [
+    {
+      "replicate": 1,
+      "generator_role": "A",
+      "reviewer_role": "B",
+      "call_id": "cf5a45e13607",
+      "reviewer_call_id": "e678643a4968",
+      "outcome": "APPROVED",
+      "outcome_code": null,
+      "outcome_class": "REVIEWER_PASS",
+      "reviewer_calls": 1,
+      "candidate_emitted": true,
+      "candidate_id": "sha256:2a78edf81ee28c986fb78f93e5b233418ac7977c6da931406e6512765c7ddbca",
+      "observed_scope_exact": true,
+      "observed_item_count": 2,
+      "counterevidence_item_count": 1,
+      "observed_event_count": 3,
+      "outside_ref_count": 0,
+      "telemetry": {
+        "version": "REFERENCE-TELEMETRY-1",
+        "observed_ref_occurrences": 4,
+        "observed_unique_ref_tokens": 4,
+        "counterevidence_ref_occurrences": 1,
+        "counterevidence_unique_ref_tokens": 1,
+        "known_evidence_ref_count": 5,
+        "known_event_ref_as_evidence_count": 0,
+        "corpus_id_as_evidence_count": 0,
+        "unknown_canonical_ref_count": 0,
+        "malformed_ref_count": 0,
+        "non_text_ref_count": 0,
+        "unknown_or_invalid_ref_count": 0,
+        "observed_unknown_or_invalid_ref_count": 0,
+        "counterevidence_unknown_or_invalid_ref_count": 0,
+        "known_observed_evidence_ref_count": 4,
+        "known_observed_distinct_event_count": 3,
+        "event_floor_relation": "MET",
+        "corpus_ref_relation": "CLEAN",
+        "unknown_or_invalid_unique_token_count": 0,
+        "unknown_or_invalid_fingerprints": []
+      },
+      "event_floor_relation": "MET",
+      "review_verdicts": [
+        {
+          "dimension": "OBSERVATION_SUPPORT",
+          "verdict": "PASS",
+          "evidence_refs": [
+            "sha256:0c4d8190d42036d5e43d11fe2dd2a2510e20118b28f0ad26091adc680e1dca6b"
+          ]
+        },
+        {
+          "dimension": "COUNTEREVIDENCE_ADEQUACY",
+          "verdict": "PASS",
+          "evidence_refs": [
+            "sha256:0c4d8190d42036d5e43d11fe2dd2a2510e20118b28f0ad26091adc680e1dca6b"
+          ]
+        },
+        {
+          "dimension": "SCOPE_DISCIPLINE",
+          "verdict": "PASS",
+          "evidence_refs": []
+        },
+        {
+          "dimension": "NO_MOTIVE_INFERENCE",
+          "verdict": "PASS",
+          "evidence_refs": []
+        },
+        {
+          "dimension": "NO_FLATTERY",
+          "verdict": "PASS",
+          "evidence_refs": []
+        },
+        {
+          "dimension": "NO_COMPLIANCE_PRESSURE",
+          "verdict": "PASS",
+          "evidence_refs": []
+        },
+        {
+          "dimension": "UNCERTAINTY_ADEQUACY",
+          "verdict": "PASS",
+          "evidence_refs": []
+        },
+        {
+          "dimension": "RECIPIENT_AGENCY",
+          "verdict": "PASS",
+          "evidence_refs": []
+        }
+      ],
+      "reviewed_state_minted": true,
+      "same_reported_model_pair": false,
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "OK",
+        "GENERATOR_RESULT": "CANDIDATE",
+        "ALLY1_STRUCTURAL_GATE": "PASS",
+        "CORPUS_REF_GATE": "PASS",
+        "EVENT_FLOOR_GATE": "PASS",
+        "EVIDENCE_RESOLUTION": "PASS",
+        "REVIEWER_TRANSPORT": "OK",
+        "REVIEWER_PARSE": "OK",
+        "SEMANTIC_REVIEW": "PASS",
+        "FINAL_GATE_OUTCOME": "APPROVED"
+      }
+    },
+    {
+      "replicate": 2,
+      "generator_role": "B",
+      "reviewer_role": "A",
+      "call_id": "b4bc4f936bbf",
+      "reviewer_call_id": null,
+      "outcome": "NO_ADVICE",
+      "outcome_code": null,
+      "outcome_class": "NO_ADVICE",
+      "reviewer_calls": 0,
+      "candidate_emitted": false,
+      "candidate_id": null,
+      "observed_scope_exact": null,
+      "observed_item_count": 0,
+      "counterevidence_item_count": 0,
+      "observed_event_count": 0,
+      "outside_ref_count": 0,
+      "telemetry": null,
+      "event_floor_relation": "NOT_EVALUABLE",
+      "review_verdicts": [],
+      "reviewed_state_minted": false,
+      "same_reported_model_pair": null,
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "OK",
+        "GENERATOR_RESULT": "NO_ADVICE",
+        "ALLY1_STRUCTURAL_GATE": "NOT_REACHED",
+        "CORPUS_REF_GATE": "NOT_REACHED",
+        "EVENT_FLOOR_GATE": "NOT_REACHED",
+        "EVIDENCE_RESOLUTION": "NOT_REACHED",
+        "REVIEWER_TRANSPORT": "NOT_REACHED",
+        "REVIEWER_PARSE": "NOT_REACHED",
+        "SEMANTIC_REVIEW": "SKIPPED",
+        "FINAL_GATE_OUTCOME": "NO_ADVICE"
+      }
+    }
+  ],
+  "population": {
+    "combo": "SAIFREN",
+    "projection": "B019-POPULATION-PRIVACY-PROJECTION-1",
+    "participants": [
+      {
+        "role": "A",
+        "requested": "SAIFREN",
+        "reported_model": {
+          "sha256": "d399eb0f887592c61569e7c61ba28d0ccca00e7e8845c4ef25377133e25513ce",
+          "bytes": 7,
+          "known": "SAIFREN"
+        },
+        "member_status": "OBSERVED_COMBO_MEMBER",
+        "source": "COMBO_ALIAS",
+        "provider": {
+          "sha256": null,
+          "bytes": null
+        }
+      },
+      {
+        "role": "B",
+        "requested": "goat/MiniMaxAI/MiniMax-M3",
+        "reported_model": {
+          "sha256": "10fe10ac79eef3e8e8ff0b3facb64a327da40b875b3485468d52ba6edc0d2c39",
+          "bytes": 25,
+          "known": "goat/MiniMaxAI/MiniMax-M3"
+        },
+        "member_status": "NOT_PROVEN_COMBO_MEMBER",
+        "source": "T69_FIXED_ROUTE",
+        "provider": {
+          "sha256": null,
+          "bytes": null
+        }
+      }
+    ],
+    "participants_ready": true
+  },
+  "privacy": {
+    "prompt_persisted": false,
+    "output_persisted": false,
+    "candidate_prose_persisted": false,
+    "reviewer_rationale_persisted": false,
+    "error_body_persisted": false,
+    "full_output_persisted": false,
+    "auth_token_persisted": false
+  },
+  "side_effects": {
+    "mail": 0,
+    "seal": 0,
+    "store": 0,
+    "attention": 0,
+    "advice_presentation": 0
+  },
+  "provider_retention": "NOT_VERIFIED_BY_SAIMAIL",
+  "historical_shape": "UNKNOWN_BYTES_DISCARDED",
+  "stop_reason": null
+}

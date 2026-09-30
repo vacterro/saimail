@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-034:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-55 closed with verification evidence in LOG: verify -> PASS [target: T-55] conf: high -- python -m pytest focused 56 passed; python -m pytest full 1106 passed; pip install -e .[test] exit 0; saipen validate VALID; red control pre-implementation 3 ModuleNotFoundError",
+      "text": "Execute B-001 SAILETTER/HUMAN_PRIVATE handoff TARGETS A/B/C from V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260919_1614.md",
+      "verification": "the Work this request created reached its own verification gate; see the T-55 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-55"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "SAIMAIL_FEEDBACK_ORIGIN_CONTROL_1",
+  "subject": "before",
+  "exit_code": 1,
+  "counts": {
+    "tests": 31,
+    "failures": 31,
+    "errors": 0,
+    "skipped": 0
+  },
+  "criterion_met": true,
+  "verifier_sha256": "6288460cc1a64aa5b88d27c2162866c2aaf00c3037004d654fe98b0a0d0fc4f5",
+  "control_sha256": "b45cbf8ec4910a2eef6add0066d26049561270d2ec37dac760349cf68fb9a1af",
+  "subjects": {
+    "saimail/host_contract.py": "b26a4c612619c5268bf0764296b6a29434741bf29e87f8d1f0284aac293db3f8",
+    "saimail/correspondence.py": "895eac0deb8e61bd9837d784f6a1672525b4ce3c8a25faa7d132262808a1347f",
+    "saimail_host.py": "ca2eba850847f276cf97782fd2cf1ac8b4e02fa5516d33a59ebed492221de328"
+  },
+  "claim_boundary": "Isolated protocol semantics; scripted seats are not independent field actors"
+}

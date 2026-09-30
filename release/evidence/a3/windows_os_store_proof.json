@@ -1,0 +1,86 @@
+{
+  "backend": "keyring.backends.Windows.WinVaultKeyring",
+  "candidate": {
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a3",
+    "wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+    "wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc"
+  },
+  "checks": {
+    "backend_is_winvault": true,
+    "custody_status_protected": true,
+    "identity_schema_v2": true,
+    "identity_version_v2": true,
+    "list_semantics_valid": true,
+    "migration_proof": true,
+    "no_private_material_in_workspace": true,
+    "no_raw_private_fields": true,
+    "open_semantics_valid": true,
+    "platform_windows": true,
+    "protected_init_created": true,
+    "protected_label": true,
+    "protected_notice_is_os_store": true,
+    "public_fingerprints_valid": true,
+    "raw_peer_created": true,
+    "raw_peer_notice_is_raw": true,
+    "restart_load_stable": true,
+    "send_accepted": true,
+    "store_holds_both_keys": true
+  },
+  "created_utc": "2026-09-22T13:07:38Z",
+  "dependencies": {
+    "note": "optional dependency origin; no host paths recorded",
+    "resolution": "HOST_SITE_PACKAGES",
+    "status": "AVAILABLE"
+  },
+  "driver_errors": [],
+  "driver_exit_code": 0,
+  "driver_platform": "win32",
+  "driver_python": "3.11.9",
+  "environment": {
+    "platform": "win32",
+    "python_version": "3.11.9"
+  },
+  "failures": [],
+  "identity": {
+    "recipient_kid": "sha256:71d412ccc8364f588d237d821f33d5ae273e0cc6896f20030997fe07407368ba",
+    "seat": "D2PROOF20260922T130742Z",
+    "sender_kid": "sha256:e40a673d74b79827be95d0c3cbe953131cfcce3e7ff49c475ab8c83a14d62482"
+  },
+  "integrity": {
+    "failures": [],
+    "status": "PASS"
+  },
+  "keys_absent_after_delete": true,
+  "migration": {
+    "failed_leaves_raw_usable": true,
+    "failed_migration_code": "CUSTODY_ACCESS_FAILED",
+    "fingerprints_preserved": true,
+    "raw_values_gone": true,
+    "repeated_is_terminal": true,
+    "status": "CUSTODY_MIGRATED",
+    "store_values_usable": true,
+    "two_keys_stored": true,
+    "v2_protected_metadata": true
+  },
+  "module_resolution": {
+    "checked_modules": [
+      "saimail",
+      "sailang",
+      "saimail_local"
+    ],
+    "note": "dependency modules (keyring/cryptography) may resolve from host site-packages",
+    "paths": {
+      "sailang": "V:\\_TEMP_\\saimail-a3-osstore-proof\\venv\\Lib\\site-packages\\sailang\\__init__.py",
+      "saimail": "V:\\_TEMP_\\saimail-a3-osstore-proof\\venv\\Lib\\site-packages\\saimail\\__init__.py",
+      "saimail_local": "V:\\_TEMP_\\saimail-a3-osstore-proof\\venv\\Lib\\site-packages\\saimail_local.py"
+    },
+    "resolved_inside_environment": true
+  },
+  "note": "installed-wheel Windows os-store acceptance plus injected-store migration proof; no private key value is stored in this evidence file",
+  "residue": [],
+  "schema": "SAIMAIL_D3_WINDOWS_OS_STORE_PROOF_1",
+  "status": "PASS",
+  "version": 1,
+  "workspace_removed": true
+}

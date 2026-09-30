@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-095:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": ".saipen/evidence/T-107-review.md",
+      "text": "Repair D3 release-control and cold-recovery inconsistencies after T-106: fix gate engine, dead assertion, missing G15/G16 evidence, recovery doc contradictions, wrong external verification target, missing a3 proof admission path, test gaps",
+      "verification": "Independent review E-1498: 111 focused passed; full-suite 2514 passed; exact production gates PASS/READY; final SHIP recovery projection follows atomic closure",
+      "work": "T-107"
+    }
+  },
+  "schema_version": 1
+}

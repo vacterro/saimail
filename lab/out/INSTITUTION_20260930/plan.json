@@ -1,0 +1,14 @@
+{
+  "call_budget": 3,
+  "calls_per_phase": 1,
+  "claim_boundary": "Coordination and continuation in one controlled live example; no model-weight improvement claim.",
+  "hypothesis": "An evidence-bearing letter exposes a cross-project routing risk; a receiver verifies it, mechanical tests prove a correction, and a successor uses the retained result without the sender's chat.",
+  "max_tokens_per_call": 2048,
+  "membership_basis": "OBSERVED_COMBO_RESOLUTION_ONLY",
+  "registered_at": "2026-09-29T21:45:22Z",
+  "route": "SAIFREN",
+  "schema": "SAIMAIL_INSTITUTION_EXPERIMENT_1",
+  "semantic_retries": 0,
+  "timeout_seconds": 120,
+  "version": 1
+}

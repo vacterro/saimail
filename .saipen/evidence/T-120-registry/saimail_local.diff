@@ -1,0 +1,79 @@
+--- .saipen/evidence/T-120-registry/saimail_local.before.py	2026-09-24 09:41:46.071169200 +0300
++++ saimail_local.py	2026-09-24 09:41:46.170953500 +0300
+@@ -115,6 +115,12 @@
+     return outbox
+ 
+ 
++def _participants_engine():
++    from saimail import participants
++
++    return participants
++
++
+ def _api_map_path() -> Path:
+     return Path(__file__).resolve().parent / "lab" / "stable_local_api.json"
+ 
+@@ -369,6 +375,22 @@
+             return bridge.telegrams(workspace, topic=args.topic,
+                                     scan_budget=args.scan_budget, cursor=args.cursor)
+         project = _saipen_project(args.project_root)
++        if args.saipen_action == "participant":
++            # V6-06: the project comes from the admitted SAIPEN binding, never a
++            # caller string; registry work needs no private key (header view).
++            registry = _participants_engine()
++            workspace = _workspace_engine().load_workspace_headers(args.workspace)
++            lineage = bridge.enter(workspace, project["state"], project["identity"],
++                                   seat=args.seat)["saipen"]["lineage"]
++            if args.participant_action == "admit":
++                return registry.admit_participant(workspace, lineage, args.participant,
++                                                  alias=args.alias, triggers=args.trigger)
++            if args.participant_action == "revoke":
++                return registry.revoke_participant(workspace, lineage, args.participant)
++            if args.participant_action == "resolve":
++                return registry.resolve_participant(workspace, lineage, args.participant,
++                                                    trigger=args.trigger_name)
++            return registry.list_participants(workspace, lineage)
+         if args.saipen_action == "enter":
+             workspace = _workspace_engine().load_workspace_headers(args.workspace)
+             return bridge.enter(workspace, project["state"], project["identity"], seat=args.seat)
+@@ -396,7 +418,8 @@
+         return bridge.verify_citation(args.record, project["logs"], lineage=lineage)
+ 
+     return _dispatch_workspace(f"saipen-{args.saipen_action}", action, as_json,
+-                               bridge.OPERATOR_ACTION_CODES)
++                               bridge.OPERATOR_ACTION_CODES
++                               | _participants_engine().OPERATOR_ACTION_CODES)
+ 
+ 
+ def _acceptance_runner() -> str:
+@@ -851,6 +874,30 @@
+     saipen_enter_p.add_argument("--workspace", required=True)
+     saipen_enter_p.add_argument("--seat", default=None,
+                                 help="acting seat (default: SAIPEN_AGENT, else STATE.agent)")
++    saipen_part_p = saipen_sub.add_parser(
++        "participant", help="project-local participant registry for automatic routing (V6-06)")
++    saipen_part_sub = saipen_part_p.add_subparsers(dest="participant_action", required=True)
++    part_admit_p = saipen_part_sub.add_parser(
++        "admit", help="explicitly admit one registered seat as a participant of this project")
++    part_admit_p.add_argument("--alias", default=None,
++                              help="registered recipient alias (default: the seat)")
++    part_admit_p.add_argument("--trigger", action="append", default=None,
++                              help="notify trigger this participant may receive (repeat; "
++                                   "default: the whole closed set)")
++    part_revoke_p = saipen_part_sub.add_parser("revoke", help="remove one participant")
++    part_resolve_p = saipen_part_sub.add_parser(
++        "resolve", help="the alias automation would use for one seat and trigger")
++    part_resolve_p.add_argument("--trigger", dest="trigger_name", required=True)
++    part_list_p = saipen_part_sub.add_parser("list", help="admitted participants of this project")
++    for part_p in (part_admit_p, part_revoke_p, part_resolve_p):
++        part_p.add_argument("--participant", required=True, help="participant seat")
++    for part_p in (part_admit_p, part_revoke_p, part_resolve_p, part_list_p):
++        part_p.add_argument("--workspace", required=True, help="the acting seat's workspace")
++        part_p.add_argument("--seat", default=None,
++                            help="acting seat (default: SAIPEN_AGENT, else STATE.agent)")
++        part_p.add_argument("--project-root", default=None,
++                            help="SAIPEN project root (default: nearest with .saipen/)")
++        part_p.add_argument("--json", action="store_true", dest="sub_json")
+     for saipen_action_p in (saipen_status_p, saipen_init_p, saipen_cite_p, saipen_verify_p,
+                             saipen_tel_p, saipen_tels_p, saipen_brief_p, saipen_enter_p):
+         saipen_action_p.add_argument("--project-root", default=None,

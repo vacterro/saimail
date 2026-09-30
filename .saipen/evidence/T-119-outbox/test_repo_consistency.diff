@@ -1,0 +1,38 @@
+--- .saipen/evidence/T-119-outbox/test_repo_consistency.before.py	2026-09-24 09:33:38.496838500 +0300
++++ tests/test_repo_consistency.py	2026-09-24 09:33:51.156773900 +0300
+@@ -1176,6 +1176,35 @@
+     assert ("saimail.workspace", "WorkspaceHeaders") in exported
+ 
+ 
++def test_v605_durable_outbox_is_recorded():
++    """T-119 / V6-05: the wave table, spec/28, D-060, the API map and the module
++    agree; the outbox never names SAIPEN memory and adds no wire field."""
++    from saimail import envelope, outbox
++
++    current = " ".join(read(ROOT / "humbox" / "CURRENT-STATE.md").split())
++    roadmap = read(ROOT / "humbox" / "FUTURE-GATES-V6.md")
++    spec = " ".join(read(ROOT / "spec" / "28-DURABLE-OUTBOX-v0.md").split())
++    decision = " ".join(read(ROOT / "spec" / "DECISIONS-D060.md").split())
++
++    assert "D-060" in decision_ids()
++    assert "## 16. SAITELEMES reliable autonomous delivery v1" in roadmap
++    rows = [[cell.strip() for cell in line.strip("|").split("|")]
++            for line in roadmap.splitlines() if line.startswith("| V6-05 |")]
++    assert len(rows) == 1 and rows[0][3] == "T-119" and "IMPLEMENTED" in rows[0][2]
++    assert "V6-05" in current and "spec/28-DURABLE-OUTBOX-v0.md" in current
++    for text in (spec, decision):
++        assert "idempotency key" in text and "seal" in text.lower()
++        assert "wire" in text, "the idempotency key must stay off the wire"
++    source = read(ROOT / "saimail" / "outbox.py")
++    assert ".saipen" not in source, "the library must never name SAIPEN memory"
++    assert "IDEMPOTENCY" not in " ".join(envelope.KINDS)
++    api = json.loads(read(ROOT / "lab/stable_local_api.json"))
++    exported = {(item["module"], item["symbol"]) for item in api["apis"]}
++    for symbol in ("submit_send", "resume_outbox", "retry_intent", "outbox_status"):
++        assert ("saimail.outbox", symbol) in exported
++        assert callable(getattr(outbox, symbol))
++
++
+ def test_gui_read_capability_language_matches_explicit_reopen():
+     """Qt-independent oracle: first-Open refusal must point to real Reopen."""
+     from saimail import gui_adapter, workspace

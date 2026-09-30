@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-092:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "T-104 V6-01 GitHub Identity and Presentation Sync continue to canonical closure"
+    }
+  },
+  "derived_at": "2026-09-22T00:25:36Z",
+  "derived_from": "SRC-092",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "fe7a9bc9c218dfd02e1ad55e8f7efca49be51c3fe2fb64b9565165a79c9e9de3"
+}

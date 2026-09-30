@@ -1,0 +1,23 @@
+{
+  "op_id": "scope-ff35c9b3c2454b2fba820056d4045fbd",
+  "paths": {
+    ".saipen/evidence/T-142-evolution-audit/runtime-003.json": "c84a7ac80fb8b83385f819958085e17cfeffcaf4a7b773f5db7ba770720e0f6a",
+    ".saipen/evidence/T-142-evolution-audit/sequence-003.json": "d10d0d0a8fd9b0e5dbb6ca79b4009b298d9d2b384e2495ccd305eec4b40a01c0",
+    ".saipen/evidence/T-142-evolution-audit/sequence-current-003.json": "d5c4132d8cd1ac4a3628fbce683797e528b40212cf2bc93d192101e23e570638",
+    ".saipen/evidence/T-145-saifren-sample-tests.xml": "c2cbe32289f42f8d372196d9c95838def4edba91cbfd50a4274cd9b709a7f880",
+    ".saipen/evidence/T-145-saifren-sample/check.py": "c4be4588686423aefb63cb68045268aaac42289957e5b7fa09cef5c1def24847",
+    ".saipen/evidence/T-145-saifren-sample/verify.json": "d60e8ea8e4b34b94a5766bb92f5ac43322cbbbe4f188aabe396a15c1e6a6f988",
+    "lab/analysis/saifren_sample_T145.md": "84f138013356ba42a96823f45e261198a68aeb2dadce69e231ed5c6641a95cdc",
+    "lab/out/SAIFREN_T145/SAIFREN_REPORT.md": "2c1ce20bc54406d82ad1aea2e490d4ae0e032348577330c38488ddc4fa867285",
+    "lab/out/SAIFREN_T145/SAIFREN_REPORT_20260930T125211Z_b9d3f9d3fd22479c.md": "2c1ce20bc54406d82ad1aea2e490d4ae0e032348577330c38488ddc4fa867285",
+    "lab/out/SAIFREN_T145/saifren_dry_run.json": "df2ca23afdcf753a6d6cec6db7b42316f98c826032f3a81245495e11e8e19c9c",
+    "lab/out/SAIFREN_T145/saifren_live_20260930T125211Z_b9d3f9d3fd22479c.json": "15b4be9ba81a718557d3adc4055b3f94c38beba9953413f5ba9d4f7917608474"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-30T13:11:49Z",
+  "schema_version": 2,
+  "source_head": "36f8836931a322435fb70060bc7f219b571dfd49",
+  "source_tree_fingerprint": "git-delta-v1:a9ddf2965989f3de2f5ce7367d3bbe40dc5547c4dc319dda51e966efc76deef9",
+  "ticket": "T-145"
+}

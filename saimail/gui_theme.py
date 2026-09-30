@@ -14,7 +14,7 @@ is used by the project's own GUI test suite.
 
 from __future__ import annotations
 
-from typing import Dict, Mapping, Tuple
+from collections.abc import Mapping
 
 #: ``saipen/UI.md`` revision evidence for the copy this table was transcribed
 #: from. Recorded so a drift check can be run without packaging UI.md.
@@ -49,16 +49,16 @@ TOKENS: Mapping[str, str] = {
 
 #: The 640x540 canonical viewport, and the narrower 640x480 minimum a desktop
 #: window must still be usable at on Windows 10.
-MIN_VIEWPORT: Tuple[int, int] = (640, 480)
-CANONICAL_VIEWPORT: Tuple[int, int] = (640, 540)
+MIN_VIEWPORT: tuple[int, int] = (640, 480)
+CANONICAL_VIEWPORT: tuple[int, int] = (640, 540)
 
 #: The only legal font sizes (UI.md typography rules).
-FONT_SIZES: Tuple[int, ...] = (10, 11, 12, 14, 16)
+FONT_SIZES: tuple[int, ...] = (10, 11, 12, 14, 16)
 FONT_FAMILY = "Verdana"
 
 #: Component-role aliases. Every value MUST be one of :data:`TOKENS`; a new
 #: colour is not allowed, only a new name for an existing canonical value.
-SEMANTIC: Dict[str, str] = {
+SEMANTIC: dict[str, str] = {
     "window": TOKENS["background"],
     "window_text": TOKENS["textPrimary"],
     "panel": TOKENS["surfaceRaised"],
@@ -113,6 +113,22 @@ def style_sheet() -> str:
 QWidget {{
     background: {t['background']};
     color: {t['textPrimary']};
+}}
+QTabWidget::pane {{
+    border: 2px solid {t['borderMuted']};
+}}
+QTabBar::tab {{
+    background: {t['surface']};
+    color: {t['textSecondary']};
+    border: 2px solid {t['borderMuted']};
+    padding: 4px 8px;
+}}
+QTabBar::tab:selected {{
+    background: {t['surfaceRaised']};
+    color: {t['borderHighlight']};
+}}
+QTabBar::tab:focus {{
+    border-color: {t['borderHighlight']};
 }}
 QWidget#TitleBar {{
     background: {t['surface']};

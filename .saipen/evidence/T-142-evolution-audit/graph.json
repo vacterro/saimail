@@ -1,0 +1,237 @@
+{
+  "tier": "Tier 2",
+  "project": "V-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__",
+  "bounded_foreign_scope": [
+    "tools/saipen.py",
+    "tools/saipen_engine/*.py"
+  ],
+  "foreign_search": {
+    "pattern": ".*(saimail|telegram|notify).*",
+    "result": "0 nodes; no absence claim",
+    "fallback": "tools/ excluded; exact current source reads and bounded rg searches"
+  },
+  "coverage": {
+    "project": "saipen",
+    "signal": "best_effort",
+    "indexed_at": "2026-09-01T13:16:39Z",
+    "metadata": {
+      "generation": "2026-09-01T13:16:39Z",
+      "index_mode": "moderate",
+      "recorded_at": "2026-09-01T13:16:39Z",
+      "recording_status": "complete",
+      "ignored_files_stored": 10,
+      "ignored_files_total": 10,
+      "hash_records_complete": true,
+      "coverage_version": 3,
+      "generation_matches": true
+    },
+    "paths": [
+      {
+        "requested_path": "tools/saipen.py",
+        "path": "tools/saipen.py",
+        "status": "excluded",
+        "freshness": "not_tracked",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": [
+          {
+            "path": "tools",
+            "kind": "not_indexed_dir",
+            "detail": "excluded subtree",
+            "match": "ancestor"
+          }
+        ]
+      },
+      {
+        "requested_path": "tools/saipen_engine/telegrams.py",
+        "path": "tools/saipen_engine/telegrams.py",
+        "status": "excluded",
+        "freshness": "not_tracked",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": [
+          {
+            "path": "tools",
+            "kind": "not_indexed_dir",
+            "detail": "excluded subtree",
+            "match": "ancestor"
+          }
+        ]
+      },
+      {
+        "requested_path": "tools/saipen_engine/mailbox.py",
+        "path": "tools/saipen_engine/mailbox.py",
+        "status": "excluded",
+        "freshness": "not_tracked",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": [
+          {
+            "path": "tools",
+            "kind": "not_indexed_dir",
+            "detail": "excluded subtree",
+            "match": "ancestor"
+          }
+        ]
+      },
+      {
+        "requested_path": ".saipen/STATE.md",
+        "path": ".saipen/STATE.md",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      }
+    ],
+    "scopes": [
+      {
+        "requested_scope": "tools",
+        "scope": "tools",
+        "total": 1,
+        "has_more": false,
+        "entries": [
+          {
+            "path": "tools",
+            "kind": "not_indexed_dir",
+            "detail": "excluded subtree"
+          }
+        ],
+        "status": "known_gaps"
+      }
+    ],
+    "caveat": "Best-effort signal only. No recorded issue does not prove graph or source completeness; read flagged source and qualify claims when metadata is changed or unavailable."
+  },
+  "entry": {
+    "content": [
+      {
+        "type": "text",
+        "text": "function: V-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saimail.agent_cycle.entry\ndirection: both\ncallees_total: 18\ncallees: 18  (rows: name hop; qn = group prefix + \".\" + name)\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.bench.corpus:\n  add 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.lab.ally_generation_live.CallLog:\n  append 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.sailang.errors:\n  SailangError 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.sailang.frame:\n  decode 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saimail.acceptance.ProfileRegistry:\n  resolve 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saimail.agent_cycle:\n  _continuation 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saimail.correspondence:\n  _now 1\n  desk 1\n  metrics 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saimail.credentials.CredentialStore:\n  get 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saimail.letters:\n  check_path 1\n  encode 1\n  topic 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saimail.saipen_bridge:\n  _admission_binding 1\n  enter 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saimail.workspace:\n  command_result 1\nbuiltins:\n  len 1\n  str 1\ncallers_total: 4\ncallers: 4  (rows: name hop; qn = group prefix + \".\" + name)\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saimail_local:\n  _saipen_letter 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saipen.evidence.T-140-feedback-age:\n  baseline 1\n  control 1\nV-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saipen.evidence.T-141-cli-focus.before-subject.saimail_local:\n  _saipen_letter 1\n"
+      }
+    ],
+    "isError": false
+  },
+  "notify": {
+    "name": "notify",
+    "qualified_name": "V-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__.saimail.notify.notify",
+    "label": "Function",
+    "file_path": "V:/___VAC/__K/__CODE/_AI_STUFF_AGENTIC/__SAIMAIL__/saimail/notify.py",
+    "start_line": 98,
+    "end_line": 166,
+    "source": "def notify(workspace, *, lineage: str, work: str, trigger: str, to_seat: str, claim=None,\n           citation=None, event=None, letter=None, clock=None) -> dict:\n    \"\"\"Send one automatic notification exactly once, or suppress it by budget.\n\n    Exactly one body: ``claim`` (one line) or ``citation`` (the S2 record of\n    ``event``). The recipient, kind and alias come from the participant registry;\n    the key makes every repeat of the same fact the same message.\n    \"\"\"\n    if sum(body is not None for body in (claim, citation, letter)) != 1:\n        _reject(_workspace.BAD_INPUT, \"a notification carries exactly one body\")\n    resolved = participants.resolve_participant(workspace, lineage, to_seat,\n                                                trigger=trigger)[\"participant\"]\n    topic = work  # legacy claims/citations keep their established wire contract\n    if letter is not None:\n        from sailang import Record\n        from saimail import letters\n\n        letters.validate(letter, lineage=lineage, recipient_work=work)\n        topic = letters.topic(lineage, work)\n        if letter[\"trigger\"] != trigger:\n            _reject(letters.BAD_LETTER, \"letter trigger differs from its routing trigger\")\n        # Stable issue identity prevents a reworded decision from becoming a\n        # second letter. A changed request must be an explicit new decision.\n        basis = \"l\" + hashlib.sha256(\n            (letter[\"sender_work\"] + \":\" + letter[\"issue\"]).encode(\"utf-8\")).hexdigest()[:24]\n        identity = {\"form\": \"letter\", \"letter\": letter}\n        citation = Record.create(\n            KIND=\"O\", SRC=\"AGENT:\" + workspace.seat, SUBJ=work,\n            CLAIM=letters.encode(letter), TYPE=\"OBS\", STATUS=\"U1\",\n            EV=(\"sha256:\" + letter[\"evidence\"][0][\"sha256\"] if letter[\"evidence\"] else \"0\"),\n            CREATED=(clock or postoffice.utc_now)())\n    elif citation is not None:\n        if not isinstance(event, str) or not _EVENT_RE.match(event):\n            _reject(_workspace.BAD_INPUT, \"a citation names its event id E-<number>\")\n        basis = event\n        identity = {\"form\": \"citation\", \"event\": event, \"ev\": citation.get(\"EV\")}\n    else:\n        if not isinstance(claim, str) or not claim.strip() or \"\\n\" in claim or \"\\r\" in claim:\n            _reject(_workspace.BAD_INPUT, \"a notification claim is one non-empty line\")\n        basis = \"c\" + hashlib.sha256(claim.strip().encode(\"utf-8\")).hexdigest()[:24]\n        identity = None\n    key = notify_key(lineage, work, trigger, to_seat, basis)\n    now = (clock or postoffice.utc_now)()\n    kwargs = {\"key\": key, \"subject\": work, \"topic\": topic, \"kind\": resolved[\"kind\"],\n              \"content_identity\": identity, \"gate\": _budget_gate(to_seat, topic, now),\n              \"clock\": clock}\n    try:\n        if citation is not None:\n            with tempfile.TemporaryDirectory(prefix=\"saimail-notify-\") as scratch:\n                path = Path(scratch) / \"citation.sail\"\n                path.write_bytes(citation.canonical_bytes())\n                sent = outbox.submit_send(workspace, resolved[\"alias\"], record_path=path,\n                                          **kwargs)\n        else:\n            sent = outbox.submit_send(workspace, resolved[\"alias\"], claim=claim.strip(),\n                                      **kwargs)\n    except SailangError as exc:\n        if exc.code != NOTIFY_BUDGET_EXCEEDED:\n            raise\n        return _workspace.command_result(\n            \"saipen-notify\", NOTIFY_SUPPRESSED, workspace=workspace,\n            notify=_view(trigger, to_seat, resolved, work, key),\n            detail=f\"suppressed by the receiver attention budget: {exc.detail}; nothing written\")\n    resumed = outbox.resume_outbox(workspace, budget=RESUME_BUDGET, clock=clock)[\"counts\"]\n    result = dict(sent)\n    result.update(command=\"saipen-notify\", notify=_view(trigger, to_seat, resolved, work, key),\n                  resumed=resumed)\n    result[\"notify\"][\"content_contract\"] = \"SAIMAIL_LETTER_1\" if letter is not None else \"UNASSESSED\"\n    return result\n",
+    "callers": 6,
+    "callees": 15
+  },
+  "coverage_local": {
+    "project": "V-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__",
+    "signal": "best_effort",
+    "indexed_at": "2026-09-30T10:23:39Z",
+    "metadata": {
+      "generation": "2026-09-30T10:23:39Z",
+      "index_mode": "full",
+      "recorded_at": "2026-09-30T10:28:03Z",
+      "recording_status": "complete",
+      "ignored_files_stored": 17,
+      "ignored_files_total": 17,
+      "hash_records_complete": true,
+      "coverage_version": 3,
+      "generation_matches": true
+    },
+    "paths": [
+      {
+        "requested_path": "saimail/agent_cycle.py",
+        "path": "saimail/agent_cycle.py",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      },
+      {
+        "requested_path": "saimail/notify.py",
+        "path": "saimail/notify.py",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      },
+      {
+        "requested_path": "saimail/correspondence.py",
+        "path": "saimail/correspondence.py",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      },
+      {
+        "requested_path": "saimail_host.py",
+        "path": "saimail_host.py",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      },
+      {
+        "requested_path": "saimail_local.py",
+        "path": "saimail_local.py",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      },
+      {
+        "requested_path": "saimail/host_contract.py",
+        "path": "saimail/host_contract.py",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      },
+      {
+        "requested_path": "humbox/bee_like_idea1.md",
+        "path": "humbox/bee_like_idea1.md",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      },
+      {
+        "requested_path": "humbox/iniciative.md",
+        "path": "humbox/iniciative.md",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      },
+      {
+        "requested_path": "humbox/EVOLUTION.md",
+        "path": "humbox/EVOLUTION.md",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      },
+      {
+        "requested_path": "humbox/CURRENT-STATE.md",
+        "path": "humbox/CURRENT-STATE.md",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      },
+      {
+        "requested_path": "humbox/FUTURE-GATES-V6.md",
+        "path": "humbox/FUTURE-GATES-V6.md",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      },
+      {
+        "requested_path": ".saipen/evidence/T-141-cli-focus/actual_entry.json",
+        "path": ".saipen/evidence/T-141-cli-focus/actual_entry.json",
+        "status": "no_recorded_issue",
+        "freshness": "metadata_changed",
+        "recommended_action": "read_source_and_reindex",
+        "coverage": []
+      }
+    ],
+    "scopes": [],
+    "caveat": "Best-effort signal only. No recorded issue does not prove graph or source completeness; read flagged source and qualify claims when metadata is changed or unavailable."
+  }
+}

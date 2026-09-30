@@ -1,0 +1,14 @@
+{
+  "op_id": "scope-1ac4cb9b4cc9411992b7ddbc13ba450e",
+  "paths": {
+    "pics/SAIMAIL_LOGO.png": "9dd528e5bcf58ee1f51a4f329cb60d540fc65629ed4ce7ffc7cae250e703452e",
+    "pics/SAIMAIL_SOCIAL_PREVIEW.png": "54f1aaa0c1f64ac78e8764c90f81fca594b3a845451ce31478147c31e15fee5b"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-25T17:56:23Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:e5e6b2b3124ff3a95943615c5f59f5751ca0c3042b3a40792603aaf177347c09",
+  "ticket": "T-111"
+}

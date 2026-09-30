@@ -1,0 +1,1249 @@
+{
+  "command": [
+    "rg",
+    "--json",
+    "--hidden",
+    "--no-ignore",
+    "-i",
+    "-g",
+    "!.git/**",
+    "-g",
+    "!.saipen/evidence/T-114-truth/**",
+    "-g",
+    "!.saipen/kitchen/t114_scout.py",
+    "READ_REREAD_GAP|not re-readable|cannot be re-?opened|cannot be shown again|(only|one|sole) (explicit )?decryption (path|action)|V6-02|receiver (re-?read|continuity).{0,70}(gap|next)|already.{0,10}READ.{0,60}cannot|content is not re-readable|(open|reopen|reread).{0,45}(only route|impossible)|REASON_READ_NOT_THIS_SESSION|cannot_be_reopened",
+    "."
+  ],
+  "matches": [
+    {
+      "path": ".saipen/LOG.md",
+      "line": 1114,
+      "text": "- 23.09.26 14:24 [E-1469] [parent: E-1468] [T-113] [agent: opus] [op: checkpoint-7dbd69613aef494cb16dc1ce662f927d] RUN: Partial BUILD: narrow SRC-102 media manifest and repository-consistency authorization are preserved. Lossless MP3 stream-copy is 6,851,618 bytes versus source 6,851,614 with identical decoded SHA256 08b7ab053addad6834fc9b6452d02ba79ac00266c58ac498a3e3f0f4c1a3a602; source remains unchanged. A temporary explicit READ-bundle reopen implementation passed focused tests, but T-107 acceptance requires V6-02 NOT STARTED. Its exact safe design and file list are saved in .saipen/kitchen/T-113-reread-continuation.md; remove that implementation before resuming T-107, then resume T-113 after T-107 closes. a2/a3 candidate wheel hashes remain unchanged."
+    },
+    {
+      "path": ".saipen/LOG.md",
+      "line": 1115,
+      "text": "- 23.09.26 14:24 [E-1470] [parent: E-1469] [T-113] [agent: opus] [op: ticket-a927ca58087c4390803d7197b01753cb] DEC: ticket block via SAIOPS (active) -- T-107 D3 closure requires V6-02 to remain NOT STARTED; pause the SRC-102 product-improvement milestone until T-107 completes. Keep the exact re-read design in .saipen/kitchen/T-113-reread-continuation.md."
+    },
+    {
+      "path": ".saipen/LOG.md",
+      "line": 1116,
+      "text": "- 23.09.26 14:28 [E-1471] [parent: E-1470] [T-107] [agent: opus] [op: ticket-1b50bf7508c54cb19fc640e5eabaaa51] DEC: ticket unblock via SAIOPS -- SRC-102 explicitly confirms the owner added SAIGIMN.mp3 and wants it retained. The exact-path, exact-size, exact-SHA media manifest is bound to SRC-102; only this one user-provided audio asset is excluded from the generic size tripwire, and all model-data checks remain. Focused asset-consistency tests pass. Resume T-107 for final evidence and closure; do not start V6-02."
+    },
+    {
+      "path": ".saipen/LOG.md",
+      "line": 1119,
+      "text": "- 23.09.26 14:30 [E-1474] [parent: E-1473] [T-107] [agent: opus] [op: transition-3df21ecb85fd44bca95ea4af19bbdbab] RUN: transition to BUILD -- SCOUT complete: resumed inherited T-107 under explicit claim; SRC-102 resolves only the exact user-asset repo-consistency blocker. Preserve all frozen wheels and keep V6-02 NOT STARTED."
+    },
+    {
+      "path": ".pytest_cache/v/cache/nodeids",
+      "line": 616,
+      "text": "  \"tests/test_gui_surface.py::test_already_read_message_cannot_be_reopened_and_says_so\","
+    },
+    {
+      "path": ".saipen/kitchen/T-113-reread-continuation.md",
+      "line": 21,
+      "text": "T-107's active acceptance requires V6-02 to remain NOT STARTED. Therefore do"
+    },
+    {
+      "path": ".saipen/evidence/T-99-final-report.md",
+      "line": 64,
+      "text": "Open button + Enter key only route to content; state changes only after backend success; UNREAD → READ visible"
+    },
+    {
+      "path": ".saipen/extensions/subs/saiwiki/kitchen/wiki/Modules.md",
+      "line": 30,
+      "text": "| `saimail.gui_adapter` / `saimail.gui_app` / `saimail.gui_theme` | V5-01 / T-97 | one native desktop messenger over the existing public API (PySide6 optional extra only, lazy import; base install Qt-free): closed application state set, explicit Open as the only decryption path, explicit Refresh as the only page change, AND-only filters with Reset, bounded paging with explicit Load More, READ-gated Reply with backend-resolved recipient, persistent status strip that never auto-hides, Golden Default theme transcribed into `gui_theme` with `assert_canonical()` (21 tokens); zero network/model/provider calls | background polling, optimistic mutation, colour-only meaning, second palette, invented domain semantics |"
+    },
+    {
+      "path": ".saipen/evidence/T-97-v5-01-closure.md",
+      "line": 48,
+      "text": "  content; Open is the only decryption path; state changes only after backend"
+    },
+    {
+      "path": ".saipen/evidence/T-97-v5-01-closure.md",
+      "line": 104,
+      "text": "backend-capability gap lands in `adapter.READ_REREAD_GAP` instead of being"
+    },
+    {
+      "path": ".saipen/evidence/T-107-review.md",
+      "line": 36,
+      "text": "- V6-02 remains NOT STARTED throughout T-107. Historical a1/a2 tooling and"
+    },
+    {
+      "path": ".saipen/intake/coverage/SRC-100.json",
+      "line": 35,
+      "text": "      \"text\": \"Do not start V6-02.\","
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 25,
+      "text": "``saimail.workspace.open_message`` is the one decryption path and it refuses"
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 26,
+      "text": "``ALREADY_READ``, so a message that is already durably READ cannot be re-opened"
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 76,
+      "text": "    \"cannot be shown again in a new session.\")"
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 79,
+      "text": "REASON_READ_NOT_THIS_SESSION = ("
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 80,
+      "text": "    \"Opened in an earlier session; content is not re-readable.\")"
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 85,
+      "text": "READ_REREAD_GAP = ("
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 86,
+      "text": "    \"BACKEND GAP: workspace.open_message is the only decryption path and \""
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 87,
+      "text": "    \"refuses ALREADY_READ, so an already-READ message cannot be re-opened to \""
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 342,
+      "text": "        \"\"\"The one explicit decryption action. Backend success is the only gate.\"\"\""
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 393,
+      "text": "        return REASON_READ_NOT_THIS_SESSION"
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 625,
+      "text": "    \"READ_REREAD_GAP\","
+    },
+    {
+      "path": ".saipen/extensions/subs/saiui/kitchen/pen/saimail/gui_adapter.py",
+      "line": 632,
+      "text": "    \"REASON_READ_NOT_THIS_SESSION\","
+    },
+    {
+      "path": ".saipen/intake/coverage/SRC-098.json",
+      "line": 26,
+      "text": "      \"text\": \"Do not start V6-02.\","
+    },
+    {
+      "path": "tools/d3_release_evidence.py",
+      "line": 419,
+      "text": "        \"current_v602_not_started\": \"V6-02\" in current_authority"
+    },
+    {
+      "path": "tools/d3_release_evidence.py",
+      "line": 421,
+      "text": "        \"roadmap_v602_not_started\": \"V6-02\" in roadmap_authority"
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 25,
+      "text": "``saimail.workspace.open_message`` is the one decryption path and it refuses"
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 26,
+      "text": "``ALREADY_READ``, so a message that is already durably READ cannot be re-opened"
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 76,
+      "text": "    \"cannot be shown again in a new session.\")"
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 79,
+      "text": "REASON_READ_NOT_THIS_SESSION = ("
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 80,
+      "text": "    \"Opened in an earlier session; content is not re-readable.\")"
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 87,
+      "text": "READ_REREAD_GAP = ("
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 88,
+      "text": "    \"BACKEND GAP: workspace.open_message is the only decryption path and \""
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 89,
+      "text": "    \"refuses ALREADY_READ, so an already-READ message cannot be re-opened to \""
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 343,
+      "text": "        \"\"\"The one explicit decryption action. Backend success is the only gate.\"\"\""
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 397,
+      "text": "                                   f\"state {row['state']} cannot be reopened\")"
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 426,
+      "text": "            return f\"State {row['state']} cannot be reopened.\""
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 436,
+      "text": "        return REASON_READ_NOT_THIS_SESSION"
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 668,
+      "text": "    \"READ_REREAD_GAP\","
+    },
+    {
+      "path": "build/lib/saimail/gui_adapter.py",
+      "line": 675,
+      "text": "    \"REASON_READ_NOT_THIS_SESSION\","
+    },
+    {
+      "path": "release/evidence/d3/T-107-scout-baseline.md",
+      "line": 49,
+      "text": "  Roadmap v6 still call D3 ACTIVE via T-106 and defer V6-02 while D3 is active,"
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 25,
+      "text": "``saimail.workspace.open_message`` is the one decryption path and it refuses"
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 26,
+      "text": "``ALREADY_READ``, so a message that is already durably READ cannot be re-opened"
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 76,
+      "text": "    \"cannot be shown again in a new session.\")"
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 79,
+      "text": "REASON_READ_NOT_THIS_SESSION = ("
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 80,
+      "text": "    \"Opened in an earlier session; content is not re-readable.\")"
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 87,
+      "text": "READ_REREAD_GAP = ("
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 88,
+      "text": "    \"BACKEND GAP: workspace.open_message is the only decryption path and \""
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 89,
+      "text": "    \"refuses ALREADY_READ, so an already-READ message cannot be re-opened to \""
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 343,
+      "text": "        \"\"\"The one explicit decryption action. Backend success is the only gate.\"\"\""
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 397,
+      "text": "                                   f\"state {row['state']} cannot be reopened\")"
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 426,
+      "text": "            return f\"State {row['state']} cannot be reopened.\""
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 436,
+      "text": "        return REASON_READ_NOT_THIS_SESSION"
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 668,
+      "text": "    \"READ_REREAD_GAP\","
+    },
+    {
+      "path": "saimail/gui_adapter.py",
+      "line": 675,
+      "text": "    \"REASON_READ_NOT_THIS_SESSION\","
+    },
+    {
+      "path": "spec/25-DESKTOP-LOCAL-MESSENGER-v0.md",
+      "line": 77,
+      "text": "### 4.3 Receiver re-read continuity and former capability gap (T-113)"
+    },
+    {
+      "path": "spec/25-DESKTOP-LOCAL-MESSENGER-v0.md",
+      "line": 79,
+      "text": "Historically, `workspace.open_message` was the sole decryption path and refused"
+    },
+    {
+      "path": ".saipen/recovery/log-detail/E-1473-a9f04aa25e02a5465f23155d.LOG.md",
+      "line": 1,
+      "text": "- 23.09.26 14:30 [E-1473] [parent: E-1472] [T-107] [agent: opus] [op: checkpoint-f34803f7348d4c0d9477053a688b0c8d] RUN: SCOUT after explicit re-claim E-1472: preserve inherited T-107 controls and tests; independent M10 review E-1462 found all 16 bypass checks NO and 70 release-specific tests passed. New SRC-102 confirms SAIGIMN.mp3 is user-owned and should remain. Its exact hash/size are e9694312b0ebcb7a1a409cea1da0b2534d60ef348b440aded7bac25959a1a870 / 6,851,614; lossless ffmpeg stream-copy is 4 bytes larger with identical decoded PCM hash, so preserve original. Narrow humbox/media-assets.json binds one exact asset to SRC-102; both repo-size/model-data controls pass. Live candidate hashes before final T-107 work: a1 ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a; a2 d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d; a3 6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc. Source remains 0.0.2a3. T-108/109/110 are DONE; T-106 historical DONE. T-113 is blocked after preserving the SRC-102 reread design in kitchen; no reread code remains in product source, so V6-02 stays NOT STARTED. Remaining T-107: reconcile current recovery docs/external request, focused VERIFY, canonical Windows full suite, canonical SAIPEN evidence, regenerate gate evidence, independent REVIEW, then SHIP. No candidate rebuild/publication."
+    },
+    {
+      "path": "tests/test_gui_surface.py",
+      "line": 152,
+      "text": "def test_already_read_message_cannot_be_reopened_and_says_so(site):"
+    },
+    {
+      "path": "tests/test_gui_surface.py",
+      "line": 165,
+      "text": "    assert fresh.content_note() == adapter.REASON_READ_NOT_THIS_SESSION"
+    },
+    {
+      "path": "tests/test_gui_surface.py",
+      "line": 168,
+      "text": "    assert \"ALREADY_READ\" in adapter.READ_REREAD_GAP"
+    },
+    {
+      "path": "tests/test_gui_surface.py",
+      "line": 600,
+      "text": "    # explicit Open action stays the only route to content."
+    },
+    {
+      "path": "tests/test_gui_acceptance.py",
+      "line": 194,
+      "text": "    assert fresh_b.content_note() == adapter.REASON_READ_NOT_THIS_SESSION"
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r087.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r086.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r085.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r084.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r083.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r082.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r081.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r080.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r079.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r078.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r077.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r076.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r075.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r074.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r073.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r072.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r071.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r070.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r069.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r068.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r067.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r066.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r065.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r064.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r063.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r062.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r061.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r060.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r059.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r058.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r057.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r056.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r055.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r054.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r053.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r052.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r051.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r050.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r049.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r048.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r047.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r046.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r045.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r044.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r043.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r042.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r041.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r040.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r039.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r038.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r037.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r036.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r035.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r034.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r033.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r032.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r031.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r030.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r029.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r028.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r027.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r026.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r025.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r024.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r023.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r022.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r021.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r020.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r019.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r018.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r017.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r016.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r015.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r014.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r013.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r012.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r011.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r010.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r009.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r008.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r007.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r006.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r005.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.r004.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-100.json",
+      "line": 21,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r052.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r051.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r050.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r049.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r048.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r047.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r046.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r045.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r044.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r043.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r042.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r041.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r040.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r039.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r038.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r037.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r036.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r035.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r034.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r033.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r032.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r031.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r030.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r029.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r028.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r027.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r026.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r025.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r024.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r023.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r022.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r021.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r020.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r019.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r018.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r017.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r016.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r015.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r014.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r013.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r012.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r011.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r010.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r009.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r008.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r007.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r006.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r005.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r004.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.r003.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/contracts/SRC-098.json",
+      "line": 16,
+      "text": "      \"text\": \"Do not start V6-02.\""
+    },
+    {
+      "path": ".saipen/intake/active/SRC-101.md",
+      "line": 31,
+      "text": "Do not create a wrapper ticket. Do not reopen T-106. Do not start V6-02. Do not rebuild or replace the frozen 0.0.2a3 candidate unless a genuine package-byte defect is independently demonstrated. Do not publish, tag, push, create a GitHub release, upload to PyPI, or manufacture external proof."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-101.md",
+      "line": 277,
+      "text": "- V6-02 NOT STARTED;"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-101.md",
+      "line": 392,
+      "text": "- ensure V6-02 remains NOT STARTED;"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-101.md",
+      "line": 479,
+      "text": "- V6-02 NOT STARTED;"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-101.md",
+      "line": 604,
+      "text": "- V6-02 remains NOT STARTED."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-101.md",
+      "line": 611,
+      "text": "- No V6-02 implementation."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-101.md",
+      "line": 612,
+      "text": "- No READ_REREAD_GAP implementation."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-101.md",
+      "line": 681,
+      "text": "- V6-02"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-101.md",
+      "line": 709,
+      "text": "- V6-02: NOT STARTED"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-100.md",
+      "line": 24,
+      "text": "Do not create a wrapper ticket. Do not reopen T-106. Do not start V6-02. Do not rebuild or replace the frozen 0.0.2a3 candidate unless a genuine package-byte defect is independently demonstrated. Do not publish, tag, push, create a GitHub release, upload to PyPI, or manufacture external proof."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-100.md",
+      "line": 270,
+      "text": "- V6-02 NOT STARTED;"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-100.md",
+      "line": 385,
+      "text": "- ensure V6-02 remains NOT STARTED;"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-100.md",
+      "line": 472,
+      "text": "- V6-02 NOT STARTED;"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-100.md",
+      "line": 597,
+      "text": "- V6-02 remains NOT STARTED."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-100.md",
+      "line": 604,
+      "text": "- No V6-02 implementation."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-100.md",
+      "line": 605,
+      "text": "- No READ_REREAD_GAP implementation."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-100.md",
+      "line": 674,
+      "text": "- V6-02"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-100.md",
+      "line": 702,
+      "text": "- V6-02: NOT STARTED"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-098.md",
+      "line": 7,
+      "text": "Do not start V6-02."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-098.md",
+      "line": 284,
+      "text": "V6-02 remains NOT STARTED."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-098.md",
+      "line": 288,
+      "text": "D3 local engineering completed via T-106; exact candidate 0.0.2a3 is READY_FOR_EXTERNAL_INSTALL_PROOF; G13 remains PENDING_EXTERNAL; no active implementation ticket exists; V6-02 remains unselected/not started."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-098.md",
+      "line": 691,
+      "text": "V6-02 NOT STARTED"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-098.md",
+      "line": 774,
+      "text": "V6-02:"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-098.md",
+      "line": 784,
+      "text": "No V6-02."
+    },
+    {
+      "path": ".saipen/intake/active/SRC-098.md",
+      "line": 831,
+      "text": "V6-02"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-098.md",
+      "line": 859,
+      "text": "V6-02: NOT STARTED"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-093.md",
+      "line": 269,
+      "text": "V6-02:"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-093.md",
+      "line": 270,
+      "text": "READ_REREAD_GAP"
+    },
+    {
+      "path": ".saipen/intake/active/SRC-093.md",
+      "line": 274,
+      "text": "Prefer V6-02 first only if real GUI use shows rereading old READ messages is materially blocking daily use."
+    },
+    {
+      "path": "humbox/SAIPEN-WORK-DESK.md",
+      "line": 60,
+      "text": "Receiver continuity comes next: explicitly revisit an already-read message"
+    },
+    {
+      "path": "humbox/SAIPEN-WORK-DESK.md",
+      "line": 61,
+      "text": "with the same evidence and custody guarantees. `READ_REREAD_GAP` remains open."
+    },
+    {
+      "path": "humbox/FUTURE-GATES-V6.md",
+      "line": 51,
+      "text": "- **L4 — READ_REREAD_GAP remains real.** An already-`READ` message cannot be"
+    },
+    {
+      "path": "humbox/FUTURE-GATES-V6.md",
+      "line": 64,
+      "text": "  V6-02 remains NOT STARTED."
+    },
+    {
+      "path": "humbox/FUTURE-GATES-V6.md",
+      "line": 120,
+      "text": "  `ABSENT`; publication is `NONE`. V6-02 is NOT STARTED."
+    },
+    {
+      "path": "humbox/FUTURE-GATES-V6.md",
+      "line": 154,
+      "text": "  canonical suite is green — stop. Do not start D3 or V6-02 inside T-104."
+    },
+    {
+      "path": "humbox/FUTURE-GATES-V6.md",
+      "line": 183,
+      "text": "- **V6-02 — READ_REREAD_GAP: NOT STARTED at T-107 closure.** Later SRC-102/SRC-103"
+    },
+    {
+      "path": "humbox/FUTURE-GATES-V6.md",
+      "line": 266,
+      "text": "- **Next evaluation:** V6-02 receiver reread continuity, then a SAIPEN-owned"
+    },
+    {
+      "path": "humbox/FUTURE-GATES-V6.md",
+      "line": 285,
+      "text": "`PENDING_EXTERNAL`, G17 `ABSENT`, publication `NONE`; V6-02 is NOT STARTED."
+    },
+    {
+      "path": "humbox/FUTURE-GATES-V5.md",
+      "line": 174,
+      "text": "  backend-capability gap is reported, not faked (an already-READ message cannot"
+    },
+    {
+      "path": "humbox/CURRENT-STATE.md",
+      "line": 14,
+      "text": "> 116 passed. `READ_REREAD_GAP` remains open."
+    },
+    {
+      "path": "humbox/CURRENT-STATE.md",
+      "line": 105,
+      "text": "  path/hash/size manifest; V6-02 remains NOT STARTED."
+    },
+    {
+      "path": "humbox/CURRENT-STATE.md",
+      "line": 794,
+      "text": "  `ERROR`), explicit `Open` (the only decryption path), explicit `Refresh`"
+    },
+    {
+      "path": "humbox/CURRENT-STATE.md",
+      "line": 800,
+      "text": "  `workspace.open_message` is the one decryption path and refuses"
+    },
+    {
+      "path": "humbox/CURRENT-STATE.md",
+      "line": 801,
+      "text": "  `ALREADY_READ`, so an already-READ message cannot be re-opened to re-display"
+    },
+    {
+      "path": "humbox/CURRENT-STATE.md",
+      "line": 881,
+      "text": "is `ABSENT`, and publication is `NONE`. V6-02 is NOT STARTED. The checkout is"
+    },
+    {
+      "path": "humbox/CURRENT-STATE.md",
+      "line": 900,
+      "text": "candidate. V6-02 remains NOT STARTED at this T-107 closure boundary."
+    }
+  ]
+}

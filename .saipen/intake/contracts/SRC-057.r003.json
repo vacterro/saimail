@@ -1,0 +1,24 @@
+{
+  "clauses": {
+    "SRC-057:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Correct the completed T-71 LAB observer so the JSON nesting resource limit is explicit and deterministic across supported Python runtimes instead of depending on whether stdlib json.loads raises RecursionError."
+    },
+    "SRC-057:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Freeze MAX_OBSERVER_JSON_NESTING = 64 and implement a non-disclosing O(n) lexical nesting preflight: braces and brackets inside strings do not count, escape sequences preserve string state, depth never goes below zero, and RESOURCE_LIMIT is returned before json.loads without sys.setrecursionlimit or process-global mutation."
+    },
+    "SRC-057:R003": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Preserve strict parser authority and historical bytes: no strict generator or reviewer acceptance change, no fence stripping, substring extraction or repair, no B-016/B-017/B-018 semantics or T-71 artifact edits, and the 4000-character observer limit stays unchanged."
+    }
+  },
+  "derived_at": "2026-09-19T23:55:37Z",
+  "derived_from": "SRC-057",
+  "interpretation_revision": 3,
+  "schema_version": 1,
+  "source_sha256": "851de903d81d467dcaa1e3aa9dcb24d360fde9b4cfb404195dc4b3dd1288b906"
+}

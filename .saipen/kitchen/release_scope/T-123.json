@@ -1,0 +1,13 @@
+{
+  "op_id": "scope-0ae89bcb303143969936484874c64b95",
+  "paths": {
+    "lab/selector_coverage_manifest.json": "67fa3f847ba29de03a51e9592cffae70863d21f7266c1401736ff890ac08bb40"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-24T11:19:18Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:8b5376574aa5f803b4d48b6863a90b58aa658d9684c6b42332a8762015a5763f",
+  "ticket": "T-123"
+}

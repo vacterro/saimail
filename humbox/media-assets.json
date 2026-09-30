@@ -1,0 +1,12 @@
+{
+  "schema": "SAIMAIL_INTENTIONAL_MEDIA_ASSETS_1",
+  "source_receipt": "SRC-102",
+  "assets": [
+    {
+      "path": "humbox/SAIGIMN.mp3",
+      "media_type": "audio/mpeg",
+      "size_bytes": 6851614,
+      "sha256": "e9694312b0ebcb7a1a409cea1da0b2534d60ef348b440aded7bac25959a1a870"
+    }
+  ]
+}

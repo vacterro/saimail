@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-092:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-104 closed with verification evidence in LOG: verify -> PASS [target: T-104] conf: high -- python -m pytest -q (pyproject D-014): 2380 tests, 0 failed, 0 errors, 0 skipped, exit 0 (junitxml 2380/0/0/0 on the same bytes plus a final re-run all green); focused tests/test_repo_consistency.py 38 passed; red control: the new V6 gate goes red when the README hero token LOCAL ONLY is removed and the file was restored byte-identical (sha256 2E592D35.",
+      "text": "T-104 V6-01 GitHub Identity and Presentation Sync continue to canonical closure",
+      "verification": "the Work this request created reached its own verification gate; see the T-104 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-104"
+    }
+  },
+  "schema_version": 1
+}

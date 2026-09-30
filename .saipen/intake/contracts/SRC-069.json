@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-069:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "\"FG-05 end-to-end local scenario\" 2>&1"
+    }
+  },
+  "derived_at": "2026-09-20T16:20:44Z",
+  "derived_from": "SRC-069",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "e3eebd3fa4890cacfcadee9ce4d1690a7d8530976685cae9498af3532a490f7b"
+}

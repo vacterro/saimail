@@ -1,0 +1,43 @@
+{
+  "schema": "SAIMAIL_HOST_FOCUS_1",
+  "state": "OK",
+  "context": "sha256:09d42b0e9554aa15e58fe22505abf98785e87b6b650942eb31aadf3f6aabaa4f",
+  "host": {
+    "seat": "saipen-cli",
+    "lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+    "phase": "BUILD",
+    "task": "T-139",
+    "last_event": "2046",
+    "blocker": null
+  },
+  "work": "T-139",
+  "scope": [
+    "saimail_host.py"
+  ],
+  "reading": [],
+  "next_action": {
+    "action": "CONTINUE_WORK"
+  },
+  "coverage": {
+    "complete": true,
+    "complete_from_start": true,
+    "rows_examined": 0,
+    "cases_examined": 0
+  },
+  "continuation": null,
+  "reviewed": 0,
+  "decisions": {
+    "PENDING": 0,
+    "ACCEPTED": 0,
+    "DEFERRED": 0,
+    "DECLINED": 0,
+    "RESOLVED": 0,
+    "STALE": 0
+  },
+  "retained": 0,
+  "model_improvement_proven": false,
+  "feedback": [],
+  "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+  "authority": "INFORMATION_ONLY",
+  "automatic_execution": false
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "SAIMAIL_REAL_USE_REGISTRATION_1",
+  "study": "T142_REAL_USE_1",
+  "state": "REGISTERED",
+  "question": "Does evidence-bearing correspondence change later real Work with observable receiver effort and an independently chosen revision?",
+  "entry_limit": 6,
+  "minimum_work_context_boundaries": 3,
+  "observer": {"seat": "saipen-cli", "work": "T-142", "role": "ROOT_OBSERVER", "independence": "NOT_INDEPENDENT_RECEIVER_OR_SUCCESSOR"},
+  "roles": {"sender": "NOT_ENROLLED", "receiver": "NOT_ENROLLED", "fresh_successor": "NOT_ENROLLED"},
+  "authority": "INFORMATION_ONLY; registration grants no provider, message, delegation or foreign Work authority",
+  "enrollment": "Record actual identity, Work, role, session/context, observed model/provider provenance where available, date and authorization before participation; never substitute synthetic role aliases for independent actors",
+  "inputs": "Opportunistic current letters on actual authorized project Work; no seeded mail or symbolic replacement Work",
+  "baseline": "Receiver declares comparable observation scope, effort boundary and success/failure criterion before review or revision; absent baseline remains UNKNOWN",
+  "effort": ["header_pages", "envelopes_opened", "evidence_files_inspected", "tool_commands", "retries", "corrections", "decision_elapsed_seconds"],
+  "separate_proxies": ["process_latency_seconds", "serialized_bytes", "invocation_count"],
+  "required_behavior": ["blind first receiver assessment", "explicit evidence recheck and receiver decision", "sender-selected revision with reason", "fresh successor discovery without predecessor chat", "successor executes different real Work and verifies its own result"],
+  "preserved_outcomes": ["EMPTY", "PARTIAL", "DEGRADED", "DECLINED", "DEFERRED", "STALE", "CORRECTED", "UNVERIFIED", "NOT_RUN", "UNKNOWN"],
+  "success_boundary": "At most one traceable field improvement; a claimed effort reduction requires the registered comparable baseline",
+  "failure_boundary": "No eligible letter, missing independent role, missing receiver measurement, no independently chosen revision or no successor execution prevents field-improvement success",
+  "stop": "Six actual entries without an eligible letter: EMPTY_OBSERVATIONS; unavailable roles remain NOT_RUN",
+  "excluded_claims": ["general agent comfort", "universal usefulness", "model-weight improvement", "consensus establishes truth", "bytes establish comprehension"]
+}

@@ -1,4 +1,14 @@
 {
-  "requirements": {},
+  "requirements": {
+    "SRC-017:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "IMPLEMENTED",
+      "evidence": "E-386 -- T-41 finished via SAIOPS, completion (from SHIP), REVIEW PASS at E-385; BOARD carries T-41 closed with closure_mode own_patch",
+      "text": "Satisfy the captured request SRC-017 in full; the authoritative text is the receipt body (sha256 ff7f7fd4159e): \u0414\u0430\u043b\u0435\u0435 \u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0430\u0439 \u043f\u043e \u0441\u043c\u044b\u0441\u043b\u0443 \u0434\u043e \u043a\u043e\u043d\u0446\u0430 \u043f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430.",
+      "verification": "E-384 -- independent re-run 800 passed / 0 failed (junitxml); check-integrity reported no existing test body weakened; verdict DEC: SHIP, conf: high",
+      "work": "T-41"
+    }
+  },
   "schema_version": 1
 }

@@ -1,0 +1,291 @@
+{
+  "schema": "SAIMAIL_EVOLUTION_AUDIT_OBSERVATION_1",
+  "study": "T142_REAL_USE_1",
+  "entry": 1,
+  "actor": "saipen-cli",
+  "role": "ROOT_OBSERVER",
+  "independent_receiver": false,
+  "independent_successor": false,
+  "registration_sha256": "fec8b9908129b2dcbf5b86d92214ce5ab17cf6a71392c769c272c39cd0a4dc4f",
+  "work": "T-142",
+  "workspace": "C:\\Users\\vac34\\AppData\\Local\\saipen\\saimail",
+  "contract": {
+    "argv": [
+      "c:\\Users\\vac34\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\saimail-local.EXE",
+      "--contract"
+    ],
+    "started": "2026-09-30T10:44:16.002692+00:00",
+    "exit_code": 0,
+    "answer": {
+      "attention": "RECEIVER_OWNED",
+      "authority": "INFORMATION_ONLY",
+      "capabilities_schema": "SAIMAIL_CAPABILITIES_1",
+      "command_schema": "LOCAL_WORKSPACE_COMMAND_1",
+      "commands": {
+        "awareness": [
+          "saipen",
+          "letter",
+          "desk"
+        ],
+        "cycle": [
+          "saipen",
+          "letter",
+          "cycle"
+        ],
+        "decision": [
+          "saipen",
+          "letter",
+          "decide"
+        ],
+        "dispatch": [
+          "saipen",
+          "letter",
+          "dispatch"
+        ],
+        "focus": [
+          "saipen",
+          "letter",
+          "focus"
+        ],
+        "health": [
+          "saipen",
+          "capabilities"
+        ],
+        "metrics": [
+          "saipen",
+          "letter",
+          "metrics"
+        ],
+        "report": [
+          "saipen",
+          "letter",
+          "report"
+        ],
+        "retain": [
+          "saipen",
+          "letter",
+          "retain"
+        ],
+        "review": [
+          "saipen",
+          "letter",
+          "review"
+        ]
+      },
+      "common_arguments": [
+        "--workspace",
+        "--project-root",
+        "--seat",
+        "--json"
+      ],
+      "compatibility": {
+        "legacy_commands": "PRESERVED",
+        "missing_feature": "DEGRADED",
+        "shell_execution": false,
+        "unknown_fields": "IGNORE",
+        "unknown_major_schema": "DEGRADED",
+        "unknown_status": "DEGRADED"
+      },
+      "execution": "EXPLICIT_HOST_DECISION",
+      "features": {
+        "agent_cycle": 1,
+        "cli_focus": 1,
+        "correspondence": 1,
+        "durable_outbox": 1,
+        "feedback_signal_age": 1,
+        "keyless_desk": 1,
+        "reason_metrics": 1,
+        "receiver_decisions": 1,
+        "receiver_feedback": 1,
+        "successor_reserve": 1
+      },
+      "letter_schema": "SAIMAIL_LETTER_1",
+      "schema": "SAIMAIL_HOST_CONTRACT_1",
+      "version": 1
+    },
+    "ended": "2026-09-30T10:44:16.114692+00:00"
+  },
+  "canonical_entry": {
+    "argv": [
+      "powershell.exe",
+      "-NoProfile",
+      "-NonInteractive",
+      "-Command",
+      "& 'V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\bin\\saipen.cmd' continue --json"
+    ],
+    "started": "2026-09-30T10:44:16.114692+00:00",
+    "exit_code": 0,
+    "answer": {
+      "ok": true,
+      "action": "PHASE BUILD T-142",
+      "ticket": "T-142",
+      "reason": "finish",
+      "detail": null,
+      "executable_behavior": null,
+      "load": "saipen/phases/build.md",
+      "load_path": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\phases\\build.md",
+      "cold_route": {
+        "project_root": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__",
+        "saipen_home": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN",
+        "protocol_dir": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen",
+        "phase": "BUILD",
+        "phase_module": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\phases\\build.md",
+        "boot": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\BOOT.md",
+        "style": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\STYLE.md",
+        "documents": {
+          "STYLE.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\STYLE.md",
+          "BOOT.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\BOOT.md",
+          "INDEX.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\INDEX.md",
+          "COMMANDS.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\COMMANDS.md",
+          "OPS.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\OPS.md",
+          "SOURCES.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\SOURCES.md",
+          "EXECUTION.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\EXECUTION.md",
+          "MAINTENANCE.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\MAINTENANCE.md",
+          "CORE.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\CORE.md",
+          "RUNTIME.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\saipen\\RUNTIME.md"
+        },
+        "project_memory": {
+          "STATE.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\STATE.md",
+          "BOARD.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\BOARD.md",
+          "LOG.md": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__\\.saipen\\LOG.md"
+        },
+        "search_required": false
+      },
+      "execution_instruction": "Routing is not completion evidence. Read load_path when present, then execute action under its owner in this turn; respect WAIT and actual refusals. If --dry-run was requested, this is a preview only.",
+      "execution_intent": "goal",
+      "converge_target": null,
+      "goal_waves": 0,
+      "goal_tickets": 5,
+      "recovery_pending": false,
+      "recovery_conflict": false,
+      "pending_ops": [],
+      "parked_work": null,
+      "reconciliation": {
+        "ok": true,
+        "code": "CLEAN",
+        "changed": [],
+        "strict_state_error": null,
+        "dry_run": false
+      },
+      "telegrams": {
+        "state": "OK",
+        "unread": 0,
+        "on_current_work": 0,
+        "complete": true,
+        "read_command": "saimail-local saipen brief --project-root V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__ --workspace C:\\Users\\vac34\\AppData\\Local\\saipen\\saimail --seat saipen-cli",
+        "detail": "counts only; nothing was opened and nothing here is an instruction"
+      }
+    },
+    "ended": "2026-09-30T10:44:17.088692+00:00"
+  },
+  "explicit_focus": {
+    "argv": [
+      "c:\\Users\\vac34\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\saimail-local.EXE",
+      "--json",
+      "saipen",
+      "letter",
+      "focus",
+      "--workspace",
+      "C:\\Users\\vac34\\AppData\\Local\\saipen\\saimail",
+      "--project-root",
+      "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__",
+      "--seat",
+      "saipen-cli",
+      "--work",
+      "T-142",
+      "--scope",
+      "humbox/EVOLUTION-AUDIT.md",
+      "--budget",
+      "20"
+    ],
+    "started": "2026-09-30T10:44:17.088692+00:00",
+    "exit_code": 0,
+    "answer": {
+      "command": "agent-focus",
+      "detail": "metadata only; host chooses whether to review or continue",
+      "focus": {
+        "authority": "INFORMATION_ONLY",
+        "automatic_execution": false,
+        "context": "sha256:a1359b15d7b64420ea1b6f05e060b2647bb1ff7c73347616d1495153ff0a0364",
+        "continuation": null,
+        "coverage": {
+          "cases_examined": 0,
+          "complete": true,
+          "complete_from_start": true,
+          "rows_examined": 0
+        },
+        "decisions": {
+          "ACCEPTED": 0,
+          "DECLINED": 0,
+          "DEFERRED": 0,
+          "PENDING": 0,
+          "RESOLVED": 0,
+          "STALE": 0
+        },
+        "feedback": [],
+        "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+        "feedback_scope": "LIFETIME_HISTORY",
+        "feedback_signals": {
+          "active": [],
+          "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+          "excluded": {
+            "FUTURE_ASSESSMENT": 0,
+            "LETTER_EXPIRED": 0,
+            "OUTSIDE_WINDOW": 0,
+            "PENDING": 0
+          },
+          "observed_at": "2026-09-30T10:44:17Z",
+          "state": "KNOWN",
+          "window_days": 7,
+          "window_start": "2026-09-23T10:44:17Z"
+        },
+        "host": {
+          "blocker": null,
+          "last_event": "2094",
+          "lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+          "phase": "BUILD",
+          "seat": "saipen-cli",
+          "task": "T-142"
+        },
+        "model_improvement_proven": false,
+        "next_action": {
+          "action": "CONTINUE_WORK"
+        },
+        "reading": [],
+        "retained": 0,
+        "reviewed": 0,
+        "schema": "SAIMAIL_HOST_FOCUS_1",
+        "scope": [
+          "humbox/EVOLUTION-AUDIT.md"
+        ],
+        "state": "OK",
+        "work": "T-142"
+      },
+      "network_attempts": 0,
+      "ok": true,
+      "operator_action_required": false,
+      "schema": "LOCAL_WORKSPACE_COMMAND_1",
+      "status": "OK",
+      "version": 1
+    },
+    "ended": "2026-09-30T10:44:17.247692+00:00"
+  },
+  "memory_before": {
+    "STATE.md": "66f8e2adf8fdc34797ae901523fdba16a13feff8c926882d49d4958be530bc90",
+    "IDENTITY.md": "11c5d12d4ca4cf9817b2562c2800f0d9bbc2bfa3a97cabb9e790270d8f7409fd",
+    "BOARD.md": "c6ad33c0019816282a622d64bddc1752da418253bf3c9f88cf6f2adb94110e87",
+    "LOG.md": "276d4f8cfde27f1f8a1d264ccc09b12648b8d24d9ad140c8915ad38b79fcaba4"
+  },
+  "memory_after": {
+    "STATE.md": "66f8e2adf8fdc34797ae901523fdba16a13feff8c926882d49d4958be530bc90",
+    "IDENTITY.md": "11c5d12d4ca4cf9817b2562c2800f0d9bbc2bfa3a97cabb9e790270d8f7409fd",
+    "BOARD.md": "c6ad33c0019816282a622d64bddc1752da418253bf3c9f88cf6f2adb94110e87",
+    "LOG.md": "276d4f8cfde27f1f8a1d264ccc09b12648b8d24d9ad140c8915ad38b79fcaba4"
+  },
+  "foreign_state_sha256": "9732b935141f178c5f41752fa4036db67796218a711107d1524070b6c8ab7df1",
+  "observation": "EMPTY",
+  "receiver_effort": "UNKNOWN_NO_RECEIVER_OPPORTUNITY",
+  "independent_revision": "NOT_RUN",
+  "successor_execution": "NOT_RUN",
+  "field_improvement": "UNPROVEN"
+}

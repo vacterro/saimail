@@ -18,9 +18,10 @@ the canonical ``<saipen_home>/saipen/UI.md`` Golden Default palette.
 from __future__ import annotations
 
 import json
+import os
 import sys
+from itertools import pairwise
 from pathlib import Path
-from typing import Optional
 
 from saimail import gui_adapter as adapter
 from saimail import gui_theme as theme
@@ -57,6 +58,14 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
         widget.setWordWrap(True)
         return widget
 
+    def _scroll_page(page):
+        page.layout().setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
+        scroll = QtWidgets.QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
+        scroll.setWidget(page)
+        return scroll
+
     class InboxList(QtWidgets.QListWidget):
         """The inbox list. Enter is the documented keyboard route for Open.
 
@@ -78,7 +87,20 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
     class MainWindow(QtWidgets.QMainWindow):
         def __init__(self):
             super().__init__()
+            if theme.FONT_FAMILY not in QtGui.QFontDatabase.families() and sys.platform == "win32":
+                # Windows' offscreen Qt platform has no system font database.
+                # Load the existing OS font, never fetch or bundle font files.
+                font_path = Path(os.environ.get("WINDIR", "C:/Windows")) / "Fonts" / "verdana.ttf"
+                if font_path.is_file():
+                    QtGui.QFontDatabase.addApplicationFont(str(font_path))
+            font = QtGui.QFont(theme.FONT_FAMILY)
+            font.setPixelSize(theme.SIZE_BODY)
+            font.setStyleStrategy(QtGui.QFont.StyleStrategy.NoAntialias)
+            self.setFont(font)
             self.model = adapter.GuiAdapter(page_size=page_size)
+            self._key_job = None
+            self._agent_page = None
+            self._shortcut_handles = []
             self.setWindowTitle("SAIMAIL — LOCAL ONLY")
             self.setMinimumSize(*theme.MIN_VIEWPORT)
             self.resize(*theme.CANONICAL_VIEWPORT)
@@ -95,12 +117,264 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
             outer.setSpacing(8)
 
             outer.addWidget(self._title_region())
-            outer.addWidget(self._mail_region(), 1)
-            outer.addWidget(self._composer_region())
-            outer.addWidget(self._rare_region())
+            self.tabs = QtWidgets.QTabWidget()
+            mail_page = QtWidgets.QWidget()
+            mail_layout = QtWidgets.QVBoxLayout(mail_page)
+            mail_layout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
+            mail_layout.setContentsMargins(0, 0, 0, 0)
+            mail_layout.addWidget(self._mail_region(), 1)
+            mail_layout.addWidget(self._composer_region())
+            mail_layout.addWidget(self._rare_region())
+            self.tabs.addTab(_scroll_page(mail_page), "Mail")
+            self.tabs.addTab(_scroll_page(self._agents_region()), "Agents && continuity")
+            self.tabs.addTab(_scroll_page(self._keys_region()), "Keys && backup")
+            outer.addWidget(self.tabs, 1)
             outer.addWidget(self._status_region())
             self._shortcuts()
             self._tab_order(root)
+
+        def _keys_region(self):
+            page = QtWidgets.QWidget()
+            form = QtWidgets.QFormLayout(page)
+            form.setFieldGrowthPolicy(QtWidgets.QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
+            intro = _label("Your letters stay sealed. Unlock only to read or send.\n"
+                           "Choose a long master password; recovery uses a separate backup and recovery key.")
+            intro.setWordWrap(True)
+            form.addRow(intro)
+            self.key_folder = QtWidgets.QLineEdit()
+            form.addRow("Mailbox folder", self.key_folder)
+            self.key_seat = QtWidgets.QLineEdit("operator")
+            form.addRow("Your local name", self.key_seat)
+            self.key_password = QtWidgets.QLineEdit()
+            self.key_password.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+            form.addRow("Master password", self.key_password)
+            self.key_confirm = QtWidgets.QLineEdit()
+            self.key_confirm.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+            form.addRow("Repeat new password", self.key_confirm)
+            row = QtWidgets.QWidget()
+            buttons = QtWidgets.QGridLayout(row)
+            buttons.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
+            actions = (("Create encrypted mailbox", self.on_create_encrypted),
+                       ("Unlock", self.on_unlock), ("Lock", self.on_lock),
+                       ("Set / change master password", self.on_protect),
+                       ("Create recovery backup", self.on_backup), ("Restore identity", self.on_restore))
+            for i, (label, callback) in enumerate(actions):
+                button = QtWidgets.QPushButton(label)
+                button.clicked.connect(callback)
+                buttons.addWidget(button, i // 3, i % 3)
+            form.addRow(row)
+            self.key_backup_path = QtWidgets.QLineEdit()
+            form.addRow("Recovery backup file", self.key_backup_path)
+            self.key_recovery = QtWidgets.QLineEdit()
+            self.key_recovery.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+            form.addRow("Recovery key (for restore)", self.key_recovery)
+            self.key_result = QtWidgets.QPlainTextEdit()
+            self.key_result.setReadOnly(True)
+            self.key_result.setPlainText("Recovery backups contain identity keys only. Back up the sealed mailbox folder too.\n"
+                                         "Keep the backup and recovery key separately.\n"
+                                         "Hardware FIDO2/PRF unlock is not configured on this device.")
+            form.addRow(self.key_result)
+            return page
+
+        def _agents_region(self):
+            page = QtWidgets.QWidget()
+            layout = QtWidgets.QVBoxLayout(page)
+            description = _label("Useful letters connect work across agents and generations.\n"
+                                 "Discover headers, review evidence, record a decision, then preserve a proven result.")
+            description.setWordWrap(True)
+            layout.addWidget(description)
+            form = QtWidgets.QFormLayout()
+            self.agent_project = QtWidgets.QLineEdit()
+            form.addRow("SAIPEN project folder", self.agent_project)
+            self.agent_work = QtWidgets.QLineEdit()
+            form.addRow("Work (empty = current)", self.agent_work)
+            self.agent_scope = QtWidgets.QLineEdit()
+            form.addRow("File in your current work", self.agent_scope)
+            self.agent_result = QtWidgets.QLineEdit()
+            form.addRow("Result evidence file", self.agent_result)
+            layout.addLayout(form)
+            actions = QtWidgets.QGridLayout()
+            for i, (label, action) in enumerate((
+                    ("Discover", "desk"), ("Review", "review"), ("Accept", "ACCEPTED"),
+                    ("Defer", "DEFERRED"), ("Decline", "DECLINED"), ("Resolve with evidence", "RESOLVED"),
+                    ("Keep for successors", "retain"), ("Report decision to sender", "report"), ("Outcomes", "metrics"))):
+                button = QtWidgets.QPushButton(label)
+                button.clicked.connect(lambda checked=False, a=action: self.on_agent_action(a))
+                actions.addWidget(button, i // 3, i % 3)
+            layout.addLayout(actions)
+            self.agent_more = QtWidgets.QPushButton("Next discovery page")
+            self.agent_more.setEnabled(False)
+            self.agent_more.clicked.connect(lambda: self.on_agent_action("desk-next"))
+            layout.addWidget(self.agent_more)
+            self.agent_letters = QtWidgets.QListWidget()
+            layout.addWidget(self.agent_letters, 1)
+            self.agent_body = QtWidgets.QPlainTextEdit()
+            self.agent_body.setReadOnly(True)
+            layout.addWidget(self.agent_body, 2)
+            return page
+
+        def _run_key_job(self, action, *, reveal_backup=False):
+            if self._key_job is not None:
+                return
+
+            class KeyJob(QtCore.QThread):
+                completed = QtCore.Signal(object)
+
+                def run(job):
+                    try:
+                        result = action()
+                    except OSError:
+                        result = self.model._fail_code("keys", "KEY_STORAGE_UNAVAILABLE",
+                            "Could not access the mailbox folder or backup file. Check its location and permissions.")
+                    except Exception:  # noqa: BLE001 - user-facing key boundary, never include exception data or secrets
+                        result = self.model._fail_code("keys", "KEY_OPERATION_FAILED",
+                            "Could not complete the key operation. Reopen the mailbox and check the selected backup file.")
+                    job.completed.emit(result)
+
+            self.status_label.setText("Working with encrypted identity…")
+            self.centralWidget().setEnabled(False)
+            for shortcut in self._shortcut_handles:
+                shortcut.setEnabled(False)
+            self._key_job = KeyJob(self)
+
+            def completed(result):
+                self.centralWidget().setEnabled(True)
+                for shortcut in self._shortcut_handles:
+                    shortcut.setEnabled(True)
+                if reveal_backup and result.get("ok"):
+                    backup = result["backup"]
+                    self.key_result.setPlainText(
+                        "BACKUP SAVED: " + backup["path"] + "\n\nRECOVERY KEY — KEEP SEPARATELY:\n"
+                        + backup["recovery_key"] + "\n\nIdentity keys only; back up sealed mail separately. "
+                        "Lock clears this display. The recovery key is not saved by the application.")
+                else:
+                    self.key_result.setPlainText(result.get("text") or result.get("detail") or result.get("code", "Done"))
+                self._apply(result)
+
+            self._key_job.completed.connect(completed)
+            self._key_job.finished.connect(self._key_job.deleteLater)
+            self._key_job.finished.connect(lambda: setattr(self, "_key_job", None))
+            self._key_job.start()
+
+        def _new_password(self):
+            password = self.key_password.text()
+            if password != self.key_confirm.text():
+                self.key_result.setPlainText("Passwords differ. Repeat the same new password.")
+                return None
+            self.key_password.clear()
+            self.key_confirm.clear()
+            return password
+
+        def on_create_encrypted(self):
+            password = self._new_password()
+            folder, seat = self.key_folder.text().strip(), self.key_seat.text().strip()
+            if password is None or not folder or not seat:
+                return
+            self._run_key_job(lambda: self.model.create_workspace(folder, seat, "master-key", password=password))
+
+        def on_unlock(self):
+            password = self.key_password.text()
+            self.key_password.clear()
+            if self.model.workspace is None:
+                folder = self.key_folder.text().strip()
+                if not folder:
+                    self.key_result.setPlainText("Choose the mailbox folder first.")
+                    return
+                self._run_key_job(lambda: self.model.open_workspace(folder, password=password))
+            else:
+                self._run_key_job(lambda: self.model.unlock_workspace(password))
+
+        def on_lock(self):
+            self.key_result.clear()
+            self.key_password.clear()
+            self.key_confirm.clear()
+            self.key_recovery.clear()
+            self.agent_body.clear()
+            self.agent_letters.clear()
+            self._agent_page = None
+            self.agent_more.setEnabled(False)
+            self._apply(self.model.lock_workspace())
+
+        def on_protect(self):
+            password = self._new_password()
+            if password is not None:
+                self._run_key_job(lambda: self.model.protect_keys(password))
+
+        def on_backup(self):
+            path = self.key_backup_path.text().strip()
+            if not path:
+                path, _ = QtWidgets.QFileDialog.getSaveFileName(self, "Save encrypted recovery backup", "saimail-recovery.json")
+            if path:
+                self.key_backup_path.setText(path)
+                self._run_key_job(lambda: self.model.recovery_backup(path), reveal_backup=True)
+
+        def on_restore(self):
+            password = self._new_password()
+            if password is None:
+                return
+            backup, folder = self.key_backup_path.text().strip(), self.key_folder.text().strip()
+            recovery_key = self.key_recovery.text().strip()
+            self.key_recovery.clear()
+            if not backup or not folder or not recovery_key:
+                self.key_result.setPlainText("Fill the backup file, empty destination folder, recovery key and new password.")
+                return
+            self._run_key_job(lambda: self.model.restore_backup(backup, folder, recovery_key, password))
+
+        def on_agent_action(self, action):
+            selected = self.agent_letters.currentItem()
+            envelope_id = selected.data(QtCore.Qt.ItemDataRole.UserRole) if selected else None
+            kwargs = {"work": self.agent_work.text().strip() or None,
+                      "scope": [self.agent_scope.text().strip()] if self.agent_scope.text().strip() else []}
+            context = (str(self.model.workspace.root) if self.model.workspace else None,
+                       self.agent_project.text().strip(), kwargs["work"], tuple(kwargs["scope"]))
+            continued = action == "desk-next"
+            if continued:
+                if self._agent_page is None or context != self._agent_page["context"]:
+                    self.agent_body.setPlainText("Discovery context changed. Press Discover to start again.")
+                    self.agent_more.setEnabled(False)
+                    return
+                kwargs.update(continuation=self._agent_page["continuation"])
+                action = "desk"
+            if action in {"ACCEPTED", "DEFERRED", "DECLINED", "RESOLVED"}:
+                reasons = {"ACCEPTED": "ACTION_PLANNED", "DEFERRED": "WAITING_DEPENDENCY",
+                           "DECLINED": "NOT_ACTIONABLE", "RESOLVED": "ACTION_TAKEN"}
+                kwargs.update(decision=action, reason=reasons[action], result_path=self.agent_result.text().strip() or None)
+                action = "decide"
+            if action not in {"desk", "metrics"} and not envelope_id:
+                self.agent_body.setPlainText("Select a discovered letter first.")
+                return
+            result = self.model.correspondence_action(self.agent_project.text().strip(), action,
+                                                      envelope_id=envelope_id, **kwargs)
+            if action == "desk" and result.get("ok"):
+                if not continued:
+                    self.agent_letters.clear()
+                self._agent_page = {"context": context, "continuation": result.get("continuation")}
+                self.agent_more.setEnabled(not result.get("complete", False))
+                seen = {self.agent_letters.item(i).data(QtCore.Qt.ItemDataRole.UserRole)
+                        for i in range(self.agent_letters.count())}
+                for item in (result.get("items") or []) + (result.get("cases") or []):
+                    if item["envelope_id"] in seen:
+                        continue
+                    seen.add(item["envelope_id"])
+                    row = QtWidgets.QListWidgetItem(
+                        f"{item.get('match', 'NEW')}  {item.get('from', item.get('sender'))}  "
+                        f"{item.get('decision', item.get('state'))}")
+                    row.setData(QtCore.Qt.ItemDataRole.UserRole, item["envelope_id"])
+                    self.agent_letters.addItem(row)
+            from saimail.workspace import render_command
+
+            self.agent_body.setPlainText(render_command(result))
+            self._apply(result)
+
+        def closeEvent(self, event):
+            if self._key_job is not None and self._key_job.isRunning():
+                self.status_label.setText("Finish the requested key operation before closing.")
+                event.ignore()
+                return
+            self.model.close_workspace()
+            self.agent_body.clear()
+            self.key_result.clear()
+            event.accept()
 
         def _title_region(self):
             bar = QtWidgets.QWidget()
@@ -136,7 +410,7 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
             column.setContentsMargins(4, 4, 4, 4)
             column.setSpacing(4)
 
-            filter_row = QtWidgets.QHBoxLayout()
+            filter_row = QtWidgets.QGridLayout()
             filter_row.setSpacing(4)
             self.filter_sender = QtWidgets.QLineEdit()
             self.filter_sender.setPlaceholderText("sender seat")
@@ -150,14 +424,10 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
             self.filter_state.addItem("any state", None)
             for state in ("UNREAD", "READ", "EXPIRED"):
                 self.filter_state.addItem(state, state)
-            filter_row.addWidget(_label("Sender", "MetadataLabel"))
-            filter_row.addWidget(self.filter_sender)
-            filter_row.addWidget(_label("Topic", "MetadataLabel"))
-            filter_row.addWidget(self.filter_topic)
-            filter_row.addWidget(_label("Kind", "MetadataLabel"))
-            filter_row.addWidget(self.filter_kind)
-            filter_row.addWidget(_label("State", "MetadataLabel"))
-            filter_row.addWidget(self.filter_state)
+            for i, (label, control) in enumerate((("Sender", self.filter_sender), ("Topic", self.filter_topic),
+                                                  ("Kind", self.filter_kind), ("State", self.filter_state))):
+                filter_row.addWidget(_label(label, "MetadataLabel"), i // 2, (i % 2) * 2)
+                filter_row.addWidget(control, i // 2, (i % 2) * 2 + 1)
             column.addLayout(filter_row)
 
             filter_buttons = QtWidgets.QHBoxLayout()
@@ -240,20 +510,26 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
             head.addWidget(self.new_button)
             column.addLayout(head)
 
-            fields = QtWidgets.QHBoxLayout()
+            self.composer_inputs = QtWidgets.QWidget()
+            column.addWidget(self.composer_inputs)
+            column = QtWidgets.QVBoxLayout(self.composer_inputs)
+            column.setContentsMargins(0, 0, 0, 0)
+            column.setSpacing(4)
+
+            fields = QtWidgets.QGridLayout()
             fields.setSpacing(4)
             self.recipient_box = QtWidgets.QComboBox()
             self.recipient_box.setObjectName("recipient")
             self.recipient_box.currentIndexChanged.connect(self.on_recipient_changed)
-            fields.addWidget(_label("Recipient", "MetadataLabel"))
-            fields.addWidget(self.recipient_box)
-            fields.addWidget(_label("Subject", "MetadataLabel"))
+            fields.addWidget(_label("Recipient", "MetadataLabel"), 0, 0)
+            fields.addWidget(self.recipient_box, 0, 1)
             self.subject_edit = QtWidgets.QLineEdit("local-message")
-            fields.addWidget(self.subject_edit)
-            fields.addWidget(_label("Topic", "MetadataLabel"))
+            fields.addWidget(_label("Subject", "MetadataLabel"), 0, 2)
+            fields.addWidget(self.subject_edit, 0, 3)
+            fields.addWidget(_label("Topic", "MetadataLabel"), 1, 0)
             self.topic_edit = QtWidgets.QLineEdit("")
             self.topic_edit.setPlaceholderText("local-message")
-            fields.addWidget(self.topic_edit)
+            fields.addWidget(self.topic_edit, 1, 1, 1, 3)
             column.addLayout(fields)
 
             self.draft = QtWidgets.QPlainTextEdit()
@@ -278,7 +554,7 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
 
         def _rare_region(self):
             box = _panel("Workspace, Recipients, Identity, Custody")
-            row = QtWidgets.QHBoxLayout(box)
+            row = QtWidgets.QGridLayout(box)
             row.setContentsMargins(4, 4, 4, 4)
             row.setSpacing(4)
             self.open_workspace_button = QtWidgets.QPushButton("Open Workspace")
@@ -295,12 +571,11 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
             self.custody_button.clicked.connect(self.on_custody_status)
             self.migrate_button = QtWidgets.QPushButton("Migrate Custody")
             self.migrate_button.clicked.connect(self.on_migrate_custody)
-            for widget in (self.open_workspace_button, self.create_workspace_button,
+            for i, widget in enumerate((self.open_workspace_button, self.create_workspace_button,
                            self.recipients_button, self.add_recipient_button,
                            self.identity_button, self.custody_button,
-                           self.migrate_button):
-                row.addWidget(widget)
-            row.addStretch(1)
+                           self.migrate_button)):
+                row.addWidget(widget, i // 4, i % 4)
             return box
 
         def _status_region(self):
@@ -330,6 +605,7 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
             for sequence, handler in bindings:
                 shortcut = QtGui.QShortcut(QtGui.QKeySequence(sequence), self)
                 shortcut.activated.connect(handler)
+                self._shortcut_handles.append(shortcut)
 
         def _tab_order(self, root):
             """One explicit focus chain: daily actions before rare ones."""
@@ -344,7 +620,7 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
                 self.recipients_button, self.add_recipient_button,
                 self.identity_button, self.custody_button, self.migrate_button,
             ]
-            for previous, following in zip(chain, chain[1:]):
+            for previous, following in pairwise(chain):
                 QtWidgets.QWidget.setTabOrder(previous, following)
 
         # -- rendering -----------------------------------------------------
@@ -356,7 +632,7 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
             self.seat_label.setText(
                 f"seat {model.workspace.seat}" if loaded else "no workspace")
             self.custody_label.setText(
-                f"custody {model.workspace.custody}" if loaded else "custody —")
+                f"{model.workspace.custody} · {'locked' if model.locked else 'unlocked'}" if loaded else "custody —")
             self.refresh_button.setEnabled(loaded)
             for widget in (self.recipient_box, self.subject_edit, self.topic_edit,
                            self.draft, self.send_button):
@@ -411,7 +687,7 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
                 self.content.setPlainText(note or "No content loaded.")
                 self.content_label.setText("")
             else:
-                self.content.setPlainText(
+                text = (
                     f"SUBJECT  {content.get('subject') or '—'}\n"
                     f"CLAIM    {content.get('claim') or '—'}\n"
                     f"FROM     {content.get('from')}\n"
@@ -420,10 +696,24 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
                     f"STATUS   {content.get('status')}   "
                     f"EVIDENCE {content.get('evidence_state')}\n"
                     f"CONTENT_ID {content.get('content_id')}")
+                from sailang import SailangError
+                from saimail import letters
+
+                try:
+                    letter = letters.parse(content.get("claim") or "")
+                    text = "\n\n".join((
+                        "OBSERVATION\n" + letter["observation"], "WHY IT MATTERS\n" + letter["impact"],
+                        "REQUEST\n" + letter["request"], "COMPLETE WHEN\n" + letter["done_when"],
+                        "UNCERTAINTY\n" + (letter["uncertainty"] or "See the evidence pointers."),
+                        "EVIDENCE\n" + "\n".join(ref["path"] + " · " + ref["sha256"] for ref in letter["evidence"])))
+                except SailangError:
+                    pass
+                self.content.setPlainText(text)
                 self.content_label.setText(f"content_id {content.get('content_id')}")
 
         def _draw_composer(self):
             composer = self.model.composer
+            self.composer_inputs.setVisible(composer is not None)
             if composer is None:
                 self.composer_mode.setText("no composer open")
                 self.recipient_box.setCurrentIndex(0 if self.recipient_box.count() else -1)
@@ -531,18 +821,8 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
             self._apply(self.model.open_workspace(path))
 
         def on_create_workspace(self):
-            path = QtWidgets.QFileDialog.getExistingDirectory(self, "Create Workspace In")
-            if not path:
-                return
-            seat, ok = QtWidgets.QInputDialog.getText(self, "Create Workspace", "Seat")
-            if not ok or not seat.strip():
-                return
-            custody, ok = QtWidgets.QInputDialog.getItem(
-                self, "Create Workspace", "Custody",
-                ["raw", "os-store"], 0, False)
-            if not ok:
-                return
-            self._apply(self.model.create_workspace(path, seat.strip(), custody))
+            self.tabs.setCurrentIndex(2)
+            self.key_folder.setFocus()
 
         def on_recipients(self):
             """List registered recipients (metadata only). Never discovers peers."""
@@ -647,7 +927,7 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
                 if index >= 0:
                     self.recipient_box.setCurrentIndex(index)
 
-        def _apply(self, result: Optional[dict] = None):
+        def _apply(self, result: dict | None = None):
             if result is None:
                 self._sync()
                 return

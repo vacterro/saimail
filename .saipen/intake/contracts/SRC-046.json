@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-046:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "ALLY_ADVICE LIVE BOUNDED GENERATION EXPERIMENT - capture SAIHANDOFF file and execute TARGET A/B/C"
+    }
+  },
+  "derived_at": "2026-09-19T20:24:05Z",
+  "derived_from": "SRC-046",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "6093bac780dd97379813cc4aa3c2f5bd72e33fa4e2f24921ff1c0309939e4d0a"
+}

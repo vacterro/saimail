@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-042:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIMAIL START ingress for the ALLY_ADVICE generation/semantic-review handoff; the requested change is the T-61 B-016 bounded generation/review gate, captured verbatim as SRC-043"
+    }
+  },
+  "derived_at": "2026-09-19T19:33:48Z",
+  "derived_from": "SRC-042",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "9539d8d10ce03264ab4a855dcc6256d8765805e3d91fe5a8b375b802a373c701"
+}

@@ -1,0 +1,14 @@
+{
+  "op_id": "scope-86e25e0c510745aaa1269a77c5d21b8d",
+  "paths": {
+    ".saipen/intake/contracts/SRC-101.json": "1d205b9ade70937c8dc69b5e73e987072e98ecd75f03dc2ca3db3fc22ea5a3f0",
+    ".saipen/intake/coverage/SRC-101.json": "9c42183804e9e19377a403c9c9909e466b6a037026cb1ae99b3251279201e441"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-25T16:54:34Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:8b5376574aa5f803b4d48b6863a90b58aa658d9684c6b42332a8762015a5763f",
+  "ticket": "T-112"
+}

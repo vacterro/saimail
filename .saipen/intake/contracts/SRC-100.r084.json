@@ -1,0 +1,429 @@
+{
+  "clauses": {
+    "SRC-100:R001": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "The supplied archive was audited read-only and must not be modified or returned as an edited archive."
+    },
+    "SRC-100:R002": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not create a wrapper ticket."
+    },
+    "SRC-100:R003": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not reopen T-106."
+    },
+    "SRC-100:R004": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not start V6-02."
+    },
+    "SRC-100:R005": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not rebuild or replace the frozen 0.0.2a3 candidate unless a genuine package-byte defect is independently demonstrated."
+    },
+    "SRC-100:R006": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not publish, tag, push, create a GitHub release, upload to PyPI, or manufacture external proof."
+    },
+    "SRC-100:R007": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Historical authority that must remain historical:"
+    },
+    "SRC-100:R008": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not rewrite T-106 as ACTIVE."
+    },
+    "SRC-100:R009": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not reopen it."
+    },
+    "SRC-100:R010": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "exact a3 G15/G16 evidence must be materialized from real runs"
+    },
+    "SRC-100:R011": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "a3 external request must target exact 0.0.2a3 bytes"
+    },
+    "SRC-100:R012": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "an additive exact-a3 admission path must exist and reject wrong/malformed proofs"
+    },
+    "SRC-100:R013": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "dead G13 assertion must be removed"
+    },
+    "SRC-100:R014": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "recovery docs must agree with canonical state"
+    },
+    "SRC-100:R015": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "It is precisely what must be reconciled and reviewed."
+    },
+    "SRC-100:R016": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "A hand-written two-field JSON must never satisfy G13."
+    },
+    "SRC-100:R017": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not leave G14 as unconditional PASS."
+    },
+    "SRC-100:R018": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "T-107 is still SCOUT and must be closed against final repository bytes, not its pre-interruption snapshot."
+    },
+    "SRC-100:R019": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "A gate evaluation must not claim to have consumed evidence whose own declared creation time is later than the gate evaluation."
+    },
+    "SRC-100:R020": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "At final T-107 closure, all cold-recovery entry points must agree on:"
+    },
+    "SRC-100:R021": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "### P1-H current audit snapshot contains a repository-consistency blocker that must be classified, not silently deleted"
+    },
+    "SRC-100:R022": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "`tests/test_d3_release_candidate.py`"
+    },
+    "SRC-100:R023": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "`tests/test_a3_external_proof.py`"
+    },
+    "SRC-100:R024": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "`tests/test_a2_external_proof.py`"
+    },
+    "SRC-100:R025": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not assume this is a T-107-owned defect and do not delete or mutate the user asset without authority."
+    },
+    "SRC-100:R026": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not weaken the model-data safety test merely to make green."
+    },
+    "SRC-100:R027": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not limit candidate binding to G15/G16 if nearby evidence inputs are also accepted by status alone."
+    },
+    "SRC-100:R028": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not invent fields."
+    },
+    "SRC-100:R029": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Historical a1/a2 evidence remains historical and must never be treated as a3 merely because a generic `status: PASS` exists."
+    },
+    "SRC-100:R030": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not erase or re-create useful existing T-107 code just because lifecycle checkpoints were missing."
+    },
+    "SRC-100:R031": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "exact `SAIMAIL_A3_EXTERNAL_PROOF_ACCEPTANCE_1` schema/version or the final canonical schema chosen by the repo"
+    },
+    "SRC-100:R032": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "status PASS"
+    },
+    "SRC-100:R033": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "exact a3 candidate version and SHA256"
+    },
+    "SRC-100:R034": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "non-empty raw external proof SHA256"
+    },
+    "SRC-100:R035": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "publication NONE / NOT_PUBLISHED boundary preserved in the acceptance record"
+    },
+    "SRC-100:R036": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "critical admission checks all green"
+    },
+    "SRC-100:R037": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "no a1/a2 identity"
+    },
+    "SRC-100:R038": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "no acceptance of a minimal hand-written two-field object."
+    },
+    "SRC-100:R039": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not equate strict schema with genuine external provenance."
+    },
+    "SRC-100:R040": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Current recovery authority must not contradict itself."
+    },
+    "SRC-100:R041": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "The acceptor must remain read-only with respect to the frozen bundle and supplied proof."
+    },
+    "SRC-100:R042": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "It must reject at minimum:"
+    },
+    "SRC-100:R043": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not require raw top-level `publication` if the bundled verifier does not emit it."
+    },
+    "SRC-100:R044": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not hard-code Linux or `/tmp/` unless the canonical external-proof contract is explicitly Linux-only."
+    },
+    "SRC-100:R045": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "A legitimate verifier-shaped proof from a separate Windows VM must be mechanically admissible if all exact-a3 checks pass."
+    },
+    "SRC-100:R046": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not create `release/evidence/a3/external_verification_record.json` as PASS now."
+    },
+    "SRC-100:R047": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "G15 NOT_RUN -> top-level not PASS, terminal not READY."
+    },
+    "SRC-100:R048": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "G15 FAIL -> top-level not PASS."
+    },
+    "SRC-100:R049": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "G16 NOT_RUN -> top-level not PASS."
+    },
+    "SRC-100:R050": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "G16 failure/worsened baseline -> top-level not PASS."
+    },
+    "SRC-100:R051": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "G16 warning regression -> not PASS unless explicitly allowed by contract."
+    },
+    "SRC-100:R052": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "wrong-candidate full-suite `status: PASS` -> refused/blocked."
+    },
+    "SRC-100:R053": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "contradictory full-suite `PASS` plus failures/errors -> refused/blocked."
+    },
+    "SRC-100:R054": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "wrong-candidate SAIPEN evidence -> refused/blocked."
+    },
+    "SRC-100:R055": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "missing/failed docs evidence -> G14 not PASS."
+    },
+    "SRC-100:R056": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "all local gates green + no external proof -> PASS / READY_FOR_EXTERNAL_INSTALL_PROOF."
+    },
+    "SRC-100:R057": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "any local required gate red + external acceptance PASS -> LOCAL_BLOCKED, never DONE."
+    },
+    "SRC-100:R058": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "two-field fake external acceptance -> refused, G13 not PASS."
+    },
+    "SRC-100:R059": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "wrong acceptance schema/version -> refused."
+    },
+    "SRC-100:R060": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "acceptance bound to a1/a2 -> refused."
+    },
+    "SRC-100:R061": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "valid synthetic exact-a3 admission record + all local green -> production gate may produce DONE, while publication remains NONE."
+    },
+    "SRC-100:R062": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "actual verifier-shaped Windows proof fixture is not rejected merely for `win32` or Windows venv paths."
+    },
+    "SRC-100:R063": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "actual verifier-shaped Linux proof fixture is not rejected merely for Linux paths if Linux is allowed by the existing contract."
+    },
+    "SRC-100:R064": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "raw verifier proof without top-level `publication` is not rejected solely for that absence; candidate `publication_status` is the relevant raw field."
+    },
+    "SRC-100:R065": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not sanitize historical evidence that accurately records past state."
+    },
+    "SRC-100:R066": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "D3 release candidate tests"
+    },
+    "SRC-100:R067": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "a3 external proof tests"
+    },
+    "SRC-100:R068": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "historical a2 external/release tests"
+    },
+    "SRC-100:R069": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "repo consistency tests"
+    },
+    "SRC-100:R070": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "any new documentation validation tests"
+    },
+    "SRC-100:R071": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "direct production gate negative controls"
+    },
+    "SRC-100:R072": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "exact-a3 acceptor tests."
+    },
+    "SRC-100:R073": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not forge green evidence around it."
+    },
+    "SRC-100:R074": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "run the canonical full suite in the repository-declared Windows environment"
+    },
+    "SRC-100:R075": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "use the actual final result count"
+    },
+    "SRC-100:R076": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "do not copy 2398 or 2477 from old logs"
+    },
+    "SRC-100:R077": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "create/regenerate `release/evidence/a3/full_suite.json` from the real run"
+    },
+    "SRC-100:R078": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "use an actual UTC timestamp from the run"
+    },
+    "SRC-100:R079": {
+      "actionable": true,
+      "class": "acceptance-criterion",
+      "text": "bind exact a3 version/hash and, if supported by existing infrastructure, the current repository/source-tree fingerprint so later checkout changes cannot silently reuse stale G15 proof."
+    },
+    "SRC-100:R080": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not clean unrelated debt simply to make numbers pretty."
+    },
+    "SRC-100:R081": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Chronology must be sane: gate evaluation timestamp must be at or after the evidence it actually consumes."
+    },
+    "SRC-100:R082": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not feed a fake/synthetic external acceptance during production regeneration."
+    },
+    "SRC-100:R083": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Review questions; every answer must be NO:"
+    },
+    "SRC-100:R084": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "never lose the current T-107 repair state when switching Work"
+    }
+  },
+  "derived_at": "2026-09-23T04:25:29Z",
+  "derived_from": "SRC-100",
+  "interpretation_revision": 84,
+  "schema_version": 1,
+  "source_sha256": "eb6777f1191f72da996b3a98594400dc762631bfb07ddc8602f61056877b4e24"
+}

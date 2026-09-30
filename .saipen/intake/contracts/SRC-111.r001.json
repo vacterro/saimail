@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-111:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Finish the existing bounded T-143 provenance verification/review/local ship first without changing its product scope."
+    }
+  },
+  "derived_at": "2026-09-30T12:39:24Z",
+  "derived_from": "SRC-111",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "7e630628f9b7c507da1c799dedd08ced109466b4af7f63620841be7a8baab2fa"
+}

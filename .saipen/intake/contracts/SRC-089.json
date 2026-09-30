@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-089:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIMAIL V6-01 GitHub Identity and Presentation Sync per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260922_0213.md"
+    }
+  },
+  "derived_at": "2026-09-22T00:25:36Z",
+  "derived_from": "SRC-089",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "2dc259ab0c1fc789ee8e5ef2904194ae074906465bc796e72d1377475d05a251"
+}

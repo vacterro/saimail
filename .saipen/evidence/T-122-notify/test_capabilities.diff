@@ -1,0 +1,21 @@
+--- .saipen/evidence/T-122-notify/test_capabilities.before.py	2026-09-24 10:14:27.065500800 +0300
++++ tests/test_capabilities.py	2026-09-24 10:14:27.132434400 +0300
+@@ -53,7 +53,8 @@
+                                 "complete": True, "scan_budget": caps.AWARENESS_SCAN_BUDGET}
+     states = {name: entry["state"] for name, entry in doc["capabilities"].items()}
+     assert states == {"signing": caps.UNVERIFIED, "header_awareness": caps.AVAILABLE,
+-                      "durable_outbox": caps.AVAILABLE, "participant_registry": caps.AVAILABLE}
++                      "durable_outbox": caps.AVAILABLE, "participant_registry": caps.AVAILABLE,
++                      "notify": caps.AVAILABLE}
+     assert doc["seat"] == {"acting": "builder", "source": None, "workspace": "builder",
+                            "matches": True}
+     assert "secret body text" not in json.dumps(result)
+@@ -96,6 +97,8 @@
+     nobody = _doc(A.root, acting_seat="builder", lineage=LINEAGE)
+     assert nobody["overall"] == caps.DEGRADED and nobody["reasons"] == [caps.NO_PARTICIPANTS]
+     assert nobody["capabilities"]["participant_registry"]["state"] == caps.REQUIRES_HUMAN
++    assert nobody["capabilities"]["notify"] == {"state": caps.REQUIRES_HUMAN,
++                                                "reason": caps.NO_PARTICIPANTS}
+     anonymous = _doc(A.root)
+     assert caps.SEAT_UNKNOWN in anonymous["reasons"]
+ 

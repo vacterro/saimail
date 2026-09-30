@@ -1,0 +1,29 @@
+{
+  "clauses": {
+    "SRC-104:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Continue T-114 only; read prescribed state/log/contracts and checkpoint complete A-E stale-language classification before edits; no T-113 reimplementation."
+    },
+    "SRC-104:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Repair GUI Open versus explicit Reopen wording; READ guidance points to Reopen; UNREAD stays hidden until Open; remove obsolete gap export without protocol changes."
+    },
+    "SRC-104:R003": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Prove all twelve Milestone C controls, rename false tests, preserve T-113 matrix, and demonstrate old runtime truth makes capability-coherence oracle fail."
+    },
+    "SRC-104:R004": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Reconcile CURRENT-STATE, Roadmap v6 and Work Desk with T-113 DONE/V6-02 closure, T-114 continuation, honest T-107 chronology and frozen versus checkout separation."
+    }
+  },
+  "derived_at": "2026-09-23T22:43:49Z",
+  "derived_from": "SRC-104",
+  "interpretation_revision": 4,
+  "schema_version": 1,
+  "source_sha256": "f6464515728a13ab747fe14d15f078816a80900f8526096bbbf1b7d22e893012"
+}

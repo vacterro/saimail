@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-039:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-59 closed with verification evidence in LOG: verify -> PASS [target: T-59] conf: high -- review resolver-boundary fix focused 46 green, ruff clean, full 1311 green; invalid non-callable resolver now named refusal; no authority bypass and no protected-file change",
+      "text": "implement and close B-012 ALLY_ADVICE / PERSONAL_REFLECTION v0",
+      "verification": "the Work this request created reached its own verification gate; see the T-59 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-59"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,50 @@
+{
+  "requirements": {
+    "SRC-111:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "E-2136; T-143 release scope and review-origin.xml; bounded product scope retained, no retroactive entry2",
+      "text": "Finish the existing bounded T-143 provenance verification/review/local ship first without changing its product scope.",
+      "verification": "Canonical 159 regression tests and independent provenance review 31; full2855 inherited; local no-publish completion",
+      "work": "T-143"
+    },
+    "SRC-111:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "capture.py/verify.py; runtime-002.json observed T-144 BUILD E-2139; sequence-002.json; immutable entry1 and registration hashes unchanged",
+      "text": "Repair the T142_REAL_USE_1 recorder and verifier as the immediate next Work: preserve immutable registration/entry1; append a bounded contiguous fail-closed actual-Work sequence with honest context qualification and negative evidence.",
+      "verification": "44 focused tests; deterministic entries2/3/through6, seventh refusal, corruption/duplicate/gap/hash/race/Work/context/EMPTY/no-effects controls; same pre-fix oracle red1/currentgreen1",
+      "work": "T-144"
+    },
+    "SRC-111:R003": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-144 oracle.json/focused-verified.xml/full.xml and five regression XMLs; sequence-002.json",
+      "text": "Prove append/history/refusal/no-effects controls and run the five specified canonical regression files; report mechanically the study counts and UNPROVEN field truth.",
+      "verification": "Focused44; feedback_origin31 cli_focus24 host_focus32 agent_cycle15 correspondence57; full2899 zero failures/errors/skips; counts2 observations2 boundaries0 opportunities0 independent behavior; field UNPROVEN",
+      "work": "T-144"
+    },
+    "SRC-111:R004": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "lab/out/SAIFREN_T145/saifren_live_20260930T125211Z_b9d3f9d3fd22479c.json; existing sample was preregistered dry before live, after recorder technical VERIFY/REVIEW",
+      "text": "After completing the mandatory recorder repair, use SAIFREN for a bounded honest test of SAIMAIL.",
+      "verification": "Bounded live9 of14: discovery3+experiment6; PASS2 MEASURED1 ERROR0; SAIFREN observed stealth/space-bunny-alpha, external comparator gemini-3-flash not a proven combo member; controlled results remain experiment data",
+      "work": "T-145"
+    },
+    "SRC-111:R005": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "Preservation/continuation obligation met: T-146 remains open; immutable registration has NOT_ENROLLED actors; sequence-002.json reports all independent counters0 and field UNPROVEN. This disposition does not claim the broader objective achieved.",
+      "text": "Continue the broader SAIMAIL field-improvement objective; it remains open until preregistered independent behavioral conditions are genuinely satisfied.",
+      "verification": "Mechanical sequence status and BOARD T-146 preserve the open field-improvement objective; no laboratory actor, fresh prompt, byte metric or invocation count is promoted to real independent Work behavior",
+      "work": "T-146"
+    }
+  },
+  "schema_version": 1
+}

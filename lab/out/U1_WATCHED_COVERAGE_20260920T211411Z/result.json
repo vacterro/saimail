@@ -1,0 +1,2290 @@
+{
+  "admission": {
+    "current": {
+      "implementation": [
+        {
+          "PATH": "lab/watched_coverage.py",
+          "ROLE": "RUNNER",
+          "status": "CURRENT_MATCH"
+        },
+        {
+          "PATH": "tools/watched_coverage_experiment.py",
+          "ROLE": "RUNNER",
+          "status": "CURRENT_MATCH"
+        },
+        {
+          "PATH": "saimail/selector.py",
+          "ROLE": "PARSER",
+          "status": "CURRENT_MATCH"
+        },
+        {
+          "PATH": "sailang/frame.py",
+          "ROLE": "PARSER",
+          "status": "CURRENT_MATCH"
+        },
+        {
+          "PATH": "sailang/record.py",
+          "ROLE": "PARSER",
+          "status": "CURRENT_MATCH"
+        },
+        {
+          "PATH": "sailang/dictionary/v1.json",
+          "ROLE": "PARSER",
+          "status": "CURRENT_MATCH"
+        },
+        {
+          "PATH": "lab/experiment_manifest.py",
+          "ROLE": "RUNNER",
+          "status": "CURRENT_MATCH"
+        },
+        {
+          "PATH": "bench/selector_corpus.py",
+          "ROLE": "PARSER",
+          "status": "CURRENT_MATCH"
+        }
+      ],
+      "inputs": [
+        {
+          "INPUT_ID": "U1_FIXTURES",
+          "status": "CURRENT_MATCH"
+        },
+        {
+          "INPUT_ID": "U1_REGISTRATION",
+          "status": "CURRENT_MATCH"
+        }
+      ],
+      "manifest_identity": "19ebff4bbf9cbc17a24d25cf7ff93fa8d61be75224f5e03027cba9d97d16db79",
+      "verdict": "CURRENT_MATCH"
+    },
+    "historical": {
+      "current_source_read": false,
+      "inputs": [
+        {
+          "INPUT_ID": "U1_FIXTURES",
+          "status": "HISTORICAL_VERIFIED"
+        },
+        {
+          "INPUT_ID": "U1_REGISTRATION",
+          "status": "HISTORICAL_VERIFIED"
+        }
+      ],
+      "manifest_identity": "19ebff4bbf9cbc17a24d25cf7ff93fa8d61be75224f5e03027cba9d97d16db79",
+      "verdict": "HISTORICAL_VERIFIED"
+    }
+  },
+  "aggregate": {
+    "baseline_required_open_downgrades": 0,
+    "baseline_total_open": 34,
+    "downward_attention_changes": 0,
+    "irrelevant_attention_upgrades": 24,
+    "new_false_ignores": 0,
+    "new_missed_relevant": 0,
+    "noise_overlap_extra_opens": 10,
+    "outcome": "COVERAGE_GAIN_WITH_EXTRA_OPENS",
+    "relation_spam_extra_opens": 14,
+    "relevant_attention_upgrades": 18,
+    "relevant_drift_not_rescued": 6,
+    "relevant_drift_rescued": 14,
+    "safety_invariant_violation": false,
+    "total_attention_upgrades": 42,
+    "treatment_total_open": 72,
+    "unnecessary_extra_opens": 0
+  },
+  "directions": [
+    "A_TO_B",
+    "B_TO_A"
+  ],
+  "fixture_sha256": "ab11da7a9f51d4d9716d4f94c27b374412977d5c675deaf17f47053bf447cd9f",
+  "interpretation": "PASS means the registered experiment completed, not that watching proves relevance",
+  "latency": "NOT_MEASURED",
+  "no_production_default_change": true,
+  "other_target": "sha256:d0b340fad25730ee491a55e069714c769f701fc960c7a14b41fe370b01f24b5c",
+  "outcome": "COVERAGE_GAIN_WITH_EXTRA_OPENS",
+  "pairs": [
+    {
+      "baseline": {
+        "messages": 7,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-000",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-001",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-002",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "3dcdd58fdc92d5dfc65ac412ecd038a26853c381a260b17101d31f9f99904f41",
+            "message_id": "DRIFT_RESCUE-003",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "3dcdd58fdc92d5dfc65ac412ecd038a26853c381a260b17101d31f9f99904f41",
+            "message_id": "DRIFT_RESCUE-004",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "53f58ef2a8007df81d39621af2f650aa7bc08920ff3c8cdb3477a23cde007d84",
+            "message_id": "DRIFT_RESCUE-005",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "53f58ef2a8007df81d39621af2f650aa7bc08920ff3c8cdb3477a23cde007d84",
+            "message_id": "DRIFT_RESCUE-006",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          }
+        ],
+        "total_open": 0
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 0,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [],
+        "irrelevant_attention_upgrades": 0,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 7,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 7,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [
+          "DRIFT_RESCUE-000",
+          "DRIFT_RESCUE-001",
+          "DRIFT_RESCUE-002",
+          "DRIFT_RESCUE-003",
+          "DRIFT_RESCUE-004",
+          "DRIFT_RESCUE-005",
+          "DRIFT_RESCUE-006"
+        ],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 7,
+        "treatment_total_open": 7,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": [
+          "DRIFT_RESCUE-000",
+          "DRIFT_RESCUE-001",
+          "DRIFT_RESCUE-002",
+          "DRIFT_RESCUE-003",
+          "DRIFT_RESCUE-004",
+          "DRIFT_RESCUE-005",
+          "DRIFT_RESCUE-006"
+        ]
+      },
+      "direction": "A_TO_B",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 7,
+        "rows": [
+          {
+            "depth": 3,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-000",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-001",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-002",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "3dcdd58fdc92d5dfc65ac412ecd038a26853c381a260b17101d31f9f99904f41",
+            "message_id": "DRIFT_RESCUE-003",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "3dcdd58fdc92d5dfc65ac412ecd038a26853c381a260b17101d31f9f99904f41",
+            "message_id": "DRIFT_RESCUE-004",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "53f58ef2a8007df81d39621af2f650aa7bc08920ff3c8cdb3477a23cde007d84",
+            "message_id": "DRIFT_RESCUE-005",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "53f58ef2a8007df81d39621af2f650aa7bc08920ff3c8cdb3477a23cde007d84",
+            "message_id": "DRIFT_RESCUE-006",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          }
+        ],
+        "total_open": 7
+      },
+      "workload": "DRIFT_RESCUE"
+    },
+    {
+      "baseline": {
+        "messages": 7,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-000",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-001",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-002",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "3dcdd58fdc92d5dfc65ac412ecd038a26853c381a260b17101d31f9f99904f41",
+            "message_id": "DRIFT_RESCUE-003",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "3dcdd58fdc92d5dfc65ac412ecd038a26853c381a260b17101d31f9f99904f41",
+            "message_id": "DRIFT_RESCUE-004",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "53f58ef2a8007df81d39621af2f650aa7bc08920ff3c8cdb3477a23cde007d84",
+            "message_id": "DRIFT_RESCUE-005",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "53f58ef2a8007df81d39621af2f650aa7bc08920ff3c8cdb3477a23cde007d84",
+            "message_id": "DRIFT_RESCUE-006",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "DRIFT_RESCUE"
+          }
+        ],
+        "total_open": 0
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 0,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [],
+        "irrelevant_attention_upgrades": 0,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 7,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 7,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [
+          "DRIFT_RESCUE-000",
+          "DRIFT_RESCUE-001",
+          "DRIFT_RESCUE-002",
+          "DRIFT_RESCUE-003",
+          "DRIFT_RESCUE-004",
+          "DRIFT_RESCUE-005",
+          "DRIFT_RESCUE-006"
+        ],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 7,
+        "treatment_total_open": 7,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": [
+          "DRIFT_RESCUE-000",
+          "DRIFT_RESCUE-001",
+          "DRIFT_RESCUE-002",
+          "DRIFT_RESCUE-003",
+          "DRIFT_RESCUE-004",
+          "DRIFT_RESCUE-005",
+          "DRIFT_RESCUE-006"
+        ]
+      },
+      "direction": "B_TO_A",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 7,
+        "rows": [
+          {
+            "depth": 3,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-000",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-001",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "ac9c77b0a2b9bbb0691d2d7788148c3969dc9f5d5e2e34418698cf6195283a39",
+            "message_id": "DRIFT_RESCUE-002",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "3dcdd58fdc92d5dfc65ac412ecd038a26853c381a260b17101d31f9f99904f41",
+            "message_id": "DRIFT_RESCUE-003",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "3dcdd58fdc92d5dfc65ac412ecd038a26853c381a260b17101d31f9f99904f41",
+            "message_id": "DRIFT_RESCUE-004",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "53f58ef2a8007df81d39621af2f650aa7bc08920ff3c8cdb3477a23cde007d84",
+            "message_id": "DRIFT_RESCUE-005",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "53f58ef2a8007df81d39621af2f650aa7bc08920ff3c8cdb3477a23cde007d84",
+            "message_id": "DRIFT_RESCUE-006",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "DRIFT_RESCUE"
+          }
+        ],
+        "total_open": 7
+      },
+      "workload": "DRIFT_RESCUE"
+    },
+    {
+      "baseline": {
+        "messages": 3,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-000",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-001",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-002",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          }
+        ],
+        "total_open": 0
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 0,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [],
+        "irrelevant_attention_upgrades": 0,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 0,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 0,
+        "treatment_total_open": 0,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": []
+      },
+      "direction": "A_TO_B",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 3,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-000",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-001",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-002",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          }
+        ],
+        "total_open": 0
+      },
+      "workload": "OTHER_TARGET"
+    },
+    {
+      "baseline": {
+        "messages": 3,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-000",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-001",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-002",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          }
+        ],
+        "total_open": 0
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 0,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [],
+        "irrelevant_attention_upgrades": 0,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 0,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 0,
+        "treatment_total_open": 0,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": []
+      },
+      "direction": "B_TO_A",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 3,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-000",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-001",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "5af01270e297f1ef46c1acfc13e90520b42d0c9e495b6a527cd5e7c7f7f6a9dc",
+            "message_id": "OTHER_TARGET-002",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "OTHER_TARGET"
+          }
+        ],
+        "total_open": 0
+      },
+      "workload": "OTHER_TARGET"
+    },
+    {
+      "baseline": {
+        "messages": 3,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-000",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-001",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-002",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          }
+        ],
+        "total_open": 0
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 0,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [],
+        "irrelevant_attention_upgrades": 0,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 0,
+        "relevant_drift_not_rescued": 3,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [
+          "NO_RELATION_RELEVANT-000",
+          "NO_RELATION_RELEVANT-001",
+          "NO_RELATION_RELEVANT-002"
+        ],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 0,
+        "treatment_total_open": 0,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": []
+      },
+      "direction": "A_TO_B",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 3,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-000",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-001",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-002",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          }
+        ],
+        "total_open": 0
+      },
+      "workload": "NO_RELATION_RELEVANT"
+    },
+    {
+      "baseline": {
+        "messages": 3,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-000",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-001",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-002",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          }
+        ],
+        "total_open": 0
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 0,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [],
+        "irrelevant_attention_upgrades": 0,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 0,
+        "relevant_drift_not_rescued": 3,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [
+          "NO_RELATION_RELEVANT-000",
+          "NO_RELATION_RELEVANT-001",
+          "NO_RELATION_RELEVANT-002"
+        ],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 0,
+        "treatment_total_open": 0,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": []
+      },
+      "direction": "B_TO_A",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 3,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-000",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-001",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "328f682dfc9531562f91c6eb8e5e1ea23b54212bd0cf5a700300fca03bc723d0",
+            "message_id": "NO_RELATION_RELEVANT-002",
+            "relevant": true,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "NO_RELATION_RELEVANT"
+          }
+        ],
+        "total_open": 0
+      },
+      "workload": "NO_RELATION_RELEVANT"
+    },
+    {
+      "baseline": {
+        "messages": 7,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-000",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-001",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-002",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-003",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-004",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-005",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-006",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          }
+        ],
+        "total_open": 0
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 0,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [
+          "RELATION_SPAM-000",
+          "RELATION_SPAM-001",
+          "RELATION_SPAM-002",
+          "RELATION_SPAM-003",
+          "RELATION_SPAM-004",
+          "RELATION_SPAM-005",
+          "RELATION_SPAM-006"
+        ],
+        "irrelevant_attention_upgrades": 7,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 7,
+        "relevant_attention_upgrades": 0,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 7,
+        "treatment_total_open": 7,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": [
+          "RELATION_SPAM-000",
+          "RELATION_SPAM-001",
+          "RELATION_SPAM-002",
+          "RELATION_SPAM-003",
+          "RELATION_SPAM-004",
+          "RELATION_SPAM-005",
+          "RELATION_SPAM-006"
+        ]
+      },
+      "direction": "A_TO_B",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 7,
+        "rows": [
+          {
+            "depth": 3,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-000",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-001",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-002",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-003",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-004",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-005",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-006",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          }
+        ],
+        "total_open": 7
+      },
+      "workload": "RELATION_SPAM"
+    },
+    {
+      "baseline": {
+        "messages": 7,
+        "rows": [
+          {
+            "depth": 1,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-000",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-001",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-002",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-003",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-004",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-005",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 1,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-006",
+            "relevant": false,
+            "rule": "R5-NOT-NOW",
+            "verdict": "DEFER",
+            "workload": "RELATION_SPAM"
+          }
+        ],
+        "total_open": 0
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 0,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [
+          "RELATION_SPAM-000",
+          "RELATION_SPAM-001",
+          "RELATION_SPAM-002",
+          "RELATION_SPAM-003",
+          "RELATION_SPAM-004",
+          "RELATION_SPAM-005",
+          "RELATION_SPAM-006"
+        ],
+        "irrelevant_attention_upgrades": 7,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 7,
+        "relevant_attention_upgrades": 0,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 7,
+        "treatment_total_open": 7,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": [
+          "RELATION_SPAM-000",
+          "RELATION_SPAM-001",
+          "RELATION_SPAM-002",
+          "RELATION_SPAM-003",
+          "RELATION_SPAM-004",
+          "RELATION_SPAM-005",
+          "RELATION_SPAM-006"
+        ]
+      },
+      "direction": "B_TO_A",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 7,
+        "rows": [
+          {
+            "depth": 3,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-000",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-001",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-002",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "31f9845c7c056b8469d710a3af03be7657a667e15a9aebe74afeac827d5cc1bc",
+            "message_id": "RELATION_SPAM-003",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-004",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-005",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "82b1aea2a3c1e932d0e8c714f1e1e963b93e2b47c544b8cef17de4c8670b094a",
+            "message_id": "RELATION_SPAM-006",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "RELATION_SPAM"
+          }
+        ],
+        "total_open": 7
+      },
+      "workload": "RELATION_SPAM"
+    },
+    {
+      "baseline": {
+        "messages": 5,
+        "rows": [
+          {
+            "depth": 0,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-000",
+            "relevant": false,
+            "rule": "R4-NOISE",
+            "verdict": "IGNORE",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 0,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-001",
+            "relevant": false,
+            "rule": "R4-NOISE",
+            "verdict": "IGNORE",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 0,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-002",
+            "relevant": false,
+            "rule": "R4-NOISE",
+            "verdict": "IGNORE",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 0,
+            "frame_sha256": "08994a1ebeb252197a52d23b1421dfd9ab697b97ea841e3826feb76c7e5a0ad7",
+            "message_id": "NOISE_OVERLAP-003",
+            "relevant": false,
+            "rule": "R4-NOISE",
+            "verdict": "IGNORE",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 0,
+            "frame_sha256": "08994a1ebeb252197a52d23b1421dfd9ab697b97ea841e3826feb76c7e5a0ad7",
+            "message_id": "NOISE_OVERLAP-004",
+            "relevant": false,
+            "rule": "R4-NOISE",
+            "verdict": "IGNORE",
+            "workload": "NOISE_OVERLAP"
+          }
+        ],
+        "total_open": 0
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 0,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [
+          "NOISE_OVERLAP-000",
+          "NOISE_OVERLAP-001",
+          "NOISE_OVERLAP-002",
+          "NOISE_OVERLAP-003",
+          "NOISE_OVERLAP-004"
+        ],
+        "irrelevant_attention_upgrades": 5,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 5,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 0,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 5,
+        "treatment_total_open": 5,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": [
+          "NOISE_OVERLAP-000",
+          "NOISE_OVERLAP-001",
+          "NOISE_OVERLAP-002",
+          "NOISE_OVERLAP-003",
+          "NOISE_OVERLAP-004"
+        ]
+      },
+      "direction": "A_TO_B",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 5,
+        "rows": [
+          {
+            "depth": 3,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-000",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-001",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-002",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "08994a1ebeb252197a52d23b1421dfd9ab697b97ea841e3826feb76c7e5a0ad7",
+            "message_id": "NOISE_OVERLAP-003",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "08994a1ebeb252197a52d23b1421dfd9ab697b97ea841e3826feb76c7e5a0ad7",
+            "message_id": "NOISE_OVERLAP-004",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "NOISE_OVERLAP"
+          }
+        ],
+        "total_open": 5
+      },
+      "workload": "NOISE_OVERLAP"
+    },
+    {
+      "baseline": {
+        "messages": 5,
+        "rows": [
+          {
+            "depth": 0,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-000",
+            "relevant": false,
+            "rule": "R4-NOISE",
+            "verdict": "IGNORE",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 0,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-001",
+            "relevant": false,
+            "rule": "R4-NOISE",
+            "verdict": "IGNORE",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 0,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-002",
+            "relevant": false,
+            "rule": "R4-NOISE",
+            "verdict": "IGNORE",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 0,
+            "frame_sha256": "08994a1ebeb252197a52d23b1421dfd9ab697b97ea841e3826feb76c7e5a0ad7",
+            "message_id": "NOISE_OVERLAP-003",
+            "relevant": false,
+            "rule": "R4-NOISE",
+            "verdict": "IGNORE",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 0,
+            "frame_sha256": "08994a1ebeb252197a52d23b1421dfd9ab697b97ea841e3826feb76c7e5a0ad7",
+            "message_id": "NOISE_OVERLAP-004",
+            "relevant": false,
+            "rule": "R4-NOISE",
+            "verdict": "IGNORE",
+            "workload": "NOISE_OVERLAP"
+          }
+        ],
+        "total_open": 0
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 0,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [
+          "NOISE_OVERLAP-000",
+          "NOISE_OVERLAP-001",
+          "NOISE_OVERLAP-002",
+          "NOISE_OVERLAP-003",
+          "NOISE_OVERLAP-004"
+        ],
+        "irrelevant_attention_upgrades": 5,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 5,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 0,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 5,
+        "treatment_total_open": 5,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": [
+          "NOISE_OVERLAP-000",
+          "NOISE_OVERLAP-001",
+          "NOISE_OVERLAP-002",
+          "NOISE_OVERLAP-003",
+          "NOISE_OVERLAP-004"
+        ]
+      },
+      "direction": "B_TO_A",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 5,
+        "rows": [
+          {
+            "depth": 3,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-000",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-001",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "7c291e8be959fe15a5624c0524ed85ae95e1d86646a2b40de51d0af980360f4c",
+            "message_id": "NOISE_OVERLAP-002",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "08994a1ebeb252197a52d23b1421dfd9ab697b97ea841e3826feb76c7e5a0ad7",
+            "message_id": "NOISE_OVERLAP-003",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "NOISE_OVERLAP"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "08994a1ebeb252197a52d23b1421dfd9ab697b97ea841e3826feb76c7e5a0ad7",
+            "message_id": "NOISE_OVERLAP-004",
+            "relevant": false,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "NOISE_OVERLAP"
+          }
+        ],
+        "total_open": 5
+      },
+      "workload": "NOISE_OVERLAP"
+    },
+    {
+      "baseline": {
+        "messages": 11,
+        "rows": [
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-000",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-001",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-002",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "a4214ced6536b17ee59086fece1592f762f3a9d2a4c84da23183966a9e6a6822",
+            "message_id": "MANDATORY_OPEN_CONTROL-003",
+            "relevant": true,
+            "rule": "R8-RELEVANT",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "a4214ced6536b17ee59086fece1592f762f3a9d2a4c84da23183966a9e6a6822",
+            "message_id": "MANDATORY_OPEN_CONTROL-004",
+            "relevant": true,
+            "rule": "R8-RELEVANT",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "40d2d94b5eb0dc094624d30dc94ade327536ca7995e4288f79984ede3e80bbf2",
+            "message_id": "MANDATORY_OPEN_CONTROL-005",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "40d2d94b5eb0dc094624d30dc94ade327536ca7995e4288f79984ede3e80bbf2",
+            "message_id": "MANDATORY_OPEN_CONTROL-006",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "abf60fb927caeb1489e47bad5f43d8d7de44551c41a9f0dccf700db68d03bf37",
+            "message_id": "MANDATORY_OPEN_CONTROL-007",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "abf60fb927caeb1489e47bad5f43d8d7de44551c41a9f0dccf700db68d03bf37",
+            "message_id": "MANDATORY_OPEN_CONTROL-008",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "8851849ca29c44a782bf5413fb4a7d19a65d3040c4eb8ab646edb5fd8c6f5022",
+            "message_id": "MANDATORY_OPEN_CONTROL-009",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "8851849ca29c44a782bf5413fb4a7d19a65d3040c4eb8ab646edb5fd8c6f5022",
+            "message_id": "MANDATORY_OPEN_CONTROL-010",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          }
+        ],
+        "total_open": 11
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 11,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [],
+        "irrelevant_attention_upgrades": 0,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 2,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 2,
+        "treatment_total_open": 11,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": [
+          "MANDATORY_OPEN_CONTROL-009",
+          "MANDATORY_OPEN_CONTROL-010"
+        ]
+      },
+      "direction": "A_TO_B",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 11,
+        "rows": [
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-000",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-001",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-002",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "a4214ced6536b17ee59086fece1592f762f3a9d2a4c84da23183966a9e6a6822",
+            "message_id": "MANDATORY_OPEN_CONTROL-003",
+            "relevant": true,
+            "rule": "R8-RELEVANT",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "a4214ced6536b17ee59086fece1592f762f3a9d2a4c84da23183966a9e6a6822",
+            "message_id": "MANDATORY_OPEN_CONTROL-004",
+            "relevant": true,
+            "rule": "R8-RELEVANT",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "40d2d94b5eb0dc094624d30dc94ade327536ca7995e4288f79984ede3e80bbf2",
+            "message_id": "MANDATORY_OPEN_CONTROL-005",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "40d2d94b5eb0dc094624d30dc94ade327536ca7995e4288f79984ede3e80bbf2",
+            "message_id": "MANDATORY_OPEN_CONTROL-006",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "abf60fb927caeb1489e47bad5f43d8d7de44551c41a9f0dccf700db68d03bf37",
+            "message_id": "MANDATORY_OPEN_CONTROL-007",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "abf60fb927caeb1489e47bad5f43d8d7de44551c41a9f0dccf700db68d03bf37",
+            "message_id": "MANDATORY_OPEN_CONTROL-008",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "8851849ca29c44a782bf5413fb4a7d19a65d3040c4eb8ab646edb5fd8c6f5022",
+            "message_id": "MANDATORY_OPEN_CONTROL-009",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "8851849ca29c44a782bf5413fb4a7d19a65d3040c4eb8ab646edb5fd8c6f5022",
+            "message_id": "MANDATORY_OPEN_CONTROL-010",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          }
+        ],
+        "total_open": 11
+      },
+      "workload": "MANDATORY_OPEN_CONTROL"
+    },
+    {
+      "baseline": {
+        "messages": 11,
+        "rows": [
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-000",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-001",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-002",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "a4214ced6536b17ee59086fece1592f762f3a9d2a4c84da23183966a9e6a6822",
+            "message_id": "MANDATORY_OPEN_CONTROL-003",
+            "relevant": true,
+            "rule": "R8-RELEVANT",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "a4214ced6536b17ee59086fece1592f762f3a9d2a4c84da23183966a9e6a6822",
+            "message_id": "MANDATORY_OPEN_CONTROL-004",
+            "relevant": true,
+            "rule": "R8-RELEVANT",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "40d2d94b5eb0dc094624d30dc94ade327536ca7995e4288f79984ede3e80bbf2",
+            "message_id": "MANDATORY_OPEN_CONTROL-005",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "40d2d94b5eb0dc094624d30dc94ade327536ca7995e4288f79984ede3e80bbf2",
+            "message_id": "MANDATORY_OPEN_CONTROL-006",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "abf60fb927caeb1489e47bad5f43d8d7de44551c41a9f0dccf700db68d03bf37",
+            "message_id": "MANDATORY_OPEN_CONTROL-007",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "abf60fb927caeb1489e47bad5f43d8d7de44551c41a9f0dccf700db68d03bf37",
+            "message_id": "MANDATORY_OPEN_CONTROL-008",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "8851849ca29c44a782bf5413fb4a7d19a65d3040c4eb8ab646edb5fd8c6f5022",
+            "message_id": "MANDATORY_OPEN_CONTROL-009",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "8851849ca29c44a782bf5413fb4a7d19a65d3040c4eb8ab646edb5fd8c6f5022",
+            "message_id": "MANDATORY_OPEN_CONTROL-010",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          }
+        ],
+        "total_open": 11
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 11,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [],
+        "irrelevant_attention_upgrades": 0,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 2,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 2,
+        "treatment_total_open": 11,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": [
+          "MANDATORY_OPEN_CONTROL-009",
+          "MANDATORY_OPEN_CONTROL-010"
+        ]
+      },
+      "direction": "B_TO_A",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 11,
+        "rows": [
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-000",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-001",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "97a5e4a092176148570968896f4b550e6957d982ba91a2ba1121d9f071199c26",
+            "message_id": "MANDATORY_OPEN_CONTROL-002",
+            "relevant": true,
+            "rule": "R7-ACTIONABLE",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "a4214ced6536b17ee59086fece1592f762f3a9d2a4c84da23183966a9e6a6822",
+            "message_id": "MANDATORY_OPEN_CONTROL-003",
+            "relevant": true,
+            "rule": "R8-RELEVANT",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "a4214ced6536b17ee59086fece1592f762f3a9d2a4c84da23183966a9e6a6822",
+            "message_id": "MANDATORY_OPEN_CONTROL-004",
+            "relevant": true,
+            "rule": "R8-RELEVANT",
+            "verdict": "OPEN_R2",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "40d2d94b5eb0dc094624d30dc94ade327536ca7995e4288f79984ede3e80bbf2",
+            "message_id": "MANDATORY_OPEN_CONTROL-005",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "40d2d94b5eb0dc094624d30dc94ade327536ca7995e4288f79984ede3e80bbf2",
+            "message_id": "MANDATORY_OPEN_CONTROL-006",
+            "relevant": true,
+            "rule": "R6-CONTRADICTION",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "abf60fb927caeb1489e47bad5f43d8d7de44551c41a9f0dccf700db68d03bf37",
+            "message_id": "MANDATORY_OPEN_CONTROL-007",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "abf60fb927caeb1489e47bad5f43d8d7de44551c41a9f0dccf700db68d03bf37",
+            "message_id": "MANDATORY_OPEN_CONTROL-008",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "8851849ca29c44a782bf5413fb4a7d19a65d3040c4eb8ab646edb5fd8c6f5022",
+            "message_id": "MANDATORY_OPEN_CONTROL-009",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          },
+          {
+            "depth": 3,
+            "frame_sha256": "8851849ca29c44a782bf5413fb4a7d19a65d3040c4eb8ab646edb5fd8c6f5022",
+            "message_id": "MANDATORY_OPEN_CONTROL-010",
+            "relevant": true,
+            "rule": "R0-WATCHED",
+            "verdict": "OPEN_R3",
+            "workload": "MANDATORY_OPEN_CONTROL"
+          }
+        ],
+        "total_open": 11
+      },
+      "workload": "MANDATORY_OPEN_CONTROL"
+    },
+    {
+      "baseline": {
+        "messages": 6,
+        "rows": [
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-000",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-001",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-002",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-003",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-004",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-005",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          }
+        ],
+        "total_open": 6
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 6,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [],
+        "irrelevant_attention_upgrades": 0,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 0,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 0,
+        "treatment_total_open": 6,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": []
+      },
+      "direction": "A_TO_B",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 6,
+        "rows": [
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-000",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-001",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-002",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-003",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-004",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-005",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          }
+        ],
+        "total_open": 6
+      },
+      "workload": "UNKNOWN_OPAQUE_CONTROL"
+    },
+    {
+      "baseline": {
+        "messages": 6,
+        "rows": [
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-000",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-001",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-002",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-003",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-004",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-005",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          }
+        ],
+        "total_open": 6
+      },
+      "comparison": {
+        "baseline_required_open_downgrades": 0,
+        "baseline_total_open": 6,
+        "downward_attention_changes": 0,
+        "extra_open_message_ids": [],
+        "irrelevant_attention_upgrades": 0,
+        "new_false_ignores": 0,
+        "new_missed_relevant": 0,
+        "noise_overlap_extra_opens": 0,
+        "relation_spam_extra_opens": 0,
+        "relevant_attention_upgrades": 0,
+        "relevant_drift_not_rescued": 0,
+        "relevant_drift_rescued": 0,
+        "relevant_not_rescued_message_ids": [],
+        "rescued_message_ids": [],
+        "safety_invariant_violation": false,
+        "total_attention_upgrades": 0,
+        "treatment_total_open": 6,
+        "unnecessary_extra_opens": 0,
+        "upgraded_message_ids": []
+      },
+      "direction": "B_TO_A",
+      "paired_frames_identical": true,
+      "treatment": {
+        "messages": 6,
+        "rows": [
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-000",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-001",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "527714ba23138448ef4766105fbc78cca51e8c662918c3542cdff7b66cd51ab8",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-002",
+            "relevant": true,
+            "rule": "R2-UNKNOWN",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-003",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-004",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          },
+          {
+            "depth": 2,
+            "frame_sha256": "ca9c22811fa38cc9c527c8617ce0f5937039e95a5652583a1bc22c135cab8577",
+            "message_id": "UNKNOWN_OPAQUE_CONTROL-005",
+            "relevant": true,
+            "rule": "R3-OPEN-RECORD",
+            "verdict": "OPEN_R2",
+            "workload": "UNKNOWN_OPAQUE_CONTROL"
+          }
+        ],
+        "total_open": 6
+      },
+      "workload": "UNKNOWN_OPAQUE_CONTROL"
+    }
+  ],
+  "production_promotion": "NONE",
+  "publication": "NONE",
+  "r1_control": {
+    "cases": 51,
+    "changed_by_treatment": false,
+    "false_ignores": 0,
+    "opaque_claim_fallbacks": 8,
+    "scope": "unchanged current R1 stress corpus; not the U1 transport/header experiment",
+    "unknown_atom_fallbacks": 7,
+    "verdict_fingerprint": "d6e5e052a609b2a2a2b19eedc1359a6cd0daf9d65f999094dd1fc00ae9629bba",
+    "watched_relation_cases": 4
+  },
+  "registration_sha256": "42ed1767da2eb198787d995704821176b3dd4574ca080a81b39321e2de5ab512",
+  "runtime": {
+    "model_calls": 0,
+    "network_attempts": 0,
+    "provider_calls": 0
+  },
+  "schema": "WATCHED_COVERAGE_RESULT_1",
+  "setup_and_maintenance": {
+    "future_watched_target_review_cost": "NOT_MEASURED",
+    "receiver_watched_target_entries_for_two_participants": 2,
+    "sender_extra_treatment_work": 0,
+    "setup_cost_not_in_any_friction_model": true
+  },
+  "status": "PASS",
+  "subjective_pleasantness": "NOT_MEASURED",
+  "treatment_variable": "Interest.watched",
+  "version": 1,
+  "watched_target": "sha256:0c79f4ffb3c3d063f5be0460d52361fdd3d4a8788b64736fef83df4f853c6827",
+  "workload_ids": [
+    "DRIFT_RESCUE",
+    "OTHER_TARGET",
+    "NO_RELATION_RELEVANT",
+    "RELATION_SPAM",
+    "NOISE_OVERLAP",
+    "MANDATORY_OPEN_CONTROL",
+    "UNKNOWN_OPAQUE_CONTROL"
+  ]
+}

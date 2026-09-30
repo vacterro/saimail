@@ -1,0 +1,18 @@
+{
+  "op_id": "scope-75f1fd2e9a8b490b92169a77cb2a527b",
+  "paths": {
+    "humbox/FUTURE-GATES-V5.md": "1f282ddbf89c6b6e731ef5e52d31d9740ba13ecab5e71caf7cc8fbaa39e4823e",
+    "pyproject.toml": "96abfe1fa38130c8908e13974e0b09ba80ac7fbd88e52da9c499366006160c64",
+    "saimail/gui_adapter.py": "31a040dddc8379d3266839dadbef1bd72292465015aa97bf9584dbc99eb49ceb",
+    "saimail/gui_app.py": "3e316daa3abcc91ad1737a9e17611a7fcd476a39dde60b1493c9770bc8fbbdb7",
+    "saimail/gui_theme.py": "d507501b386618f0d22371be19b925656e25390a4cceebb6b9ef841197ed8f84",
+    "tests/test_gui_surface.py": "4bd8a10fcc23959160c90abdc252c18fdd1d02d2e502ab17f81fb7f2dfa09a3b"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-20T23:14:56Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:3674b881931e5cea7d6db113a57ff5b5b8b825c21367d856a60bbfc7b39769ff",
+  "ticket": "T-97"
+}

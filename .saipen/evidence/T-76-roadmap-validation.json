@@ -1,0 +1,16 @@
+{
+  "roadmap": "humbox/FUTURE-GATES.md",
+  "sha256": "569bcbd2846b4bc9a34950beaca213207e1821b3cf9543596f6a90691e90e660",
+  "gates": [
+    "FG-00",
+    "FG-01",
+    "FG-02",
+    "FG-03",
+    "FG-04",
+    "FG-05",
+    "FG-06"
+  ],
+  "links_valid": true,
+  "baseline": "1916 tests, zero failures/errors/skips; T-65-verified-suite.xml",
+  "scope": "planning only; no future gate executed"
+}

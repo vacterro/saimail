@@ -1,0 +1,87 @@
+{
+  "api_map": {
+    "path_exists": true,
+    "release": "0.0.2a1",
+    "release_matches": true,
+    "schema": "SAIMAIL_STABLE_LOCAL_API_1"
+  },
+  "candidate": {
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a1",
+    "wheel_filename": "saimail-0.0.2a1-py3-none-any.whl",
+    "wheel_sha256": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a"
+  },
+  "environment": {
+    "platform": "linux",
+    "python_version": "3.13.5",
+    "verified_utc": "2026-09-20T17:47:02Z",
+    "verifier_version": 1
+  },
+  "failures": [],
+  "fg05": {
+    "network_attempts": 0,
+    "schema": "LOCAL_SCENARIO_RESULT_1",
+    "status": "PASS"
+  },
+  "fg06": {
+    "network_attempts": 0,
+    "outcome_category": "UTILITY_CONDITIONAL",
+    "schema": "FG06_UTILITY_RESULT_1"
+  },
+  "install": {
+    "dependency_source": "HOST_SITE_PACKAGES",
+    "note": "dependency installation is separate from SAIMAIL runtime network activity",
+    "status": "INSTALLED",
+    "wheel": "saimail-0.0.2a1-py3-none-any.whl"
+  },
+  "integrity": {
+    "candidate_version": "0.0.2a1",
+    "failures": [],
+    "manifest_schema": "LOCAL_ALPHA_CANDIDATE_1",
+    "status": "PASS",
+    "wheel_filename": "saimail-0.0.2a1-py3-none-any.whl",
+    "wheel_sha256": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a"
+  },
+  "limitations": {
+    "acknowledged": true,
+    "identity": "LOCAL_ALPHA_LIMITATIONS_1",
+    "utility_verdict": "UTILITY_CONDITIONAL"
+  },
+  "module_resolution": {
+    "paths": [
+      "/tmp/saimail-local-alpha-verify-1d_du8a8/venv/lib/python3.13/site-packages/saimail/__init__.py",
+      "/tmp/saimail-local-alpha-verify-1d_du8a8/venv/lib/python3.13/site-packages/lab/__init__.py",
+      "/tmp/saimail-local-alpha-verify-1d_du8a8/venv/lib/python3.13/site-packages/saimail_local.py"
+    ],
+    "resolved_inside_environment": true
+  },
+  "privacy": {
+    "findings": [],
+    "private_key_material_found": false,
+    "status": "PASS"
+  },
+  "runtime_counters": {
+    "model_calls": 0,
+    "network_attempts": 0,
+    "note": "the local base path has no model or provider surface",
+    "provider_calls": 0
+  },
+  "saimail_local_version": {
+    "expected": "0.0.2a1",
+    "reported": "0.0.2a1",
+    "status": "PASS"
+  },
+  "schema": "LOCAL_ALPHA_VERIFICATION_1",
+  "status": "PASS",
+  "v201_acceptance": {
+    "network_attempts": 0,
+    "schema": "LOCAL_WORKSPACE_RESULT_1",
+    "status": "PASS"
+  },
+  "v201_direct_command": {
+    "network_attempts": 0,
+    "schema": "LOCAL_WORKSPACE_COMMAND_1",
+    "status": "CREATED"
+  },
+  "version": 1
+}

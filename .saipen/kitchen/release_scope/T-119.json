@@ -1,0 +1,23 @@
+{
+  "op_id": "scope-4ac6b0c52e21451a8fd7b664cb23871d",
+  "paths": {
+    "CHANGELOG.md": "17c959e8628a561efc93621bb8367519dd9def5c5542ac433475b187a55917b1",
+    "humbox/CURRENT-STATE.md": "12295d15e57492a3b052a4af95a4c45c511cc70da6a179c29af6820b0c522efd",
+    "humbox/FUTURE-GATES-V6.md": "7ad86cd47fbf569b9020eb8557cd342ac33005cd8fed2b6b20f913da748672d9",
+    "lab/stable_local_api.json": "7a22fe123f29ac93d68d816c36733da017468dfe866c66b3e09230a74f7f531e",
+    "saimail/outbox.py": "c3e9a0a2f2c078b552eeb7f034b046a8234c0ceaa8adcd8e8d4696a6ff5ce29d",
+    "saimail/workspace.py": "edb477729274e7c5561f794ae0df796dfd1567c2c73d1da99c127c0f2526db0e",
+    "saimail_local.py": "d7ba25f982981657f54d8d62a10bbc4880529e280692c45c692e46a508bf2fe4",
+    "spec/28-DURABLE-OUTBOX-v0.md": "68d69ff99e0153eef90b92884836adbcdd0a6ea004bd03a2159f929c0624f650",
+    "spec/DECISIONS-D060.md": "03df37b7dea6e2bafe9d2fa726b023190bc1d28675deec862f2651e1aa55fdf9",
+    "tests/test_outbox.py": "37568f406899482c9de8f9826582c50c1748894b00318114d27f8ce2d26b01d5",
+    "tests/test_repo_consistency.py": "d3d77130f2c432413644d58dab9ec31a81205917d6975085ef9863b4e04fab70"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-24T06:39:17Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:8033f6f26e628478368cd0f1094df3f728fd2381cc236671488f8463d28ae30e",
+  "ticket": "T-119"
+}

@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-074:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Close T-86 / V2-04 using the completed external-install proof (closure-only handoff)"
+    }
+  },
+  "derived_at": "2026-09-20T18:13:31Z",
+  "derived_from": "SRC-074",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "99ed246d6489f11b0737dec8036ee3d6909f7d005924cfb6ba19f7c45d3f86a3"
+}

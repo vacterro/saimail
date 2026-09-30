@@ -1,0 +1,30 @@
+{
+  "op_id": "scope-9e76e1333bb34ab2bdd3e998558a40a6",
+  "paths": {
+    ".saipen/evidence/T-142-evolution-audit/added_coverage.json": "41b4e703a01d98015f48a6aeeb58769ebcab0b4513d0ca35601156867ac5d8a6",
+    ".saipen/evidence/T-142-evolution-audit/build_check.json": "2275c18821923b50617edd235133ed8b98d783c403bb69e30c625c05d39e78f2",
+    ".saipen/evidence/T-142-evolution-audit/capture.py": "79feebb2a55d53c07612f1d0120356f07cb7538be018d1bb7b74068d3d8e3981",
+    ".saipen/evidence/T-142-evolution-audit/capture_observed.txt": "a7525f3a2732c48ef0b74b439025869f9d01c7a685353749552ed7bd82889e95",
+    ".saipen/evidence/T-142-evolution-audit/collector.json": "707cf252489da5afce759960e708d4b4b713b02b5f4ac09260400beeb9e08bf7",
+    ".saipen/evidence/T-142-evolution-audit/graph.json": "b5dc63e6064ddf0b867a685e8f7696e3a9940dfd3b1b19b8e45d04e7afa398e2",
+    ".saipen/evidence/T-142-evolution-audit/registration.json": "fec8b9908129b2dcbf5b86d92214ce5ab17cf6a71392c769c272c39cd0a4dc4f",
+    ".saipen/evidence/T-142-evolution-audit/review.json": "2275c18821923b50617edd235133ed8b98d783c403bb69e30c625c05d39e78f2",
+    ".saipen/evidence/T-142-evolution-audit/runtime.json": "451d1960f397e4789dff611602376ed4395ba69f0db0531007fb9576140d147e",
+    ".saipen/evidence/T-142-evolution-audit/sources.json": "4ce1553639df0660f735d25aafb6ce2b6076c8f9f2c99bc164e62764a89b4bde",
+    ".saipen/evidence/T-142-evolution-audit/verify.json": "2275c18821923b50617edd235133ed8b98d783c403bb69e30c625c05d39e78f2",
+    ".saipen/evidence/T-142-evolution-audit/verify.py": "7533bf9a1553ab2d954842b6c8eadafe6b0d3687027dc3ef09ef57ccacfd88f5",
+    "CHANGELOG.md": "7e00e44d607a0566452292a3b48fca00f7bea839d4e1a7b6d14d87047131cf06",
+    "humbox/CURRENT-STATE.md": "f41dd36b2bf7b27c71c54078a421d49d99022d689ce323a821686700ad6e8c77",
+    "humbox/EVOLUTION-AUDIT.md": "44c8695580c83f97c4fc04195650dfdabceb0641c36fc1fb8b0d7af1b971234b",
+    "humbox/EVOLUTION.md": "2731898565e5d24d5da48658cb764cc95c8f10cc9b05c339b0fec687d93ee8df",
+    "humbox/FUTURE-GATES-V6.md": "b0bd8e95af09dc40b5e9bbe4cf27fcc735096c154ffa56b9ca57d85e50d3af1b",
+    "lab/analysis/evolution_audit_T142.md": "46eb41be3d45eed7c0e2678ff2b09446dffbf8d7202e25ddd209e8f7b58e8be6"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-30T10:56:39Z",
+  "schema_version": 2,
+  "source_head": "36f8836931a322435fb70060bc7f219b571dfd49",
+  "source_tree_fingerprint": "git-delta-v1:53093266248c687e3b972cb1201fce4a0da8e179bfb461664358d69c85ac3e68",
+  "ticket": "T-142"
+}

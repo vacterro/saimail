@@ -1,0 +1,4 @@
+c3518786fce5628e4811fdd04a604884d38a72cd4a5752753f50f6244f95981f  local_alpha_candidate.json
+27ee1b7118a81fe8e38db3d00e40fde93565f4fcca1f7025a875acba6b613dec  README-LOCAL-ALPHA.md
+6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc  saimail-0.0.2a3-py3-none-any.whl
+3b38e346b33ad58e4dfb1c7d746844c35708ca9ae9410c879a2d1d30d954efcf  verify_local_alpha.py

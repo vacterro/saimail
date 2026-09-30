@@ -1,0 +1,33 @@
+{
+  "op_id": "scope-1f4fb684372241b78ef0d2c636b14fd1",
+  "paths": {
+    "CHANGELOG.md": "3ca88831c963aecef054ada40b200faee04e1a42d1ba310cfa62b768475e020c",
+    "humbox/CURRENT-STATE.md": "a416e1ed8329d56631939599eacafabc15953697120c5d8c290b476a558cb7b0",
+    "humbox/EVOLUTION.md": "c0a31d2cb0c960ea9fb45a880f4e3013df8211513507824e5f225fee791557e2",
+    "humbox/FUTURE-GATES-V6.md": "a905dea9402d7c45d0814857d85e98cc5accd5e8d61aad504284267cfaa2a545",
+    "lab/agent_cycle_run.py": "b1c6b9dccf3d5a0bc640dd64189fbf35d913296a0b3c9e91f1b2202b661b47d0",
+    "lab/analysis/agent_cycle_T138.md": "827da233c5e1ba3117a120fd3c3c802c5497c07763b929feca0f6516fe54199e",
+    "lab/out/AGENT_CYCLE_T138/attempt-001/observations.json": "5734c8d2fffaad741496454383f407c3c00e81bfb2faa2ec4c40cda58fe122d5",
+    "lab/out/AGENT_CYCLE_T138/attempt-001/plan.json": "e996af8033f70f3a6721b82ea6863d32b0cb6e46bd128fecf68dc262d43adfc2",
+    "lab/out/AGENT_CYCLE_T138/attempt-001/result.json": "4e4ff6af620535b4db561ba05438fde21039c922f74c6caaa9b0d5da8abfb0b2",
+    "lab/out/AGENT_CYCLE_T138/attempt-002/observations.json": "36d80f26663065efe5f30418bb16aa5a7661b151479bfbfd996923081b80cd53",
+    "lab/out/AGENT_CYCLE_T138/attempt-002/plan.json": "ba7f119826bec41299fad9920f8ecc7d87ada909582897bb4c9366ef5f44924d",
+    "lab/out/AGENT_CYCLE_T138/attempt-002/result.json": "b14b8ee557c87328e73568d7146e809f01b51b0895487fee28f463bbdd2bdf2c",
+    "lab/out/AGENT_CYCLE_T138/attempt-003/observations.json": "926634c9f6a6b71b7a57bd714e8210626e2e63ce5ac4fb5d794e534b90400b3e",
+    "lab/out/AGENT_CYCLE_T138/attempt-003/plan.json": "ba7f119826bec41299fad9920f8ecc7d87ada909582897bb4c9366ef5f44924d",
+    "lab/out/AGENT_CYCLE_T138/attempt-003/result.json": "21a05b2fa7dbeb600f27728920413571a50d8b42877b7fd64187c7bd182f6923",
+    "lab/out/AGENT_CYCLE_T138/attempt-004/observations.json": "385dc2e5c4fbce6b19f37adb441d16bb152797a5a9bf227827e287218fed5c12",
+    "lab/out/AGENT_CYCLE_T138/attempt-004/plan.json": "ba7f119826bec41299fad9920f8ecc7d87ada909582897bb4c9366ef5f44924d",
+    "lab/out/AGENT_CYCLE_T138/attempt-004/result.json": "c94378221a62887c2ea5637ba684e4480d0c9f35bd55cc8b8abce034cc715dfa",
+    "lab/out/AGENT_CYCLE_T138/latest.json": "afbd263ebdeb9f5083aba6e5f7d960d2ad168ce77c6412afadc172f9e92b2bfc",
+    "lab/out/AGENT_CYCLE_T138/observations.json": "54850f6719c9a79cb4952da76e607cbcc269221730497037f420be33761974c9",
+    "lab/out/AGENT_CYCLE_T138/plan.json": "93452da66318ca202377a10faed538481ba513485e4914f28fc465c8ab4c080b"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-30T08:18:42Z",
+  "schema_version": 2,
+  "source_head": "36f8836931a322435fb70060bc7f219b571dfd49",
+  "source_tree_fingerprint": "git-delta-v1:3365b32fc7f24028349a6fe04103ce6cac2035ac2432efd4f98f1c2da7be313a",
+  "ticket": "T-138"
+}

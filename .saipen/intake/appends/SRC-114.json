@@ -1,0 +1,36 @@
+{
+  "appends": [
+    {
+      "class": "CLARIFICATION",
+      "created_work": null,
+      "delta": "context",
+      "derived_clauses": [
+        "SRC-115:R001",
+        "SRC-115:R002",
+        "SRC-115:R003",
+        "SRC-115:R004",
+        "SRC-115:R005"
+      ],
+      "label": "",
+      "projected_at": "2026-09-30T18:01:00Z",
+      "receipt": "SRC-115",
+      "received_at": "2026-09-30T18:00:50Z",
+      "rewind": null,
+      "seq": 1,
+      "source_sha256": "77771d93eed0b8330adf87e0c5dad0de97ffc6df17f12c0749f9833ca08523da",
+      "state": "PROJECTED",
+      "steps": [
+        "linked",
+        "derived",
+        "superseded"
+      ],
+      "superseded": [],
+      "supersedes": [],
+      "work": [
+        "T-149"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "source": "SRC-114"
+}

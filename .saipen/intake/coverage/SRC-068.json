@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-068:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-81 closed with verification evidence in LOG: review -> PASS [target: T-81] conf: high -- independent review: registration/schema/manifest identities and admission checks match the live artifact; single intentional variable verified (generator/probe JSON_SCHEMA with CORPUS_ENUM, reviewer ABSENT); outcome matrix total; product gate authoritative; no repair, retry, replacement or hidden call; privacy block all false; T-74 artifacts and fixtures",
+      "text": "Execute and close FG-04B: one newly registered bounded live JSON_SCHEMA experiment per SAIMAIL transport (no T-74 mutation, <=6 model calls, frozen variables)",
+      "verification": "the Work this request created reached its own verification gate; see the T-81 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-81"
+    }
+  },
+  "schema_version": 1
+}

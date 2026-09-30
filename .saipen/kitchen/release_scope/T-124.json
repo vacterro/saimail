@@ -1,0 +1,19 @@
+{
+  "op_id": "scope-b4519c99c15d4735ba64a900adc2849d",
+  "paths": {
+    ".saipen/saitranslate/BOARD.md": "36adf1e578ad98675c332ad6561368fd870552270e0f73604c8e8b21b00ff481",
+    ".saipen/saitranslate/LOG.md": "e7a11397249d870746cc68293cd6d18c0988122e498d4710031e1ec6512aa0d4",
+    ".saipen/saitranslate/STATE.md": "839ce77cf94befad06a40a857db9ea87c722349fe16321e57f95b962a2448263",
+    ".saipen/saitranslate/kitchen/OUTBOX.md": "d884f641061c70d047488d38f493ec60c2da997831d4362cc4c17cfa31d346d7",
+    ".saipen/saitranslate/kitchen/README.ja.md": "e9585d0f230a78a314acc9d7e9979cbd16504efedcc38799f0530eb1c97ae5dd",
+    ".saipen/saitranslate/kitchen/README.uk.md": "2dedc48496378c4d3dc3dd4cfad701dad68feeb23ef0bdf03344905dffe220a1",
+    ".saipen/saitranslate/kitchen/_source_digest.py": "b1e4a46b1f6f9b53ada04c94ca9414bea4da7eeff97bdb49e3bc47abe7dbfbe8"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-25T15:52:16Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:8b5376574aa5f803b4d48b6863a90b58aa658d9684c6b42332a8762015a5763f",
+  "ticket": "T-124"
+}

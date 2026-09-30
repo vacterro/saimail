@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-057:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Correct the completed T-71 LAB observer so the JSON nesting resource limit is explicit and deterministic across supported Python runtimes instead of depending on whether stdlib json.loads raises RecursionError."
+    }
+  },
+  "derived_at": "2026-09-19T23:55:33Z",
+  "derived_from": "SRC-057",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "851de903d81d467dcaa1e3aa9dcb24d360fde9b4cfb404195dc4b3dd1288b906"
+}

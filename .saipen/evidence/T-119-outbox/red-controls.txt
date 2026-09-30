@@ -1,0 +1,21 @@
+== defect demonstration (pre-T-119 send path)
+send_message retried after an unclear result: receiver holds 2 messages
+== unmutated copy: rc=0 24 passed in 6.59s
+== mutant no_lock: rc=1 2 failed, 22 passed in 6.67s
+  FAILED tests/test_outbox.py::test_the_outbox_lock_excludes_a_second_process
+  FAILED tests/test_outbox.py::test_concurrent_writers_with_one_key_produce_one_message
+== mutant reseal: rc=1 6 failed, 18 passed in 6.68s
+  FAILED tests/test_outbox.py::test_one_key_is_one_message_and_no_plaintext_stays_at_rest
+  FAILED tests/test_outbox.py::test_a_quarantine_is_terminal_until_the_operator_re_arms_it
+  FAILED tests/test_outbox.py::test_a_process_killed_at_any_transition_resumes_to_exactly_one_message[after_delivery]
+  FAILED tests/test_outbox.py::test_a_process_killed_at_any_transition_resumes_to_exactly_one_message[after_sealed_record]
+  FAILED tests/test_outbox.py::test_a_process_killed_at_any_transition_resumes_to_exactly_one_message[before_delivery]
+  FAILED tests/test_outbox.py::test_a_tampered_intent_fails_closed[<lambda>1]
+== mutant keep_plaintext: rc=1 5 failed, 19 passed in 6.75s
+  FAILED tests/test_outbox.py::test_one_key_is_one_message_and_no_plaintext_stays_at_rest
+  FAILED tests/test_outbox.py::test_a_process_killed_at_any_transition_resumes_to_exactly_one_message[after_delivery]
+  FAILED tests/test_outbox.py::test_a_process_killed_at_any_transition_resumes_to_exactly_one_message[after_sealed_record]
+  FAILED tests/test_outbox.py::test_a_process_killed_at_any_transition_resumes_to_exactly_one_message[before_delivery]
+  FAILED tests/test_outbox.py::test_a_tampered_intent_fails_closed[<lambda>1]
+== mutant all_terminal: rc=1 1 failed, 23 passed in 7.00s
+  FAILED tests/test_outbox.py::test_an_offline_recipient_is_retried_with_backoff_and_delivered_once

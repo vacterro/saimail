@@ -1,0 +1,8 @@
+{
+  "schema": "SAIMAIL_T136_LEGACY_RETRY_1",
+  "verdict": "PASS",
+  "original_envelope": "sha256:24be1eb3c7923f8f8887c40c69f182026cc47499c51e0c4a285d312d57982690",
+  "report_envelope": "sha256:9201d95690e9d49b33ba6cdecbc7e241e76b4991fb57d461e617a901a93f1d82",
+  "same_report_after_update": true,
+  "scope": "first v1 resolution report at a later retry time"
+}

@@ -1,0 +1,48 @@
+{
+  "alpha_scope": "local filesystem messaging only; persistent V2-01 workspaces; explicit public identity-card exchange; deterministic recipient registration; current SENV2/PostOffice semantics with duplicate suppression and explicit open; the documented saimail-local command workflow",
+  "created_utc": "2026-09-20T17:33:10Z",
+  "limitations": {
+    "identity": "LOCAL_ALPHA_LIMITATIONS_1",
+    "reference": "README-LOCAL-ALPHA.md#limitations-and-security",
+    "utility_verdict": "UTILITY_CONDITIONAL"
+  },
+  "package_name": "saimail",
+  "package_version": "0.0.2a1",
+  "platform_proof_scope": "CPython 3.11 on win32 (the host that produced the clean-install and verification evidence); no broader portability claimed",
+  "publication_status": "NOT_PUBLISHED",
+  "python_scope": ">=3.11",
+  "result_schemas": {
+    "fg05": "LOCAL_SCENARIO_RESULT_1 v1",
+    "fg06": "FG06_UTILITY_RESULT_1 v1",
+    "v201_acceptance": "LOCAL_WORKSPACE_RESULT_1 v1",
+    "v201_command": "LOCAL_WORKSPACE_COMMAND_1 v1"
+  },
+  "schema": "LOCAL_ALPHA_CANDIDATE_1",
+  "security_limitations": [
+    "identity private keys are raw software files protected only by their file location; no encryption at rest, no hardware custody, no rotation",
+    "delivery requires write access to the recipient workspace (shared local filesystem path, not a network service)",
+    "no key discovery: both sides must exchange public identity cards explicitly and register each other",
+    "the alpha is not a production communication service and is not published"
+  ],
+  "source_identity": {
+    "git_dirty": true,
+    "git_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+    "note": "the worktree is dirty; no commit uniquely identifies this candidate, so the exact wheel SHA-256 is the candidate identity",
+    "package_version_source": "VERSION"
+  },
+  "verification": {
+    "identity": "LOCAL_ALPHA_VERIFICATION_1 v1",
+    "procedure": "verify_local_alpha.py",
+    "verifier_version": 1
+  },
+  "version": 1,
+  "wheel": {
+    "content_digest_sha256": "d060491b6fe865e6844f353aaa691d97eaa92db7e1a75c13617e658993bdab8f",
+    "filename": "saimail-0.0.2a1-py3-none-any.whl",
+    "member_count": 57,
+    "sha256": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+    "size_bytes": 370976
+  },
+  "zero_model_calls_expected": true,
+  "zero_runtime_network_expected": true
+}

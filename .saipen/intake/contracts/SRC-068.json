@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-068:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute and close FG-04B: one newly registered bounded live JSON_SCHEMA experiment per SAIMAIL transport (no T-74 mutation, <=6 model calls, frozen variables)"
+    }
+  },
+  "derived_at": "2026-09-20T15:58:56Z",
+  "derived_from": "SRC-068",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "c6ecaccdaf004862fb99e8feb7ef76315c03c6c35d96b6636127c94ade34f814"
+}

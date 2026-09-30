@@ -1,0 +1,39 @@
+{
+  "clauses": {
+    "SRC-113:R001": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not fabricate participants and do not count:"
+    },
+    "SRC-113:R002": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not block the roadmap waiting for participants."
+    },
+    "SRC-113:R003": {
+      "actionable": false,
+      "class": "context",
+      "text": "SAIMAIL must work reliably."
+    },
+    "SRC-113:R004": {
+      "actionable": false,
+      "class": "context",
+      "text": "Never let the experiment block useful product development."
+    },
+    "SRC-113:R005": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Count no fabricated participants, same-session labels, scripted self-review, duplicated context, routing aliases or synthetic study evidence; use SAIFREN only with actual separate execution/context and independent SAIMAIL behavior."
+    },
+    "SRC-113:R006": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "If qualifying SAIFREN study behavior is unavailable, record unavailable or not run and continue normal SAIMAIL product work without waiting for participants."
+    }
+  },
+  "derived_at": "2026-09-30T14:45:06Z",
+  "derived_from": "SRC-113",
+  "interpretation_revision": 3,
+  "schema_version": 1,
+  "source_sha256": "5cf36a961b1d7d11e05aabe52bcfee0dde503922ad5fe79e2bac2fc9bd566531"
+}

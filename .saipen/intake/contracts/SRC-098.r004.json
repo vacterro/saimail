@@ -1,0 +1,29 @@
+{
+  "clauses": {
+    "SRC-098:R001": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not reopen T-106."
+    },
+    "SRC-098:R002": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not create a continuation wrapper for T-106."
+    },
+    "SRC-098:R003": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not start V6-02."
+    },
+    "SRC-098:R004": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not rebuild the 0.0.2a3 candidate unless a real artifact-byte defect is independently discovered."
+    }
+  },
+  "derived_at": "2026-09-22T21:02:38Z",
+  "derived_from": "SRC-098",
+  "interpretation_revision": 4,
+  "schema_version": 1,
+  "source_sha256": "d07cc103c9c8e0d382a3a96d3236f380e03455e47215af205b5b3ea0720f54ae"
+}

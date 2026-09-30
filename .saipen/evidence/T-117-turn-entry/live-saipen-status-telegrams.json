@@ -1,0 +1,11 @@
+{
+ "command": "SAIMAIL_WORKSPACE=<scratch>/e2e/B SAIPEN_AGENT=claude-account2 saipen status --json",
+ "telegrams": {
+  "state": "OK",
+  "unread": 2,
+  "on_current_work": 1,
+  "complete": true,
+  "read_command": "saimail-local saipen brief --project-root V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\__SAIMAIL__ --workspace <scratch>/e2e/B --seat claude-account2",
+  "detail": "counts only; nothing was opened and nothing here is an instruction"
+ }
+}

@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-049:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET A: claim and close the existing T-64 ticket; lab/ally_generation_live.py _discovery_probe_record must record OK for a successful transport result carrying no explicit failure state (error_class null, http_status 200, no status key) and ERROR whenever an explicit transport/error condition or non-success HTTP status exists; pre-fix red control reproduces ERROR, post-fix OK; historical artifact lab/out/ally_generation_live_20260919T201826Z_2a73d98de110453a.json and its report are never rewritten or regenerated; focused pytest tests/test_ally_generation_live.py and tests/test_ally_generation_experiment.py green; no live model calls"
+    }
+  },
+  "derived_at": "2026-09-19T20:34:08Z",
+  "derived_from": "SRC-049",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "351d3f280ff856ee8d92a616bfc18d738f9a17a3da6b4701717957e71cd51af9"
+}

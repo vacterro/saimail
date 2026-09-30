@@ -1,0 +1,15 @@
+{
+  "created": "2026-09-30T14:28:30.561816+00:00",
+  "native_session": "ses_f0d499707ffe15naRiJ1EvcJuR",
+  "source_hashes": {
+    "saimail_local.py": "d14ab45a844dc480e506647428a75630d4aab1d71869770170bc89ae7eb41794",
+    "saimail/workspace.py": "93ac851e04fbd6e03c01ed35c321f453d11dc90200cfb58d2d9313a36744fbe6",
+    "tests/test_public_recipient_management.py": "fcace0d75efff4ad0e03431fc6a7f8bd2a99acb22c2543bac75b6296050e1bdc",
+    "spec/17-LOCAL-WORKSPACE-v0.md": "130e81055fab61c13054ee43787c446fb8152256a994e94cd4b9ab97b3df666d"
+  },
+  "prior_root_chat_supplied": false,
+  "prior_review_verdicts_or_test_results_supplied": false,
+  "role": "INDEPENDENT_PRODUCT_REVIEWER_NOT_STUDY_RECEIVER",
+  "study_enrolled": false,
+  "study_observation_created": false
+}

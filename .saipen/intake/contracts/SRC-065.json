@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-065:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "'Execute SAIHANDOFF FG-02 (experiment history vs current checkout separation, MODE: CONVERGE) from V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260920_1748.md' 2>&1 | Out-String"
+    }
+  },
+  "derived_at": "2026-09-20T14:58:52Z",
+  "derived_from": "SRC-065",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "578ed5b4806100f14a6ffe46cba9ba41235fc207d0dc92873bcd3658e7b0fddc"
+}

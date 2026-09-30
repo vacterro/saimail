@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-056:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-72 closed with verification evidence in LOG: verify -> PASS [target: T-72] conf: high -- python -m pytest -q tests/test_parse_shape.py tests/test_parse_shape_resource_bounds.py = 49 passed; full suite python -m pytest -q = 1693 passed exit 0; corpus reachability/pilot/privacy plus B-016/17/18 selection = 227 passed; red control: pre-fix path at raised recursion limit answered OK for depth 1100 and depth 2000, post-fix RESOURCE_LIMIT; histori",
+      "text": "\"T-71 strict-schema observer deterministic resource bound closure\" 2>&1",
+      "verification": "the Work this request created reached its own verification gate; see the T-72 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-72"
+    }
+  },
+  "schema_version": 1
+}

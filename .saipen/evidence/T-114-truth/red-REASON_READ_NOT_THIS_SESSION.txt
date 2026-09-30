@@ -1,0 +1,22 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+__________ test_gui_read_capability_language_matches_explicit_reopen __________
+
+    def test_gui_read_capability_language_matches_explicit_reopen():
+        """Qt-independent oracle: first-Open refusal must point to real Reopen."""
+        from saimail import gui_adapter, workspace
+    
+        assert callable(workspace.reopen_message)
+        assert callable(gui_adapter.GuiAdapter.reopen_selected)
+        assert not hasattr(gui_adapter, "READ_REREAD_GAP"), "T-113 resolved this gap"
+        for reason in (gui_adapter.REASON_OPEN_ALREADY_READ,
+                       gui_adapter.REASON_READ_NOT_THIS_SESSION):
+>           assert "READ" in reason and "Reopen" in reason, (
+                "READ guidance must point to the explicit Reopen action")
+E           AssertionError: READ guidance must point to the explicit Reopen action
+E           assert ('READ' in 'Opened in an earlier session; content is not re-readable.')
+
+tests\test_repo_consistency.py:1148: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_repo_consistency.py::test_gui_read_capability_language_matches_explicit_reopen
+1 failed in 0.25s

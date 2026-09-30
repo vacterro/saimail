@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-086:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-99 closed with verification evidence in LOG: verify -> PASS [target: T-99] conf: high -- VERIFY scope isolation repaired by T-1444 (SAIPEN-home regression 6 tests OK; end-to-end verification evidence for T-99 now True); saiui UI-002 PASS 18/18 with review package collected as T-101; GUI focused + repo-consistency 80 passed; full suite 2372 passed, 0 failed, 0 errors, 0 skipped; installed canonical validator: 3 problems / 21 warnings, all inh",
+      "text": "V5-01 closure continuation: refresh CURRENT-STATE + FUTURE-GATES-V5 from evidence (M31), run SAIPEN validation record (M29), write acceptance record + FINAL REPORT, add repo-consistency durability test for V5-01 artifacts",
+      "verification": "the Work this request created reached its own verification gate; see the T-99 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-99"
+    }
+  },
+  "schema_version": 1
+}

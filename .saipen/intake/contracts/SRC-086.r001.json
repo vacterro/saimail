@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-086:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "V5-01 closure continuation: refresh CURRENT-STATE + FUTURE-GATES-V5 from evidence (M31), run SAIPEN validation record (M29), write acceptance record + FINAL REPORT, add repo-consistency durability test for V5-01 artifacts"
+    }
+  },
+  "derived_at": "2026-09-21T00:22:54Z",
+  "derived_from": "SRC-086",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "6fc8de40b791a6d1dc2f5ebef4cfe89bccb0953d16d46ba237fca5cfbbd83e25"
+}

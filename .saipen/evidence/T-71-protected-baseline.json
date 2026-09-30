@@ -1,0 +1,146 @@
+[
+  {
+    "path": "sailang\\__init__.py",
+    "sha256": "19b6f058dfd51f83d798ac2609fa5e25f32bef4a283668f5b3bcec0126c0c47f"
+  },
+  {
+    "path": "sailang\\record.py",
+    "sha256": "082fb69ac6754abebf66564af081b85ac5860f5ad78bd47c6bb8fdecdd93b4c7"
+  },
+  {
+    "path": "sailang\\line.py",
+    "sha256": "d8c6e55cbd07b1d85e578445b24205e5dbefc3811e217811747570d79d6726fa"
+  },
+  {
+    "path": "sailang\\frame.py",
+    "sha256": "cdd9062f359ad43cbb778cc3e9bdd9942d9b1e89915496cb394031d44b154d51"
+  },
+  {
+    "path": "sailang\\errors.py",
+    "sha256": "987d44611a587f90a32705d1429939f4cfd0a5f218e4c06cd14cf6bb003480e1"
+  },
+  {
+    "path": "sailang\\dictionary\\v1.json",
+    "sha256": "8a1e48b1170be100da9e6147f3c7fdf5fd54efadf7c6305528defc4d40426f78"
+  },
+  {
+    "path": "sailang\\dictionary\\v0.json",
+    "sha256": "a4dbb4b0d0005a172a45605f61d3bc700df5464c44654be9846915e39b9ef878"
+  },
+  {
+    "path": "saimail\\legacy.py",
+    "sha256": "6e519e624ad6e33a5509337f43d7e8d7f742e2af23aef9a8257b7b568821fe2a"
+  },
+  {
+    "path": "saimail\\human_attention.py",
+    "sha256": "26bfb2b45d2647e6b5f9ae0c4e0799e14522013e2a39340321bd06b2488cc208"
+  },
+  {
+    "path": "saimail\\hardware_piv.py",
+    "sha256": "90bfee23c49bb489e4b4ad55a780048eb55f6780ea0910f7f0d703c9c196c366"
+  },
+  {
+    "path": "saimail\\envelope.py",
+    "sha256": "025b435274ac6e28c149723d41e6ba770cc51120b15cf5669a984d1bf087eef2"
+  },
+  {
+    "path": "saimail\\credentials.py",
+    "sha256": "94a7bae17a2a0147dc4ee72958cdf830f701f1bf84ec10b98419b7e8513aefab"
+  },
+  {
+    "path": "saimail\\ally_generation.py",
+    "sha256": "db5aac15b3fb9725b39eb101e2abebbb9a23bba10de80c9e1a375bee69a1b117"
+  },
+  {
+    "path": "saimail\\ally_advice.py",
+    "sha256": "637236737b3e24932cb5b7f3efe1f093542566e7f102c9695e830b31bd8a3673"
+  },
+  {
+    "path": "saimail\\acceptance.py",
+    "sha256": "be219cb044135d3c674ba210ececde175f7eb754be1ffc9d77f801069e087b3e"
+  },
+  {
+    "path": "saimail\\provenance.py",
+    "sha256": "3aa1a93d63ca6bfdca40fb09fe4ed6de23340ec27afaf8efaa50c3b23112209e"
+  },
+  {
+    "path": "saimail\\promotion.py",
+    "sha256": "037bb1cda8172871acaec80e107298beb65e9151f6c76df186f709180c567561"
+  },
+  {
+    "path": "saimail\\project_corpus.py",
+    "sha256": "1d74fd9df9726e5a86de1fd614ab1667b823d580f6250b5ae697f7d999d86270"
+  },
+  {
+    "path": "saimail\\postoffice.py",
+    "sha256": "6842a4442c0265770cdaf2bc228606c01e7386dc5ca72a3cf8f1f94999055a03"
+  },
+  {
+    "path": "saimail\\quarantine.py",
+    "sha256": "0960dd992839ca149a81be3bdf80746fb6cd7397023ef2998d429cf03428b985"
+  },
+  {
+    "path": "saimail\\publish.py",
+    "sha256": "07c992f1a4b38b3a82e21d26b1c743f473e8ac344295ad9b4f0ca963ba0a1097"
+  },
+  {
+    "path": "saimail\\sailetter.py",
+    "sha256": "0f8acc85debeee4160f936da9a60483b87812f642f79afc04e7c6b1991af1ec2"
+  },
+  {
+    "path": "saimail\\sainote.py",
+    "sha256": "ceeb59e76dad78c2fad676bbb2f18809ee92dae1eccdb62a5f95be01f60d4255"
+  },
+  {
+    "path": "saimail\\__init__.py",
+    "sha256": "dd8f4c727cb67ec46eb56cba8fcbc299ee1eae6dd5aac63f21629282d375524b"
+  },
+  {
+    "path": "saimail\\selector.py",
+    "sha256": "2d06e994a2abfba80d24597f601a608bf337ed4e2450f73dce9d05f765d41cd0"
+  },
+  {
+    "path": "lab/project_corpus_generation_pilot.py",
+    "sha256": "0b5c59f6f7cc0c5248adc17b95236f42c7d26088912afcdc695866fe2954a050"
+  },
+  {
+    "path": "lab/project_corpus_generation_registration.json",
+    "sha256": "5d750a8aaf166a02d7f1bc13c98f7bbde91728dd616083a0d2cde563e1f40b6e"
+  },
+  {
+    "path": "lab/ally_generation_live.py",
+    "sha256": "79f9ae4e651509458f6acc8eda3b7814ae0ad67733afdbb45c27305810f3fc4c"
+  },
+  {
+    "path": "lab/saifren_run.py",
+    "sha256": "8cc77304d91b768218aee6b809a5b49dd0972ea1fef498492388b3f6d5e6b92a"
+  },
+  {
+    "path": "lab/project_corpus_pilot.py",
+    "sha256": "61395e7404853686b806ec5195e56d3bb8f536d3f6d8a29a2110fff6a97f70af"
+  },
+  {
+    "path": "lab/project_corpus_pilot_registration.json",
+    "sha256": "dfd8b48dded34de8426181f309032da31c86e83f675412add15076fc421a096f"
+  },
+  {
+    "path": "lab/project_corpus_pilot_selection.json",
+    "sha256": "ada868e1267a8b9d295d0c6509b98e19e3f62a6e8a647c041d0e51e35b95a35f"
+  },
+  {
+    "path": "lab/out/project_corpus_generation_live_20260919T220641Z.json",
+    "sha256": "e9745fcbb84f12f29f8e54c7f891e0b9a61949710e40d48224e9352889caa5d7"
+  },
+  {
+    "path": "lab/out/PROJECT_CORPUS_GENERATION_REPORT_20260919T220641Z.md",
+    "sha256": "f442512fc28d7e31d54b0ae01510c9ee78985dc46024d56873c31b42e4f860b5"
+  },
+  {
+    "path": "lab/analysis/project_corpus_generation_20260919T220641Z.md",
+    "sha256": "f4f2d92c60fbab134ef5b404968a6dc853f3ca2914fe83ae269376b791157617"
+  },
+  {
+    "path": "tests/test_quarantine.py",
+    "sha256": "f2a4e18cbf34d1bb645bef42655221d4ddb30e2a4f3d07d9b4f4b0a880897e32"
+  }
+]

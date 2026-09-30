@@ -1,0 +1,33 @@
+{
+  "authoritative_documents_at_closure": {
+    "current_state_sha256": "70cf251d43cf130896c5206b83539113a0e68673ce3fa2cbfe7295f79d2ffb49",
+    "external_request_sha256": "bc41cc9289e44397041f2098719d7ed73a94bc6c66b2bcb43d50906c70e4a72a",
+    "roadmap_sha256": "3681db95aa165b39e7ce0738ea79fc316cb0233ff6a1f6afee8eeba5677e95b2"
+  },
+  "candidate": {
+    "member_count": 65,
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a3",
+    "wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+    "wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc"
+  },
+  "closure_event": "E-1502",
+  "created_utc": "2026-09-23T18:50:04Z",
+  "expected_gates": {
+    "G13": "PENDING_EXTERNAL",
+    "G17": "ABSENT",
+    "publication": "NONE"
+  },
+  "lifecycle_at_closure": {
+    "T-106": "DONE",
+    "T-107": "DONE",
+    "T-108": "DONE",
+    "T-109": "DONE",
+    "T-110": "DONE"
+  },
+  "provenance": "Derived from canonical live state at T-107 E-1502 closure boundary.",
+  "schema": "SAIMAIL_T107_CLOSURE_CONTEXT_1",
+  "source_fingerprint": "f7ccf88d57ecc5e4f21fabcdfa2339996e0b1365463df1793ad56303c8298a59",
+  "v602_state_at_closure": "NOT_STARTED",
+  "version": 1
+}

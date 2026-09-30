@@ -1,0 +1,94 @@
+{
+  "clauses": {
+    "SRC-100:R001": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "The supplied archive was audited read-only and must not be modified or returned as an edited archive."
+    },
+    "SRC-100:R002": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not create a wrapper ticket."
+    },
+    "SRC-100:R003": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not reopen T-106."
+    },
+    "SRC-100:R004": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not start V6-02."
+    },
+    "SRC-100:R005": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not rebuild or replace the frozen 0.0.2a3 candidate unless a genuine package-byte defect is independently demonstrated."
+    },
+    "SRC-100:R006": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not publish, tag, push, create a GitHub release, upload to PyPI, or manufacture external proof."
+    },
+    "SRC-100:R007": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Historical authority that must remain historical:"
+    },
+    "SRC-100:R008": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not rewrite T-106 as ACTIVE."
+    },
+    "SRC-100:R009": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not reopen it."
+    },
+    "SRC-100:R010": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "exact a3 G15/G16 evidence must be materialized from real runs"
+    },
+    "SRC-100:R011": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "a3 external request must target exact 0.0.2a3 bytes"
+    },
+    "SRC-100:R012": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "an additive exact-a3 admission path must exist and reject wrong/malformed proofs"
+    },
+    "SRC-100:R013": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "dead G13 assertion must be removed"
+    },
+    "SRC-100:R014": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "recovery docs must agree with canonical state"
+    },
+    "SRC-100:R015": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "It is precisely what must be reconciled and reviewed."
+    },
+    "SRC-100:R016": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "A hand-written two-field JSON must never satisfy G13."
+    },
+    "SRC-100:R017": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "Do not leave G14 as unconditional PASS."
+    }
+  },
+  "derived_at": "2026-09-23T04:25:10Z",
+  "derived_from": "SRC-100",
+  "interpretation_revision": 17,
+  "schema_version": 1,
+  "source_sha256": "eb6777f1191f72da996b3a98594400dc762631bfb07ddc8602f61056877b4e24"
+}

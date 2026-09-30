@@ -1,0 +1,55 @@
+{
+  "schema": "SAIMAIL_EVOLUTION_AUDIT_CHECK_1",
+  "state": "PASS",
+  "failures": [],
+  "matrix_rows": [
+    "R1",
+    "R2",
+    "R3",
+    "R4",
+    "R5",
+    "R6",
+    "R7",
+    "R8",
+    "R9",
+    "R10",
+    "R11",
+    "R12"
+  ],
+  "inherited_suite": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "2824",
+      "time": "142.533",
+      "timestamp": "2026-09-30T13:10:16.059187+03:00",
+      "hostname": "DESKTOP-TTH0L52"
+    }
+  ],
+  "known_bad_controls": {
+    "unsupported_field_claim": {
+      "rejected": true,
+      "failures": [
+        "unavailable independent behavior claimed as established"
+      ]
+    },
+    "invented_independent_actor": {
+      "rejected": true,
+      "failures": [
+        "unavailable independent behavior claimed as established"
+      ]
+    },
+    "false_empty_coverage": {
+      "rejected": true,
+      "failures": [
+        "incomplete or nonempty observation claimed empty"
+      ]
+    }
+  },
+  "verifier_sha256": "7533bf9a1553ab2d954842b6c8eadafe6b0d3687027dc3ef09ef57ccacfd88f5",
+  "runtime_sha256": "451d1960f397e4789dff611602376ed4395ba69f0db0531007fb9576140d147e",
+  "audit_sha256": "44c8695580c83f97c4fc04195650dfdabceb0641c36fc1fb8b0d7af1b971234b",
+  "claim_boundary": "Record consistency and source freshness; matrix semantics require source review; no field utility verdict"
+}

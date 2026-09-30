@@ -1,0 +1,80 @@
+{
+  "baseline": {
+    "observed_before": "E-1422 T-107 resume, before this repair",
+    "problem_signatures": [
+      {
+        "detail_hash": "8e410875a794f3dc",
+        "rule_id": "source_receipt_unresolved_work",
+        "subject_id": "T-41"
+      },
+      {
+        "detail_hash": "84a39e0eab234308",
+        "rule_id": "unclassified",
+        "subject_id": null
+      },
+      {
+        "detail_hash": "13c5015d6f0fe0c7",
+        "rule_id": "source_credential_unsafe",
+        "subject_id": "SRC-017"
+      },
+      {
+        "detail_hash": "c7e6f36c086c115e",
+        "rule_id": "unclassified",
+        "subject_id": null
+      }
+    ],
+    "problems": 4,
+    "receipt_id": "receipt-73951ee35436",
+    "warnings": 23
+  },
+  "candidate_version": "0.0.2a3",
+  "candidate_wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+  "candidate_wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc",
+  "canonical_source_tree_fingerprint": "git-delta-v1:dae6b48a467dccafbe7a2dc3e917ab913e99f3698a92ba23f8338270cf7b5436",
+  "canonical_timestamp_utc": "2026-09-23T18:49:26.267463Z",
+  "canonical_validator_verdict": "FAIL",
+  "created_utc": "2026-09-23T18:49:49Z",
+  "failure_lines": [
+    "source_receipt_unresolved_work [T-41] detail 8e410875a794f3dc",
+    "unclassified [global] detail 84a39e0eab234308",
+    "source_credential_unsafe [SRC-017] detail 13c5015d6f0fe0c7",
+    "unclassified [global] detail c7e6f36c086c115e"
+  ],
+  "gate": "core",
+  "new_candidate_attributable_failures": 0,
+  "new_problem_signatures": [],
+  "note": "SAIPEN canonical validation itself remains FAIL with inherited findings. The active T-107 resume baseline is the pre-repair 4/23 receipt; the older a3 record's 3/21 counts predate T-108/T-109/T-110 and are retained as inherited baseline drift. Problem signatures are compared exactly; warning details were not emitted by the canonical status surface, so their count is compared and the limitation is recorded.",
+  "problem_signatures": [
+    {
+      "detail_hash": "8e410875a794f3dc",
+      "rule_id": "source_receipt_unresolved_work",
+      "subject_id": "T-41"
+    },
+    {
+      "detail_hash": "84a39e0eab234308",
+      "rule_id": "unclassified",
+      "subject_id": null
+    },
+    {
+      "detail_hash": "13c5015d6f0fe0c7",
+      "rule_id": "source_credential_unsafe",
+      "subject_id": "SRC-017"
+    },
+    {
+      "detail_hash": "c7e6f36c086c115e",
+      "rule_id": "unclassified",
+      "subject_id": null
+    }
+  ],
+  "problems": 4,
+  "receipt_id": "receipt-885af55c0f51",
+  "result": "INHERITED_BASELINE_MATCH",
+  "schema": "SAIMAIL_D3_SAIPEN_VALIDATION_1",
+  "source_tree_fingerprint": "f7ccf88d57ecc5e4f21fabcdfa2339996e0b1365463df1793ad56303c8298a59",
+  "validator_exit_code": 1,
+  "validator_summary": null,
+  "version": 1,
+  "warning_details_available": false,
+  "warning_lines": [],
+  "warnings": 23
+}

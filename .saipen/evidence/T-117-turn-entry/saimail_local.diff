@@ -1,0 +1,35 @@
+--- .saipen/evidence/T-117-turn-entry/before/saimail_local.py	2026-09-24 08:40:07.288456200 +0300
++++ saimail_local.py	2026-09-24 08:41:07.617224100 +0300
+@@ -252,7 +252,8 @@
+     query_requested = any(getattr(args, name) is not None for name in _INBOX_QUERY_ARGS)
+ 
+     def action():
+-        workspace = engine.load_workspace(args.workspace)
++        # Header-only: the secret-free view never reads a private key (T-117).
++        workspace = engine.load_workspace_headers(args.workspace)
+         if not query_requested:
+             return engine.list_inbox(workspace)
+         return engine.query_inbox(
+@@ -331,16 +332,19 @@
+     bridge = _saipen_engine()
+ 
+     def action():
++        # Header-only seam reads (telegrams, which SAIPEN runs at each automatic turn
++        # entry, plus enter and brief) load the secret-free view and never read a
++        # private key (T-117). Sending a telegram keeps the full load.
+         if args.saipen_action == "telegrams":
+-            workspace = _workspace_engine().load_workspace(args.workspace)
++            workspace = _workspace_engine().load_workspace_headers(args.workspace)
+             return bridge.telegrams(workspace, topic=args.topic,
+                                     scan_budget=args.scan_budget, cursor=args.cursor)
+         project = _saipen_project(args.project_root)
+         if args.saipen_action == "enter":
+-            workspace = _workspace_engine().load_workspace(args.workspace)
++            workspace = _workspace_engine().load_workspace_headers(args.workspace)
+             return bridge.enter(workspace, project["state"], project["identity"], seat=args.seat)
+         if args.saipen_action == "brief":
+-            workspace = _workspace_engine().load_workspace(args.workspace)
++            workspace = _workspace_engine().load_workspace_headers(args.workspace)
+             return bridge.work_brief(workspace, project["state"], project["identity"],
+                                      seat=args.seat, scan_budget=args.scan_budget,
+                                      cursor=args.cursor, context=args.context)

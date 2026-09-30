@@ -1,0 +1,66 @@
+{
+  "ticket": "T-72",
+  "phase": "VERIFY",
+  "corrective_of": "T-71",
+  "source_receipts": ["SRC-054", "SRC-055", "SRC-056", "SRC-057"],
+  "runtime": "Python 3.11.9 (sys.getrecursionlimit()=1000)",
+  "change_corridor": [
+    "lab/parse_shape.py (MAX_OBSERVER_JSON_NESTING = 64 + lexical preflight)",
+    "tests/test_parse_shape.py (boundary regression)",
+    "tests/test_parse_shape_resource_bounds.py (new dedicated matrix)",
+    "spec/12-STRICT-SCHEMA-RESOURCE-BOUND-v0.md (additive contract)",
+    ".saipen/evidence/T-72-validation-baseline.json, .saipen/evidence/T-72-verification.json"
+  ],
+  "unchanged": {
+    "lab/ally_generation_live.py": "79f9ae4e651509458f6acc8eda3b7814ae0ad67733afdbb45c27305810f3fc4c",
+    "strict_parser_functions": ["parse_generator_output", "parse_reviewer_output", "_strict_object"],
+    "production_saimail": "no file touched",
+    "max_input_chars": 4000,
+    "schema_version": "PARSE-SHAPE-1",
+    "sys_setrecursionlimit": "not used"
+  },
+  "red_control_prefix_subject": {
+    "method": "same module, pre-fix code path (preflight disabled), recursionlimit raised to 200000, exact defect bytes",
+    "depth_1100": "OK prefix -> RESOURCE_LIMIT postfix",
+    "depth_2000": "OK prefix -> RESOURCE_LIMIT postfix",
+    "meaning": "pre-fix bound depended on runtime recursion behavior; post-fix does not"
+  },
+  "runtime_independence_test": "tests/test_parse_shape_resource_bounds.py::test_over_bound_is_resource_limited_without_json_loads fails if json.loads is invoked above the explicit bound",
+  "focused": {
+    "command": "python -m pytest -q tests/test_parse_shape.py tests/test_parse_shape_resource_bounds.py",
+    "result": "49 passed"
+  },
+  "regressions": {
+    "command": "python -m pytest -q tests/test_project_corpus_reachability.py tests/test_project_corpus_generation_pilot.py tests/test_project_corpus_generation_privacy.py tests/test_ally_generation_gate.py tests/test_project_corpus_builder.py tests/test_project_corpus_pilot.py tests/test_project_corpus_artifacts.py tests/test_ally_generation_live.py",
+    "result": "227 passed"
+  },
+  "full_suite": {
+    "command": "python -m pytest -q",
+    "exit_code": 0,
+    "passed": 1693,
+    "failed": 0,
+    "skipped": 0
+  },
+  "historical_pins_sha256_after": {
+    "lab/out/project_corpus_reachability_live.json": "a9c7905af2d8b4a79849e811637946411c47c977c51a99cc8788b2ff75dff43b",
+    "lab/out/PROJECT_CORPUS_REACHABILITY_REPORT.md": "1d5f01a26030841ba3dcfa678939d33f53ba61eabfcf5fd1279d6e171150d3f7",
+    "lab/analysis/project_corpus_reachability.md": "1d5f01a26030841ba3dcfa678939d33f53ba61eabfcf5fd1279d6e171150d3f7",
+    "lab/analysis/project_corpus_reachability_closure.md": "c4ff5cd777750b2cc8170b2cb46170b0adf446e3a872b0ae30b3b5dcead97cf5",
+    "spec/11-STRICT-SCHEMA-OBSERVABILITY-v0.md": "6c681ce35645203f2ed098d1cf3f962f58544f78590a6195939965a0616aebf2",
+    "lab/ally_generation_live.py": "79f9ae4e651509458f6acc8eda3b7814ae0ad67733afdbb45c27305810f3fc4c"
+  },
+  "validator": {
+    "exit_code": 1,
+    "failures": [
+      "FAIL: source receipts -- DONE Work T-41 has unresolved source receipt SRC-017",
+      "FAIL: source receipts -- source credential gate: SOURCE_CREDENTIALS_UNSAFE credential pattern in exact active source SRC-036; supply a user-authorized replacement or amendment before release"
+    ],
+    "verdict": "CURRENT_FAIL / CARRIED_DEBT_UNCHANGED (DEBT-000066, identical to SCOUT baseline)"
+  },
+  "live_calls": {
+    "network": 0,
+    "model": 0,
+    "provider": 0,
+    "mail_or_attention_effects": 0
+  }
+}

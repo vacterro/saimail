@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-037:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-58 closed with verification evidence in LOG: verify -> PASS [target: T-58] conf: high -- pre-fix RED-1 ACKED consumed=0 second RESERVED; RED-2 2099 minted replacement; RED-3 forged 2000 won; post-fix regression named/preserved, overrides TypeError; focused 88, regressions 269, full 1264, validate VALID",
+      "text": "correct completed T-57 / B-011 without rewriting its DONE history",
+      "verification": "the Work this request created reached its own verification gate; see the T-58 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-58"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,117 @@
+{
+  "candidate": {
+    "version": "0.0.2a2",
+    "wheel_filename": "saimail-0.0.2a2-py3-none-any.whl",
+    "wheel_sha256": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d"
+  },
+  "created_utc": "2026-09-20T20:26:29Z",
+  "g17_note": "G17 ABSENT does not block D2 engineering closure; publication stays forbidden",
+  "gates": [
+    {
+      "evidence": "VERSION, wheel metadata, saimail-local --version",
+      "id": "G1",
+      "name": "VERSION CONSISTENCY",
+      "status": "PASS"
+    },
+    {
+      "evidence": "manifest content_proof (custody module, identity v2, --custody, custody status/migrate, first-run notice) + two-build content identity",
+      "id": "G2",
+      "name": "PACKAGE CONTENT",
+      "status": "PASS"
+    },
+    {
+      "evidence": "manifest custody.default + verifier first_run_notice",
+      "id": "G3",
+      "name": "CUSTODY DEFAULT",
+      "status": "PASS"
+    },
+    {
+      "evidence": "installed-wheel os-store proof",
+      "id": "G4",
+      "name": "CUSTODY SECURITY",
+      "status": "PASS"
+    },
+    {
+      "evidence": "LOCAL_ALPHA_VERIFICATION_1 install + module resolution",
+      "id": "G5",
+      "name": "CLEAN INSTALL",
+      "status": "PASS"
+    },
+    {
+      "evidence": "V2-01 acceptance from the installed wheel",
+      "id": "G6",
+      "name": "LOCAL WORKFLOW",
+      "status": "PASS"
+    },
+    {
+      "evidence": "installed FG-05 result",
+      "id": "G7",
+      "name": "FG-05",
+      "status": "PASS"
+    },
+    {
+      "evidence": "installed FG-06 verdict UTILITY_CONDITIONAL preserved",
+      "id": "G8",
+      "name": "FG-06",
+      "status": "PASS"
+    },
+    {
+      "evidence": "installed-wheel Windows os-store acceptance + migration proof",
+      "id": "G9",
+      "name": "CUSTODY ACCEPTANCE",
+      "status": "PASS"
+    },
+    {
+      "evidence": "bundle integrity + wheel/hash/checksum red controls",
+      "id": "G10",
+      "name": "INTEGRITY",
+      "status": "PASS"
+    },
+    {
+      "evidence": "candidate privacy scan + planted marker/key-material red controls",
+      "id": "G11",
+      "name": "PRIVACY",
+      "status": "PASS"
+    },
+    {
+      "evidence": "runtime counters zero on the verification path",
+      "id": "G12",
+      "name": "RUNTIME NETWORK/MODEL",
+      "status": "PASS"
+    },
+    {
+      "evidence": "external Linux / Python 3.13.5 LOCAL_ALPHA_VERIFICATION_1 PASS against the exact frozen wheel; proof sha256 2d77e13dd1e414e8642fb5a1b60e216e2136bb267bf1789c7e1169adfaa1d5c2; byte-identical copy stored; os-store status NOT_TESTED_HERE (Windows evidence remains platform authority)",
+      "id": "G13",
+      "name": "EXTERNAL INSTALL",
+      "status": "PASS"
+    },
+    {
+      "evidence": "README/spec/18/spec/17/spec/20 + D-055 updated to the exact a2 candidate; a1 history untouched",
+      "id": "G14",
+      "name": "DOCUMENTATION",
+      "status": "PASS"
+    },
+    {
+      "evidence": "canonical suite result file",
+      "id": "G15",
+      "name": "FULL SUITE",
+      "status": "PASS"
+    },
+    {
+      "evidence": "canonical SAIPEN validation; no new candidate-attributable failure",
+      "id": "G16",
+      "name": "SAIPEN",
+      "status": "PASS"
+    },
+    {
+      "evidence": "operator authorization absent; publication forbidden, not an engineering blocker",
+      "id": "G17",
+      "name": "PUBLICATION AUTHORIZATION",
+      "status": "ABSENT"
+    }
+  ],
+  "schema": "SAIMAIL_A2_GATE_EVALUATION_1",
+  "status": "PASS",
+  "terminal": "DONE",
+  "version": 1
+}

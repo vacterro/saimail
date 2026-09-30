@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-034:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute B-001 SAILETTER/HUMAN_PRIVATE handoff TARGETS A/B/C from V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260919_1614.md"
+    }
+  },
+  "derived_at": "2026-09-19T13:26:04Z",
+  "derived_from": "SRC-034",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "0e9a582d8d73d532a276d0d92f9be8aaf619b425f5a68a5a068b40f5f8bcad20"
+}

@@ -1,0 +1,43 @@
+{
+  "ok": false,
+  "code": "CONFORMANCE_UNHEALTHY",
+  "structural_gate": "pass",
+  "validator": {
+    "path": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\tools\\validate.py",
+    "launched": true,
+    "exit_code": 1,
+    "summary": "r-package-stale]: .saipen/extensions/subs/saiwiki/kitchen/OUTBOX.md [W-001] carries source_tree_fingerprint 'git-delta-v1:a666c486c65f99fa62f877813ea9a2b02c994c950cc7d5cd6547b999267abeaa' but the current tree computes 'git-delta-v1:780dbcc6a304036f6af60504df108a1321cb543a0344723636cec7d7ca1ef169' -- the tree changed since the package was produced (same HEAD or not), so it is stale and MUST NOT be collected (PROTOCOL.md § 6, T-543) -- reported under `--gate core`, where this producer is not being consumed; it FAILs under `--gate collect:saiwiki` and blocks nothing else\nWARN [producer-package-malformed]: .saipen/saitranslate/kitchen/OUTBOX.md fails strict OUTBOX parsing: OUTBOX:3 verified field must be a closed verdict (`PASS -- <command/result evidence>` | `FAIL -- <evidence>` | `BLOCKED -- <missing fact>`); arbitrary prose is never positive evidence (PROTOCOL.md § 2) -- reported under `--gate core`, where this producer is not being consumed; it FAILs under `--gate collect:saitranslate` and blocks nothing else\nWARN [subsaipen-uncollected]: 1 subSaipen OUTBOX entr(y/ies) sit at `status: ready` -- that is a finding waiting on `saipen sub collect`, visible only when someone runs it (extensions/subs/PROTOCOL.md § 4)\nWARN [cross-doc-drift]: cross-doc drift [ahead-stamp-repair] -- CORE.md must say a future-stamped LOG line is restamped to a defensible bound with a DEC naming the original, the replacement, and that the minute is inherited rather than measured. Without it the only sanctioned response is waiting, which keeps a false record and reds every gate until the clock catches up\nWARN [cross-doc-drift]: cross-doc drift [shortcut-memory-ban] -- BOOT.md step 7 must order § 1.10's table read before acting on a shortcut and explicitly state that memory is never a source for it. An agent that believes it knows what a key means answers from recall rather than reading the file\nWARN [cross-doc-drift]: ... and 13 more like the above\nValidation FAILED: 3 problem(s), 21 warning(s)"
+  },
+  "conformance_status": {
+    "status": "CURRENT_FAIL",
+    "gate": "core",
+    "reason": "canonical validator reports FAIL for the current checkpoint",
+    "receipt": {
+      "board_hash": "c84288a2185622a1",
+      "content_hash": "77aaca6c2787ded2",
+      "exit_code": 1,
+      "gate": "core",
+      "kind": "conformance_receipt",
+      "log_hash": "3c0e54fca38af3ad",
+      "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+      "receipt_id": "receipt-c928c7971876",
+      "schema_version": 2,
+      "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+      "source_tree_fingerprint": "git-delta-v1:780dbcc6a304036f6af60504df108a1321cb543a0344723636cec7d7ca1ef169",
+      "state_hash": "6ddc75d8d1b343c3",
+      "timestamp_utc": "2026-09-20T18:05:22.156394Z",
+      "validator_protocol_version": "1",
+      "verdict": "FAIL"
+    },
+    "validator": {
+      "validator_path": "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN\\tools\\validate.py",
+      "validator_protocol_version": "1",
+      "project_protocol_version": "8",
+      "gate": "core",
+      "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+      "source_tree_fingerprint": "git-delta-v1:780dbcc6a304036f6af60504df108a1321cb543a0344723636cec7d7ca1ef169"
+    }
+  },
+  "reason": "canonical validator reports FAIL for the current checkpoint",
+  "detail": "conformance is CURRENT_FAIL: canonical validator reports FAIL for the current checkpoint"
+}

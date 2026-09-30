@@ -1,0 +1,8 @@
+{
+  "schema": "T147_REGRESSION_ORACLE_1",
+  "command": "python -m pytest -q tests/test_public_recipient_management.py",
+  "criteria_sha256": {
+    "tests/test_public_recipient_management.py": "8f047374817aca36f6bcfd6fd607e998617d710d6056b16c6c81052aea717ff4",
+    "pyproject.toml": "1c4604335ed3d5e6826c9448fa93205d882eb1fab6977814ed49967c0a69d1db"
+  }
+}

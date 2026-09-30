@@ -1,0 +1,7 @@
+{
+  "schema": "T148_ORACLE_1",
+  "sha256": {
+    "tests/test_recipient_registration_concurrency.py": "a3997c874309aeb0da5274ab06b815fb7a4db5d84d53ef41168dd337ef926bd9",
+    "pyproject.toml": "1c4604335ed3d5e6826c9448fa93205d882eb1fab6977814ed49967c0a69d1db"
+  }
+}

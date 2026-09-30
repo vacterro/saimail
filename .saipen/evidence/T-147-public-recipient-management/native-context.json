@@ -1,0 +1,17 @@
+{
+  "schema": "T147_NATIVE_REVIEW_CONTEXT_1",
+  "created": "2026-09-30T14:27:13.894594+00:00",
+  "workspace": "V:\\_TEMP_\\saimail-T147-SAIFREN-folagh6g",
+  "work": "T-147",
+  "authorization": [
+    "SRC-112",
+    "SRC-113"
+  ],
+  "purpose": "Independent product review; not an eligible-letter study observation",
+  "source_evidence_supplied": false,
+  "prior_root_chat_supplied": false,
+  "native_session_required_before_source": true,
+  "steps_per_invocation": 6,
+  "timeout_per_invocation_seconds": 180,
+  "max_invocations": 2
+}

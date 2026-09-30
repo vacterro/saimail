@@ -1,0 +1,75 @@
+{
+  "schema": "WATCHED_RELATION_COVERAGE_REGISTRATION_1",
+  "version": 1,
+  "experiment_id": "U1-WATCHED-COVERAGE",
+  "title": "Drift-safe coverage without new ignore authority: receiver-owned watched canonical target",
+  "mechanism_owner": "receiver",
+  "selector_layer": "R1 selector (saimail.selector.select) over a decoded sailang.frame.TriageView",
+  "dependency_class": "R1 attention coverage AFTER an R1 TriageView exists; NOT the Post Office header DEFER fallback, NOT transport/header scan opens, NOT the V2-02 fallback-open count, NOT the unknown wire-token fallback and NOT the opaque-claim fallback",
+  "v202_boundary": "U1 numbers must never be compared directly to V2-02 fallback-open savings; V2-02 measured transport/header-policy suppression, U1 measures R1 attention escalation",
+  "watched_relation_definition": "A watched relation is a canonical relation target appearing in the existing R1 relation_targets projection. The sender may assert the relation; the receiver alone declares whether the target is watched. Watching does not validate the sender assertion: it only raises receiver attention.",
+  "treatment_variable": "Interest.watched",
+  "single_changed_field": "watched",
+  "baseline_watched": [],
+  "treatment_watched": ["sha256:0c79f4ffb3c3d063f5be0460d52361fdd3d4a8788b64736fef83df4f853c6827"],
+  "watched_target": "sha256:0c79f4ffb3c3d063f5be0460d52361fdd3d4a8788b64736fef83df4f853c6827",
+  "other_target": "sha256:d0b340fad25730ee491a55e069714c769f701fc960c7a14b41fe370b01f24b5c",
+  "baseline_interest": {
+    "atoms": ["QUEUE_OWNERSHIP_STALE", "RETRY", "DUPLICATE_EXECUTION", "DEADLOCK", "CONCURRENCY", "RECOVERY"],
+    "subjects": ["queue", "recovery"],
+    "noise": ["CHECKPOINT", "TIMESTAMP", "METADATA"],
+    "watched": []
+  },
+  "treatment_interest": {
+    "atoms": ["QUEUE_OWNERSHIP_STALE", "RETRY", "DUPLICATE_EXECUTION", "DEADLOCK", "CONCURRENCY", "RECOVERY"],
+    "subjects": ["queue", "recovery"],
+    "noise": ["CHECKPOINT", "TIMESTAMP", "METADATA"],
+    "watched": ["sha256:0c79f4ffb3c3d063f5be0460d52361fdd3d4a8788b64736fef83df4f853c6827"]
+  },
+  "fixture_path": "lab/watched_coverage_fixtures.json",
+  "fixture_sha256": "ab11da7a9f51d4d9716d4f94c27b374412977d5c675deaf17f47053bf447cd9f",
+  "directions": ["A_TO_B", "B_TO_A"],
+  "workload_ids": ["DRIFT_RESCUE", "OTHER_TARGET", "NO_RELATION_RELEVANT", "RELATION_SPAM", "NOISE_OVERLAP", "MANDATORY_OPEN_CONTROL", "UNKNOWN_OPAQUE_CONTROL"],
+  "selector_implementation_path": "saimail/selector.py",
+  "frame_projection_identity": "sailang/frame.py FRAME_VERSION 4, BATCH_MARKER SAIB4, dictionary sailang/dictionary/v1.json",
+  "truth_authority": "receiver need declared by the fixture row, independent of the selector verdict; a sender-asserted relation is an attention hint, never relevance truth",
+  "truth_visible_to_selector": false,
+  "paired_input_requirement": "baseline and treatment must receive byte-identical records and frames; the only changed receiver input is the watched set",
+  "success_criteria": {
+    "relevant_attention_upgrades": "> 0 for DRIFT_RESCUE",
+    "safety_invariants": "all hold",
+    "no_ignore_authority_created": true,
+    "attention_is_raise_only": true
+  },
+  "safety_invariants": {
+    "per_message_depth": "depth(treatment_verdict) >= depth(baseline_verdict)",
+    "DOWNWARD_ATTENTION_CHANGES": 0,
+    "NEW_FALSE_IGNORES": 0,
+    "NEW_MISSED_RELEVANT": 0,
+    "BASELINE_REQUIRED_OPEN_DOWNGRADES": 0,
+    "any_violation_terminal_outcome": "SAFETY_INVARIANT_VIOLATION",
+    "safety_overrides_coverage": true
+  },
+  "terminal_outcomes": ["COVERAGE_GAIN_NO_EXTRA_OPENS", "COVERAGE_GAIN_WITH_EXTRA_OPENS", "NO_COVERAGE_GAIN", "SAFETY_INVARIANT_VIOLATION"],
+  "zero_call_budget": {"network": 0, "model": 0, "provider": 0},
+  "production_promotion": "NONE",
+  "no_production_default_change": true,
+  "frozen_release_mutation": "NONE",
+  "post_result_adjustment": "FORBIDDEN: no threshold, fixture, truth, watched-target, interest-field, acceptance-criteria or terminal-outcome change after observing the result",
+  "result_schema": "WATCHED_COVERAGE_RESULT_1",
+  "output_directory_rule": "the evidence output directory must be new and empty; existing evidence is never overwritten",
+  "manifest_path": "lab/watched_coverage_manifest.json",
+  "historical_input_copies": [
+    "lab/history/u1-watched-coverage/watched_coverage_fixtures.json",
+    "lab/history/u1-watched-coverage/watched_coverage_registration.json"
+  ],
+  "r1_stress_control": {
+    "scope": "the unchanged current R1 stress corpus (bench/selector_corpus.py), measured separately by the existing selector",
+    "reduced_by_this_experiment": false,
+    "unknown_atom_and_opaque_claim_fallbacks_are_a_different_stage": true
+  },
+  "latency": "NOT_MEASURED",
+  "subjective_pleasantness": "NOT_MEASURED",
+  "frozen_by": "astra",
+  "frozen_at": "2026-09-20T21:20:00Z"
+}

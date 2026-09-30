@@ -1,0 +1,29 @@
+{
+  "clauses": {
+    "SRC-075:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Recover state; verify the original external proof SHA256 and strict JSON, all nineteen acceptance checks and frozen wheel identity; retain original and byte-identical evidence copy."
+    },
+    "SRC-075:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Preserve frozen candidate, supplied JSON and advertised platform scope; no rebuild of the frozen candidate, publication, commit, tag, push or V2-02 start."
+    },
+    "SRC-075:R003": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Run focused release/integrity/repository checks, full suite and SAIPEN validation; compare against inherited 3 FAIL / 22 WARN and require no new V2-04 failure."
+    },
+    "SRC-075:R004": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Close T-86/V2-04 canonically, update CURRENT-STATE and FUTURE-GATES-V2 truthfully; V2-01/V2-04 DONE, V2-02 next NOT STARTED, V2-03 optional NOT STARTED; final report and STOP."
+    }
+  },
+  "derived_at": "2026-09-20T18:14:29Z",
+  "derived_from": "SRC-075",
+  "interpretation_revision": 4,
+  "schema_version": 1,
+  "source_sha256": "e727a5e2303d7b05f4451eb97cd638b03babeb43bafe575c8f5c5af745537188"
+}

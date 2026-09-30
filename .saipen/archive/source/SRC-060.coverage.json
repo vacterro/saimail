@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-060:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-74 closed with verification evidence in LOG: review -> PASS [target: T-74] conf: high -- python V:\\_TEMP_\\opencode\\t74_audit.py reported every audit check true: registration/implementation/dry/live/attempt bindings; recomputed request-body evidence; deterministic report and analysis re-render; per-function 4096/2048/16 budgets; response_format absent; zero corpus or prompt plaintext; zero side effects",
+      "text": "\"SAIMAIL SAIHANDOFF 20260920_0339 (V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260920_0339.md): remove the local 4000-character truncation from the EPHEMERAL parser-input path without weakening durable privacy, then run exactly one real-project completion-budget-only reachability experiment over the frozen B-018 corpus (Target A freeze contract, Target B LAB-only full-visible-output parser path, Target C one 2-role-swapped 4096 generator / 2048 reviewer / response_format absent live run, max 6 calls)\"",
+      "verification": "the Work this request created reached its own verification gate; see the T-74 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-74"
+    }
+  },
+  "schema_version": 1
+}

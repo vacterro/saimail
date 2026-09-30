@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-044:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIMAIL handoff: T-61/B-016 corrective closure - make real reviewer invocation the mint boundary for reviewed state, require corpus evidence refs for PASS on OBSERVATION_SUPPORT and COUNTEREVIDENCE_ADEQUACY; handoff file: V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260919_2241.md"
+    }
+  },
+  "derived_at": "2026-09-19T19:50:55Z",
+  "derived_from": "SRC-044",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "ddbd168ccba151f1703716aff8b245d8e6308e3f446d9c188512d380f6076951"
+}

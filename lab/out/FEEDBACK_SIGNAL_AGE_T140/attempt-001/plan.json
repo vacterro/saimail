@@ -1,0 +1,36 @@
+{
+  "baseline": [
+    "awareness",
+    "metrics"
+  ],
+  "candidate": [
+    "cycle"
+  ],
+  "claim_boundary": "Scripted receiver decisions and fresh CLI processes; no model, field-use or comfort claim.",
+  "controls": [
+    "Lost correspondence state removes reserve",
+    "Changed result bytes fail recheck",
+    "Changed host event refuses continuation",
+    "STALE correction removes reserve"
+  ],
+  "focus_candidate": "HostClient.focus over the same cycle",
+  "focus_hypothesis": "Host-owned focus preserves reading references, context, coverage and receiver feedback with fewer agent-visible bytes.",
+  "harness_sha256": "473f9512cc74257595bcdf70557ad7aa8bd24aba4c9a9c047b9d63a0479e6ace",
+  "hypothesis": "One cycle returns equivalent discovery and reason feedback with fewer CLI invocations.",
+  "inputs": {
+    "after": "a18dd73bc2bc206407f3f703732dc920bd3e9572bfde8f78967e59c6d3432c0c",
+    "before": "f631cc98c105907b113e94dbd6939d8c6aba6aa11fc41096473bad50d7a50c01"
+  },
+  "network_calls": 0,
+  "primary_measure": "Actual CLI invocations, including fresh contract negotiation",
+  "repetitions": 3,
+  "schema": "SAIMAIL_AGENT_CYCLE_EXPERIMENT_1",
+  "secondary_measures": [
+    "Normalized JSON payload bytes",
+    "Agent-visible normalized JSON bytes",
+    "Descriptive wall time only"
+  ],
+  "temporal_comparison": "Lifetime metrics match exactly; separately sampled seven-day windows must preserve active assessments and exclusion counts. Observation times may differ.",
+  "version": 3,
+  "work_basis": "Controlled replay of actual T-137 before/after CLI race evidence"
+}

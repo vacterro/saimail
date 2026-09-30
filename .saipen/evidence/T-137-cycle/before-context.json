@@ -1,0 +1,12 @@
+{
+  "schema": "SAIMAIL_T137_CONTEXT_CONTROL_1",
+  "verdict": "FAIL",
+  "cli_exit": 0,
+  "status": "OK",
+  "admission_events": [
+    "40",
+    "41"
+  ],
+  "verifier": "9febd8d11ef8818f1c00e4966f8a4460dbc8ae9914dd9aee50ed1bf52b2e1be8",
+  "subject": "a4a8bf6c2bea569ea64d02e74a47706849501b6db954d0784d33812be62be11f"
+}

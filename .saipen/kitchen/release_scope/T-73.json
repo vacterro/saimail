@@ -1,0 +1,21 @@
+{
+  "op_id": "scope-c0b4bb37abc04a04a7cefcf1084e1326",
+  "paths": {
+    "lab/LATEST.md": "5a2a0ca058141482be10293d3e9ee4c28aa59856ee87804bac92dbbdc6e0d1ad",
+    "lab/analysis/structured_output_capability_20260920T001732Z.md": "36de55bdfb9c9c9103c8427d0d1cb2a78a0bfa0e235c63f229b483f28d3d48cd",
+    "lab/out/STRUCTURED_OUTPUT_CAPABILITY_REPORT_20260920T001732Z.md": "511dea08ab7b95be28da62665c45201643a7b6854db6909891dc75a7d69ddc99",
+    "lab/out/structured_output_capability_20260920T001732Z.json": "687da1f27d95d5287f8d217d172407d76930b73849caa3910528fc18420bb40d",
+    "lab/out/structured_output_capability_dry_run.json": "e4e29d6948868cf37866ed85c87075bc0d702398c426eadf48a1571368450c93",
+    "lab/structured_output_capability.py": "f0dad1cce747fd006cea2ecf3e91f8669c9bc5909803714f0319a3db83a7ae58",
+    "lab/structured_output_capability_registration.json": "e696db4c786ea60b9764b50e924fd93ed505efdf1b8b366529600ac100c4ffdf",
+    "tests/test_structured_output_capability.py": "63c893dcdaf46fb6a225884ec4a4dcfd9c63075c8f65e3bb7ec13d4c8c6bfd2b",
+    "tests/test_structured_output_transport.py": "04b456d651e37f97f357e5c26e64e4dbc1c5feeef982ae2b24f11b1456805206"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-20T00:22:48Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:e7ec72e4d71274a6064ca40748ab70d925c016fad45a71551861a1bbfd5f9fb4",
+  "ticket": "T-73"
+}

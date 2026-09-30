@@ -17,6 +17,8 @@ from __future__ import annotations
 
 import json
 import os
+import threading
+import time
 
 import pytest
 
@@ -30,8 +32,7 @@ QtWidgets = pytest.importorskip("PySide6.QtWidgets", reason="optional gui extra"
 QtGui = pytest.importorskip("PySide6.QtGui")
 QtCore = pytest.importorskip("PySide6.QtCore")
 
-from saimail import gui_app, gui_theme  # noqa: E402
-
+from saimail import gui_app, gui_theme
 
 # --------------------------------------------------------------------------
 # shared fixtures: two real workspaces, one message delivered A -> B
@@ -412,7 +413,9 @@ def test_640x480_window_is_usable_and_has_no_overlapping_critical_controls(windo
     for name in ("refresh_button", "open_button", "reply_button", "send_button",
                  "new_button", "inbox"):
         widget = getattr(win, name)
-        rects[name] = widget.geometry().translated(widget.mapTo(win, QtCore.QPoint()))
+        if not widget.isVisible():
+            continue
+        rects[name] = QtCore.QRect(widget.mapTo(win, QtCore.QPoint()), widget.size())
     names = list(rects)
     for i, first in enumerate(names):
         for second in names[i + 1:]:
@@ -420,6 +423,21 @@ def test_640x480_window_is_usable_and_has_no_overlapping_critical_controls(windo
             assert overlap.width() <= 0 or overlap.height() <= 0, (
                 f"{first} and {second} overlap at 640x480")
     assert win.layout() is not None
+    # All three daily tabs must keep click targets disjoint at the supported
+    # minimum. An offscreen target remains reachable by explicit scrolling.
+    for index in range(win.tabs.count()):
+        win.tabs.setCurrentIndex(index)
+        QtWidgets.QApplication.instance().processEvents()
+        page = win.tabs.currentWidget()
+        controls = page.findChildren(QtWidgets.QLineEdit) + page.findChildren(QtWidgets.QPushButton)
+        rectangles = [(widget, QtCore.QRect(widget.mapTo(win, QtCore.QPoint()), widget.size()))
+                      for widget in controls if widget.isVisible()]
+        for i, (first, rect) in enumerate(rectangles):
+            for second, other in rectangles[i + 1:]:
+                overlap = rect.intersected(other)
+                assert overlap.width() <= 0 or overlap.height() <= 0, (
+                    f"tab {index}: {first.objectName() or first.text()} overlaps {second.objectName() or second.text()}")
+    win.tabs.setCurrentIndex(0)
 
 
 def test_open_action_exists_is_visible_and_is_text_labelled(window):
@@ -614,11 +632,51 @@ def test_local_only_is_stated_in_text(window):
     assert "LOCAL ONLY" in win.windowTitle()
 
 
+def test_explicit_key_job_keeps_ui_responsive_and_blocks_competing_actions(window, tmp_path):
+    win = window
+    assert win._key_job is None
+    started, release = threading.Event(), threading.Event()
+
+    def create():
+        started.set()
+        release.wait(5)
+        return win.model.create_workspace(tmp_path / "encrypted", "operator", "master-key",
+                                          password="random words long passphrase 82374")
+
+    win._run_key_job(create)
+    try:
+        assert started.wait(1)
+        assert not win.centralWidget().isEnabled()
+        assert all(not shortcut.isEnabled() for shortcut in win._shortcut_handles)
+        # An event handled now proves that the requested KDF is off the UI
+        # thread. There is no timer, polling daemon or automatic key lookup.
+        QtWidgets.QApplication.instance().processEvents()
+        assert win._key_job is not None
+    finally:
+        release.set()
+        deadline = time.monotonic() + 10
+        while win._key_job is not None and time.monotonic() < deadline:
+            QtWidgets.QApplication.instance().processEvents()
+            time.sleep(0.005)
+        if win._key_job is not None:
+            win._key_job.wait(10000)
+            QtWidgets.QApplication.instance().processEvents()
+    assert win._key_job is None and win.model.workspace.custody == "master-key"
+    assert win.centralWidget().isEnabled()
+    win.key_result.setPlainText("synthetic recovery key")
+    win.agent_body.setPlainText("synthetic private letter")
+    win.on_lock()
+    assert win.model.locked
+    assert win.key_result.toPlainText() == win.agent_body.toPlainText() == ""
+
+
 def test_gui_module_carries_no_network_or_background_machinery():
     import inspect
 
     source = inspect.getsource(gui_app)
-    for banned in ("QNetwork", "http", "socket", "threading", "QThread",
+    # Requested password derivation runs off the UI thread. No polling,
+    # network, or unsolicited work is allowed; key jobs start only on a click.
+    for banned in ("QNetwork", "http", "socket", "threading",
                    "QTimer", "requests", "urllib"):
         assert banned not in source, f"the GUI must not carry {banned!r}"
 

@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-095:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Repair D3 release-control and cold-recovery inconsistencies after T-106: fix gate engine, dead assertion, missing G15/G16 evidence, recovery doc contradictions, wrong external verification target, missing a3 proof admission path, test gaps"
+    }
+  },
+  "derived_at": "2026-09-23T17:31:47Z",
+  "derived_from": "SRC-095",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "cf18ed4fff2bde3744bc67ff0d7cc70dad48189daea1b2d7cf7b83a823b75f9a"
+}

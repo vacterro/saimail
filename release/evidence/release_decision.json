@@ -1,0 +1,154 @@
+{
+  "schema": "SAIMAIL_RELEASE_DECISION_1",
+  "version": 1,
+  "created_utc": "2026-09-20T19:38:08Z",
+  "outcome": "NEW_CANDIDATE_REQUIRED",
+  "decision_reason": "The frozen 0.0.2a1 wheel predates V3-01 (no saimail/custody.py, no identity schema v2, no --custody/os-store CLI). Its external proof binds exactly those bytes. The current checkout is not externally verified, and V3-01 is intended for distribution, so the frozen candidate may be published only as the pre-V3-01 historical alpha, and the current capability needs a new candidate identity.",
+  "frozen_artifact": {
+    "identity_kind": "EXACT_WHEEL_BYTES",
+    "filename": "saimail-0.0.2a1-py3-none-any.whl",
+    "sha256": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+    "size_bytes": 370976,
+    "member_count": 57,
+    "content_digest_sha256": "d060491b6fe865e6844f353aaa691d97eaa92db7e1a75c13617e658993bdab8f",
+    "publication_status": "NOT_PUBLISHED",
+    "classification": "HISTORICAL_VERIFIED_ALPHA",
+    "has_custody_module": false,
+    "identity_schemas": ["SAIMAIL_LOCAL_IDENTITY_1"],
+    "cli_custody_commands": false
+  },
+  "current_source_delta": {
+    "post_candidate_source_delta": ["V3-01"],
+    "has_custody_module": true,
+    "has_os_store_custody": true,
+    "identity_schemas": ["SAIMAIL_LOCAL_IDENTITY_1", "SAIMAIL_LOCAL_IDENTITY_2"],
+    "declared_version": "0.0.2a1",
+    "classification": "CURRENT_SOURCE_CAPABILITY",
+    "note": "The checkout contains saimail/custody.py and os-store custody; no distributable artifact of the current checkout exists, and none is externally verified."
+  },
+  "version_decision": {
+    "current_frozen_artifact_version": "0.0.2a1",
+    "current_checkout_declared_version": "0.0.2a1",
+    "next_candidate_version": "0.0.2a2",
+    "intentional_difference": "The checkout still declares 0.0.2a1 although it contains post-freeze V3-01 code. The version string is not artifact identity (D-052): the frozen wheel is identified by its SHA-256, and the next candidate gate (D2) owns the version-surface bump to 0.0.2a2 when it builds and freezes the new wheel."
+  },
+  "custody_default_decision": {
+    "decision": "KEEP_RAW_DEFAULT",
+    "record": "spec/DECISIONS-D054.md",
+    "options_evaluated": [
+      "KEEP_RAW_DEFAULT",
+      "OS_STORE_DEFAULT_WHERE_SUPPORTED",
+      "REQUIRE_EXPLICIT_CHOICE"
+    ],
+    "rationale": "The zero-required-dependency core install contract is documented (pyproject.toml, README, D-052, D-053); an os-store default would put keyring on the ordinary path or force a silent degradation that spec/20 excludes. OS-store backend evidence exists on Windows only (WinVaultKeyring classification and one disposable smoke); the external proof environment is Linux, so a protected default would make an unproven platform path primary. An explicit-choice requirement would break the documented init compatibility without an observed need.",
+    "next_candidate_requirements": [
+      "keep raw as the documented default and os-store as the explicit opt-in",
+      "keep the base-path install contract free of required runtime dependencies",
+      "carry the raw-custody warning on the first-run surface without changing behavior",
+      "re-evaluate the default only when a second supported platform has verified OS-store backend evidence"
+    ]
+  },
+  "support_scope": {
+    "platform_proven_for_frozen": "CPython 3.11 on win32 (local clean-install and verification evidence) plus Linux / Python 3.13.5 (external proof, exact wheel bytes only)",
+    "python_scope": ">=3.11",
+    "external_evidence_scope": "FROZEN_WHEEL_ONLY",
+    "next_candidate_scope": "UNCHANGED_UNTIL_PROVEN"
+  },
+  "claims": [
+    {"claim": "package_installability", "frozen_0_0_2a1": "PROVEN", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "release/evidence/external_proof_acceptance.json (frozen); tests/test_clean_install.py builds and installs the current wheel locally"},
+    {"claim": "stable_local_cli", "frozen_0_0_2a1": "PROVEN", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "LOCAL_ALPHA_VERIFICATION_1 saimail_local_version PASS; tests/test_local_entrypoint.py"},
+    {"claim": "persistent_workspace", "frozen_0_0_2a1": "PROVEN", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "V2-01 acceptance PASS in release/evidence/local_alpha_verification.json; tests/test_local_workspace_acceptance.py"},
+    {"claim": "send_list_open_restart_dedup", "frozen_0_0_2a1": "PROVEN", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "V2-01 acceptance workflow; tests/test_local_workspace.py"},
+    {"claim": "fg05", "frozen_0_0_2a1": "PROVEN", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "LOCAL_SCENARIO_RESULT_1 PASS (local and external); spec/15-LOCAL-SCENARIO-v0.md"},
+    {"claim": "fg06", "frozen_0_0_2a1": "PROVEN", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "FG06_UTILITY_RESULT_1 UTILITY_CONDITIONAL (local and external); spec/16-UTILITY-AND-LOCAL-ENTRYPOINT-v0.md"},
+    {"claim": "external_install", "frozen_0_0_2a1": "PROVEN", "current_checkout": "NOT_PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "release/evidence/SAIMAIL_V2-04_external_linux_verification.json; binds wheel ed930e38 only"},
+    {"claim": "windows_support_evidence", "frozen_0_0_2a1": "PROVEN", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "release/evidence/local_alpha_verification.json; canonical suite on CPython 3.11 win32"},
+    {"claim": "linux_external_evidence", "frozen_0_0_2a1": "PROVEN", "current_checkout": "NOT_PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "external proof, Linux / Python 3.13.5, exact frozen wheel only"},
+    {"claim": "raw_custody", "frozen_0_0_2a1": "PROVEN", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "SAIMAIL_LOCAL_IDENTITY_1 in the frozen wheel; spec/17-LOCAL-WORKSPACE-v0.md"},
+    {"claim": "os_store_custody", "frozen_0_0_2a1": "ABSENT", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "checkout only: saimail/custody.py, spec/20-LOCAL-KEY-CUSTODY-v0.md, D-053, tests/test_workspace_custody.py"},
+    {"claim": "custody_migration", "frozen_0_0_2a1": "ABSENT", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "checkout only: custody migrate transactional evidence in tests/test_workspace_custody.py"},
+    {"claim": "copied_workspace_protection", "frozen_0_0_2a1": "ABSENT", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "checkout only, os-store mode: WORKSPACE_DIRECTORY_COPY_ALONE_DOES_NOT_REVEAL_PRIVATE_IDENTITY_KEYS objective in spec/20"},
+    {"claim": "zero_runtime_network_model", "frozen_0_0_2a1": "PROVEN", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "runtime counters 0 in local and external proofs; zero-network tripwire in the entrypoint"},
+    {"claim": "privacy_checks", "frozen_0_0_2a1": "PROVEN", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "privacy PASS with no private key material in both proofs; release privacy scan with planted-marker red control"},
+    {"claim": "integrity_checks", "frozen_0_0_2a1": "PROVEN", "current_checkout": "PROVEN", "next_distributable_candidate": "NOT_PROVEN", "evidence": "exact wheel SHA-256, SHA256SUMS, corrupted-wheel and corrupted-hash red controls in tests/test_local_alpha_release.py"}
+  ],
+  "unproven_for_next_candidate": [
+    "a new wheel's exact identity and hash",
+    "clean install of that new wheel",
+    "external install proof for that new wheel",
+    "privacy scan of the new bundle",
+    "integrity red controls for the new bundle",
+    "the custody default as actually shipped",
+    "version surfaces at 0.0.2a2",
+    "publication authorization (G17)"
+  ],
+  "residual_risks": [
+    "raw default custody: a copied default workspace directory is a copied identity (spec/20 threat cases A/B)",
+    "same-user malware and admin/kernel compromise are explicitly not protected in any mode",
+    "loss, reinstall or OS-account migration may strand os-store keys; availability is a stated limitation",
+    "the OS credential store becomes an operational dependency in protected mode",
+    "utility remains UTILITY_CONDITIONAL, not universal",
+    "semantic reviewer reliability remains not demonstrated (V2-03 optional research)",
+    "inherited SAIPEN debt: 3 FAIL / 21 WARN (SRC-017/T-41 linkage, SRC-036, stale improve-report fingerprint) plus SAIPEN_DIGEST_DRIFT",
+    "T-75 remains BLOCKED on historical T-41 release-linkage accounting",
+    "the worktree is dirty; no commit uniquely identifies the frozen candidate (SHA-256 is the identity)",
+    "no package-index publication convention is established in this repository"
+  ],
+  "metadata_status": {
+    "locale_mirrors": "CORRECTED 2026-09-20 (README.ee/ded/ja v0.0.1 -> v0.0.2a1); a repo-consistency test now derives the expected value from VERSION",
+    "version_surface_agreement": "AGREES (VERSION is the canonical authority)",
+    "frozen_bundle_metadata": "UNTOUCHED (wheel, manifest, checksums and bundle README unchanged)",
+    "changelog": "0.0.2a1 section present; the 0.0.2a2 section belongs to the next candidate gate"
+  },
+  "gates": [
+    {"id": "G1", "name": "VERSION CONSISTENCY", "criterion": "All authoritative version surfaces agree."},
+    {"id": "G2", "name": "PACKAGE CONTENT", "criterion": "The candidate contains all intended current-source features."},
+    {"id": "G3", "name": "CUSTODY DEFAULT", "criterion": "The D1 decision is implemented exactly."},
+    {"id": "G4", "name": "CUSTODY SECURITY", "criterion": "Protected mode contains no raw private keys and fails closed."},
+    {"id": "G5", "name": "CLEAN INSTALL", "criterion": "Fresh environment outside the checkout."},
+    {"id": "G6", "name": "LOCAL WORKFLOW", "criterion": "V2-01 acceptance passes."},
+    {"id": "G7", "name": "FG-05", "criterion": "PASS."},
+    {"id": "G8", "name": "FG-06", "criterion": "UTILITY_CONDITIONAL preserved honestly."},
+    {"id": "G9", "name": "CUSTODY ACCEPTANCE", "criterion": "Protected workspace init/load/restart/migration passes on a supported host."},
+    {"id": "G10", "name": "INTEGRITY", "criterion": "Exact candidate hashes plus a corruption red control."},
+    {"id": "G11", "name": "PRIVACY", "criterion": "Artifact and evidence secret scan plus a red control."},
+    {"id": "G12", "name": "RUNTIME NETWORK/MODEL", "criterion": "Zero unless a future contract explicitly changes this."},
+    {"id": "G13", "name": "EXTERNAL INSTALL", "criterion": "A genuinely separate environment proves the exact new candidate."},
+    {"id": "G14", "name": "DOCUMENTATION", "criterion": "Claims match the exact candidate."},
+    {"id": "G15", "name": "FULL SUITE", "criterion": "Green."},
+    {"id": "G16", "name": "SAIPEN", "criterion": "No new candidate-attributable validation failure."},
+    {"id": "G17", "name": "PUBLICATION AUTHORIZATION", "criterion": "Explicit operator publication approval exists; without it publication is forbidden."}
+  ],
+  "publication_mechanics": {
+    "stages": [
+      {"stage": "LOCAL_CANDIDATE_BUILD", "required": true, "state": "ESTABLISHED", "template": "python tools/local_alpha_release.py build --out release/local-alpha-0.0.2a2", "note": "TEMPLATE NOT EXECUTED; D2 owns the actual build directory and manifest."},
+      {"stage": "GIT_COMMIT", "required": true, "state": "CONVENTION_EXISTS", "template": "git add <closure paths> && git commit", "note": "The repository records closure sets as commits (T-53); no commit uniquely identifies the frozen candidate, and D2 must record exact source identity."},
+      {"stage": "GIT_TAG", "required": true, "state": "CONVENTION_EXISTS", "template": "git tag -a v0.0.2a2 -m \"saimail 0.0.2a2 local alpha\"", "note": "TEMPLATE NOT EXECUTED; latest existing tag is v0.0.1 at 2ca4900b4dda2890e8e74c6e82003af30f86eb4f."},
+      {"stage": "GITHUB_RELEASE", "required": true, "state": "CONVENTION_EXISTS", "template": "gh release create v0.0.2a2 --notes-file <notes>", "note": "TEMPLATE NOT EXECUTED; a v0.0.1 GitHub release surface was recorded by T-54."},
+      {"stage": "PACKAGE_INDEX_UPLOAD", "required": false, "state": "NOT_ESTABLISHED", "template": null, "note": "No PyPI or other package-index convention is documented in this repository; an operator decision would be required first."}
+    ],
+    "conventions": {
+      "git_tags": "v0.0.1 exists; no post-0.0.1 tag",
+      "github_releases": "v0.0.1 release surface recorded by T-54 / SRC-033",
+      "package_index": "NOT_ESTABLISHED",
+      "remote_verification": "NOT_PERFORMED (no service authenticated to; remote release state not inferred)"
+    },
+    "secrets": "NONE; no stage authenticates to any service in D1"
+  },
+  "publication_authorization": "ABSENT",
+  "publication": "NONE",
+  "next_target": {
+    "gate": "D2",
+    "name": "Post-V3-01 release candidate refresh",
+    "status": "NOT_STARTED",
+    "job": [
+      "implement the D1 custody-default decision (keep raw default; first-run warning requirement)",
+      "assign the next prerelease version 0.0.2a2",
+      "build a new candidate bundle",
+      "verify the exact new artifact locally",
+      "obtain external proof for that exact artifact",
+      "preserve historical 0.0.2a1 evidence",
+      "stop before publication"
+    ]
+  }
+}

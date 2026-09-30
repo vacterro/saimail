@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-080:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-92 closed with verification evidence in LOG: verify -> PASS [target: T-92] conf: high -- python -m pytest -q: 2211 passed, 0 failed, 0 errors, 0 skipped; external proof sha256 2d77e13d... accepted byte-identical for frozen wheel d1f97537...; gate_evaluation G1-G16 PASS G17 ABSENT terminal DONE",
+      "text": "Close T-91 / D2 using the genuine external verification proof for the exact frozen 0.0.2a2 candidate; closure-only continuation (no rebuild, no publish)",
+      "verification": "the Work this request created reached its own verification gate; see the T-92 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-92"
+    }
+  },
+  "schema_version": 1
+}

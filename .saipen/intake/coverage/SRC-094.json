@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-094:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-106 closed with verification evidence in LOG: VERIFY PASS -- full canonical suite 2390/0/0/0; focused release/a2/d3/repo-consistency 86/0/0/0; a3 wheel 6427feab unchanged and bound in all evidence; conf: high",
+      "text": "Execute Roadmap v6 D3 POST-GUI RELEASE CANDIDATE / SOURCE IDENTITY ALIGNMENT per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260922_1320.md",
+      "verification": "the Work this request created reached its own verification gate; see the T-106 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-106"
+    }
+  },
+  "schema_version": 1
+}

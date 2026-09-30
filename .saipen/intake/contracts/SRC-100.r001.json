@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-100:R001": {
+      "actionable": true,
+      "class": "invariant",
+      "text": "The supplied archive was audited read-only and must not be modified or returned as an edited archive."
+    }
+  },
+  "derived_at": "2026-09-23T04:25:07Z",
+  "derived_from": "SRC-100",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "eb6777f1191f72da996b3a98594400dc762631bfb07ddc8602f61056877b4e24"
+}

@@ -1,0 +1,13 @@
+{
+  "op_id": "scope-c5a3ff46b9914718bdf4fcac663cc5a9",
+  "paths": {
+    ".saipen/evidence/T-75-inherited-audit-review.md": "b59539576be24697478250f9a35931f7a4bdaeeafb88eb07c841c09686f97cde"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-25T18:05:34Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:e5e6b2b3124ff3a95943615c5f59f5751ca0c3042b3a40792603aaf177347c09",
+  "ticket": "T-75"
+}

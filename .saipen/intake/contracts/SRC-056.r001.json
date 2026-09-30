@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-056:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "\"T-71 strict-schema observer deterministic resource bound closure\" 2>&1"
+    }
+  },
+  "derived_at": "2026-09-19T23:55:22Z",
+  "derived_from": "SRC-056",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "8d3104bf868db46ee7a6f36c6bc900ecad2e19af99f9ea0fa57eeb1219aec1c8"
+}

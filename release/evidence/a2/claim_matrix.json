@@ -1,0 +1,165 @@
+{
+  "boundaries": [
+    "os-store backend evidence is Windows-specific (WinVaultKeyring)",
+    "the base verifier does not test os-store custody",
+    "the external proof validates the base candidate path only; its os-store status stays NOT_TESTED_HERE",
+    "publication authorization (G17) is absent; publication is forbidden"
+  ],
+  "candidate": {
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a2",
+    "wheel_filename": "saimail-0.0.2a2-py3-none-any.whl",
+    "wheel_sha256": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d"
+  },
+  "created_utc": "2026-09-20T20:20:36Z",
+  "external_verification": {
+    "base_candidate_verification": "TESTED_BY_THIS_VERIFIER",
+    "environment": {
+      "platform": "linux",
+      "python_version": "3.13.5",
+      "verified_utc": "2026-09-20T20:12:29Z",
+      "verifier_version": 1
+    },
+    "external_proof_sha256": "2d77e13dd1e414e8642fb5a1b60e216e2136bb267bf1789c7e1169adfaa1d5c2",
+    "os_store_external_status": "NOT_TESTED_HERE platform-specific; independent Windows evidence is recorded in the candidate evidence set",
+    "record_sha256": "e7dfacab2308071306e990a657eea2c82fd9ea9a49e7c8e54a2f9449c8621bbb",
+    "source": ".saipen/evidence/SAIMAIL_D2_a2_external_linux_verification.json",
+    "stored_copy": "release/evidence/a2/external_linux_verification.json",
+    "windows_os_store_linkage": {
+      "backend": "keyring.backends.Windows.WinVaultKeyring",
+      "path": "release/evidence/a2/windows_os_store_proof.json",
+      "sha256": "3525b20da70deef3681081d5210d4cded058cacacf1ede85a9d13d55b33bc849",
+      "status": "PASS"
+    }
+  },
+  "not_yet_externally_proven": [
+    "os-store custody on any non-Windows platform"
+  ],
+  "proven_externally_on_exact_a2_wheel": [
+    {
+      "claim": "exact_wheel_identity",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "clean_install_in_external_environment",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "module_resolution_inside_environment",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "base_raw_default_local_workflow",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "first_run_custody_notice",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "custody_implementation_shipped_in_wheel",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "fg05",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "fg06_utility_conditional",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "v201_workflow",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "privacy_gate",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "zero_runtime_network_model_provider",
+      "status": "PROVEN"
+    }
+  ],
+  "proven_on_windows_exact_a2_wheel": [
+    {
+      "claim": "package_install",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "module_resolution_outside_checkout",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "base_raw_workflow",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "first_run_raw_custody_notice",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "custody_module_shipped",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "os_store_backend_classification",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "os_store_init",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "protected_metadata_no_raw_keys",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "custody_restart_stable",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "custody_status_protected",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "installed_send_list_open",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "migration",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "custody_cleanup",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "fg05",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "fg06_utility_conditional",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "v201_workflow",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "zero_runtime_network_model",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "privacy_gate",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "integrity_gate",
+      "status": "PROVEN"
+    }
+  ],
+  "schema": "SAIMAIL_A2_CLAIM_MATRIX_1",
+  "status": "PASS",
+  "version": 1
+}

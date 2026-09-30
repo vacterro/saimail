@@ -1,4 +1,14 @@
 {
-  "requirements": {},
+  "requirements": {
+    "SRC-025:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "IMPLEMENTED",
+      "evidence": "The receipt orders execution under the existing T-7 and forbids a wrapper ticket; T-7 closed canonically at E-518 (transition to SHIP at E-516, no-publish ship at E-517, finish via SAIOPS from SHIP at E-518). This ticket is the accidental START-minted wrapper and carries no work of its own.",
+      "text": "Execute T-7 SAIHANDOFF: TTL sweep, immutable tombstone, non-resurrection per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260919_0405.md",
+      "verification": "T-7 own verify clause re-run on current bytes: pytest -q tests/test_ttl_sweep.py -> 48 passed, 0 failed. The handoff file the receipt cites no longer exists on disk, so the receipt text itself is the surviving authority for what was asked.",
+      "work": "T-7"
+    }
+  },
   "schema_version": 1
 }

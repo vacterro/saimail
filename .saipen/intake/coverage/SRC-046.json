@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-046:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-63 closed with verification evidence in LOG: verify -> PASS [target: T-63] conf: high -- pre-live gates: focused generation baseline 70 passed; new lab tests 42 passed (tests/test_ally_generation_live.py, tests/test_ally_generation_experiment.py, ruff clean); existing lab regressions green; dry run (real registration) zero network; saipen validate VALID; then the ONE registered live run completed: status COMPLETED, 25/30 calls (6 discovery i",
+      "text": "ALLY_ADVICE LIVE BOUNDED GENERATION EXPERIMENT - capture SAIHANDOFF file and execute TARGET A/B/C",
+      "verification": "the Work this request created reached its own verification gate; see the T-63 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-63"
+    }
+  },
+  "schema_version": 1
+}

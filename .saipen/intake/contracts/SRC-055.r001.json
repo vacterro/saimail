@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-055:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET A: freeze the strict-schema observability contract and exactly one immutable registration over exact B-018 identities and T-69 requested routes; preserve strict acceptance, privacy, comparability and no retry or repair."
+    }
+  },
+  "derived_at": "2026-09-19T23:29:18Z",
+  "derived_from": "SRC-055",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "f1e5d8ab70d60f09430ecd9445e87f102300d63c949beee0bce489a29da7e636"
+}

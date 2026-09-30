@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-061:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET A: freeze the ephemeral full-output contract and the new real-run registration before any live call -- one immutable registration lab/project_corpus_budget4096_registration.json binding the exact B-018 identifiers (registration_id, build_id, corpus_id, artifact_count 8, event_count 5), the single experimental variable (generator max_tokens 2048 -> 4096; reviewer 2048; probe 16; response_format absent), the full visible output semantics (after inline reasoning removal, before the 4000-character projection), the COMPLETE OR REFUSE invariant, the durable full-output identity, the 4000-character legacy projection remains for the generic path, and the observer has no acceptance authority."
+    }
+  },
+  "derived_at": "2026-09-20T01:03:28Z",
+  "derived_from": "SRC-061",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "6bee95d0be67493f5258c396a6ba58776761162eb877dc640ecef8063326049b"
+}

@@ -1,0 +1,43 @@
+{
+  "created_utc": "2026-09-20T20:05:59Z",
+  "evidence_scan": {
+    "files_scanned": 10,
+    "findings": [],
+    "root": "release\\evidence\\a2",
+    "schema": "LOCAL_ALPHA_PRIVACY_SCAN_1",
+    "status": "PASS",
+    "version": 1
+  },
+  "note": "source identifiers that merely name private-key fields are not secret material; the scanner detects generated secret values",
+  "privacy": {
+    "files_scanned": 5,
+    "findings": [],
+    "root": "release\\candidates\\0.0.2a2",
+    "schema": "LOCAL_ALPHA_PRIVACY_SCAN_1",
+    "status": "PASS",
+    "version": 1
+  },
+  "red_controls": [
+    {
+      "control": "planted_plaintext_marker",
+      "expected": "FAIL",
+      "observed": "FAIL",
+      "ok": true,
+      "rules_hit": [
+        "planted_marker"
+      ]
+    },
+    {
+      "control": "planted_generated_private_key_material",
+      "expected": "FAIL",
+      "observed": "FAIL",
+      "ok": true,
+      "rules_hit": [
+        "private_key_hex_field"
+      ]
+    }
+  ],
+  "schema": "SAIMAIL_A2_RED_CONTROLS_1",
+  "status": "PASS",
+  "version": 1
+}

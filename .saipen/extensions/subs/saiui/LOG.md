@@ -1,0 +1,16 @@
+# Log
+
+- 21.09.26 00:00 [E-001] [UI-001] RUN: adopt saiui for SAIMAIL V5-01 -> read PROTOCOL.md, saipui.md charter and canonical _SAIPEN/saipen/UI.md (sha256 162fa057..., 429 lines, 21 tokens) -- все читано, ничего не выдумано
+- 21.09.26 00:01 [E-002] [UI-001] RUN: Task Map + Action/State Map + Capability Gap Map -> 6 daily, 4 secondary, 6 rare, 0 destructive, 0 backend gap; discovery that the whole surface is a first exposure, not a redesign
+- 21.09.26 00:02 [E-003] [UI-001] RUN: information architecture at 640x540 -> header / inbox+detail split / composer / rare strip / persistent status; daily on the main surface, rare text-labelled
+- 21.09.26 00:03 [E-004] [UI-001] RUN: golden-default token table transcribed into pen/saimail/gui_theme.py -> 21/21 values exact vs UI.md lines 120-145, same order, no extra colour, style sheet emits canonical hex only
+- 21.09.26 00:04 [E-005] [UI-001] RUN: VERIFY in pen -> token count 21, distinct 21, every semantic alias canonical, zero stray hex in rendered QSS; module imports stdlib-only
+- 21.09.26 00:05 [E-006] [UI-001] DEC: UI-001 -> ready (patch is one new file; project GUI tests are Core's VERIFY since the pen has no Qt harness)
+- 21.09.26 05:35 [E-007] [UI-002] RUN: adopted saiui for UI-002 -> re-read canonical _SAIPEN/saipen/UI.md (sha256 162fa057... re-verified on current bytes, 429 lines) and the six implemented files at source_head 3fa8f229...
+- 21.09.26 05:36 [E-008] [UI-002] RUN: UI check V5-01 desktop surface -> PASS 18/18 required checks; tokens 21/21 exact vs UI.md, 19 distinct; non-antialiasing recorded as a platform limitation, not a violation
+- 21.09.26 05:37 [E-009] [UI-002] RUN: focused tests/test_gui_surface.py + tests/test_gui_acceptance.py -> 43 passed; full suite 2372 passed / 0 failed / 0 errors / 0 skipped; review package ready in OUTBOX (UI-002-review-pass.md)
+- 21.09.26 05:38 [E-010] [UI-002] DEC: UI-001 + UI-002 DONE in the saiui sub-state; no pen patch required
+- 25.09.26 19:30 [E-011] [UI-003] RUN: adopted saiui for T-128 -> UI-002 rendered stale by evidence, not age (its fingerprint git-delta-v1:2447ef10 vs current git-delta-v1:8b537657); canonical UI.md has ALSO moved, 162fa057/429 lines -> 66fb92db/454 lines, so the previous verdict could not be carried forward by citing it
+- 25.09.26 19:31 [E-012] [UI-003] RUN: re-parsed both sides of the token comparison from current bytes -> 21 canonical names, 21 values, 0 mismatches, declaration order identical, 19 distinct values; the 25 added UI.md lines are outside the :root block, so the specification change introduced no palette drift
+- 25.09.26 19:33 [E-013] [UI-003] RUN: focused tests/test_gui_surface.py + tests/test_gui_acceptance.py -> 46 passed (was 43; the suites grew, the product subjects did not move); full suite -> 2639 passed / 0 failed / 0 errors / 0 skipped, exit 0; tests/test_repo_consistency.py -> 56 passed with the untracked 6,851,614-byte humbox/SAIGIMN.mp3 still present, so that red condition is no longer reproducing
+- 25.09.26 19:35 [E-014] [UI-003] DEC: UI-003 ready and bound to the current triple; UI-002 -> stale, UI-001 stays stale; evidence in kitchen/UI-003-review-pass.md; OUTBOX re-parsed by the engine parser with zero errors; no pen patch, product tree untouched, no commit/tag/push

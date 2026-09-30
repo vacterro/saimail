@@ -1,0 +1,22 @@
+[
+  {
+    "mutation": "REASON_OPEN_ALREADY_READ",
+    "exit_code": 1,
+    "failed": 1
+  },
+  {
+    "mutation": "REASON_READ_NOT_THIS_SESSION",
+    "exit_code": 1,
+    "failed": 1
+  },
+  {
+    "mutation": "__doc__",
+    "exit_code": 1,
+    "failed": 1
+  },
+  {
+    "mutation": "current recovery falsely reopens resolved gap",
+    "exit_code": 1,
+    "failed": 1
+  }
+]

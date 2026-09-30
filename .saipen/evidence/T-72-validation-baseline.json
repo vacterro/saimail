@@ -1,0 +1,27 @@
+{
+  "ticket": "T-72",
+  "phase": "SCOUT",
+  "debt": "DEBT-000066",
+  "verdict": "CURRENT_FAIL",
+  "exit_code": 1,
+  "validator": "C:\\Users\\vac34\\.config\\opencode\\skills\\saipen\\tools\\validate.py --gate core",
+  "validator_receipt": "receipt-13866166cd90",
+  "failures": [
+    "FAIL: source receipts -- DONE Work T-41 has unresolved source receipt SRC-017",
+    "FAIL: source receipts -- source credential gate: SOURCE_CREDENTIALS_UNSAFE credential pattern in exact active source SRC-036; supply a user-authorized replacement or amendment before release"
+  ],
+  "runtime": "Python 3.11.9 (sys.getrecursionlimit()=1000)",
+  "focused_baseline": {
+    "command": "python -m pytest -q tests/test_parse_shape.py tests/test_project_corpus_reachability.py tests/test_project_corpus_generation_pilot.py tests/test_project_corpus_generation_privacy.py",
+    "result": "129 passed",
+    "note": "The repository resource test passes on Python 3.11.9 because json.loads raises RecursionError at depth 1000; on Python 3.13.5 it returns OK for depth 1100 and the test fails (handoff reproduction)."
+  },
+  "historical_pins_sha256": {
+    "lab/out/project_corpus_reachability_live.json": "a9c7905af2d8b4a79849e811637946411c47c977c51a99cc8788b2ff75dff43b",
+    "lab/out/PROJECT_CORPUS_REACHABILITY_REPORT.md": "1d5f01a26030841ba3dcfa678939d33f53ba61eabfcf5fd1279d6e171150d3f7",
+    "lab/analysis/project_corpus_reachability.md": "1d5f01a26030841ba3dcfa678939d33f53ba61eabfcf5fd1279d6e171150d3f7",
+    "lab/analysis/project_corpus_reachability_closure.md": "c4ff5cd777750b2cc8170b2cb46170b0adf446e3a872b0ae30b3b5dcead97cf5",
+    "spec/11-STRICT-SCHEMA-OBSERVABILITY-v0.md": "6c681ce35645203f2ed098d1cf3f962f58544f78590a6195939965a0616aebf2",
+    "lab/ally_generation_live.py": "79f9ae4e651509458f6acc8eda3b7814ae0ad67733afdbb45c27305810f3fc4c"
+  }
+}

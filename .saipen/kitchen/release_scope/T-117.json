@@ -1,0 +1,26 @@
+{
+  "op_id": "scope-3e8dabb8d4be46b386643d6ee88bcd28",
+  "paths": {
+    "CHANGELOG.md": "6ad3a13efc70377c35f868dd629ae92e505bdbba708ae238c4032ec93fa6d5f2",
+    "README.md": "1120cf72286428cbc7fd177ca1c8e19cbe92ac1cf7eaf902092ff241a09c456b",
+    "humbox/CURRENT-STATE.md": "53702839ad6847434313fa175d65643af298e6997cd4690c417c8a51dc732cb0",
+    "humbox/FUTURE-GATES-V6.md": "3e51687164105df130980c14665da384da1e47132277df6198ffab9f7e8a570f",
+    "humbox/SAIPEN-WORK-DESK.md": "b477cdf11475fe5c8ff9f54fe63f41dabbc6ede4b843eafad26181be6c5825c7",
+    "lab/stable_local_api.json": "0e1cf12510d7d9b91b28251d4705abba895e7c30a8e3a5a37f27ba3ed08cf14d",
+    "saimail/workspace.py": "0540f8f63350d30a921c42e8c2bfcedba95a14efc3d06583cb52f335eec63257",
+    "saimail_local.py": "8aa88718c1818f79354d266dc0b4bae47222d0104f815f5f16097c4d6537783d",
+    "spec/20-LOCAL-KEY-CUSTODY-v0.md": "352cf0cc9bec8d10ac4f284ffd1b54b63ce03b93b18a05917126e3aa08c4f9d4",
+    "spec/26-SAITELEMES-v0.md": "371f2545de604498c43f536437c3a6029b91a7174fd6e5754ce0912e08f6f96e",
+    "spec/27-SAIPEN-WORK-DESK-v0.md": "49c4cebf266669e3db359e5b551bb1b194499a1fdd35f2a751b87e5f95d8be32",
+    "spec/DECISIONS-D059.md": "71b5e3e959ac981b77168da37b79e73a7f59bd1bdaf630428394fde3c385af28",
+    "tests/test_repo_consistency.py": "c0c996b11a77916ba1fb531d2f25eb460c3fdde46cb00fd729b23a4134e6fe07",
+    "tests/test_turn_entry_headers.py": "d71f75f6b053e5be06a840a37092c025f2a700bef59a68a49fbdd9fc0a5e9134"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-24T06:04:38Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:c48e90b4d0d45d8c9a6f1e112a070aee01ab36c220ae2be10be331ae873dd412",
+  "ticket": "T-117"
+}

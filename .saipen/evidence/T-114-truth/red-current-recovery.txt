@@ -1,0 +1,53 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+______ test_current_recovery_recognizes_t113_closure_and_frozen_boundary ______
+
+    def test_current_recovery_recognizes_t113_closure_and_frozen_boundary():
+        """T-114: current capability truth must not send cold recovery back to T-113."""
+        current = read(ROOT / "humbox/CURRENT-STATE.md")
+        roadmap = read(ROOT / "humbox/FUTURE-GATES-V6.md")
+        desk = read(ROOT / "humbox/SAIPEN-WORK-DESK.md")
+    
+        # Parse the lane's status fields, not an exact prose paragraph snapshot.
+        rows = [[cell.strip() for cell in line.strip("|").split("|")]
+                for line in roadmap.splitlines() if line.startswith("| V6-02 |")]
+        assert len(rows) == 1 and rows[0][:3] == ["V6-02", "DONE", "T-113"]
+        assert "E-1527" in rows[0][3]
+        for text in (current, roadmap, desk):
+            flat = " ".join(text.replace("*", "").replace("`", "").split())
+            assert re.search(r"T-113 DONE|DONE via T-113", flat)
+            assert "T-114 owns subsequent continuation" in flat
+            assert "Reopen" in flat
+            assert "metadata-only" in flat or "metadata only" in flat
+        for text in (current, roadmap):
+            flat = " ".join(text.replace("*", "").replace("`", "").split())
+            assert "Frozen 0.0.2a3 does not contain T-113" in flat
+            assert "checkout-only" in flat
+            for unchanged in ("G13", "PENDING_EXTERNAL", "G17", "ABSENT", "NONE"):
+                assert unchanged in flat
+    
+        # Explicit historical sections/paragraphs remain valid evidence. Check the
+        # rest, including current position and restart, for the original drift.
+        current_now = re.sub(r"## V5-01 DESKTOP.*?(?=\n## S2 )", "", current,
+                             flags=re.DOTALL)
+        for text in (current_now, roadmap, desk):
+            for paragraph in text.split("\n\n"):
+                if any(scope in paragraph for scope in (
+                        "Historical T-107 boundary:", "NOT STARTED at T-107 closure",
+                        "Next evaluation at T-110 closure (historical)")):
+                    continue
+                flat = " ".join(paragraph.replace("*", "").replace("`", "").split())
+>               assert not re.search(
+                    r"READ_REREAD_GAP.{0,40}(?:remains|is) (?:open|real)|"
+                    r"V6-02.{0,25}NOT STARTED|"
+                    r"saved T-113.{0,50}(?:next|first)|Receiver continuity comes next",
+                    flat), flat
+E               AssertionError: READ_REREAD_GAP remains open.
+E               assert not <re.Match object; span=(0, 28), match='READ_REREAD_GAP remains open'>
+E                +  where <re.Match object; span=(0, 28), match='READ_REREAD_GAP remains open'> = <function search at 0x000001F89939C540>('READ_REREAD_GAP.{0,40}(?:remains|is) (?:open|real)|V6-02.{0,25}NOT STARTED|saved T-113.{0,50}(?:next|first)|Receiver continuity comes next', 'READ_REREAD_GAP remains open.')
+E                +    where <function search at 0x000001F89939C540> = re.search
+
+tests\test_repo_consistency.py:1195: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_repo_consistency.py::test_current_recovery_recognizes_t113_closure_and_frozen_boundary
+1 failed in 0.24s

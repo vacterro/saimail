@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-071:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "\"POST-FG06 ROADMAP V2: convert completed FG-00..FG-06 evidence into next evidence-based roadmap for SAIMAIL (planning only, no implementation)\" 2>&1 | Out-String"
+    }
+  },
+  "derived_at": "2026-09-20T16:45:07Z",
+  "derived_from": "SRC-071",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "7effa890f6dcc04296775e44f0a7a0e33c81c86f76ef64a8f79a9f1e73fa2d9b"
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "SAIMAIL_FEEDBACK_ORIGIN_ORACLE_1",
+  "command": "python -m pytest -q tests/test_feedback_origin.py",
+  "verifier_sha256": "6288460cc1a64aa5b88d27c2162866c2aaf00c3037004d654fe98b0a0d0fc4f5",
+  "fixture_sha256": "660a964f3aeaa34fd632723dd0f693199fdfccb0e490638b57cd9a49806d0790",
+  "projection_fixture_sha256": "8344638672e903e91c8d54574b1a9710afc845c0649372f58844d6b68400a6ef",
+  "config_sha256": "1c4604335ed3d5e6826c9448fa93205d882eb1fab6977814ed49967c0a69d1db",
+  "before": {
+    "errors": 0,
+    "tests": 31,
+    "failures": 31,
+    "skips": 0
+  },
+  "before_subject": {
+    "saimail/correspondence.py": "895eac0deb8e61bd9837d784f6a1672525b4ce3c8a25faa7d132262808a1347f",
+    "saimail/host_contract.py": "b26a4c612619c5268bf0764296b6a29434741bf29e87f8d1f0284aac293db3f8",
+    "saimail_host.py": "ca2eba850847f276cf97782fd2cf1ac8b4e02fa5516d33a59ebed492221de328"
+  }
+}

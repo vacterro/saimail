@@ -1,0 +1,15 @@
+{
+  "source": "SRC-036",
+  "sha256": "4c3e6a6732c7284159fc124f85c7b239f0a2fc421170c3368d82ad08b4c14176",
+  "assignment_matches": [
+    {
+      "line": 825,
+      "matched_bytes": 14,
+      "gap_newlines": 1,
+      "crosses_blank_line": false,
+      "value_bytes": 7
+    }
+  ],
+  "redaction_changes_body": true,
+  "raw_matched_values_retained": false
+}

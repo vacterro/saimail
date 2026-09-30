@@ -53,7 +53,9 @@ def test_wheel_contains_the_local_surface(wheel: Path):
     names = set(zipfile.ZipFile(wheel).namelist())
     for required in ("saimail_local.py", "lab/__init__.py", "lab/local_scenario.py",
                      "lab/utility_friction.py", "lab/stable_local_api.json",
-                     "saimail/workspace.py"):
+                     "saimail/workspace.py", "saimail_host.py", "saimail_project.py",
+                     "saimail/letters.py", "saimail/correspondence.py", "saimail/keyvault.py",
+                     "saimail/host_contract.py"):
         assert required in names, f"wheel is missing {required}"
     assert any(name.endswith("entry_points.txt") for name in names)
     # History/out/analysis artifacts are not package data and must not ship.

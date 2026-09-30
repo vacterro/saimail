@@ -1,0 +1,9 @@
+{
+  "correction": "Confirm `query_inbox` lacks mandatory implicit lineage scoping. If absent, add a required `lineage` contract parameter, pass `lineage=lineage` from `desk`, enforce lineage filtering before pagination, and preserve it across continuation cursors. No change if the workspace already mandates lineage scoping.",
+  "reasoning": "Source confirms `desk` validates `lineage` and applies it to case queries, but omits it from `ws.query_inbox`. `notify` includes lineage in `notify_key` while using shared `topic=work`. Missing `query_inbox` internals prevent proving leakage or implicit workspace lineage partitioning.",
+  "required_tests": [
+    "Shared workspace: notify both lineages with identical unread `T-9` Work IDs; call `desk(lineage=A)` and assert every returned item excludes lineage B. Any B item confirms the finding; complete exclusion refutes observable leakage.",
+    "Populate enough B `T-9` items to force continuation pages; follow every `inbox_cursor`; assert page two and later still exclude B. Any continuation-page B item confirms the finding."
+  ],
+  "verdict": "UNVERIFIED"
+}

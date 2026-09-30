@@ -1,0 +1,9 @@
+{
+  "call_budget": 1,
+  "claim_boundary": "The receiver did not confirm missing query internals; mechanical validation supplies the result evidence. Original verdict and registration remain unchanged.",
+  "criteria_amendment": "Allow an explicitly uncertain receiver finding when a real red/green regression proves the correction.",
+  "receiver_verdict": "UNVERIFIED",
+  "registered_at": "2026-09-29T21:54:46Z",
+  "schema": "SAIMAIL_INSTITUTION_EXPERIMENT_1",
+  "timeout_seconds": 300
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "SAIMAIL_REAL_USE_SEQUENCE_CHECK_1",
+  "state": "PASS",
+  "study": "T142_REAL_USE_1",
+  "registration_sha256": "fec8b9908129b2dcbf5b86d92214ce5ab17cf6a71392c769c272c39cd0a4dc4f",
+  "entry_one_sha256": "451d1960f397e4789dff611602376ed4395ba69f0db0531007fb9576140d147e",
+  "retained_observations": 2,
+  "qualifying_work_context_boundaries": 2,
+  "minimum_work_context_boundaries": 3,
+  "entry_limit": 6,
+  "eligible_receiver_opportunities": 0,
+  "independent_receiver_assessments": 0,
+  "independently_chosen_revisions": 0,
+  "fresh_successor_executions": 0,
+  "field_improvement": "UNPROVEN",
+  "next_entry": 3,
+  "last_observation_sha256": "1a06ebf8e57ad151fbc12d7b67edbbbf96db091e60eb0cf29ebb1ddbb0403c3f",
+  "last_observed_at": "2026-09-30T12:34:32.103804+00:00",
+  "boundary_keys": [
+    "sha256:599a8530d9a4dfd5297b1eb48b47ee57cc2c3e7f8c9954160330214397dabf31",
+    "sha256:8ed562960715c6f61423a5540bfef31764f645143cd6022e22de40ad3baed0f9"
+  ],
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "claim_boundary": "Retained metadata/identity consistency; independent behavior is not enrolled or measured"
+}

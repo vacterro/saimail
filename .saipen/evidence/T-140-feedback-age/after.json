@@ -1,0 +1,29 @@
+{
+  "observed_at": "2026-12-31T10:00:00Z",
+  "source_expires_at": "2026-10-30T10:00:00Z",
+  "source_expired": true,
+  "reading": [],
+  "feedback": [
+    {
+      "decision": "DEFERRED",
+      "reason": "WAITING_DEPENDENCY",
+      "count": 1,
+      "suggestion": "WAIT_FOR_DEPENDENCY_EVIDENCE"
+    }
+  ],
+  "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+  "feedback_signals": {
+    "state": "KNOWN",
+    "observed_at": "2026-12-31T10:00:00Z",
+    "window_start": "2026-12-24T10:00:00Z",
+    "window_days": 7,
+    "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+    "active": [],
+    "excluded": {
+      "PENDING": 0,
+      "FUTURE_ASSESSMENT": 0,
+      "OUTSIDE_WINDOW": 1,
+      "LETTER_EXPIRED": 0
+    }
+  }
+}

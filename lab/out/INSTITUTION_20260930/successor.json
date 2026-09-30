@@ -1,0 +1,6 @@
+{
+  "avoid_repeating": "Do not rerun the unchanged failing baseline or duplicate the existing all-pages shared-mailbox fixture. Do not reapply the receiver's suggested contract change without confirming missing implicit lineage partitioning.",
+  "evidence_limit": "The letter records a finding, not lifecycle authority. `UNVERIFIED` reflects omitted `query_inbox` internals. Passing tests cover executed artifacts, not deployment state. SHA-256 identifies bytes, not semantic truth.",
+  "inherited_lesson": "A failed baseline demonstrates cross-lineage leakage for identical `T-9` Work IDs under shared `work`; the passing validation shows only that the tested corrected artifacts now isolate every page.",
+  "next_work_precaution": "Inspect `query_inbox` scope, pre-pagination filtering, continuation-cursor lineage retention, topic/header namespacing, authenticated body-to-header verification first. Add the required `lineage` parameter only if no mandatory implicit scope exists."
+}

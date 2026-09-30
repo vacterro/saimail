@@ -1,0 +1,58 @@
+{
+  "base_entrypoint_version": "0.0.2a3",
+  "candidate": {
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a3",
+    "wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+    "wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc"
+  },
+  "checks": {
+    "base_entrypoint_reports_candidate_version": true,
+    "gui_extra_declares_pyside6": true,
+    "gui_modules_resolve_inside_environment": true,
+    "install_status": true,
+    "offscreen_gui_tests_pass": true,
+    "pyside6_not_core_dependency": true,
+    "saimail_gui_entrypoint_exists": true,
+    "saimail_local_entrypoint_exists": true
+  },
+  "created_utc": "2026-09-22T13:15:08Z",
+  "entrypoints": {
+    "saimail-gui": true,
+    "saimail-local": true
+  },
+  "environment": {
+    "platform": "win32",
+    "python_version": "3.11.9"
+  },
+  "failures": [],
+  "install": {
+    "note": "dependency installation is separate from SAIMAIL runtime activity",
+    "status": "INSTALLED",
+    "wheel": "saimail-0.0.2a3-py3-none-any.whl"
+  },
+  "integrity": {
+    "failures": [],
+    "status": "PASS"
+  },
+  "module_resolution": {
+    "note": "the GUI modules and PySide6 import from the fresh environment",
+    "paths": [
+      "V:\\_TEMP_\\saimail-a3-gui-matrix2\\venv\\Lib\\site-packages\\saimail\\__init__.py",
+      "C:\\Users\\vac34\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PySide6\\__init__.py"
+    ],
+    "resolved_inside_environment": true
+  },
+  "note": "installed-wheel GUI matrix: gui extra provides PySide6, saimail-gui entrypoint and the GUI modules resolve from the environment; the repository's own offscreen GUI acceptance runs against the wheel",
+  "offscreen_pytest": {
+    "exit_code": 0,
+    "files": [
+      "test_gui_acceptance.py",
+      "test_gui_surface.py"
+    ],
+    "tail": "...........................................                              [100%]\n43 passed in 1.74s\n"
+  },
+  "schema": "SAIMAIL_D3_GUI_INSTALL_MATRIX_1",
+  "status": "PASS",
+  "version": 1
+}

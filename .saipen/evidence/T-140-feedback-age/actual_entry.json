@@ -1,0 +1,63 @@
+{
+  "schema": "SAIMAIL_ACTUAL_WORK_ENTRY_1",
+  "work": "T-140",
+  "observation": {
+    "schema": "SAIMAIL_HOST_FOCUS_1",
+    "state": "OK",
+    "context": "sha256:bcd1773c01e82f556815369c1ca8e21981775da07c8ef14d322171bfe75b44fa",
+    "host": {
+      "seat": "saipen-cli",
+      "lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+      "phase": "VERIFY",
+      "task": "T-140",
+      "last_event": "2065",
+      "blocker": null
+    },
+    "work": "T-140",
+    "scope": [
+      "saimail/correspondence.py"
+    ],
+    "reading": [],
+    "next_action": {
+      "action": "CONTINUE_WORK"
+    },
+    "coverage": {
+      "complete": true,
+      "complete_from_start": true,
+      "rows_examined": 0,
+      "cases_examined": 0
+    },
+    "continuation": null,
+    "reviewed": 0,
+    "decisions": {
+      "PENDING": 0,
+      "ACCEPTED": 0,
+      "DEFERRED": 0,
+      "DECLINED": 0,
+      "RESOLVED": 0,
+      "STALE": 0
+    },
+    "retained": 0,
+    "model_improvement_proven": false,
+    "feedback": [],
+    "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+    "feedback_scope": "LIFETIME_HISTORY",
+    "feedback_signals": {
+      "state": "KNOWN",
+      "observed_at": "2026-09-30T09:32:26Z",
+      "window_start": "2026-09-23T09:32:26Z",
+      "window_days": 7,
+      "basis": "LATEST_EXPLICIT_ASSESSMENT_AT",
+      "active": [],
+      "excluded": {
+        "PENDING": 0,
+        "FUTURE_ASSESSMENT": 0,
+        "OUTSIDE_WINDOW": 0,
+        "LETTER_EXPIRED": 0
+      }
+    },
+    "authority": "INFORMATION_ONLY",
+    "automatic_execution": false
+  },
+  "claim_boundary": "One actual keyless Work entry, with no send/open/decision/lifecycle action. Empty observations do not prove receiver usefulness."
+}

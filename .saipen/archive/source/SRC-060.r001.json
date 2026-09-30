@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-060:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "\"SAIMAIL SAIHANDOFF 20260920_0339 (V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260920_0339.md): remove the local 4000-character truncation from the EPHEMERAL parser-input path without weakening durable privacy, then run exactly one real-project completion-budget-only reachability experiment over the frozen B-018 corpus (Target A freeze contract, Target B LAB-only full-visible-output parser path, Target C one 2-role-swapped 4096 generator / 2048 reviewer / response_format absent live run, max 6 calls)\""
+    }
+  },
+  "derived_at": "2026-09-20T01:02:38Z",
+  "derived_from": "SRC-060",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "e43b798f3acf958e19956efb21d44243a093a522bb9131016abc20b4eb3aee10"
+}

@@ -1,0 +1,90 @@
+{
+  "schema": "SELECTOR_COVERAGE_REGISTRATION_1",
+  "version": 1,
+  "experiment_id": "V202-SELECTOR-COVERAGE",
+  "title": "Receiver-owned ignore-topic coverage experiment",
+  "mechanism_owner": "receiver",
+  "policy_surface": "saimail.postoffice.HeaderInterest",
+  "dependency_class": "transport/header-policy DEFER fallback; NOT the R1 unknown-atom or opaque-claim fallback",
+  "treatment_variable": "ignore_topics",
+  "single_changed_field": "ignore_topics",
+  "changed_value_added": "ci-ok",
+  "baseline_policy": {
+    "open_r3_topics": ["action"],
+    "open_r3_kinds": ["WARNING"],
+    "ignore_topics": ["noise"]
+  },
+  "treatment_policy": {
+    "open_r3_topics": ["action"],
+    "open_r3_kinds": ["WARNING"],
+    "ignore_topics": ["noise", "ci-ok"]
+  },
+  "both_receivers_declare": true,
+  "no_learned_relevance": true,
+  "no_content_or_label_lookup": true,
+  "no_model_call": true,
+  "fixture_path": "lab/selector_coverage_fixtures.json",
+  "fixture_sha256": "a8fa4095ea4bbd1361a40c4c0d6be8968584e562a3cde3f47183a3cfccf9631e",
+  "directions": ["A_TO_B", "B_TO_A"],
+  "workload_ids": ["ROUTINE", "MIXED_NOVEL", "MANDATORY_OVERLAP", "TOPIC_DRIFT", "LOW_VOLUME"],
+  "frozen_workloads": [
+    {"id": "ROUTINE", "messages": 40, "relevant": 2},
+    {"id": "MIXED_NOVEL", "messages": 40, "relevant": 16},
+    {"id": "MANDATORY_OVERLAP", "messages": 40, "relevant": 16},
+    {"id": "TOPIC_DRIFT", "messages": 40, "relevant": 10},
+    {"id": "LOW_VOLUME", "messages": 2, "relevant": 1}
+  ],
+  "truth_authority": "receiver need declared by the synthetic payload, independent of the header topic; topic alone is not relevance truth",
+  "truth_visible_to_policy": false,
+  "paired_transport_requirement": "baseline and treatment must receive byte-identical sealed envelopes and canonical records",
+  "success_criteria": {
+    "aggregate_fallback_opens": "decrease",
+    "new_false_ignores_per_workload_direction": 0,
+    "new_missed_relevant_per_workload_direction": 0,
+    "baseline_required_open_downgrades_per_workload_direction": 0
+  },
+  "rejection_criteria": {
+    "any_new_false_ignore": "reject_candidate",
+    "any_new_missed_relevant": "reject_candidate",
+    "any_baseline_required_open_downgrade": "reject_candidate",
+    "safety_failure_overrides_friction_savings": true
+  },
+  "terminal_outcomes": ["CANDIDATE_SUPPORTED_ON_FIXTURES", "CANDIDATE_REJECTED_SAFETY", "NO_REDUCTION"],
+  "friction_model_identity": "TOTAL_FRICTION_FRICTION_UNITS_v1",
+  "friction_weights": {
+    "header_scan": 1.0,
+    "full_read": 8.0,
+    "durable_write": 4.0,
+    "promotion_decision": 100.0,
+    "attention_reservation": 100.0,
+    "attention_acknowledgement": 100.0,
+    "recovery_action": 50.0,
+    "duplicate_suppressed": 0.5,
+    "token_kunit": 1.0
+  },
+  "token_ratios": {
+    "frame_prose": 1.16,
+    "record_prose": 1.67,
+    "source": "T-9B Q1/Q2 cl100k_base; integrated prior evidence, not remeasured"
+  },
+  "zero_call_budget": {"network": 0, "model": 0, "provider": 0},
+  "production_promotion": "NONE",
+  "frozen_release_mutation": "NONE",
+  "post_result_adjustment": "FORBIDDEN: no threshold, fixture, policy, label or acceptance-criteria change after observing the result",
+  "result_schema": "SELECTOR_COVERAGE_RESULT_1",
+  "output_directory_rule": "the evidence output directory must be new and empty; existing evidence is never overwritten",
+  "manifest_path": "lab/selector_coverage_manifest.json",
+  "historical_input_copies": [
+    "lab/history/v202-selector-coverage/selector_coverage_fixtures.json",
+    "lab/history/v202-selector-coverage/selector_coverage_registration.json"
+  ],
+  "r1_control": {
+    "scope": "the unchanged current R1 stress corpus, measured separately by the existing selector",
+    "reduced_by_this_experiment": false,
+    "unknown_atom_and_opaque_claim_fallbacks_are_a_different_stage": true
+  },
+  "latency": "NOT_MEASURED",
+  "subjective_pleasantness": "NOT_MEASURED",
+  "frozen_by": "astra",
+  "frozen_at": "2026-09-20T18:40:00Z"
+}

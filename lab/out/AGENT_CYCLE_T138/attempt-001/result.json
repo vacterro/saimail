@@ -1,0 +1,57 @@
+{
+  "checks": {
+    "changed_context_refused": true,
+    "changed_result_detected": true,
+    "correction_has_distinct_reply": true,
+    "equivalent_keyless_observation": true,
+    "fewer_cli_invocations": true,
+    "fresh_successor_discovers_reserve": true,
+    "fresh_successor_rechecks_actual_result": true,
+    "lost_state_does_not_invent_reserve": true,
+    "resolution_history_preserved": true,
+    "resolution_retry_idempotent": true,
+    "review_is_pending": true,
+    "scripted_sender_adaptation": true,
+    "sealed_deferred_feedback": true,
+    "sealed_negative_feedback": true,
+    "stale_correction_removes_reserve": true
+  },
+  "claim_boundary": "Scripted receiver decisions and fresh CLI processes; no model, field-use or comfort claim.",
+  "limitations": [
+    "Three repetitions on one Windows checkout",
+    "Payload bytes are normalized JSON, not model tokens",
+    "Latency includes local startup/cache variation",
+    "Receiver and sender choices are scripted",
+    "Broader autonomous improvement and real-session usefulness remain unproven"
+  ],
+  "measurements": {
+    "baseline": {
+      "cli_invocations_per_entry": [
+        3,
+        3,
+        3
+      ],
+      "median_cli_seconds": 0.42672679998213425,
+      "normalized_payload_bytes": [
+        3749,
+        3749,
+        3749
+      ]
+    },
+    "cycle": {
+      "cli_invocations_per_entry": [
+        2,
+        2,
+        2
+      ],
+      "median_cli_seconds": 0.28139680001186207,
+      "normalized_payload_bytes": [
+        4379,
+        4379,
+        4379
+      ]
+    }
+  },
+  "schema": "SAIMAIL_AGENT_CYCLE_EXPERIMENT_1",
+  "status": "PASS"
+}

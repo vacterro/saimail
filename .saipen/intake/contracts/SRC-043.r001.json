@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-043:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Capture the SAIMAIL ALLY_ADVICE generation/semantic-review handoff verbatim and build the bounded v0 gate above B-012 exactly within Targets A/B/C: additive normative decision; explicit caller-supplied bounded PROJECT_OPERATIONAL corpus with no history discovery; closed generator result NO_ADVICE or one already-valid AllyAdvice whose refs stay inside the corpus; at most one generator and one reviewer invocation per run; independent full-corpus semantic reviewer with no generator hidden reasoning; eight PASS/FAIL/UNKNOWN dimensions with fail-closed all-PASS approval and a non-transferable candidate/corpus/rubric-bound type-state; generated private adapter over unchanged HLET1/HENV1 with no auto seal, store, attention admission, novelty claim or rewrite loop; focused tests, B-012 regression, full suite and saipen validate green; then STOP without commit/tag/push (local-only baseline preserved)."
+    }
+  },
+  "derived_at": "2026-09-19T19:33:09Z",
+  "derived_from": "SRC-043",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "7a666e1f39c86bf828dcb7ce3496193e5458e97b51a24bb4ef258861ea22882d"
+}

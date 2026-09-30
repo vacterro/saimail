@@ -1,0 +1,18 @@
+--- .saipen/evidence/T-120-registry/workspace.before.py	2026-09-24 09:41:46.089070400 +0300
++++ saimail/workspace.py	2026-09-24 09:41:46.171703000 +0300
+@@ -1421,6 +1421,15 @@
+                      + ")")
+         if intent.get("envelope_id"):
+             lines.append(f"ENVELOPE:   {intent.get('envelope_id')}")
++    participant = result.get("participant") or {}
++    if participant.get("seat"):
++        lines.append(f"PARTICIPANT: {participant.get('seat')} in {participant.get('lineage')} "
++                     f"via alias {participant.get('alias')} "
++                     f"(triggers {', '.join(participant.get('triggers') or [])})")
++    for lineage, seats in sorted((result.get("participants") or {}).items()):
++        for seat, record in sorted(seats.items()):
++            lines.append(f"PARTICIPANT: {seat} in {lineage} via alias {record.get('alias')} "
++                         f"(triggers {', '.join(record.get('triggers') or [])})")
+     outbox_block = result.get("outbox") or {}
+     if outbox_block.get("counts"):
+         lines.append(f"OUTBOX:     {outbox_block.get('pending')} pending "

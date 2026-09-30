@@ -1,0 +1,8 @@
+{
+  "schema": "T148_ORACLE_1",
+  "change": "Descriptor oracle follows actual registry lock subtype or original shared primitive; descriptor closure assertion unchanged. Post Office source restored byte-identically to preserve frozen experiment admission.",
+  "sha256": {
+    "tests/test_recipient_registration_concurrency.py": "3657f958c958ee352010f9ec087053cc8ba83e7bd1f3067593227f04a72272dc",
+    "pyproject.toml": "1c4604335ed3d5e6826c9448fa93205d882eb1fab6977814ed49967c0a69d1db"
+  }
+}

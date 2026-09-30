@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-090:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-111 closed with verification evidence in LOG: verify -> PASS [target: T-111] conf: high -- the repo's OWN pre-existing contract test is the oracle here: tests/test_repo_consistency.py::test_v601_github_identity_and_presentation_sync_is_recorded, written by T-104, asserts the hero names pics/SAIMAIL_LOGO.png, that the asset exists, that it is byte-identical to pics/SAIMAIL2.png, and that pics/SAIMAIL_SOCIAL_PREVIEW.png is a 1280x640 PNG under ",
+      "text": "V6-01 GitHub Identity and Presentation Sync: canonical logo SAIMAIL2, social preview 1280x640, README hero refresh, GUI discoverability, repo hygiene/metadata, roadmap v6; no protocol change, no release",
+      "verification": "the Work this request created reached its own verification gate; see the T-111 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-111"
+    }
+  },
+  "schema_version": 1
+}

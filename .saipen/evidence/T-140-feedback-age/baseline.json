@@ -1,0 +1,19 @@
+{
+  "schema": "SAIMAIL_FEEDBACK_AGE_BASELINE_1",
+  "experiment": "CONTROLLED_FUTURE_CLOCK",
+  "observed_at": "2026-12-31T10:00:00Z",
+  "source_expires_at": "2026-10-30T10:00:00Z",
+  "source_expired": true,
+  "reading": [],
+  "feedback": [
+    {
+      "decision": "DEFERRED",
+      "reason": "WAITING_DEPENDENCY",
+      "count": 1,
+      "suggestion": "WAIT_FOR_DEPENDENCY_EVIDENCE"
+    }
+  ],
+  "feedback_basis": "LATEST_RECEIVER_ASSESSMENT",
+  "metrics_source_sha256": "cad361ddf500a346274741f4a1b0110fe2599cbe05fb384e09f03a9f5df0aea1",
+  "claim_boundary": "Historical assessment is retained correctly, but this view cannot distinguish its age or current eligibility."
+}

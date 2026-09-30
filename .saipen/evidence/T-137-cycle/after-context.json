@@ -1,0 +1,11 @@
+{
+  "schema": "SAIMAIL_T137_CONTEXT_CONTROL_1",
+  "verdict": "PASS",
+  "cli_exit": 1,
+  "status": "SAIPEN_CONTEXT_CHANGED",
+  "admission_events": [
+    "40"
+  ],
+  "verifier": "9febd8d11ef8818f1c00e4966f8a4460dbc8ae9914dd9aee50ed1bf52b2e1be8",
+  "subject": "8b4d45b17b8094d1806f3e530255f7cf1f37987a5d1fac045a7045e9c43eefc9"
+}

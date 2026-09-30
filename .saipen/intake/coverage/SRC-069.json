@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-069:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-82 closed with verification evidence in LOG: verify -> PASS [target: T-82] conf: high -- FG-05 focused tests 20 passed; relevant regression battery 507 passed; full canonical suite python -m pytest --junitxml: 2061 passed, 0 failed, 0 errors, 0 skipped (17.6s, python 3.11.9 win32); ruff clean on the four changed/new files; saipen validate CURRENT_FAIL with the same 3 pre-existing problems (SRC-017/T-41, SRC-036, stale improve-report) + 22 wa",
+      "text": "\"FG-05 end-to-end local scenario\" 2>&1",
+      "verification": "the Work this request created reached its own verification gate; see the T-82 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-82"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,109 @@
+{
+  "project": "V-___VAC-__K-__CODE-_AI_STUFF_AGENTIC-__SAIMAIL__",
+  "signal": "best_effort",
+  "indexed_at": "2026-09-30T10:55:02Z",
+  "metadata": {
+    "generation": "2026-09-30T10:55:02Z",
+    "index_mode": "full",
+    "recorded_at": "2026-09-30T10:55:03Z",
+    "recording_status": "complete",
+    "ignored_files_stored": 17,
+    "ignored_files_total": 17,
+    "hash_records_complete": true,
+    "coverage_version": 3,
+    "generation_matches": true
+  },
+  "paths": [
+    {
+      "requested_path": "humbox/EVOLUTION-AUDIT.md",
+      "path": "humbox/EVOLUTION-AUDIT.md",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_changed",
+      "recommended_action": "read_source_and_reindex",
+      "coverage": []
+    },
+    {
+      "requested_path": "lab/analysis/evolution_audit_T142.md",
+      "path": "lab/analysis/evolution_audit_T142.md",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_changed",
+      "recommended_action": "read_source_and_reindex",
+      "coverage": []
+    },
+    {
+      "requested_path": ".saipen/evidence/T-142-evolution-audit/capture.py",
+      "path": ".saipen/evidence/T-142-evolution-audit/capture.py",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_changed",
+      "recommended_action": "read_source_and_reindex",
+      "coverage": []
+    },
+    {
+      "requested_path": ".saipen/evidence/T-142-evolution-audit/verify.py",
+      "path": ".saipen/evidence/T-142-evolution-audit/verify.py",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_changed",
+      "recommended_action": "read_source_and_reindex",
+      "coverage": []
+    },
+    {
+      "requested_path": ".saipen/evidence/T-142-evolution-audit/registration.json",
+      "path": ".saipen/evidence/T-142-evolution-audit/registration.json",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_changed",
+      "recommended_action": "read_source_and_reindex",
+      "coverage": []
+    },
+    {
+      "requested_path": ".saipen/evidence/T-142-evolution-audit/runtime.json",
+      "path": ".saipen/evidence/T-142-evolution-audit/runtime.json",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_changed",
+      "recommended_action": "read_source_and_reindex",
+      "coverage": []
+    },
+    {
+      "requested_path": ".saipen/evidence/T-142-evolution-audit/verify.json",
+      "path": ".saipen/evidence/T-142-evolution-audit/verify.json",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_changed",
+      "recommended_action": "read_source_and_reindex",
+      "coverage": []
+    },
+    {
+      "requested_path": ".saipen/evidence/T-142-evolution-audit/review.json",
+      "path": ".saipen/evidence/T-142-evolution-audit/review.json",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_changed",
+      "recommended_action": "read_source_and_reindex",
+      "coverage": []
+    }
+  ],
+  "scopes": [
+    {
+      "requested_scope": "humbox",
+      "scope": "humbox",
+      "total": 0,
+      "has_more": false,
+      "entries": [],
+      "status": "no_recorded_issue"
+    },
+    {
+      "requested_scope": "lab/analysis",
+      "scope": "lab/analysis",
+      "total": 0,
+      "has_more": false,
+      "entries": [],
+      "status": "no_recorded_issue"
+    },
+    {
+      "requested_scope": ".saipen/evidence/T-142-evolution-audit",
+      "scope": ".saipen/evidence/T-142-evolution-audit",
+      "total": 0,
+      "has_more": false,
+      "entries": [],
+      "status": "no_recorded_issue"
+    }
+  ],
+  "caveat": "Best-effort signal only. No recorded issue does not prove graph or source completeness; read flagged source and qualify claims when metadata is changed or unavailable."
+}

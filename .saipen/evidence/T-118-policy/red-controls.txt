@@ -1,0 +1,4 @@
+== unmutated copy: rc=0 .                                                                        [100%]
+== renamed_control: rc=1 FAILED tests/test_repo_consistency.py::test_workshop_policy_is_mapped_to_live_controls
+== gate_dropped: rc=1 FAILED tests/test_repo_consistency.py::test_workshop_policy_is_mapped_to_live_controls
+== acted_state: rc=1 FAILED tests/test_repo_consistency.py::test_workshop_policy_is_mapped_to_live_controls

@@ -88,6 +88,26 @@ register each other: the receiver needs the sender's accepted public key to
 verify delivery, and the sender needs the receiver's public key and root to
 address and deliver.
 
+`recipient list` and explicit `recipient add` use the public workspace view.
+They do not retrieve private keys from credential custody and remain usable
+while that store is locked, including an empty recipient list. All public
+workspace/card/peer identity checks and alias conflict refusals still apply.
+Missing, unreadable, non-UTF-8 or malformed JSON card files return the structured
+`RECIPIENT_MALFORMED` command result without modifying the mapping. Registration
+does not send, admit a study participant or unlock custody; message operations
+retain their existing private-key requirements.
+
+Concurrent `recipient add` commands serialize conflict admission and atomic
+replacement under the existing OS file-lock mechanism. Each writer reads the
+current registry after acquiring the lock: distinct aliases survive, competing
+identities for one alias produce one successful registration and a conflict,
+and identical additions remain idempotent. The local `.peers.lock` file carries
+no identity or ownership authority; process exit releases the OS lock.
+`recipient list` remains read-only and does not create this lock file.
+`RECIPIENT_LOCK_TIMEOUT` asks the caller to retry after contention;
+`RECIPIENT_REGISTRY_UNAVAILABLE` reports lock or persistence I/O refusal.
+Neither outcome permits replacing a conflicting alias.
+
 ## 5. Message content
 
 The existing stable typed representation is the message. `--record FILE` sends

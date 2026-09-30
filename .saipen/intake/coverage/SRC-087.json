@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-087:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-100 closed with verification evidence in LOG: verify -> PASS [target: T-100] conf: high -- focused tests/test_dev_access.py 14 passed; full suite python -m pytest: 2372 passed, 0 failed, 0 errors, 0 skipped (2358 floor + 14 additive); ruff clean; helper never writes canonical SAIPEN state proven by control test; devaccess baseline and result valid JSON; self-expiry proven; write-ownership conflict reproduced against overlapping DEV-20260921-0",
+      "text": "Implement temporary DEV ACCESS overlay from V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260921_0403.md without modifying canonical .saipen state",
+      "verification": "the Work this request created reached its own verification gate; see the T-100 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-100"
+    }
+  },
+  "schema_version": 1
+}

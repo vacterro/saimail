@@ -1,0 +1,33 @@
+{
+  "a3_member_count_after": 65,
+  "a3_normalized_content_sha256_after": "2f75bdb7d421a6838b8ab292f667a85bb51e207017f0760caf71c9c1e59c061d",
+  "before_basis": "Frozen identities captured from live checkout before T-107 edits and independently specified in SRC-098/T-107 handoff.",
+  "candidate_bytes_changed": false,
+  "candidates": [
+    {
+      "candidate": "a1",
+      "sha256_after_t107_edits": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+      "sha256_before_t107_edits": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+      "unchanged": true,
+      "wheel": "release/local-alpha/saimail-0.0.2a1-py3-none-any.whl"
+    },
+    {
+      "candidate": "a2",
+      "sha256_after_t107_edits": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d",
+      "sha256_before_t107_edits": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d",
+      "unchanged": true,
+      "wheel": "release/candidates/0.0.2a2/saimail-0.0.2a2-py3-none-any.whl"
+    },
+    {
+      "candidate": "a3",
+      "sha256_after_t107_edits": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc",
+      "sha256_before_t107_edits": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc",
+      "unchanged": true,
+      "wheel": "release/candidates/0.0.2a3/saimail-0.0.2a3-py3-none-any.whl"
+    }
+  ],
+  "created_utc": "2026-09-23T14:46:45Z",
+  "schema": "SAIMAIL_D3_T107_CANDIDATE_IMMUTABILITY_1",
+  "source_version": "0.0.2a3",
+  "version": 1
+}

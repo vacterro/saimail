@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-053:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "B-019 privacy corrective wave (SRC-053): TARGET A close the population/discovery error-text persistence path in the B-019 metadata-only artifact by serializing only an explicit sanitized population projection that keeps identity, membership/selection topology, error_class, requested route, reason and probe metadata and replaces raw error/response/body/exception text with error_sha256/error_bytes; TARGET B add an additive historical disclosure, pin the unchanged T-69 artifact/report/interpretation SHA-256, prove population error canaries absent from every durable output and derived report/interpretation, couple the provider_error_bodies=false claim to a structural test, keep every content-call privacy control green, change no production module and make no live model or network call; then close the corrective ticket and STOP"
+    }
+  },
+  "derived_at": "2026-09-19T22:50:58Z",
+  "derived_from": "SRC-053",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "fad075b8e2ba88d32a9abb331c712e8f9de33b1bbc866b3e71500df37fa67341"
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "SAIMAIL_D3_SAIPEN_BASELINE_1",
+  "version": 1,
+  "observed_before": "E-1422 T-107 resume, before this repair",
+  "receipt_id": "receipt-73951ee35436",
+  "validator_status": "STALE_FAIL",
+  "problems": 4,
+  "warnings": 23,
+  "problem_signatures": [
+    {
+      "rule_id": "source_receipt_unresolved_work",
+      "subject_id": "T-41",
+      "detail_hash": "8e410875a794f3dc"
+    },
+    {
+      "rule_id": "unclassified",
+      "subject_id": null,
+      "detail_hash": "84a39e0eab234308"
+    },
+    {
+      "rule_id": "source_credential_unsafe",
+      "subject_id": "SRC-017",
+      "detail_hash": "13c5015d6f0fe0c7"
+    },
+    {
+      "rule_id": "unclassified",
+      "subject_id": null,
+      "detail_hash": "c7e6f36c086c115e"
+    }
+  ],
+  "prior_a3_evidence": {
+    "problems": 3,
+    "warnings": 21,
+    "classification": "INHERITED_DRIFT_AFTER_T108_T109_T110",
+    "note": "The old a3 receipt predates the three intervening tickets. At T-107 resume the canonical current baseline was already 4 problems and 23 warnings; that is the repair comparison baseline."
+  }
+}

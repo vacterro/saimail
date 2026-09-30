@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-079:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-91 closed with verification evidence in LOG: review -> PASS [target: T-91] conf: high -- external proof bound to the exact wheel; os-store NOT_TESTED_HERE and Windows authority preserved; G17 ABSENT; a1 immutable; no P0/P1/P2",
+      "text": "Execute Roadmap v3 gate D2 - POST-V3-01 RELEASE CANDIDATE REFRESH: build and freeze SAIMAIL 0.0.2a2 from post-V3-01 source, implement D-054 first-run custody warning, preserve historical 0.0.2a1 artifact untouched",
+      "verification": "the Work this request created reached its own verification gate; see the T-91 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-91"
+    }
+  },
+  "schema_version": 1
+}

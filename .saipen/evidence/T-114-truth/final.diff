@@ -1,0 +1,679 @@
+--- before/.saipen/kitchen/T-113-reread-continuation.md
++++ .saipen/kitchen/T-113-reread-continuation.md
+@@ -1,4 +1,12 @@
+ # T-113 continuation after D3 closure
++
++> Later closure (T-114 recovery annotation): **T-113 DONE at E-1527**.
++> Receiver re-read continuity / V6-02 is implemented in the checkout.
++> E-1521 records 2549 passing tests; E-1524 records independent review PASS.
++> The design and T-107 sequencing instructions below are historical, from
++> before T-107 closed at E-1502. Do not implement them again. Current recovery
++> authority: `humbox/CURRENT-STATE.md`, Roadmap v6 §14 and `.saipen/STATE.md`;
++> T-114 owns subsequent continuation. Frozen a3 does not contain T-113.
+ 
+ SRC-102 contains two outcomes. The user-confirmed `humbox/SAIGIMN.mp3` asset
+ stays in SAIMAIL; a verified stream-copy preserved the decoded PCM SHA256 but
+--- before/humbox/CURRENT-STATE.md
++++ humbox/CURRENT-STATE.md
+@@ -1,4 +1,18 @@
+ # SAIMAIL CURRENT STATE
++
++> **T-113 DONE (E-1527): receiver re-read continuity is implemented.**
++> V6-02 / READ_REREAD_GAP is resolved by T-113 in the development checkout.
++> Open is first-read only (UNREAD to READ); Open still refuses READ. Explicit
++> Reopen re-authenticates/decrypts READ within its budget, fails closed and
++> leaves durable state and sealed bytes unchanged. Entry, selection and refresh
++> remain metadata-only; content appears only after explicit Open or Reopen.
++> The checkout is ahead of frozen `0.0.2a3` by checkout-only T-108, T-109,
++> T-110 and T-113 product work, with T-107/T-115 release-evidence repairs.
++> Frozen `0.0.2a3` does not contain T-113. T-114 owns subsequent continuation;
++> `.saipen/STATE.md`, BOARD and LOG own its exact current phase.
++> Do not implement the saved T-113 design again. After truth reconciliation
++> is accepted, evaluate the separate SAIPEN-owned turn-entry hook; do not
++> implement it inside this repair.
+ 
+ > **T-110 DONE (2026-09-23, development checkout):** SAIPEN Work Desk v0 adds
+ > `saipen enter` and `saipen brief`: local participation/seat checks, current
+@@ -11,9 +25,9 @@
+ > Lossless stream-copy did not reduce its size. T-107 passed 2514 tests and
+ > the 111-test independent review; final evidence is under `release/evidence/a3/`. T-110 product
+ > regression: 2477 tests passed; targeted review:
+-> 116 passed. `READ_REREAD_GAP` remains open.
+-
+-> **Restart note:** this map records the checkout as observed on 2026-09-21,
++> 116 passed. Receiver re-read continuity subsequently closed via T-113.
++
++> **Historical baseline:** the following map began with the 2026-09-21 checkout,
+ > after FG-02 closed via T-79, FG-03 via T-78, FG-04A via T-80, FG-04B via T-81,
+ > FG-05 via T-82, FG-06 via T-83, V2-01 via T-85, V2-04 via T-86/T-87,
+ > V2-02 via T-88, V3-01 via T-89, D1 via T-90, D2 via T-91/T-92, P1 via T-93,
+@@ -102,7 +116,8 @@
+   remainder is the GitHub Settings click (`MANUAL_GITHUB_SETTINGS_REQUIRED`,
+   `humbox/GITHUB-SETTINGS-V6.md`). D3 local control repair is complete; T-107 DONE.
+   SRC-102 authorizes retaining `humbox/SAIGIMN.mp3` through one exact
+-  path/hash/size manifest; V6-02 remains NOT STARTED.
++  path/hash/size manifest. **V6-02 is DONE via T-113** (E-1527);
++  T-114 owns subsequent continuation, including the current truth repair.
+ - **FG-00 DONE** (T-77: state/navigation closure artifact; LOG E-910–E-918).
+ - **FG-01 diagnosed / externally blocked.** T-75 cannot inherit the unrecorded
+   T-41 publication; SRC-017/T-41 and SRC-036 are separately carried SAIPEN
+@@ -776,6 +791,10 @@
+ 
+ **V5-01 DONE via T-97.**
+ 
++Historical T-97 closure record below: its first-open-only limitation describes
++that checkpoint. T-113 later resolved it with explicit Reopen; see the current
++receiver re-read section below. The old suite count is historical evidence.
++
+ - **Outcome:** `DONE` via T-97. One native desktop application presents the
+   proven local workflow through a presentation-only adapter over the existing
+   tested public API. Visual authority is the canonical
+@@ -867,19 +886,38 @@
+   acknowledged receipt and triages after its T-1344.
+ - **Release truth:** checkout-only, not inside frozen `0.0.2a3`.
+ 
++## V6-02 RECEIVER RE-READ CONTINUITY (T-113)
++
++**T-113 DONE; V6-02 DONE via T-113.** The former READ_REREAD_GAP is resolved.
++`PostOfficeSession.reopen_message`, `workspace.reopen_message`, the distinct
++`saimail-local reopen` command and GUI `Reopen` are implemented. Open remains
++UNREAD-only; Reopen requires READ, re-verifies sender/recipient, receipt/index
++and sealed bytes under the lifecycle lock, consumes its open budget and
++preserves READ without plaintext persistence. Expiry/tombstone and crash
++ambiguity still refuse. Selecting, refreshing or restarting never decrypts.
++
++Evidence: `tests/test_reread_continuation.py` (25 T-113 controls), stable API
++`lab/stable_local_api.json`, spec/03 and spec/25 §4.3. Historical T-113 full
++suite: 2549 passed / 0 failed / 0 errors / 0 skipped (E-1521); independent
++review PASS E-1524; closure E-1527. T-115 repaired D3 evidence monotonicity
++(44 focused / 2522 full at that checkpoint, E-1514); T-115 DONE E-1518.
++These checkout-only results are not evidence that frozen a3 contains Reopen.
++
+ ## NEXT EXECUTABLE STEP
+ 
+ **Roadmap v6 (`humbox/FUTURE-GATES-V6.md`) is the current authority; V6-01 is
+ DONE via T-104; S2 SAIPEN seam bridge is DONE via T-108 (§11); SAITELEMES v0 is
+-DONE via T-109 (§12); T-110 is DONE (§13). T-107 DONE at E-1502.**
++DONE via T-109 (§12); T-110 is DONE (§13). T-107 DONE at E-1502;
++T-113 DONE at E-1527; T-115 DONE at E-1518. V6-02 DONE via T-113 (§14).**
+ T-106 remains the historical candidate-build ticket. Candidate `0.0.2a3` at
+ `release/candidates/0.0.2a3/` (wheel
+ `6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc`, 65 members,
+ content digest `2f75bdb7d421a6838b8ab292f667a85bb51e207017f0760caf71c9c1e59c061d`)
+ remains frozen and `NOT_PUBLISHED`. Local required gates passed; final G14/G15/G16
+ records are in `release/evidence/a3/`. G13 is `PENDING_EXTERNAL`, G17
+-is `ABSENT`, and publication is `NONE`. V6-02 is NOT STARTED. The checkout is
+-ahead of frozen a3 by checkout-only T-108, T-109 and T-110 work.
++is `ABSENT`, and publication is `NONE`. The checkout is ahead of frozen a3 by
++checkout-only T-108, T-109, T-110 and T-113 work plus T-107/T-115 evidence repairs.
++Frozen `0.0.2a3` does not contain T-113 receiver re-read continuity.
+ Publication remains a separate operator decision (G17 ABSENT) and no publication
+ task is created. FG-01 / SAIPEN debt remains separate (T-41 release-linkage FAIL,
+ SRC-017 credential gate, inherited actor naming, stale improve-report fingerprint are the known inherited
+@@ -896,8 +934,14 @@
+ on a genuinely separate machine/VM/host and return its raw JSON. Local repair
+ is complete and no implementation ticket is kept active to wait for G13.
+ SRC-102/SRC-103 separately authorize subsequent checkout product improvements;
+-T-114 owns that continuation, with the saved T-113 re-read design as its first
+-candidate. V6-02 remains NOT STARTED at this T-107 closure boundary.
++T-114 owns that continuation. T-113 is implemented, not a future candidate.
++After this capability/recovery truth repair is accepted, the next exact target
++is evaluation of the separate SAIPEN-owned Work Desk / SAITELEMES turn-entry
++hook: bounded header-only awareness, receiver-owned authority, zero automatic
++open. That hook is outside this repair; STATE owns the current phase.
++
++Historical T-107 boundary: V6-02 was NOT STARTED at E-1502. T-113 closed it
++later at E-1527; frozen candidate evidence remains scoped to its checkpoint.
+ 
+ The earlier E-1461/E-1462 blocked snapshot and its 2512/1 suite result are
+ historical. SRC-102 now authorizes retaining the exact user-provided audio asset;
+--- before/humbox/FUTURE-GATES-V6.md
++++ humbox/FUTURE-GATES-V6.md
+@@ -1,6 +1,6 @@
+ # SAIMAIL: Roadmap v6 (POST-V5 / GITHUB IDENTITY + PRESENTATION LANE)
+ 
+-Updated: 2026-09-23. Authority: this file, for work after V5-01. It supersedes
++Updated: 2026-09-24. Authority: this file, for work after V5-01. It supersedes
+ `humbox/FUTURE-GATES-V5.md` as the *current* roadmap; v1 through v5 stay intact
+ and identifiable as completed historical planning evidence. This is a plan, not
+ permission to publish, to make a live model call, or to change any proven
+@@ -15,6 +15,9 @@
+ 
+ **V6-01 (GitHub Identity and Presentation Sync) is DONE via T-104.** It was the
+ only gate executed under T-104; no second gate was started inside it.
++
++**V6-02 (receiver re-read continuity) is DONE via T-113**, E-1527; see §14.
++T-114 owns subsequent continuation and the current capability-truth repair.
+ 
+ ## 1. Current proven baseline (post-V5)
+ 
+@@ -26,8 +29,10 @@
+   3.13.5 environment; that proof applies only to a2. T-106 built and froze the
+   exact `0.0.2a3` candidate. It remains `NOT_PUBLISHED`; G17 authorization is
+   ABSENT and G13 is `PENDING_EXTERNAL`.
+-- The checkout is ahead of frozen a3 by checkout-only T-108, T-109 and T-110
+-  work. T-107 DONE at E-1502: local release-control repair passed independent
++- The checkout is ahead of frozen a3 by checkout-only T-108, T-109, T-110
++  and T-113 product work, with T-107/T-115 release-evidence repairs.
++  Frozen `0.0.2a3` does not contain T-113. T-107 DONE at E-1502:
++  local release-control repair passed independent
+   review. SRC-102 confirms `humbox/SAIGIMN.mp3` is user-owned and must
+   remain; a narrow exact-path/hash/size manifest covers only that asset.
+   Candidate-bound local evidence is under `release/evidence/a3/`.
+@@ -48,8 +53,9 @@
+   identified as `0.0.2a2` while containing post-a2 product work. T-106 aligned
+   that source as frozen candidate `0.0.2a3`; the later T-108/T-109/T-110
+   checkout-only changes do not alter the frozen candidate.
+-- **L4 — READ_REREAD_GAP remains real.** An already-`READ` message cannot be
+-  decrypted again in a later session. Explicitly out of scope for this lane.
++- **L4 — READ_REREAD_GAP resolved by T-113.** Explicit Reopen re-authenticates
++  and decrypts an already-READ message across sessions. Open remains first-read
++  only; entry, selection and refresh remain metadata-only. See §14.
+ 
+ ## 3. Priority principles
+ 
+@@ -61,7 +67,7 @@
+ - Every gate needs a stop condition; a gate whose evidence says "stop"
+   succeeds.
+ - One gate at a time: V6-01 is DONE; D3 local repair is DONE via T-107;
+-  V6-02 remains NOT STARTED.
++  V6-02 is DONE via T-113; the separate turn-entry hook is not part of this repair.
+ 
+ ## 4. Lanes
+ 
+@@ -117,7 +123,7 @@
+   `6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc`, 65
+   members, digest `2f75bdb7…`) remains frozen and `NOT_PUBLISHED`. Local
+   repair passed 2514 tests and a 111-test independent review. G13 is `PENDING_EXTERNAL`; G17 is
+-  `ABSENT`; publication is `NONE`. V6-02 is NOT STARTED.
++  `ABSENT`; publication is `NONE`. V6-02 is DONE via T-113, checkout-only.
+ 
+ ## 6. Selected gate
+ 
+@@ -180,8 +186,10 @@
+   stale. SRC-102 authorizes retaining the exact user asset through
+   `humbox/media-assets.json`; local G15/G16 evidence is candidate-bound.
+   G13 is `PENDING_EXTERNAL`, G17 `ABSENT`, publication `NONE`.)
+-- **V6-02 — READ_REREAD_GAP: NOT STARTED at T-107 closure.** Later SRC-102/SRC-103
+-  authorize checkout improvements; the saved T-113 design is next for T-114.
++- **V6-02 — READ_REREAD_GAP: NOT STARTED at T-107 closure.** This is the
++  historical E-1502 boundary. Later SRC-102/SRC-103 authorized checkout
++  improvements; T-113 implemented the saved design and closed at E-1527.
++  Current status is DONE via T-113 (§14); T-114 owns subsequent continuation.
+ - **External operator action:** follow `release/evidence/a3/EXTERNAL_VERIFICATION_REQUEST.md`
+   on a genuinely separate machine/VM/host and return raw verifier JSON. No active
+   implementation ticket waits solely for G13; publication remains unauthorized.
+@@ -263,9 +271,39 @@
+   `humbox/SAIPEN-WORK-DESK.md`.
+ - **Boundary:** checkout-only, outside frozen `0.0.2a3`; no publish, extension
+   registration, automatic send/open, or SAIPEN memory writes.
+-- **Next evaluation:** V6-02 receiver reread continuity, then a SAIPEN-owned
++- **Next evaluation at T-110 closure (historical):** V6-02 receiver reread continuity, then a SAIPEN-owned
+   turn-entry hook. Neither is started in T-110. T-107 release-control repair
+   remains separate work.
++- **Later closure:** T-113 implemented receiver re-read continuity (§14).
++  Current next evaluation is the separate SAIPEN-owned turn-entry hook after
++  T-114 truth reconciliation is accepted; do not implement it in this repair.
++
++## 14. V6-02 — Receiver re-read continuity (T-113)
++
++| Lane | Status | Closure Work | Evidence |
++|---|---|---|---|
++| V6-02 | DONE | T-113 | E-1521, E-1524, E-1527 |
++
++T-113 resolves READ_REREAD_GAP in the development checkout. The distinct
++`PostOfficeSession.reopen_message`, `workspace.reopen_message`, CLI `reopen`
++and GUI `Reopen` support an explicit later read. Open remains UNREAD-only;
++Reopen requires durable READ and preserves it. Reopen is budgeted, fail-closed,
++verifies sender/recipient plus receipt/index under the lifecycle lock, and
++persists no plaintext. Selection, refresh and restart never decrypt.
++
++Historical proof: 25 T-113 controls in `tests/test_reread_continuation.py`;
++full suite 2549 passed / 0 failed / 0 errors / 0 skipped at E-1521;
++independent review PASS E-1524; T-113 DONE E-1527. T-115 DONE E-1518 records
++the D3 historical-evidence monotonicity repair (44 focused / 2522 full at
++E-1514). Contracts: spec/03, spec/25 §4.3; API: `lab/stable_local_api.json`.
++
++Release boundary: checkout-only. Frozen `0.0.2a3` does not contain T-113;
++its wheel and historical evidence remain unchanged. G13 `PENDING_EXTERNAL`,
++G17 `ABSENT`, publication `NONE`. T-114 owns subsequent continuation, not a
++second implementation of T-113. After this truth repair is accepted, evaluate
++the separate SAIPEN-owned turn-entry hook with bounded header-only awareness,
++receiver-owned authority and zero automatic open. Implementation is outside
++this repair.
+ 
+ ## 10. Restart / context-loss entry
+ 
+@@ -279,10 +317,12 @@
+    `spec/20-LOCAL-KEY-CUSTODY-v0.md` — product contracts.
+ 
+ Recovery checklist: current roadmap is v6; V6-01 is DONE via T-104; T-106 is
+-historical DONE and T-107 DONE at E-1502; T-108/T-109/T-110 are DONE. STATE owns later work.
++historical DONE and T-107 DONE at E-1502; T-108/T-109/T-110 are DONE;
++T-113 DONE E-1527 and T-115 DONE E-1518. T-114 owns subsequent continuation;
++STATE owns its current phase. Do not redo the saved T-113 design.
+ Candidate `0.0.2a3` remains frozen and `NOT_PUBLISHED`; final G15/G16 evidence
+ records local repair after SRC-102's exact-asset manifest. G13 is
+-`PENDING_EXTERNAL`, G17 `ABSENT`, publication `NONE`; V6-02 is NOT STARTED.
++`PENDING_EXTERNAL`, G17 `ABSENT`, publication `NONE`; V6-02 is DONE via T-113.
+ S2 SAIPEN seam bridge is DONE via T-108 (checkout-only, ahead of frozen
+ `0.0.2a3`, §11); SAITELEMES v0 is DONE via T-109 (§12); Work Desk v0 is DONE
+ via T-110 (§13); completed gates (v1–v5) must not be reopened.
+--- before/humbox/SAIPEN-WORK-DESK.md
++++ humbox/SAIPEN-WORK-DESK.md
+@@ -55,12 +55,23 @@
+ it explicitly with `open --workspace ... --envelope ...`. Opening and promoting
+ knowledge remain separate decisions. Arrival never creates a SAIPEN task.
+ 
++## Revisit a READ message
++
++Receiver re-read continuity is implemented: **T-113 DONE**, V6-02 resolved.
++Open performs the first read and refuses an already-READ message. Use explicit
++`reopen --workspace ... --envelope ...` (or the GUI `Reopen` button) to read it
++again in a later session. Reopen re-authenticates/decrypts within its budget,
++fails closed and preserves durable READ state without persisting plaintext.
++Entry, selection and refresh show metadata only; they never decrypt content.
++This checkout-only T-113 capability is not inside frozen `0.0.2a3`.
++
+ ## Next useful direction
+ 
+-Receiver continuity comes next: explicitly revisit an already-read message
+-with the same evidence and custody guarantees. `READ_REREAD_GAP` remains open.
+-Then evaluate a SAIPEN-owned turn-entry hook. Both need their own acceptance
+-gate; neither is implemented here.
++T-114 owns subsequent continuation. After capability/recovery truth
++reconciliation is accepted, evaluate the separate SAIPEN-owned turn-entry hook
++for Work Desk / SAITELEMES: automatic bounded header-only telegram awareness,
++receiver-owned authority and zero automatic open. That hook needs its own
++acceptance gate and is not implemented in this repair. Do not redo T-113.
+ 
+ Contract: [Work Desk v0](../spec/27-SAIPEN-WORK-DESK-v0.md). This feature lives
+ in the development checkout, beyond frozen `0.0.2a3`.
+--- before/saimail/gui_adapter.py
++++ saimail/gui_adapter.py
+@@ -10,8 +10,9 @@
+ 
+ * **Selecting is not opening.** :meth:`GuiAdapter.select` reads one row's
+   metadata from the page already in memory. It never touches the mailbox.
+-  Only :meth:`GuiAdapter.open_selected` may call ``workspace.open_message``,
+-  and only after that call returns does content become visible.
++  Explicit :meth:`GuiAdapter.open_selected` and :meth:`GuiAdapter.reopen_selected`
++  call ``workspace.open_message`` and ``workspace.reopen_message`` respectively;
++  content becomes visible only after the requested action succeeds.
+ * **Refresh is explicit.** There is no watcher, timer, thread, poll or
+   background mutation anywhere in this module. :meth:`GuiAdapter.refresh`
+   replaces the visible page because the operator asked; nothing else ever
+@@ -21,13 +22,13 @@
+   or protocol relation lives here. Backend refusal codes pass through
+   unchanged; the adapter never relabels a protocol verdict.
+ 
+-Recorded backend-capability gap (not faked, not worked around):
+-``saimail.workspace.open_message`` is the one decryption path and it refuses
+-``ALREADY_READ``, so a message that is already durably READ cannot be re-opened
+-to re-display its plaintext in a later session. The adapter therefore shows a
+-READ message's content only when this very session opened it
+-(:attr:`GuiAdapter.content_visible`), and reports the gap instead of
+-pretending otherwise.
++Open and Reopen are distinct receiver actions (T-113). Open performs the first
++UNREAD-to-READ transition and refuses READ messages. Reopen explicitly
++re-authenticates and decrypts a durable READ message, including in a later
++session. The backend budgets and verifies each Reopen without changing durable
++READ state or persisting plaintext. Content is held only in this session's
++ephemeral presentation state (:attr:`GuiAdapter.content_visible`); workspace
++entry, selection and refresh never decrypt it automatically.
+ """
+ 
+ from __future__ import annotations
+@@ -72,22 +73,15 @@
+ REASON_NO_RECIPIENTS = "Register a recipient to compose a message."
+ REASON_EMPTY_INBOX = "The inbox is empty."
+ REASON_OPEN_ALREADY_READ = (
+-    "Already READ. SAIMAIL opens a message exactly once, so its content "
+-    "cannot be shown again in a new session.")
++    "Already READ. Open is for the first read only. Use Reopen to read again.")
+ REASON_REPLY_UNREAD = "Open the message first to reply."
+ REASON_REPLY_NONE = "Select a READ message to reply."
+ REASON_READ_NOT_THIS_SESSION = (
+-    "Opened in an earlier session; content is not re-readable.")
++    "READ — content is not loaded in this session. Use Reopen to read again.")
+ REASON_REOPEN_NOT_READ = "Message is UNREAD; open it explicitly first."
+ REASON_REOPEN_NONE = "Select a READ message to reopen."
+ REASON_COMPOSER_EMPTY = "Type a message to send."
+ REASON_NO_FILTERS = "No active filters."
+-
+-#: The honest statement of the recorded backend-capability gap.
+-READ_REREAD_GAP = (
+-    "BACKEND GAP: workspace.open_message is the only decryption path and "
+-    "refuses ALREADY_READ, so an already-READ message cannot be re-opened to "
+-    "re-display its content in a later session.")
+ 
+ @dataclass
+ class Status:
+@@ -247,11 +241,11 @@
+ 
+     @property
+     def content_visible(self) -> bool:
+-        """True only when this session explicitly opened the selected message."""
++        """True only after this session's explicit Open or Reopen succeeded."""
+         return self.selected_id in self._opened
+ 
+     def content(self) -> Optional[dict]:
+-        """The canonical record fields returned by the explicit open, if any."""
++        """Canonical record fields returned by explicit Open or Reopen, if any."""
+         return self._opened.get(self.selected_id) if self.selected_id else None
+ 
+     # -- mailbox view ------------------------------------------------------
+@@ -340,7 +334,7 @@
+                         f"{row['state']} selected: {row['from']} / {row['topic']}")
+ 
+     def open_selected(self) -> dict:
+-        """The one explicit decryption action. Backend success is the only gate."""
++        """Explicit first Open of UNREAD. Backend success gates the transition."""
+         if self.workspace is None:
+             return self._refuse_no_workspace("open")
+         row = self.selected_row
+@@ -665,7 +659,6 @@
+     "NO_WORKSPACE",
+     "OK",
+     "Page",
+-    "READ_REREAD_GAP",
+     "REASON_COMPOSER_EMPTY",
+     "REASON_EMPTY_INBOX",
+     "REASON_NO_FILTERS",
+--- before/spec/25-DESKTOP-LOCAL-MESSENGER-v0.md
++++ spec/25-DESKTOP-LOCAL-MESSENGER-v0.md
+@@ -60,9 +60,10 @@
+ ### 4.2 Interaction invariants (non-negotiable)
+ 
+ - **Selecting a message does not open it.** `select()` reads one row's metadata
+-  from the already-loaded page; only `open_selected()` may call
+-  `workspace.open_message`, and content becomes visible only after that call
+-  returns.
++  from the already-loaded page. Explicit `open_selected()` calls
++  `workspace.open_message` for UNREAD; explicit `reopen_selected()` calls
++  `workspace.reopen_message` for READ. Content becomes visible only after the
++  requested action succeeds. Workspace entry, selection and refresh never decrypt.
+ - **Refresh is explicit.** There is no watcher, timer, thread, poll or daemon;
+   the visible page changes only through `refresh()` (or an explicit `Load More`
+   continuation) and rows already visible never jump or reorder.
+--- before/tests/test_gui_acceptance.py
++++ tests/test_gui_acceptance.py
+@@ -38,6 +38,7 @@
+ 
+ from saimail import gui_adapter as adapter
+ from saimail import workspace
++from saimail_local import no_network
+ 
+ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+ QtWidgets = pytest.importorskip("PySide6.QtWidgets", reason="optional gui extra")
+@@ -60,6 +61,14 @@
+     app = QtWidgets.QApplication.instance() or QtWidgets.QApplication([])
+     app.setStyleSheet(gui_theme.style_sheet())
+     yield app
++
++
++@pytest.fixture
++def network_probe():
++    probe = {"blocked": 0}
++    with no_network(probe):
++        yield probe
++    assert probe["blocked"] == 0
+ 
+ 
+ @pytest.fixture
+@@ -75,7 +84,8 @@
+         win.close()
+ 
+ 
+-def test_two_workspace_offline_gui_acceptance(tmp_path, qapp, windows):
++def test_two_workspace_offline_gui_acceptance(
++        tmp_path, qapp, windows, monkeypatch, network_probe):
+     a_root = tmp_path / "ws-a"
+     b_root = tmp_path / "ws-b"
+     card_a = tmp_path / "card-a.json"
+@@ -83,7 +93,7 @@
+     wn = windows
+ 
+     # 18 (first part): the network tripwire covers the whole scenario.
+-    network = {"blocked": 0}
++    network = network_probe
+ 
+     # 1: create A and B through the GUI's own create path.
+     created_a = wn["a"].model.create_workspace(a_root, "SAIMAIL-A")
+@@ -129,6 +139,7 @@
+     assert "FROM SAIMAIL-A" in wn["b"].detail_meta.text()
+     assert MARKER not in wn["b"].content.toPlainText()
+     assert wn["b"].open_button.isEnabled() is True
++    assert wn["b"].reopen_button.isEnabled() is False
+     assert wn["b"].reply_button.isEnabled() is False
+     assert wn["b"].reply_reason_label.text() == adapter.REASON_REPLY_UNREAD
+     assert wn["b"].model.content() is None
+@@ -179,21 +190,68 @@
+     # 16-17: restart the presentation layer; durable truth is unchanged.
+     durable_before_a = _tree(a_root)
+     durable_before_b = _tree(b_root)
++    decrypt_calls = []
++    original_open = workspace.open_message
++    original_reopen = workspace.reopen_message
++
++    def watched_open(*args, **kwargs):
++        decrypt_calls.append("open")
++        return original_open(*args, **kwargs)
++
++    def watched_reopen(*args, **kwargs):
++        decrypt_calls.append("reopen")
++        return original_reopen(*args, **kwargs)
++
++    monkeypatch.setattr(workspace, "open_message", watched_open)
++    monkeypatch.setattr(workspace, "reopen_message", watched_reopen)
+     fresh_a = adapter.GuiAdapter()
+     fresh_b = adapter.GuiAdapter()
+     assert fresh_a.open_workspace(a_root)["ok"]
+     assert fresh_b.open_workspace(b_root)["ok"]
++    assert decrypt_calls == [], "restart must never decrypt"
+     assert fresh_a.workspace.sender_kid == wn["a"].model.workspace.sender_kid
+     assert fresh_b.selected_id is None and fresh_b.content_visible is False
+     fresh_b.refresh()
++    assert decrypt_calls == [], "refresh must never decrypt"
+     assert [row["envelope_id"] for row in fresh_b.page.items] == [original_id]
+     assert fresh_b.page.items[0]["state"] == "READ"
+     assert fresh_b.select(original_id)["ok"]
++    assert decrypt_calls == [], "selection must never decrypt"
+     assert fresh_b.content_visible is False, (
+         "a READ message from an earlier session must not silently reveal content")
+     assert fresh_b.content_note() == adapter.REASON_READ_NOT_THIS_SESSION
++    assert "Reopen" in fresh_b.content_note()
++    assert fresh_b.open_reason() is not None and fresh_b.reopen_reason() is None
+     assert _tree(a_root) == durable_before_a, "the mailbox must be byte-identical"
+     assert _tree(b_root) == durable_before_b, "the mailbox must be byte-identical"
++
++    # A restarted window visibly offers Reopen while content stays hidden.
++    cls = gui_app._build_window(QtCore, QtGui, QtWidgets)
++    fresh_window = cls()
++    try:
++        fresh_window._apply(fresh_window.model.open_workspace(b_root))
++        fresh_window.on_refresh()
++        fresh_window.inbox.setCurrentItem(fresh_window.inbox.item(0))
++        assert decrypt_calls == []
++        assert fresh_window.open_button.isEnabled() is False
++        assert fresh_window.reopen_button.isEnabled() is True
++        assert "Reopen" in fresh_window.content.toPlainText()
++        assert MARKER not in fresh_window.content.toPlainText()
++        # Even programmatic first Open refuses READ without calling the backend.
++        fresh_window.on_open()
++        assert fresh_window.model.status.code == "OPEN_NOT_UNREAD"
++        assert decrypt_calls == []
++        assert fresh_window.reopen_button.isEnabled() is True
++        fresh_window.reopen_button.click()
++        assert decrypt_calls == ["reopen"]
++        assert "original " + MARKER in fresh_window.content.toPlainText()
++        assert fresh_window.model.selected_state == "READ"
++        assert fresh_window.model.content_visible is True
++    finally:
++        fresh_window.close()
++    assert _tree(a_root) == durable_before_a
++    assert _tree(b_root) == durable_before_b
++    assert all(MARKER.encode() not in data for data in _tree(b_root).values())
+     assert network["blocked"] == 0
+ 
+ 
+--- before/tests/test_gui_surface.py
++++ tests/test_gui_surface.py
+@@ -149,7 +149,7 @@
+     assert model.status.detail == "injected failure"
+ 
+ 
+-def test_already_read_message_cannot_be_reopened_and_says_so(site):
++def test_read_refuses_second_open_but_explicit_reopen_remains_available(site):
+     model = _open_b(site)
+     model.select(site["envelope"])
+     model.open_selected()
+@@ -157,15 +157,22 @@
+     second = model.open_selected()
+     assert second["ok"] is False and second["code"] == "OPEN_NOT_UNREAD"
+     assert model.open_reason() == adapter.REASON_OPEN_ALREADY_READ
+-    # A fresh session sees READ and reports the recorded backend gap.
++    assert model.reopen_reason() is None
++    assert "Reopen" in second["detail"]
++    # A fresh session offers explicit Reopen while keeping content hidden.
+     fresh = _open_b(site)
+     fresh.select(site["envelope"])
+     assert fresh.selected_state == "READ"
+     assert fresh.content_visible is False
+     assert fresh.content_note() == adapter.REASON_READ_NOT_THIS_SESSION
++    assert "Reopen" in fresh.content_note()
++    assert fresh.reopen_reason() is None
+     refused = fresh.open_selected()
+-    assert refused["ok"] is False
+-    assert "ALREADY_READ" in adapter.READ_REREAD_GAP
++    assert refused["ok"] is False and refused["code"] == "OPEN_NOT_UNREAD"
++    assert fresh.reopen_reason() is None
++    assert fresh.reopen_selected()["ok"] is True
++    assert fresh.content()["claim"] == "hello from A"
++    assert fresh.selected_state == "READ"
+ 
+ 
+ # --------------------------------------------------------------------------
+@@ -597,7 +604,7 @@
+                                    QtCore.Qt.KeyboardModifier.NoModifier))
+     assert "hello from A" in win.content.toPlainText()
+     # A double-click activation is deliberately NOT wired to Open, so the
+-    # explicit Open action stays the only route to content.
++    # explicit Open remains the first-read route; READ uses distinct Reopen.
+     assert win.inbox.receivers("2itemActivated(QListWidgetItem*)") == 0
+ 
+ 
+@@ -675,7 +682,39 @@
+         fresh_win.inbox.setCurrentItem(fresh_win.inbox.item(0))
+         assert fresh_win.open_button.isEnabled() is False
+         assert fresh_win.reopen_button.isEnabled() is True
++        assert fresh_win.model.content() is None
++        assert "hello from A" not in fresh_win.content.toPlainText()
++        assert "Reopen" in fresh_win.content.toPlainText()
++        assert "Reopen" in fresh_win.open_reason_label.text()
+         fresh_win.on_reopen()
+         assert "hello from A" in fresh_win.content.toPlainText()
++        assert fresh_win.model.selected_state == "READ"
+     finally:
+         fresh_win.close()
++
++
++def test_failed_reopen_keeps_read_selection_and_durable_bytes(site, monkeypatch):
++    from sailang import SailangError
++
++    workspace.open_message(site["b"], site["envelope"])
++    model = _open_b(site)
++    model.select(site["envelope"])
++
++    def snapshot():
++        return {p.relative_to(site["b_root"]): p.read_bytes()
++                for p in site["b_root"].rglob("*") if p.is_file()}
++
++    before = snapshot()
++
++    def refused(*_args, **_kwargs):
++        raise SailangError("DECRYPTION_FAILED", "injected reopen failure")
++
++    monkeypatch.setattr(workspace, "reopen_message", refused)
++    result = model.reopen_selected()
++    assert result["ok"] is False and result["code"] == "DECRYPTION_FAILED"
++    assert model.selected_id == site["envelope"]
++    assert model.selected_state == "READ"
++    assert model.content() is None and model.content_visible is False
++    assert model.reopen_reason() is None
++    assert model.status.detail == "injected reopen failure"
++    assert snapshot() == before
+--- before/tests/test_repo_consistency.py
++++ tests/test_repo_consistency.py
+@@ -1134,3 +1134,71 @@
+     head = " ".join(readme.split("## Status", 1)[0].split())
+     assert "SAITELEMES" in head and "not** inside the frozen `0.0.2a3` wheel" in head
+     assert "TELEGRAM" not in envelope.KINDS, "SAITELEMES must not grow the closed wire set"
++
++
++def test_gui_read_capability_language_matches_explicit_reopen():
++    """Qt-independent oracle: first-Open refusal must point to real Reopen."""
++    from saimail import gui_adapter, workspace
++
++    assert callable(workspace.reopen_message)
++    assert callable(gui_adapter.GuiAdapter.reopen_selected)
++    assert not hasattr(gui_adapter, "READ_REREAD_GAP"), "T-113 resolved this gap"
++    for reason in (gui_adapter.REASON_OPEN_ALREADY_READ,
++                   gui_adapter.REASON_READ_NOT_THIS_SESSION):
++        assert "READ" in reason and "Reopen" in reason, (
++            "READ guidance must point to the explicit Reopen action")
++    # Check only READ capability prose; non-READ refusal text remains valid.
++    capability = " ".join((gui_adapter.__doc__,
++                           gui_adapter.REASON_OPEN_ALREADY_READ,
++                           gui_adapter.REASON_READ_NOT_THIS_SESSION))
++    capability = " ".join(capability.split()).lower()
++    assert not re.search(
++        r"not re-readable|cannot be (?:re-?opened|shown again)|"
++        r"(?:only|one|sole) decryption path|backend.capability gap", capability)
++
++
++def test_current_recovery_recognizes_t113_closure_and_frozen_boundary():
++    """T-114: current capability truth must not send cold recovery back to T-113."""
++    current = read(ROOT / "humbox/CURRENT-STATE.md")
++    roadmap = read(ROOT / "humbox/FUTURE-GATES-V6.md")
++    desk = read(ROOT / "humbox/SAIPEN-WORK-DESK.md")
++
++    # Parse the lane's status fields, not an exact prose paragraph snapshot.
++    rows = [[cell.strip() for cell in line.strip("|").split("|")]
++            for line in roadmap.splitlines() if line.startswith("| V6-02 |")]
++    assert len(rows) == 1 and rows[0][:3] == ["V6-02", "DONE", "T-113"]
++    assert "E-1527" in rows[0][3]
++    for text in (current, roadmap, desk):
++        flat = " ".join(text.replace("*", "").replace("`", "").split())
++        assert re.search(r"T-113 DONE|DONE via T-113", flat)
++        assert "T-114 owns subsequent continuation" in flat
++        assert "Reopen" in flat
++        assert "metadata-only" in flat or "metadata only" in flat
++    for text in (current, roadmap):
++        flat = " ".join(text.replace("*", "").replace("`", "").split())
++        assert "Frozen 0.0.2a3 does not contain T-113" in flat
++        assert "checkout-only" in flat
++        for unchanged in ("G13", "PENDING_EXTERNAL", "G17", "ABSENT", "NONE"):
++            assert unchanged in flat
++
++    # Explicit historical sections/paragraphs remain valid evidence. Check the
++    # rest, including current position and restart, for the original drift.
++    current_now = re.sub(r"## V5-01 DESKTOP.*?(?=\n## S2 )", "", current,
++                         flags=re.DOTALL)
++    for text in (current_now, roadmap, desk):
++        for paragraph in text.split("\n\n"):
++            if any(scope in paragraph for scope in (
++                    "Historical T-107 boundary:", "NOT STARTED at T-107 closure",
++                    "Next evaluation at T-110 closure (historical)")):
++                continue
++            flat = " ".join(paragraph.replace("*", "").replace("`", "").split())
++            assert not re.search(
++                r"READ_REREAD_GAP.{0,40}(?:remains|is) (?:open|real)|"
++                r"V6-02.{0,25}NOT STARTED|"
++                r"saved T-113.{0,50}(?:next|first)|Receiver continuity comes next",
++                flat), flat
++
++    api = json.loads(read(ROOT / "lab/stable_local_api.json"))
++    exported = {(item["module"], item["symbol"]) for item in api["apis"]}
++    assert ("saimail.workspace", "open_message") in exported
++    assert ("saimail.workspace", "reopen_message") in exported

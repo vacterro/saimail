@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="0.177" timestamp="2026-09-30T15:34:31.218081+03:00" hostname="DESKTOP-TTH0L52"><testcase classname="tests.test_real_use_recorder" name="test_entry2_appends_and_preserves_history" time="0.078" /></testsuite></testsuites>

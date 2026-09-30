@@ -1,0 +1,21 @@
+{
+  "op_id": "scope-0770381f05ec4fd6965c1a0bc75755c2",
+  "paths": {
+    ".saipen/evidence/T-148-recipient-registration/before/postoffice.py": "de45fc8448e3a4200ef01b4c687ab1f9492f8f13b5b9c7a60160c5f89b6304b4",
+    ".saipen/evidence/T-148-recipient-registration/before/workspace.py": "93ac851e04fbd6e03c01ed35c321f453d11dc90200cfb58d2d9313a36744fbe6",
+    ".saipen/evidence/T-148-recipient-registration/check_original.py": "fd2c8bd49a6e82aa45ca041bf43a9e13e4e4a3b4a47e45804195f7769a7ae056",
+    ".saipen/evidence/T-148-recipient-registration/full-verify.txt": "6100a079a11d42b56ce0fccbaa43474852628413d2f2d3388c7c9bc0d7bea0d1",
+    ".saipen/evidence/T-148-recipient-registration/oracle-pinned-v3.json": "c968f64ce63edb6184c85f54a5677cef13b3f6fea68eaf54bdbd6e845d50ada5",
+    ".saipen/evidence/T-148-recipient-registration/original-bound-v3.xml": "181e94cfa0ddfb451e8060d7d3334811bc35c90e8e3c18f483b40c71252e8e94",
+    ".saipen/evidence/T-148-recipient-registration/original-bound-verify.xml": "b5ac0b97639aa438a8c053ffb8fc241af921d963311c117cda3eb972336bde33",
+    "saimail/workspace.py": "95b22be7146578d62dc6832bbcceecedb713719a313e5a6e3119616887644e53",
+    "tests/test_recipient_registration_concurrency.py": "3657f958c958ee352010f9ec087053cc8ba83e7bd1f3067593227f04a72272dc"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-30T17:36:07Z",
+  "schema_version": 2,
+  "source_head": "36f8836931a322435fb70060bc7f219b571dfd49",
+  "source_tree_fingerprint": "git-delta-v1:7115eaf576a0cd4286fd51c8004adf0ca01f1a513548e347b21ea5d8cfd1bbe1",
+  "ticket": "T-148"
+}

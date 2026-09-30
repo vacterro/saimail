@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="10" skipped="0" tests="14" time="1.323" timestamp="2026-09-30T17:54:40.522380+03:00" hostname="DESKTOP-TTH0L52"><testcase classname="tests.test_recipient_registration_concurrency" name="test_two_writers_preserve_mapping_and_alias_authority[distinct-public]" time="0.046"><failure message="AssertionError: assert {'beta'} == {'beta', 'gamma'}&#10;  &#10;  Extra items in the right set:&#10;  'gamma'&#10;  Use -v to get more diff">trio = ([WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_two_writers_preserve_mapp0/local'), WindowsPath('V:/_TEMP_/py...c_key': 'da7c765cb49beb109b0bf325c94856dffab528c6539b4a43c1bacc2660eef83a', 'schema': 'SAIMAIL_IDENTITY_CARD_1', ...}])
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001A63C0E9250&gt;
+view = 'public', case = 'distinct'
+
+    @pytest.mark.parametrize("view", ["public", "full"])
+    @pytest.mark.parametrize("case", ["distinct", "conflict", "identical"])
+    def test_two_writers_preserve_mapping_and_alias_authority(trio, monkeypatch, view, case):
+        roots, cards = trio
+        load = workspace.load_workspace_headers if view == "public" else workspace.load_workspace
+        a = load(roots[0])
+        before_foreign = [snapshot(root) for root in roots[1:]]
+        entered = threading.Event()
+        release = threading.Event()
+        second_done = threading.Event()
+        write = workspace._write_peers
+        outcomes = {}
+    
+        def hold_first_write(root, peers):
+            if threading.current_thread().name == "first":
+                entered.set()
+                assert release.wait(10), "test controller failed to release writer"
+            write(root, peers)
+    
+        monkeypatch.setattr(workspace, "_write_peers", hold_first_write)
+    
+        def add(name, alias, card, peer):
+            try:
+                outcomes[name] = workspace.add_recipient(a, alias, card, peer)["status"]
+            except SailangError as exc:
+                outcomes[name] = exc.code
+            except Exception as exc:
+                outcomes[name] = type(exc).__name__
+            finally:
+                if name == "second":
+                    second_done.set()
+    
+        second_alias = "gamma" if case == "distinct" else "beta"
+        second_card, second_root = (cards[0], roots[1]) if case == "identical" else (cards[1], roots[2])
+        first = threading.Thread(target=add, name="first", args=("first", "beta", cards[0], roots[1]))
+        second = threading.Thread(target=add, name="second", args=("second", second_alias, second_card, second_root))
+        first.start()
+        assert entered.wait(10)
+        second.start()
+        # The old implementation finishes writer 2 while writer 1 holds an older
+        # snapshot, then writer 1 silently overwrites it. A serialized writer waits.
+        second_done.wait(0.5)
+        release.set()
+        first.join(10)
+        second.join(10)
+        assert not first.is_alive() and not second.is_alive(), outcomes
+        peers = workspace.load_workspace_headers(a.root).peers
+        assert outcomes["first"] == workspace.RECIPIENT_ADDED
+        if case == "distinct":
+            assert outcomes["second"] == workspace.RECIPIENT_ADDED
+&gt;           assert set(peers) == {"beta", "gamma"}
+E           AssertionError: assert {'beta'} == {'beta', 'gamma'}
+E             
+E             Extra items in the right set:
+E             'gamma'
+E             Use -v to get more diff
+
+tests\test_recipient_registration_concurrency.py:86: AssertionError</failure></testcase><testcase classname="tests.test_recipient_registration_concurrency" name="test_two_writers_preserve_mapping_and_alias_authority[distinct-full]" time="0.029"><failure message="AssertionError: assert {'beta'} == {'beta', 'gamma'}&#10;  &#10;  Extra items in the right set:&#10;  'gamma'&#10;  Use -v to get more diff">trio = ([WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_two_writers_preserve_mapp1/local'), WindowsPath('V:/_TEMP_/py...c_key': 'b4236c614f342a67f92fb09759ed39e3f6f563578d38d48fc49cd139b706a511', 'schema': 'SAIMAIL_IDENTITY_CARD_1', ...}])
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001A63C159510&gt;
+view = 'full', case = 'distinct'
+
+    @pytest.mark.parametrize("view", ["public", "full"])
+    @pytest.mark.parametrize("case", ["distinct", "conflict", "identical"])
+    def test_two_writers_preserve_mapping_and_alias_authority(trio, monkeypatch, view, case):
+        roots, cards = trio
+        load = workspace.load_workspace_headers if view == "public" else workspace.load_workspace
+        a = load(roots[0])
+        before_foreign = [snapshot(root) for root in roots[1:]]
+        entered = threading.Event()
+        release = threading.Event()
+        second_done = threading.Event()
+        write = workspace._write_peers
+        outcomes = {}
+    
+        def hold_first_write(root, peers):
+            if threading.current_thread().name == "first":
+                entered.set()
+                assert release.wait(10), "test controller failed to release writer"
+            write(root, peers)
+    
+        monkeypatch.setattr(workspace, "_write_peers", hold_first_write)
+    
+        def add(name, alias, card, peer):
+            try:
+                outcomes[name] = workspace.add_recipient(a, alias, card, peer)["status"]
+            except SailangError as exc:
+                outcomes[name] = exc.code
+            except Exception as exc:
+                outcomes[name] = type(exc).__name__
+            finally:
+                if name == "second":
+                    second_done.set()
+    
+        second_alias = "gamma" if case == "distinct" else "beta"
+        second_card, second_root = (cards[0], roots[1]) if case == "identical" else (cards[1], roots[2])
+        first = threading.Thread(target=add, name="first", args=("first", "beta", cards[0], roots[1]))
+        second = threading.Thread(target=add, name="second", args=("second", second_alias, second_card, second_root))
+        first.start()
+        assert entered.wait(10)
+        second.start()
+        # The old implementation finishes writer 2 while writer 1 holds an older
+        # snapshot, then writer 1 silently overwrites it. A serialized writer waits.
+        second_done.wait(0.5)
+        release.set()
+        first.join(10)
+        second.join(10)
+        assert not first.is_alive() and not second.is_alive(), outcomes
+        peers = workspace.load_workspace_headers(a.root).peers
+        assert outcomes["first"] == workspace.RECIPIENT_ADDED
+        if case == "distinct":
+            assert outcomes["second"] == workspace.RECIPIENT_ADDED
+&gt;           assert set(peers) == {"beta", "gamma"}
+E           AssertionError: assert {'beta'} == {'beta', 'gamma'}
+E             
+E             Extra items in the right set:
+E             'gamma'
+E             Use -v to get more diff
+
+tests\test_recipient_registration_concurrency.py:86: AssertionError</failure></testcase><testcase classname="tests.test_recipient_registration_concurrency" name="test_two_writers_preserve_mapping_and_alias_authority[conflict-public]" time="0.031"><failure message="AssertionError: assert 'RECIPIENT_ADDED' == 'RECIPIENT_CONFLICT'&#10;  &#10;  - RECIPIENT_CONFLICT&#10;  + RECIPIENT_ADDED">trio = ([WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_two_writers_preserve_mapp2/local'), WindowsPath('V:/_TEMP_/py...c_key': '8ba4c911708a76f39a753390db904f8cde74d38d45f75f2973214ad12d0df536', 'schema': 'SAIMAIL_IDENTITY_CARD_1', ...}])
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001A63BAD01D0&gt;
+view = 'public', case = 'conflict'
+
+    @pytest.mark.parametrize("view", ["public", "full"])
+    @pytest.mark.parametrize("case", ["distinct", "conflict", "identical"])
+    def test_two_writers_preserve_mapping_and_alias_authority(trio, monkeypatch, view, case):
+        roots, cards = trio
+        load = workspace.load_workspace_headers if view == "public" else workspace.load_workspace
+        a = load(roots[0])
+        before_foreign = [snapshot(root) for root in roots[1:]]
+        entered = threading.Event()
+        release = threading.Event()
+        second_done = threading.Event()
+        write = workspace._write_peers
+        outcomes = {}
+    
+        def hold_first_write(root, peers):
+            if threading.current_thread().name == "first":
+                entered.set()
+                assert release.wait(10), "test controller failed to release writer"
+            write(root, peers)
+    
+        monkeypatch.setattr(workspace, "_write_peers", hold_first_write)
+    
+        def add(name, alias, card, peer):
+            try:
+                outcomes[name] = workspace.add_recipient(a, alias, card, peer)["status"]
+            except SailangError as exc:
+                outcomes[name] = exc.code
+            except Exception as exc:
+                outcomes[name] = type(exc).__name__
+            finally:
+                if name == "second":
+                    second_done.set()
+    
+        second_alias = "gamma" if case == "distinct" else "beta"
+        second_card, second_root = (cards[0], roots[1]) if case == "identical" else (cards[1], roots[2])
+        first = threading.Thread(target=add, name="first", args=("first", "beta", cards[0], roots[1]))
+        second = threading.Thread(target=add, name="second", args=("second", second_alias, second_card, second_root))
+        first.start()
+        assert entered.wait(10)
+        second.start()
+        # The old implementation finishes writer 2 while writer 1 holds an older
+        # snapshot, then writer 1 silently overwrites it. A serialized writer waits.
+        second_done.wait(0.5)
+        release.set()
+        first.join(10)
+        second.join(10)
+        assert not first.is_alive() and not second.is_alive(), outcomes
+        peers = workspace.load_workspace_headers(a.root).peers
+        assert outcomes["first"] == workspace.RECIPIENT_ADDED
+        if case == "distinct":
+            assert outcomes["second"] == workspace.RECIPIENT_ADDED
+            assert set(peers) == {"beta", "gamma"}
+            assert peers["gamma"]["recipient_kid"] == cards[1]["recipient_kid"]
+        elif case == "conflict":
+&gt;           assert outcomes["second"] == workspace.RECIPIENT_CONFLICT
+E           AssertionError: assert 'RECIPIENT_ADDED' == 'RECIPIENT_CONFLICT'
+E             
+E             - RECIPIENT_CONFLICT
+E             + RECIPIENT_ADDED
+
+tests\test_recipient_registration_concurrency.py:89: AssertionError</failure></testcase><testcase classname="tests.test_recipient_registration_concurrency" name="test_two_writers_preserve_mapping_and_alias_authority[conflict-full]" time="0.028"><failure message="AssertionError: assert 'RECIPIENT_ADDED' == 'RECIPIENT_CONFLICT'&#10;  &#10;  - RECIPIENT_CONFLICT&#10;  + RECIPIENT_ADDED">trio = ([WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_two_writers_preserve_mapp3/local'), WindowsPath('V:/_TEMP_/py...c_key': '05451f224d15b4e7b4a86d51363bd0aca5d4140342e58d6850d05b210ffb3277', 'schema': 'SAIMAIL_IDENTITY_CARD_1', ...}])
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001A63BB22A50&gt;
+view = 'full', case = 'conflict'
+
+    @pytest.mark.parametrize("view", ["public", "full"])
+    @pytest.mark.parametrize("case", ["distinct", "conflict", "identical"])
+    def test_two_writers_preserve_mapping_and_alias_authority(trio, monkeypatch, view, case):
+        roots, cards = trio
+        load = workspace.load_workspace_headers if view == "public" else workspace.load_workspace
+        a = load(roots[0])
+        before_foreign = [snapshot(root) for root in roots[1:]]
+        entered = threading.Event()
+        release = threading.Event()
+        second_done = threading.Event()
+        write = workspace._write_peers
+        outcomes = {}
+    
+        def hold_first_write(root, peers):
+            if threading.current_thread().name == "first":
+                entered.set()
+                assert release.wait(10), "test controller failed to release writer"
+            write(root, peers)
+    
+        monkeypatch.setattr(workspace, "_write_peers", hold_first_write)
+    
+        def add(name, alias, card, peer):
+            try:
+                outcomes[name] = workspace.add_recipient(a, alias, card, peer)["status"]
+            except SailangError as exc:
+                outcomes[name] = exc.code
+            except Exception as exc:
+                outcomes[name] = type(exc).__name__
+            finally:
+                if name == "second":
+                    second_done.set()
+    
+        second_alias = "gamma" if case == "distinct" else "beta"
+        second_card, second_root = (cards[0], roots[1]) if case == "identical" else (cards[1], roots[2])
+        first = threading.Thread(target=add, name="first", args=("first", "beta", cards[0], roots[1]))
+        second = threading.Thread(target=add, name="second", args=("second", second_alias, second_card, second_root))
+        first.start()
+        assert entered.wait(10)
+        second.start()
+        # The old implementation finishes writer 2 while writer 1 holds an older
+        # snapshot, then writer 1 silently overwrites it. A serialized writer waits.
+        second_done.wait(0.5)
+        release.set()
+        first.join(10)
+        second.join(10)
+        assert not first.is_alive() and not second.is_alive(), outcomes
+        peers = workspace.load_workspace_headers(a.root).peers
+        assert outcomes["first"] == workspace.RECIPIENT_ADDED
+        if case == "distinct":
+            assert outcomes["second"] == workspace.RECIPIENT_ADDED
+            assert set(peers) == {"beta", "gamma"}
+            assert peers["gamma"]["recipient_kid"] == cards[1]["recipient_kid"]
+        elif case == "conflict":
+&gt;           assert outcomes["second"] == workspace.RECIPIENT_CONFLICT
+E           AssertionError: assert 'RECIPIENT_ADDED' == 'RECIPIENT_CONFLICT'
+E             
+E             - RECIPIENT_CONFLICT
+E             + RECIPIENT_ADDED
+
+tests\test_recipient_registration_concurrency.py:89: AssertionError</failure></testcase><testcase classname="tests.test_recipient_registration_concurrency" name="test_two_writers_preserve_mapping_and_alias_authority[identical-public]" time="0.027"><failure message="AssertionError: assert 'RECIPIENT_ADDED' == 'RECIPIENT_ALREADY_REGISTERED'&#10;  &#10;  - RECIPIENT_ALREADY_REGISTERED&#10;  + RECIPIENT_ADDED">trio = ([WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_two_writers_preserve_mapp4/local'), WindowsPath('V:/_TEMP_/py...c_key': '044d9face9d3c090e201979519814c7033642d8c6b6cc4d34fbafd8fc918bf3f', 'schema': 'SAIMAIL_IDENTITY_CARD_1', ...}])
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001A63C5BD210&gt;
+view = 'public', case = 'identical'
+
+    @pytest.mark.parametrize("view", ["public", "full"])
+    @pytest.mark.parametrize("case", ["distinct", "conflict", "identical"])
+    def test_two_writers_preserve_mapping_and_alias_authority(trio, monkeypatch, view, case):
+        roots, cards = trio
+        load = workspace.load_workspace_headers if view == "public" else workspace.load_workspace
+        a = load(roots[0])
+        before_foreign = [snapshot(root) for root in roots[1:]]
+        entered = threading.Event()
+        release = threading.Event()
+        second_done = threading.Event()
+        write = workspace._write_peers
+        outcomes = {}
+    
+        def hold_first_write(root, peers):
+            if threading.current_thread().name == "first":
+                entered.set()
+                assert release.wait(10), "test controller failed to release writer"
+            write(root, peers)
+    
+        monkeypatch.setattr(workspace, "_write_peers", hold_first_write)
+    
+        def add(name, alias, card, peer):
+            try:
+                outcomes[name] = workspace.add_recipient(a, alias, card, peer)["status"]
+            except SailangError as exc:
+                outcomes[name] = exc.code
+            except Exception as exc:
+                outcomes[name] = type(exc).__name__
+            finally:
+                if name == "second":
+                    second_done.set()
+    
+        second_alias = "gamma" if case == "distinct" else "beta"
+        second_card, second_root = (cards[0], roots[1]) if case == "identical" else (cards[1], roots[2])
+        first = threading.Thread(target=add, name="first", args=("first", "beta", cards[0], roots[1]))
+        second = threading.Thread(target=add, name="second", args=("second", second_alias, second_card, second_root))
+        first.start()
+        assert entered.wait(10)
+        second.start()
+        # The old implementation finishes writer 2 while writer 1 holds an older
+        # snapshot, then writer 1 silently overwrites it. A serialized writer waits.
+        second_done.wait(0.5)
+        release.set()
+        first.join(10)
+        second.join(10)
+        assert not first.is_alive() and not second.is_alive(), outcomes
+        peers = workspace.load_workspace_headers(a.root).peers
+        assert outcomes["first"] == workspace.RECIPIENT_ADDED
+        if case == "distinct":
+            assert outcomes["second"] == workspace.RECIPIENT_ADDED
+            assert set(peers) == {"beta", "gamma"}
+            assert peers["gamma"]["recipient_kid"] == cards[1]["recipient_kid"]
+        elif case == "conflict":
+            assert outcomes["second"] == workspace.RECIPIENT_CONFLICT
+            assert set(peers) == {"beta"}
+        else:
+&gt;           assert outcomes["second"] == workspace.RECIPIENT_ALREADY_REGISTERED
+E           AssertionError: assert 'RECIPIENT_ADDED' == 'RECIPIENT_ALREADY_REGISTERED'
+E             
+E             - RECIPIENT_ALREADY_REGISTERED
+E             + RECIPIENT_ADDED
+
+tests\test_recipient_registration_concurrency.py:92: AssertionError</failure></testcase><testcase classname="tests.test_recipient_registration_concurrency" name="test_two_writers_preserve_mapping_and_alias_authority[identical-full]" time="0.027"><failure message="AssertionError: assert 'RECIPIENT_ADDED' == 'RECIPIENT_ALREADY_REGISTERED'&#10;  &#10;  - RECIPIENT_ALREADY_REGISTERED&#10;  + RECIPIENT_ADDED">trio = ([WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_two_writers_preserve_mapp5/local'), WindowsPath('V:/_TEMP_/py...c_key': '303b2578246a68ae8b5a91e1f9d0336030360f8255d504c045752690d9477f37', 'schema': 'SAIMAIL_IDENTITY_CARD_1', ...}])
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001A63BB13950&gt;
+view = 'full', case = 'identical'
+
+    @pytest.mark.parametrize("view", ["public", "full"])
+    @pytest.mark.parametrize("case", ["distinct", "conflict", "identical"])
+    def test_two_writers_preserve_mapping_and_alias_authority(trio, monkeypatch, view, case):
+        roots, cards = trio
+        load = workspace.load_workspace_headers if view == "public" else workspace.load_workspace
+        a = load(roots[0])
+        before_foreign = [snapshot(root) for root in roots[1:]]
+        entered = threading.Event()
+        release = threading.Event()
+        second_done = threading.Event()
+        write = workspace._write_peers
+        outcomes = {}
+    
+        def hold_first_write(root, peers):
+            if threading.current_thread().name == "first":
+                entered.set()
+                assert release.wait(10), "test controller failed to release writer"
+            write(root, peers)
+    
+        monkeypatch.setattr(workspace, "_write_peers", hold_first_write)
+    
+        def add(name, alias, card, peer):
+            try:
+                outcomes[name] = workspace.add_recipient(a, alias, card, peer)["status"]
+            except SailangError as exc:
+                outcomes[name] = exc.code
+            except Exception as exc:
+                outcomes[name] = type(exc).__name__
+            finally:
+                if name == "second":
+                    second_done.set()
+    
+        second_alias = "gamma" if case == "distinct" else "beta"
+        second_card, second_root = (cards[0], roots[1]) if case == "identical" else (cards[1], roots[2])
+        first = threading.Thread(target=add, name="first", args=("first", "beta", cards[0], roots[1]))
+        second = threading.Thread(target=add, name="second", args=("second", second_alias, second_card, second_root))
+        first.start()
+        assert entered.wait(10)
+        second.start()
+        # The old implementation finishes writer 2 while writer 1 holds an older
+        # snapshot, then writer 1 silently overwrites it. A serialized writer waits.
+        second_done.wait(0.5)
+        release.set()
+        first.join(10)
+        second.join(10)
+        assert not first.is_alive() and not second.is_alive(), outcomes
+        peers = workspace.load_workspace_headers(a.root).peers
+        assert outcomes["first"] == workspace.RECIPIENT_ADDED
+        if case == "distinct":
+            assert outcomes["second"] == workspace.RECIPIENT_ADDED
+            assert set(peers) == {"beta", "gamma"}
+            assert peers["gamma"]["recipient_kid"] == cards[1]["recipient_kid"]
+        elif case == "conflict":
+            assert outcomes["second"] == workspace.RECIPIENT_CONFLICT
+            assert set(peers) == {"beta"}
+        else:
+&gt;           assert outcomes["second"] == workspace.RECIPIENT_ALREADY_REGISTERED
+E           AssertionError: assert 'RECIPIENT_ADDED' == 'RECIPIENT_ALREADY_REGISTERED'
+E             
+E             - RECIPIENT_ALREADY_REGISTERED
+E             + RECIPIENT_ADDED
+
+tests\test_recipient_registration_concurrency.py:92: AssertionError</failure></testcase><testcase classname="tests.test_recipient_registration_concurrency" name="test_fresh_process_writers_share_registry_lock[False]" time="0.214" /><testcase classname="tests.test_recipient_registration_concurrency" name="test_fresh_process_writers_share_registry_lock[True]" time="0.199"><failure message="AssertionError: assert ['RECIPIENT_A...IPIENT_ADDED'] == ['RECIPIENT_A...ENT_CONFLICT']&#10;  &#10;  At index 1 diff: 'RECIPIENT_ADDED' != 'RECIPIENT_CONFLICT'&#10;  Use -v to get more diff">trio = ([WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_fresh_process_writers_sha1/local'), WindowsPath('V:/_TEMP_/py...c_key': 'ffc191efaa61b5f9239a76bf41ce07bd6a5db8e3d5027716c392c76c13e19e39', 'schema': 'SAIMAIL_IDENTITY_CARD_1', ...}])
+tmp_path = WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_fresh_process_writers_sha1')
+conflict = True
+
+    @pytest.mark.parametrize("conflict", [False, True])
+    def test_fresh_process_writers_share_registry_lock(trio, tmp_path, conflict):
+        roots, cards = trio
+        helper = tmp_path / "writer.py"
+        helper.write_text('''import json,sys,time
+    from pathlib import Path
+    from saimail import workspace
+    from sailang import SailangError
+    local,peer,card,alias,ready,go=sys.argv[1:]
+    view=workspace.load_workspace_headers(local)
+    payload=json.loads(Path(card).read_text())
+    Path(ready).write_text("ready")
+    deadline=time.monotonic()+15
+    while not Path(go).exists():
+        if time.monotonic()&gt;deadline: raise RuntimeError("test start gate timed out")
+        time.sleep(.01)
+    try: result=workspace.add_recipient(view,alias,payload,peer)
+    except SailangError as e: result={"status":e.code}
+    print(json.dumps(result))
+    ''', encoding="utf-8")
+        env = os.environ.copy()
+        env["PYTHONPATH"] = str(ROOT) + os.pathsep + env.get("PYTHONPATH", "")
+        go = tmp_path / "go"
+        ready = [tmp_path / f"ready-{i}" for i in range(2)]
+        procs = []
+        foreign = [snapshot(root) for root in roots[1:]]
+        try:
+            for i in range(2):
+                card = tmp_path / f"card-{i}.json"
+                card.write_text(json.dumps(cards[i]), encoding="utf-8")
+                alias = "same" if conflict else ("beta", "gamma")[i]
+                procs.append(subprocess.Popen([sys.executable, str(helper), str(roots[0]),
+                                              str(roots[i + 1]), str(card), alias,
+                                              str(ready[i]), str(go)],
+                                             cwd=ROOT, env=env, stdout=subprocess.PIPE,
+                                             stderr=subprocess.PIPE, text=True))
+            deadline = time.monotonic() + 15
+            while not all(p.exists() for p in ready):
+                assert time.monotonic() &lt; deadline, "fresh process setup timed out"
+                time.sleep(0.01)
+            go.write_text("start", encoding="utf-8")
+            results = []
+            for proc in procs:
+                out, err = proc.communicate(timeout=20)
+                assert proc.returncode == 0 and not err, (out, err)
+                results.append(json.loads(out))
+        finally:
+            for proc in procs:
+                if proc.poll() is None:
+                    proc.kill()
+                    proc.communicate()
+        peers = workspace.load_workspace_headers(roots[0]).peers
+        if conflict:
+&gt;           assert sorted(r["status"] for r in results) == sorted([
+                workspace.RECIPIENT_ADDED, workspace.RECIPIENT_CONFLICT])
+E           AssertionError: assert ['RECIPIENT_A...IPIENT_ADDED'] == ['RECIPIENT_A...ENT_CONFLICT']
+E             
+E             At index 1 diff: 'RECIPIENT_ADDED' != 'RECIPIENT_CONFLICT'
+E             Use -v to get more diff
+
+tests\test_recipient_registration_concurrency.py:152: AssertionError</failure></testcase><testcase classname="tests.test_recipient_registration_concurrency" name="test_write_failure_releases_lock_without_changing_mapping" time="0.023"><failure message="PermissionError: test disk refusal">trio = ([WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_write_failure_releases_lo0/local'), WindowsPath('V:/_TEMP_/py...c_key': 'd25898185e2ee79c840845f7fbe6d3ff45855444ec8d3866c7b736a274151a78', 'schema': 'SAIMAIL_IDENTITY_CARD_1', ...}])
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001A63C5E2BD0&gt;
+
+    def test_write_failure_releases_lock_without_changing_mapping(trio, monkeypatch):
+        roots, cards = trio
+        a = workspace.load_workspace_headers(roots[0])
+        before = (a.root / workspace.PEERS_NAME).read_bytes()
+        original = workspace._write_peers
+    
+        def fail(*args):
+            raise PermissionError("test disk refusal")
+    
+        monkeypatch.setattr(workspace, "_write_peers", fail)
+        with pytest.raises(SailangError) as exc:
+&gt;           workspace.add_recipient(a, "beta", cards[0], roots[1])
+
+tests\test_recipient_registration_concurrency.py:173: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+saimail\workspace.py:970: in add_recipient
+    _write_peers(workspace.root, peers)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+args = (WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_write_failure_releases_lo0/local'), {'beta': {'added_at': '202...2fd120ac75adb249ba', 'recipient_public_key': '14aa98b72317f7c51d5ab8ea6ef0c89f2700327aade3dcc1130398882ed0757f', ...}})
+
+    def fail(*args):
+&gt;       raise PermissionError("test disk refusal")
+E       PermissionError: test disk refusal
+
+tests\test_recipient_registration_concurrency.py:169: PermissionError</failure></testcase><testcase classname="tests.test_recipient_registration_concurrency" name="test_lock_timeout_is_structured_and_does_not_modify_registry" time="0.068"><failure message="assert (0 == 1)">trio = ([WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_lock_timeout_is_structure0/local'), WindowsPath('V:/_TEMP_/py...c_key': 'e5aabc2f5d37a0127faa2722005ce375e8b591a62cb236ffd78626ae77df3e65', 'schema': 'SAIMAIL_IDENTITY_CARD_1', ...}])
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001A63BB1A390&gt;
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x000001A63BB191D0&gt;
+tmp_path = WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_lock_timeout_is_structure0')
+
+    def test_lock_timeout_is_structured_and_does_not_modify_registry(trio, monkeypatch, capsys, tmp_path):
+        roots, cards = trio
+        card = tmp_path / "card.json"
+        card.write_text(json.dumps(cards[0]), encoding="utf-8")
+        before = (roots[0] / workspace.PEERS_NAME).read_bytes()
+    
+        def busy(cls, fd, code):
+            raise SailangError(code, "test contention")
+    
+        monkeypatch.setattr(postoffice._OsFileLock, "_acquire", classmethod(busy))
+        rc = saimail_local.main(["recipient", "add", "--workspace", str(roots[0]),
+                                 "--alias", "beta", "--card", str(card),
+                                 "--peer-workspace", str(roots[1]), "--json"])
+        answer = json.loads(capsys.readouterr().out)
+&gt;       assert rc == 1 and answer["status"] == workspace.RECIPIENT_LOCK_TIMEOUT
+E       assert (0 == 1)
+
+tests\test_recipient_registration_concurrency.py:194: AssertionError</failure></testcase><testcase classname="tests.test_recipient_registration_concurrency" name="test_failed_lock_acquisition_closes_descriptor" time="0.003"><failure message="Failed: DID NOT RAISE &lt;class 'OSError'&gt;">tmp_path = WindowsPath('V:/_TEMP_/pytest-of-vac34/pytest-102/test_failed_lock_acquisition_c0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001A63C5E3490&gt;
+
+    def test_failed_lock_acquisition_closes_descriptor(tmp_path, monkeypatch):
+        captured = []
+    
+        def busy(cls, fd, code):
+            captured.append(fd)
+            raise SailangError(code, "test contention")
+    
+        monkeypatch.setattr(postoffice._OsFileLock, "_acquire", classmethod(busy))
+        lock = postoffice._OsFileLock(tmp_path / "lock")
+        try:
+            with pytest.raises(SailangError):
+                with lock:
+                    pytest.fail("a refused acquisition cannot enter the critical section")
+&gt;           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE &lt;class 'OSError'&gt;
+
+tests\test_recipient_registration_concurrency.py:212: Failed</failure></testcase><testcase classname="tests.test_recipient_registration_concurrency" name="test_corrupt_registry_after_view_load_refuses_without_rewrite" time="0.020" /><testcase classname="tests.test_recipient_registration_concurrency" name="test_listing_remains_read_only_and_keyless" time="0.022" /><testcase classname="tests.test_recipient_registration_concurrency" name="test_invalid_card_creates_no_registry_lock_or_mapping" time="0.021" /></testsuite></testsuites>

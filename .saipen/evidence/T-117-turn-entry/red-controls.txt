@@ -1,0 +1,14 @@
+== pre-fix bytes (expect failures) rc=1
+PASSED tests/test_turn_entry_headers.py::test_the_saipen_turn_entry_contract_fields_are_pinned
+FAILED tests/test_turn_entry_headers.py::test_the_header_view_holds_no_private_key_and_offers_no_key_operation
+FAILED tests/test_turn_entry_headers.py::test_no_header_read_touches_the_credential_store
+FAILED tests/test_turn_entry_headers.py::test_a_locked_store_still_yields_counts_but_never_an_open
+FAILED tests/test_turn_entry_headers.py::test_header_view_results_equal_the_full_load_results
+FAILED tests/test_turn_entry_headers.py::test_every_public_check_refuses_the_header_view_exactly_like_the_full_load[raw]
+FAILED tests/test_turn_entry_headers.py::test_every_public_check_refuses_the_header_view_exactly_like_the_full_load[os-store]
+FAILED tests/test_turn_entry_headers.py::test_the_private_identity_proof_stays_with_the_key_using_load
+7 failed, 1 passed in 0.63s
+== weakened header loader (expect parity failures) rc=1
+FAILED tests/test_turn_entry_headers.py::test_every_public_check_refuses_the_header_view_exactly_like_the_full_load[raw]
+FAILED tests/test_turn_entry_headers.py::test_every_public_check_refuses_the_header_view_exactly_like_the_full_load[os-store]
+2 failed, 6 deselected in 0.29s

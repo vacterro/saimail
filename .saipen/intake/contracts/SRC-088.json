@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-088:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "DEV ACCESS v1-to-v2 bootstrap migration for 0423"
+    }
+  },
+  "derived_at": "2026-09-21T21:22:36Z",
+  "derived_from": "SRC-088",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "45b51ab75ed5b5dd72c439f9c961e4ab5f933aa4ae042c8bda17bb026b73b7ce"
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "SELECTOR_COVERAGE_FIXTURES_1",
+  "version": 1,
+  "directions": ["A_TO_B", "B_TO_A"],
+  "truth_authority": "Receiver needs described by the synthetic payload; topic alone is not relevance truth",
+  "workloads": [
+    {"id": "ROUTINE", "messages": [
+      {"count": 36, "topic": "ci-ok", "kind": "DISCOVERY", "claim": "Scheduled checks passed; no action is needed", "relevant": false},
+      {"count": 2, "topic": "action", "kind": "DISCOVERY", "claim": "A queue retry is duplicating work; investigate", "relevant": true},
+      {"count": 2, "topic": "news", "kind": "DISCOVERY", "claim": "An unrelated documentation page was updated", "relevant": false}
+    ]},
+    {"id": "MIXED_NOVEL", "messages": [
+      {"count": 20, "topic": "ci-ok", "kind": "DISCOVERY", "claim": "Scheduled checks passed; no action is needed", "relevant": false},
+      {"count": 8, "topic": "action", "kind": "DISCOVERY", "claim": "A queue retry is duplicating work; investigate", "relevant": true},
+      {"count": 8, "topic": "research", "kind": "DISCOVERY", "claim": "A previously unknown lease mechanism duplicates queue work", "relevant": true},
+      {"count": 4, "topic": "noise", "kind": "DISCOVERY", "claim": "Routine timestamp bookkeeping", "relevant": false}
+    ]},
+    {"id": "MANDATORY_OVERLAP", "messages": [
+      {"count": 8, "topic": "ci-ok", "kind": "WARNING", "claim": "The success report contains an actionable queue warning", "relevant": true},
+      {"count": 12, "topic": "ci-ok", "kind": "DISCOVERY", "claim": "Scheduled checks passed; no action is needed", "relevant": false},
+      {"count": 8, "topic": "action", "kind": "DISCOVERY", "claim": "A queue retry is duplicating work; investigate", "relevant": true},
+      {"count": 12, "topic": "research", "kind": "DISCOVERY", "claim": "An unrelated subsystem experiment finished", "relevant": false}
+    ]},
+    {"id": "TOPIC_DRIFT", "messages": [
+      {"count": 18, "topic": "ci-ok", "kind": "DISCOVERY", "claim": "Scheduled checks passed; no action is needed", "relevant": false},
+      {"count": 2, "topic": "ci-ok", "kind": "DISCOVERY", "claim": "Checks pass but a newly discovered retry race loses queue work; investigate", "relevant": true},
+      {"count": 8, "topic": "action", "kind": "DISCOVERY", "claim": "A queue retry is duplicating work; investigate", "relevant": true},
+      {"count": 12, "topic": "research", "kind": "DISCOVERY", "claim": "An unrelated subsystem experiment finished", "relevant": false}
+    ]},
+    {"id": "LOW_VOLUME", "messages": [
+      {"count": 1, "topic": "ci-ok", "kind": "DISCOVERY", "claim": "Scheduled checks passed; no action is needed", "relevant": false},
+      {"count": 1, "topic": "action", "kind": "DISCOVERY", "claim": "A queue retry is duplicating work; investigate", "relevant": true}
+    ]}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-093:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Continue existing T-104 / V6-01 GitHub Identity and Presentation Sync to canonical closure per the operator letter: canonical logo sourced from SAIMAIL2, 1280x640 under-1MB social preview, README hero with LOCAL ONLY plus frozen-vs-checkout split and GUI/CLI entry commands, SECURITY.md, FUTURE-GATES-V6 roadmap authority with V6-01 DONE recorded, exact GitHub description and topics, no publication or VERSION bump, full suite green"
+    }
+  },
+  "derived_at": "2026-09-22T00:26:26Z",
+  "derived_from": "SRC-093",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "ff83a71108259fac61186c3a781874b010118ed4855185ff7b2edda6c99d573d"
+}

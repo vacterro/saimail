@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-096:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-108 closed with verification evidence in LOG: VERIFY PASS -- full suite 2431/0/0/0; humbox recorded: FUTURE-GATES-V6 \u00a711 S2 DONE via T-108, CURRENT-STATE S2 section + a3-alignment claim corrected, spec/DECISIONS-D057.md, README head checkout>a3 by S2, test_s2_saipen_seam_bridge_is_recorded; conf: high",
+      "text": "\u041f\u0440\u0438\u0432\u0435\u0442 \u041e\u043f\u0443\u0441. \u0412\u043e\u0437\u0432\u0435\u0434\u0438 \u0438 \u0441\u043e\u0435\u0434\u0438\u0433\u0438 \u0441 SAIPEN \u043a\u0430\u043a \u043d\u0438\u0431\u0443\u0434\u044c.",
+      "verification": "the Work this request created reached its own verification gate; see the T-108 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-108"
+    }
+  },
+  "schema_version": 1
+}

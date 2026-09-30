@@ -4,6 +4,18 @@
 
 **SAIMAIL — LOCAL ONLY**
 
+**Useful correspondence and encrypted human mailbox (current checkout):**
+evidence-bearing letters, explicit receiver decisions, successor discovery,
+result replies and master-password custody with independent recovery backup.
+The three-tab desktop follows Golden Default. See the
+[operator and integration guide](humbox/INSTITUTION.md) and
+[real SAIFREN validation](lab/analysis/institution_20260930.md).
+The [receiver feedback workflow](humbox/EVOLUTION.md) returns declined, deferred,
+stale and resolved decisions to the sender and gives later agents concrete checks
+for improving their correspondence.
+Install this checkout with `python -m pip install -e ".[gui]"`, then run
+`saimail-gui` or open `SAIMAIL.cmd`. New changes are not in frozen release wheels.
+
 - Desktop GUI available (this checkout)
 - CLI / headless path available
 - No cloud messaging, no server, no daemon

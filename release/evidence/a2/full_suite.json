@@ -1,0 +1,18 @@
+{
+  "baseline": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 2205
+  },
+  "created_utc": "2026-09-20T20:25:48Z",
+  "delta_note": "additive T-92 external-proof acceptance tests (+6); no test weakened",
+  "errors": 0,
+  "failed_tests": [],
+  "failures": 0,
+  "schema": "SAIMAIL_A2_FULL_SUITE_1",
+  "skipped": 0,
+  "status": "PASS",
+  "tests": 2211,
+  "version": 1
+}

@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-048:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIMAIL POST-T63 EXPERIMENT INTEGRITY + EVENT INDEPENDENCE GATE: capture handoff V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260919_2331.md verbatim as the shared source for the wave; TARGET A close the existing T-64 discovery-probe status bookkeeping defect with no live rerun; TARGET B freeze explicit EVENT_REF evidence-artifact distinction for ReflectionCorpus; TARGET C enforce distinct-event support before semantic review; then STOP"
+    }
+  },
+  "derived_at": "2026-09-19T20:48:34Z",
+  "derived_from": "SRC-048",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "1ae20ad5550283cdd3bd4dea41b5ba1f8043d2a6e4050ca87bf6e9ebdabb9a42"
+}

@@ -1,0 +1,8 @@
+{
+  "exit_code": 1,
+  "failures": [
+    "FAIL: source receipts -- DONE Work T-41 has unresolved source receipt SRC-017",
+    "FAIL: source receipts -- source credential gate: SOURCE_CREDENTIALS_UNSAFE credential pattern in exact active source SRC-036; supply a user-authorized replacement or amendment before release",
+    "Validation FAILED: 2 problem(s), 22 warning(s)"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-085:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "V5-01 desktop local messenger alpha GUI (SAIMAIL_20260921_0138.md handoff)"
+    }
+  },
+  "derived_at": "2026-09-20T23:42:50Z",
+  "derived_from": "SRC-085",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "ae49ab5e5e667a5dee1f43abf2f632af0e6511a3bbce058c2ace99afb228636c"
+}

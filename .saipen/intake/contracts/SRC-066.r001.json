@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-066:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "One additive manifest contract exists (spec/13, EXPERIMENT-MANIFEST-1) and no historical registration B-018/T-63/T-69/T-71/T-74 is rewritten."
+    }
+  },
+  "derived_at": "2026-09-20T14:58:37Z",
+  "derived_from": "SRC-066",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "f6b6402087a6bfdaba55565d7e174edad53f8a8f6b1ee34386a4cfaac1e9611f"
+}

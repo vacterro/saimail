@@ -1,0 +1,8 @@
+{
+  "files_scanned": 5,
+  "findings": [],
+  "root": "release\\local-alpha",
+  "schema": "LOCAL_ALPHA_PRIVACY_SCAN_1",
+  "status": "PASS",
+  "version": 1
+}

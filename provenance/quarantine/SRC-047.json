@@ -1,0 +1,98 @@
+{
+  "schema": "saimail-receipt-quarantine/1",
+  "receipt": "SRC-047",
+  "distribution_state": "SENSITIVE_QUARANTINED",
+  "original": {
+    "path": ".saipen/intake/active/SRC-047.md",
+    "sha256": "640da22ffcc677d515d0b9ccd4e01809323d99f63a8c4b5d21c3c71f8ff2c5f2",
+    "length": 38325,
+    "intake_metadata_at_quarantine": {
+      "status": "ACTIVE",
+      "sensitive": true,
+      "redaction_applied": false
+    },
+    "plaintext_in_normal_distribution": false,
+    "protected_location": "NOT_AVAILABLE",
+    "protected_location_blocker": "the original remains in the SAIPEN hot intake, which SAIPEN's own export contract ships; a protected local location needs the SAIPEN core change in spec/PROPOSAL-SAIPEN-RECEIPT-QUARANTINE.md"
+  },
+  "reason": {
+    "category": "CREDENTIAL_VALUE",
+    "detector": "saimail-credential-scan/1",
+    "findings": [
+      {
+        "category": "CREDENTIAL_ASSIGNMENT",
+        "line": 216,
+        "start": 5999,
+        "end": 6018
+      },
+      {
+        "category": "CREDENTIAL_ASSIGNMENT",
+        "line": 340,
+        "start": 8630,
+        "end": 8654
+      }
+    ],
+    "metadata_disagreement": null,
+    "credential_rotation": "UNKNOWN_CONFIRMED_BY_OPERATOR_ONLY",
+    "operator_statement": {
+      "receipt": "SRC-047",
+      "says": "Reuse the existing authorized SAIRoute credential mechanism. Never print or persist the secret. Do not ask the operator to paste an API key into: command line, chat, source file, artifact."
+    }
+  },
+  "derivative": {
+    "id": "SRC-047/sanitized/1",
+    "distribution_state": "SANITIZED_DERIVATIVE",
+    "path": "provenance/quarantine/SRC-047.sanitized.md",
+    "sha256": "da7f68135584499c055f8de05950749ef4e5b0b6d58276aa8c6930c088746da0",
+    "length": 38376,
+    "redaction_version": "saimail-redaction/1",
+    "redactions": [
+      {
+        "original_start": 5999,
+        "original_end": 6018,
+        "sanitized_start": 5999,
+        "sanitized_end": 6046,
+        "category": "CREDENTIAL_VALUE",
+        "marker": "[REDACTED:CREDENTIAL_VALUE:saimail-redaction/1]"
+      },
+      {
+        "original_start": 8630,
+        "original_end": 8654,
+        "sanitized_start": 8658,
+        "sanitized_end": 8705,
+        "category": "CREDENTIAL_VALUE",
+        "marker": "[REDACTED:CREDENTIAL_VALUE:saimail-redaction/1]"
+      }
+    ],
+    "authority": {
+      "represents": "SRC-047",
+      "authoritative": false,
+      "newly_authored": false,
+      "authority_source": "SEGMENT_MAP_OF_ORIGINAL_RECEIPT"
+    },
+    "unresolved": [
+      {
+        "clause": "line 216",
+        "original_start": 5999,
+        "original_end": 6018,
+        "reason": "a credential value is withheld; nothing that depends on the value itself can be interpreted from this representation"
+      },
+      {
+        "clause": "line 340",
+        "original_start": 8630,
+        "original_end": 8654,
+        "reason": "a credential value is withheld; nothing that depends on the value itself can be interpreted from this representation"
+      }
+    ]
+  },
+  "quarantined_under": {
+    "source_receipt": "SRC-047",
+    "ticket": "T-63",
+    "decision": "D-023"
+  },
+  "saipen_export": {
+    "status": "NOT_HONOURED",
+    "manifest": ".saipen/MANIFEST.json",
+    "proposal": "spec/PROPOSAL-SAIPEN-RECEIPT-QUARANTINE.md"
+  }
+}

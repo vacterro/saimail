@@ -1,0 +1,26 @@
+{
+  "op_id": "scope-ad9a56b373bb45458edcaea7e07e0914",
+  "paths": {
+    ".saipen/kitchen/digest.md": "327045379e71702f83b00a10c30c036bf7ddaf89ee100f392d0e151f6342935e",
+    "README.ded.md": "10d2ddf1958da7ff99d1be3654562bf1653d0668a1dd949781257b10f413db9f",
+    "README.ee.md": "10d2ddf1958da7ff99d1be3654562bf1653d0668a1dd949781257b10f413db9f",
+    "README.ja.md": "10d2ddf1958da7ff99d1be3654562bf1653d0668a1dd949781257b10f413db9f",
+    "humbox/CURRENT-STATE.md": "bfad4df6e6d5ea7dddfb987629f73a375843094940f06baee75f3e1b464d2e51",
+    "humbox/FUTURE-GATES-V3.md": "0e4983036a952732c05e11f078312533540e6f76a1aaa665de004eda89f3dec3",
+    "release/evidence/RELEASE-DECISION.md": "af1527000015673ac03bada269cc5c0eaac6a94d3a00587e075b6226ac984020",
+    "release/evidence/release_decision.json": "815094eba97f2e164fca39327a10fa4ae9541b9ae303f878889ea551983c27a8",
+    "release/evidence/release_decision_inputs.json": "9fb9a6aad6add9d5bf67c593d46d8e0ab67df4b73b677a6078f71389c8f8eb8e",
+    "spec/21-RELEASE-DECISION-v0.md": "c4c70d785d2fbc7024157f35e9b4d352606bbba44bf793c5561aa3127a026022",
+    "spec/DECISIONS-D054.md": "c6622c92017374b15cd42f0afc00eab50c9dd489df6aedfdad5a98e8108b3ce5",
+    "tests/test_release_decision.py": "bfd094203819ca24e7eae6fce4a8a248cc561e8c8325803e8e494fb9f6c93e87",
+    "tests/test_repo_consistency.py": "2d835b4dcd0290276d8e557373bbe0ff75b1962ef868b6d248af2ee360d4b3f3",
+    "tools/release_decision.py": "79a0e1c8066ae7808fb059d0f967892f8ed5d6cfaa00c7f0d537a5b53ec738e6"
+  },
+  "project_identity": "v:\\___vac\\__k\\__code\\_ai_stuff_agentic\\__saimail__",
+  "project_lineage": "lineage-3172dbca95fc4945955bdee3acff8d75",
+  "recorded_at": "2026-09-20T19:46:04Z",
+  "schema_version": 2,
+  "source_head": "3fa8f2295f564a6a75733905388ddee55b2f73b8",
+  "source_tree_fingerprint": "git-delta-v1:695760b1b8a44c2e92d7b195e62bb18461d516401ae268a9422bc29615091bd3",
+  "ticket": "T-90"
+}

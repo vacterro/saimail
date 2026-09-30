@@ -1,0 +1,35 @@
+{
+  "sha256_before": {
+    "saimail/quarantine.py": "0960dd992839ca149a81be3bdf80746fb6cd7397023ef2998d429cf03428b985",
+    "tests/test_quarantine.py": "8f18b8e9570cd3f1586aaf78fa386adfb2566df386bef0edaace38eeb12bc5c4",
+    "provenance/quarantine/SRC-047.json": "c47347d6822e3a7935ea562ea39d6c3bb74f94a6cd74e1ed0c357743f573966e",
+    "provenance/quarantine/SRC-047.sanitized.md": "da7f68135584499c055f8de05950749ef4e5b0b6d58276aa8c6930c088746da0"
+  },
+  "regression_command": "python -m pytest -q tests/test_quarantine.py -k 'assignment_does_not_cross or assignment_keeps or blank_line_does_not_hide or assignment_placeholders' --tb=no",
+  "regression_before": {
+    "tests": 130,
+    "failures": 30,
+    "passed": 100,
+    "exit_code": 1
+  },
+  "sha256_after": {
+    "saimail/quarantine.py": "a95c357ba8994aaa1cbdb89fe5731d4b018845a670435b496b1cf31ab11fbe9b",
+    "tests/test_quarantine.py": "8f18b8e9570cd3f1586aaf78fa386adfb2566df386bef0edaace38eeb12bc5c4",
+    "provenance/quarantine/SRC-047.json": "c47347d6822e3a7935ea562ea39d6c3bb74f94a6cd74e1ed0c357743f573966e",
+    "provenance/quarantine/SRC-047.sanitized.md": "da7f68135584499c055f8de05950749ef4e5b0b6d58276aa8c6930c088746da0"
+  },
+  "same_regression_verifier": true,
+  "historical_quarantine_unchanged": true,
+  "regression_after": {
+    "tests": 130,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "focused": {
+    "tests": 205,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}

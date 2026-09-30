@@ -1,0 +1,27 @@
+[
+  {
+    "action": "dispatch",
+    "answers": [
+      {
+        "authority": "INFORMATION_ONLY",
+        "code": "LETTER_CONTEXT_MISMATCH",
+        "reason": "REFUSED",
+        "state": "DEGRADED"
+      }
+    ],
+    "calls": [
+      {
+        "elapsed_seconds": 0.10227429994847625,
+        "normalized_payload_bytes": 1060,
+        "operation": "contract"
+      },
+      {
+        "elapsed_seconds": 0.13920089998282492,
+        "normalized_payload_bytes": 103,
+        "operation": "dispatch"
+      }
+    ],
+    "seat": "builder",
+    "stage": "actual-context-race"
+  }
+]

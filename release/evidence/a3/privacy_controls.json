@@ -1,0 +1,50 @@
+{
+  "candidate": {
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a3",
+    "wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+    "wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc"
+  },
+  "created_utc": "2026-09-23T05:25:58Z",
+  "evidence_scan": {
+    "files_scanned": 13,
+    "findings": [],
+    "root": "release\\evidence\\a3",
+    "schema": "LOCAL_ALPHA_PRIVACY_SCAN_1",
+    "status": "PASS",
+    "version": 1
+  },
+  "failures": [],
+  "note": "source identifiers that merely name private-key fields are not secret material; the scanner detects generated secret values",
+  "privacy": {
+    "files_scanned": 5,
+    "findings": [],
+    "root": "release\\candidates\\0.0.2a3",
+    "schema": "LOCAL_ALPHA_PRIVACY_SCAN_1",
+    "status": "PASS",
+    "version": 1
+  },
+  "red_controls": [
+    {
+      "control": "planted_plaintext_marker",
+      "expected": "FAIL",
+      "observed": "FAIL",
+      "ok": true,
+      "rules_hit": [
+        "planted_marker"
+      ]
+    },
+    {
+      "control": "planted_generated_private_key_material",
+      "expected": "FAIL",
+      "observed": "FAIL",
+      "ok": true,
+      "rules_hit": [
+        "private_key_hex_field"
+      ]
+    }
+  ],
+  "schema": "SAIMAIL_D3_RED_CONTROLS_1",
+  "status": "PASS",
+  "version": 1
+}

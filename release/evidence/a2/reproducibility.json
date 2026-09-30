@@ -1,0 +1,52 @@
+{
+  "byte_identical_wheels": false,
+  "byte_inequality_cause": "setuptools embeds per-build RECORD/timestamp metadata; content identity is compared member-by-member",
+  "checks": {
+    "content_digest_identical": true,
+    "content_proof_both_pass": true,
+    "installed_behavior_identical": true,
+    "member_content_hashes_identical": true,
+    "member_names_identical": true,
+    "metadata_version_identical": true,
+    "package_version_identical": true
+  },
+  "created_utc": "2026-09-20T20:00:32Z",
+  "first": {
+    "bundle": "release\\candidates\\0.0.2a2",
+    "content_digest_sha256": "4ab122b6ebb25e4b33b7dceaee83d0a8a53bc1ac492b6a31b04b0782d5093cd3",
+    "member_count": 59,
+    "metadata_version": "0.0.2a2",
+    "sha256": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d",
+    "size_bytes": 384886,
+    "wheel": "saimail-0.0.2a2-py3-none-any.whl"
+  },
+  "installed_behavior": {
+    "first": {
+      "api_map_release": "0.0.2a2",
+      "fg05": "PASS",
+      "fg06": "UTILITY_CONDITIONAL",
+      "v201_acceptance": "PASS",
+      "version": "0.0.2a2"
+    },
+    "second": {
+      "api_map_release": "0.0.2a2",
+      "fg05": "PASS",
+      "fg06": "UTILITY_CONDITIONAL",
+      "v201_acceptance": "PASS",
+      "version": "0.0.2a2"
+    }
+  },
+  "schema": "SAIMAIL_A2_REPRODUCIBILITY_1",
+  "second": {
+    "bundle": "V:\\_TEMP_\\opencode\\a2-build2",
+    "content_digest_sha256": "4ab122b6ebb25e4b33b7dceaee83d0a8a53bc1ac492b6a31b04b0782d5093cd3",
+    "member_count": 59,
+    "metadata_version": "0.0.2a2",
+    "sha256": "034677dafac7c1ab033a27ef74dc8f6cbf4bde21beec66a73d618eeafeedf3ad",
+    "size_bytes": 384886,
+    "wheel": "saimail-0.0.2a2-py3-none-any.whl"
+  },
+  "selected_candidate": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d",
+  "status": "PASS",
+  "version": 1
+}

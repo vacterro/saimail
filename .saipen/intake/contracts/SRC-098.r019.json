@@ -1,0 +1,104 @@
+{
+  "clauses": {
+    "SRC-098:R001": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not reopen T-106."
+    },
+    "SRC-098:R002": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not create a continuation wrapper for T-106."
+    },
+    "SRC-098:R003": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not start V6-02."
+    },
+    "SRC-098:R004": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not rebuild the 0.0.2a3 candidate unless a real artifact-byte defect is independently discovered."
+    },
+    "SRC-098:R005": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not publish, tag, push, or create a release."
+    },
+    "SRC-098:R006": {
+      "actionable": false,
+      "class": "context",
+      "text": "T-106 must remain historical DONE."
+    },
+    "SRC-098:R007": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not replace these bytes for documentation, tests, evidence generation, or release-control fixes."
+    },
+    "SRC-098:R008": {
+      "actionable": false,
+      "class": "context",
+      "text": "top-level status must not be PASS"
+    },
+    "SRC-098:R009": {
+      "actionable": false,
+      "class": "context",
+      "text": "terminal must not be READY_FOR_EXTERNAL_INSTALL_PROOF"
+    },
+    "SRC-098:R010": {
+      "actionable": false,
+      "class": "context",
+      "text": "report a local incomplete/blocked state"
+    },
+    "SRC-098:R011": {
+      "actionable": false,
+      "class": "context",
+      "text": "status may be PASS"
+    },
+    "SRC-098:R012": {
+      "actionable": false,
+      "class": "context",
+      "text": "terminal = READY_FOR_EXTERNAL_INSTALL_PROOF"
+    },
+    "SRC-098:R013": {
+      "actionable": false,
+      "class": "context",
+      "text": "engineering terminal may become DONE"
+    },
+    "SRC-098:R014": {
+      "actionable": false,
+      "class": "context",
+      "text": "G17 may remain ABSENT"
+    },
+    "SRC-098:R015": {
+      "actionable": false,
+      "class": "context",
+      "text": "publication remains forbidden"
+    },
+    "SRC-098:R016": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not make publication authorization an engineering prerequisite."
+    },
+    "SRC-098:R017": {
+      "actionable": false,
+      "class": "context",
+      "text": "VERIFIED DEFECT 2 \u2014 G15/G16 EVIDENCE WAS NEVER MATERIALIZED FOR A3"
+    },
+    "SRC-098:R018": {
+      "actionable": false,
+      "class": "context",
+      "text": "A3 must earn the same class of evidence."
+    },
+    "SRC-098:R019": {
+      "actionable": false,
+      "class": "context",
+      "text": "Do not fabricate files from the old LOG statement."
+    }
+  },
+  "derived_at": "2026-09-22T21:02:44Z",
+  "derived_from": "SRC-098",
+  "interpretation_revision": 19,
+  "schema_version": 1,
+  "source_sha256": "d07cc103c9c8e0d382a3a96d3236f380e03455e47215af205b5b3ea0720f54ae"
+}

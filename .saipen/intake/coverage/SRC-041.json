@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-041:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-60 closed with verification evidence in LOG: verify -> PASS [target: T-60] conf: high -- focused 46 passed on the post-fix tree: test_ally_advice, test_ally_advice_evidence, test_ally_advice_private; inherited T-59 patch present and green; no delta introduced by this cycle",
+      "text": "T-59 B-012 ALLY_ADVICE REVIEW pass 2 continuation from SAIMAIL limit-recovery handoff",
+      "verification": "the Work this request created reached its own verification gate; see the T-60 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-60"
+    }
+  },
+  "schema_version": 1
+}

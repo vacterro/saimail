@@ -1,0 +1,53 @@
+{
+  "a1": {
+    "actual_sha256": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+    "bundle_dir": "release/local-alpha",
+    "checks": {
+      "manifest_present": true,
+      "manifest_version_is_a1": true,
+      "manifest_wheel_hash_matches": true,
+      "member_count_matches": true,
+      "publication_not_published": true,
+      "wheel_present": true,
+      "wheel_sha256_matches": true
+    },
+    "expected_sha256": "ed930e38a238c4533ddbb406e0f777e7c86ebc2068657bd8c761d337d880a40a",
+    "failures": [],
+    "schema": "LOCAL_ALPHA_HISTORICAL_A1_1",
+    "status": "PASS",
+    "version": 1,
+    "wheel": "saimail-0.0.2a1-py3-none-any.whl"
+  },
+  "a2": {
+    "actual_sha256": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d",
+    "bundle_dir": "release/candidates/0.0.2a2",
+    "checks": {
+      "manifest_present": true,
+      "manifest_version_matches": true,
+      "manifest_wheel_hash_matches": true,
+      "member_count_matches": true,
+      "publication_not_published": true,
+      "wheel_present": true,
+      "wheel_sha256_matches": true
+    },
+    "expected_sha256": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d",
+    "failures": [],
+    "schema": "LOCAL_ALPHA_HISTORICAL_A2_1",
+    "status": "PASS",
+    "version": 1,
+    "wheel": "saimail-0.0.2a2-py3-none-any.whl"
+  },
+  "a2_external_proof_sha256": "2d77e13dd1e414e8642fb5a1b60e216e2136bb267bf1789c7e1169adfaa1d5c2",
+  "checks": {
+    "a1_unchanged": true,
+    "a2_acceptance_not_rewritten": true,
+    "a2_external_proof_binds_a2_wheel": true,
+    "a2_external_proof_bytes_match": true,
+    "a2_manifest_not_published": true,
+    "a2_unchanged": true
+  },
+  "created_utc": "2026-09-23T14:46:44Z",
+  "schema": "SAIMAIL_D3_IMMUTABILITY_1",
+  "status": "PASS",
+  "version": 1
+}

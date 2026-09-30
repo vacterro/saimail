@@ -1,0 +1,113 @@
+{
+  "boundaries": [
+    "os-store backend evidence is Windows-specific (WinVaultKeyring)",
+    "the base verifier tests P1/V4-01 but not os-store custody",
+    "the a2 and a1 external proofs bind their own frozen wheel bytes only and are never inherited",
+    "publication authorization (G17) is absent; publication is forbidden"
+  ],
+  "candidate": {
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a3",
+    "wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+    "wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc"
+  },
+  "created_utc": "2026-09-23T05:01:47Z",
+  "not_yet_externally_proven": [
+    "this exact a3 wheel on a genuinely separate external environment (G13)",
+    "os-store custody on any non-Windows platform"
+  ],
+  "proven_externally_on_exact_a3_wheel": [],
+  "proven_on_windows_exact_a3_wheel": [
+    {
+      "claim": "package_install",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "module_resolution_outside_checkout",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "base_raw_workflow",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "first_run_raw_custody_notice",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "custody_module_shipped",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "os_store_backend_classification",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "os_store_init",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "protected_metadata_no_raw_keys",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "custody_restart_stable",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "custody_status_protected",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "installed_send_list_open",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "migration",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "custody_cleanup",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "fg05",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "fg06_utility_conditional",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "v201_workflow",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "zero_runtime_network_model",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "privacy_gate",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "integrity_gate",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "p1_inbox_query_installed",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "v401_correspondence_continuation_installed",
+      "status": "PROVEN"
+    },
+    {
+      "claim": "v501_gui_in_wheel",
+      "status": "PROVEN"
+    }
+  ],
+  "schema": "SAIMAIL_D3_CLAIM_MATRIX_1",
+  "status": "PASS",
+  "version": 1
+}

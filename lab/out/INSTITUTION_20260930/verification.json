@@ -1,0 +1,109 @@
+{
+  "schema": "SAIMAIL_INSTITUTION_VERIFICATION_1",
+  "status": "PASS",
+  "checked_at": "2026-09-29T22:35:51.200759+00:00",
+  "scope": "CURRENT_CHECKOUT_AND_REFRESHED_EDITABLE_INSTALL",
+  "full_suite": {
+    "command": "python -m pytest -o addopts= -q",
+    "passed": 2712,
+    "failed": 0,
+    "seconds": 125.51,
+    "output_sha256": "3f034578de3ba14e6374f9501a31977a684226e0e3249bedb69f12569bfce1aa"
+  },
+  "clean_wheel_checks": {
+    "passed": 5,
+    "command": "python -m pytest tests/test_clean_install.py -o addopts= -q"
+  },
+  "gui_surface_and_acceptance": {
+    "passed": 47,
+    "minimum_viewport": [
+      640,
+      480
+    ],
+    "canonical_viewport": [
+      640,
+      540
+    ],
+    "live_sealed_letter_explicit_reopen": true
+  },
+  "independent_hosts": {
+    "saipen_turn_entry_passed": 9,
+    "zaicode_desktop_read_post_passed": 15,
+    "zaicode_skipped": 0,
+    "source_edits": false
+  },
+  "installed_smoke": {
+    "outside_checkout": true,
+    "cli_contract": "SAIMAIL_HOST_CONTRACT_1",
+    "host_modules_resolve": true,
+    "gui_constructed": true,
+    "automatic_key_job": false
+  },
+  "ruff_touched_feature_modules_and_tests": "PASS",
+  "git_diff_whitespace": "PASS",
+  "live_experiment": {
+    "calls": 4,
+    "claim_boundary": "Coordination and continuation in one controlled live example; no model-weight improvement claim.",
+    "delivery": "DELIVERED",
+    "evidence_rechecked": true,
+    "mechanical_validation": "PASS",
+    "observed_models": [
+      "stealth/space-bunny-alpha"
+    ],
+    "receiver_metrics": {
+      "basis": "EXPLICIT_RECEIVER_DECISIONS",
+      "decisions": {
+        "ACCEPTED": 0,
+        "DECLINED": 0,
+        "DEFERRED": 0,
+        "PENDING": 0,
+        "RESOLVED": 1,
+        "STALE": 0
+      },
+      "model_improvement_proven": false,
+      "resolved_fraction": 1.0,
+      "retained": 1,
+      "reviewed": 1
+    },
+    "receiver_model_verdict": "UNVERIFIED",
+    "requested_route": "SAIFREN",
+    "schema": "SAIMAIL_INSTITUTION_EXPERIMENT_1",
+    "status": "LIVE_CYCLE_COMPLETED",
+    "successor_discovered_reserve": true,
+    "transport_failures": 1
+  },
+  "source_sha256": {
+    "pyproject.toml": "1c4604335ed3d5e6826c9448fa93205d882eb1fab6977814ed49967c0a69d1db",
+    "saimail_local.py": "0eeea8b9b95e880f41dd72d50da022a363d3bf383f8b06d10417ea7e54f11a2f",
+    "saimail_host.py": "4d436a58230d0414ff659c33ba323ad53dc7785aefc9e999fa4bec586e07043f",
+    "saimail_project.py": "085beb989eab27b06639eaac5928ac9f1813526d58790ff46a115b98c57ef9e1",
+    "saimail/letters.py": "6ceb7172ae308ca17699fc85161c62135c15f9ed7ffdeefba512dc1730cb3051",
+    "saimail/correspondence.py": "4570cd7f97ff23ca076f15c87c36d48a7d22620c537c934cdb73e57b84b25696",
+    "saimail/keyvault.py": "a40f6ad38a0c5a2dc8de78a016026b83629cf1ad272953277d8a44a4e7abf355",
+    "saimail/host_contract.py": "b4c8705fab14e25c330cba100954bff830754029d160b142e6654fb9ac1f0f6f",
+    "saimail/gui_app.py": "237ecb6feb1a69dc03b703103e97797c53c9a4d7e58d0f9c8ea68271e067d572",
+    "saimail/gui_adapter.py": "0a73826cd9b52cef2c6cabeb26612ae6d854b19178f0968cbb9d343a092e70af",
+    "saimail/gui_theme.py": "fd95a222eece3b7f3f5eed479e501b5e96a539f98958cb8a51c270c72835441e",
+    "saimail/workspace.py": "628ca1fff81c8a03f3050fcbe43d57a3d4eb66ce3a5c8c7a045d71111d20d8ea",
+    "saimail/notify.py": "7477445e2da4ac74f362b5f17fcffd4fadff0c661868332c37271aea325ae5c3",
+    "saimail/custody.py": "2719f07f73ebaf91f7af72dd3d5a5ed0bc5249768d7426bf35ac80d742a4670c",
+    "saimail/capabilities.py": "dcdbd9f5eb56a04e64d079ccc4a6b1881a33e5c4521a3717bb9f787b7c82cc01",
+    "tests/test_correspondence.py": "5400a52ef68299176319ffd711608008f83573ff9f3a90591e7a788d71a81855",
+    "tests/test_host_client.py": "9b19cda6c96dce0d3fd96a966bd1040590bb1e88c4f387dfbf4c57427c38b0b0",
+    "tests/test_keyvault.py": "b821a3693721da9a22de4fc3e239aa00e1ce8a51d206c6da5e786afa8725a8d4",
+    "tests/test_gui_surface.py": "6c7d8df922c9b84795285877319dc1fe54d373fe8bac56863082c20bfa39da63",
+    "tests/test_gui_acceptance.py": "899527b89d9e287f8283c8deacb166442e5253cdd55b62e59826bce095cec8bb",
+    "tests/test_clean_install.py": "a56fafa3fcaeda38833301a621c9fc801f075138c23d20c6e27b23a14be2397b",
+    "tests/test_repo_consistency.py": "3c022b661071d0af35bec5d995f6c675319345fafc11d606b665703fbdc530b8"
+  },
+  "launchers": [
+    "saimail-gui",
+    "SAIMAIL.cmd"
+  ],
+  "human_custody": "MASTER_PASSWORD_WITH_INDEPENDENT_RECOVERY",
+  "fido_unlock": "NOT_IMPLEMENTED",
+  "privacy_reports": [
+    "privacy-scan.json",
+    "credential-scan.json"
+  ]
+}

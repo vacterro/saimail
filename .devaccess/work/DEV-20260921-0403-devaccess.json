@@ -1,0 +1,50 @@
+{
+  "dev_id": "DEV-20260921-0403-devaccess",
+  "operator_request": "Implement temporary DEV ACCESS overlay from operator handoff SAIMAIL_20260921_0403.md",
+  "starting_canonical_state": {
+    "phase": "VERIFY",
+    "task": "T-99"
+  },
+  "writable_paths": [
+    ".devaccess/**",
+    "tools/dev_access.py",
+    "tests/test_dev_access.py"
+  ],
+  "forbidden_paths": [
+    ".saipen/STATE.md",
+    ".saipen/BOARD.md",
+    ".saipen/LOG.md",
+    ".saipen/intake/**",
+    ".saipen/kitchen/**",
+    ".saipen/evidence/**",
+    "humbox/CURRENT-STATE.md",
+    "humbox/FUTURE-GATES*.md",
+    "release/local-alpha/**",
+    "release/candidates/0.0.2a2/**",
+    "release/evidence/a2/**"
+  ],
+  "started_at": "2026-09-21T01:13:32Z",
+  "status": "done",
+  "changed_files": [
+    ".devaccess/ACTIVE.json",
+    "tools/dev_access.py"
+  ],
+  "created_files": [
+    ".devaccess/evidence/DEV-20260921-0403-devaccess/RECONCILE.md",
+    ".devaccess/evidence/DEV-20260921-0403-devaccess/baseline.json",
+    ".devaccess/evidence/DEV-20260921-0403-devaccess/result.json",
+    ".devaccess/work/DEV-20260921-0403-devaccess.json",
+    ".devaccess/work/DEV-20260921-0423-devaccess-hardening.json",
+    "tests/test_dev_access.py"
+  ],
+  "deleted_files": [],
+  "tests": {
+    "focused": "python -m pytest tests/test_dev_access.py -q -> 14 passed",
+    "regression": "python -m pytest tests/test_repo_consistency.py -q -> PASS; full suite run follows in T-100 VERIFY",
+    "lint": "ruff -> All checks passed; py_compile -> PASS"
+  },
+  "finished_at": "2026-09-21T02:16:31Z",
+  "expects": [],
+  "reopened_at": "2026-09-21T02:16:03Z",
+  "reopen_reason": "premature DEV_COMPLETE: baseline was corrupt, helper contract gaps and no focused tests; reopened to finish the declared overlay work"
+}

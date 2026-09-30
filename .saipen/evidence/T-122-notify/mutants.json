@@ -1,0 +1,24 @@
+{
+  "module": "saimail/notify.py",
+  "test": "tests/test_notify.py",
+  "mutants": {
+    "no_budget": [
+      ["              \"content_identity\": identity, \"gate\": _budget_gate(to_seat, work, now),\n", "              \"content_identity\": identity, \"gate\": None,\n"]
+    ],
+    "digest_over_bytes": [
+      ["        identity = {\"form\": \"citation\", \"event\": event, \"ev\": citation.get(\"EV\")}\n", "        identity = None\n"]
+    ],
+    "no_piggyback_resume": [
+      ["    resumed = outbox.resume_outbox(workspace, budget=RESUME_BUDGET, clock=clock)[\"counts\"]\n", "    resumed = {outbox.DELIVERED: 0}\n"]
+    ],
+    "unlisted_work_allowed": [
+      ["        if explicit not in board_ids:\n", "        if False:\n"]
+    ],
+    "sender_picks_kind": [
+      ["    kwargs = {\"key\": key, \"subject\": work, \"topic\": work, \"kind\": resolved[\"kind\"],\n", "    kwargs = {\"key\": key, \"subject\": work, \"topic\": work, \"kind\": \"WARNING\",\n"]
+    ],
+    "claim_key_includes_nothing": [
+      ["        basis = \"c\" + hashlib.sha256(claim.strip().encode(\"utf-8\")).hexdigest()[:24]\n", "        basis = \"claim\"\n"]
+    ]
+  }
+}

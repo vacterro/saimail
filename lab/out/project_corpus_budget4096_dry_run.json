@@ -1,0 +1,487 @@
+{
+  "version": "PROJECT-CORPUS-BUDGET4096-1",
+  "registration_id": "sha256:ac6a940220d65916355dc648f4c1dbc4cb24331254cb793cc1c2ec1a6c383190",
+  "implementation": {
+    "observer_sha256": "db84aa89ac35c75fa98012b604232bb7221458a842f1a9d3da1bd796240a5592",
+    "harness_sha256": "d96e185b98011d4988e38520d35adb5ff850fa9b247f17b71c4c7d4706a94bb7",
+    "transport_sha256": "03212cf0799f3e7822c2098105c39d94ad4d79ae833e8e5b2334f30de52a61de"
+  },
+  "started": "2026-09-20T00:57:41Z",
+  "dry_run": true,
+  "status": "COMPLETED",
+  "input": {
+    "registration_id": "sha256:dfd8b48dded34de8426181f309032da31c86e83f675412add15076fc421a096f",
+    "build_id": "sha256:0e05460aae1645b6bdfeec887f02a978a185026422faf74c90238f0938bd4e35",
+    "corpus_id": "sha256:b009bdf3a8efd28f29be76d0dfd9c2809c0e7dd010af8e92c94a97fbeeec19ac",
+    "artifact_count": 8,
+    "event_count": 5
+  },
+  "routes": {
+    "A": "SAIFREN",
+    "B": "goat/MiniMaxAI/MiniMax-M3"
+  },
+  "token_budgets": {
+    "probe": 16,
+    "generator": 4096,
+    "reviewer": 2048
+  },
+  "response_format_kind": "NONE",
+  "legacy_output_chars": 4000,
+  "population_projection": "B019-POPULATION-PRIVACY-PROJECTION-1",
+  "participant_count": 2,
+  "budget": {
+    "max_calls": 6,
+    "spent_total": 5,
+    "spent_probe": 2,
+    "retries": 0,
+    "repair_calls": 0,
+    "network_calls": 0,
+    "spent_generation": 2,
+    "spent_review": 1
+  },
+  "calls": [
+    {
+      "call_id": "baae73df0f79",
+      "replicate": 0,
+      "role": "A",
+      "function": "PROBE",
+      "requested_model": "SAIFREN",
+      "reported_model": {
+        "sha256": "d399eb0f887592c61569e7c61ba28d0ccca00e7e8845c4ef25377133e25513ce",
+        "bytes": 7,
+        "known": "SAIFREN"
+      },
+      "provider": {
+        "sha256": null,
+        "bytes": null
+      },
+      "provider_basis": "NOT_EXPOSED",
+      "request_max_tokens": 16,
+      "response_format_kind": "NONE",
+      "request_body_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "request_body_bytes": 2,
+      "sent": true,
+      "status": "OK",
+      "error_class": null,
+      "error_body": {
+        "sha256": null,
+        "bytes": null
+      },
+      "http_status": 200,
+      "latency_s": 0.0,
+      "finish_reason": "stop",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "prompt_sha256": "ef7e7ff96d04cdcdb9a405d5319bdc1b52adabc168eea9179dfc1352aad79231",
+      "visible_output": {
+        "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+        "bytes": 2
+      },
+      "full_output_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "full_output_bytes": 2,
+      "legacy_projection_would_truncate": false,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "local_estimated_input_tokens": 7,
+      "parse_shape": null,
+      "parser_status": "NOT_ATTEMPTED",
+      "parser_error_code": null
+    },
+    {
+      "call_id": "30de7d7cb0da",
+      "replicate": 0,
+      "role": "B",
+      "function": "PROBE",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": {
+        "sha256": "10fe10ac79eef3e8e8ff0b3facb64a327da40b875b3485468d52ba6edc0d2c39",
+        "bytes": 25,
+        "known": "goat/MiniMaxAI/MiniMax-M3"
+      },
+      "provider": {
+        "sha256": null,
+        "bytes": null
+      },
+      "provider_basis": "NOT_EXPOSED",
+      "request_max_tokens": 16,
+      "response_format_kind": "NONE",
+      "request_body_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "request_body_bytes": 2,
+      "sent": true,
+      "status": "OK",
+      "error_class": null,
+      "error_body": {
+        "sha256": null,
+        "bytes": null
+      },
+      "http_status": 200,
+      "latency_s": 0.0,
+      "finish_reason": "stop",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "prompt_sha256": "ef7e7ff96d04cdcdb9a405d5319bdc1b52adabc168eea9179dfc1352aad79231",
+      "visible_output": {
+        "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+        "bytes": 2
+      },
+      "full_output_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "full_output_bytes": 2,
+      "legacy_projection_would_truncate": false,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "local_estimated_input_tokens": 7,
+      "parse_shape": null,
+      "parser_status": "NOT_ATTEMPTED",
+      "parser_error_code": null
+    },
+    {
+      "call_id": "740d5abef2df",
+      "replicate": 1,
+      "role": "A",
+      "function": "GENERATOR",
+      "requested_model": "SAIFREN",
+      "reported_model": {
+        "sha256": "d399eb0f887592c61569e7c61ba28d0ccca00e7e8845c4ef25377133e25513ce",
+        "bytes": 7,
+        "known": "SAIFREN"
+      },
+      "provider": {
+        "sha256": null,
+        "bytes": null
+      },
+      "provider_basis": "NOT_EXPOSED",
+      "request_max_tokens": 4096,
+      "response_format_kind": "NONE",
+      "request_body_sha256": "d6483bc6bc6caa8a25a1064187151b3160d019fc4512e5d83e05d5361f7f90af",
+      "request_body_bytes": 5018,
+      "sent": true,
+      "status": "OK",
+      "error_class": null,
+      "error_body": {
+        "sha256": null,
+        "bytes": null
+      },
+      "http_status": 200,
+      "latency_s": 0.0,
+      "finish_reason": "stop",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "prompt_sha256": "e83e1d8fd8d62f9966bbf06291f927e532698a9fd678450ac1d81a09f2f9d1e6",
+      "visible_output": {
+        "sha256": "d6483bc6bc6caa8a25a1064187151b3160d019fc4512e5d83e05d5361f7f90af",
+        "bytes": 5018
+      },
+      "full_output_sha256": "d6483bc6bc6caa8a25a1064187151b3160d019fc4512e5d83e05d5361f7f90af",
+      "full_output_bytes": 5018,
+      "legacy_projection_would_truncate": true,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "local_estimated_input_tokens": 7923,
+      "parse_shape": {
+        "version": "PARSE-SHAPE-1",
+        "input_kind": "TEXT",
+        "blank": false,
+        "fence_token_present": false,
+        "first_token": "OBJECT",
+        "syntax": "RESOURCE_LIMIT",
+        "root_type": null,
+        "duplicate_key_count": 0,
+        "nonfinite_constant_count": 0,
+        "syntax_error": null,
+        "error_position": null,
+        "error_line": null,
+        "error_column": null,
+        "result_kind": "ABSENT",
+        "top_missing_count": null,
+        "top_unknown_count": null,
+        "top_type_mismatch_count": null,
+        "nested_item_count": null,
+        "nested_missing_count": null,
+        "nested_unknown_count": null,
+        "nested_type_mismatch_count": null
+      },
+      "parser_status": "OK",
+      "parser_error_code": null
+    },
+    {
+      "call_id": "da41df2295cb",
+      "replicate": 1,
+      "role": "B",
+      "function": "REVIEWER",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": {
+        "sha256": "10fe10ac79eef3e8e8ff0b3facb64a327da40b875b3485468d52ba6edc0d2c39",
+        "bytes": 25,
+        "known": "goat/MiniMaxAI/MiniMax-M3"
+      },
+      "provider": {
+        "sha256": null,
+        "bytes": null
+      },
+      "provider_basis": "NOT_EXPOSED",
+      "request_max_tokens": 2048,
+      "response_format_kind": "NONE",
+      "request_body_sha256": "4e3e9567569914bcb2e69a0b035170b1a240651aa7375ec62dd241612e5498ce",
+      "request_body_bytes": 1414,
+      "sent": true,
+      "status": "OK",
+      "error_class": null,
+      "error_body": {
+        "sha256": null,
+        "bytes": null
+      },
+      "http_status": 200,
+      "latency_s": 0.0,
+      "finish_reason": "stop",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "prompt_sha256": "9daa071949ddb0470c3a69c3a50a733cceb358ebc81d94bde148d7a5d670cf90",
+      "visible_output": {
+        "sha256": "4e3e9567569914bcb2e69a0b035170b1a240651aa7375ec62dd241612e5498ce",
+        "bytes": 1414
+      },
+      "full_output_sha256": "4e3e9567569914bcb2e69a0b035170b1a240651aa7375ec62dd241612e5498ce",
+      "full_output_bytes": 1414,
+      "legacy_projection_would_truncate": false,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "local_estimated_input_tokens": 9210,
+      "parse_shape": {
+        "version": "PARSE-SHAPE-1",
+        "input_kind": "TEXT",
+        "blank": false,
+        "fence_token_present": false,
+        "first_token": "OBJECT",
+        "syntax": "OK",
+        "root_type": "OBJECT",
+        "duplicate_key_count": 0,
+        "nonfinite_constant_count": 0,
+        "syntax_error": null,
+        "error_position": null,
+        "error_line": null,
+        "error_column": null,
+        "result_kind": "ABSENT",
+        "top_missing_count": 0,
+        "top_unknown_count": 0,
+        "top_type_mismatch_count": 0,
+        "nested_item_count": 8,
+        "nested_missing_count": 0,
+        "nested_unknown_count": 0,
+        "nested_type_mismatch_count": 0
+      },
+      "parser_status": "OK",
+      "parser_error_code": null
+    },
+    {
+      "call_id": "af443694e46e",
+      "replicate": 2,
+      "role": "B",
+      "function": "GENERATOR",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": {
+        "sha256": "10fe10ac79eef3e8e8ff0b3facb64a327da40b875b3485468d52ba6edc0d2c39",
+        "bytes": 25,
+        "known": "goat/MiniMaxAI/MiniMax-M3"
+      },
+      "provider": {
+        "sha256": null,
+        "bytes": null
+      },
+      "provider_basis": "NOT_EXPOSED",
+      "request_max_tokens": 4096,
+      "response_format_kind": "NONE",
+      "request_body_sha256": "82013c37e6f199b6c8dce378ffc7b5b35bd0ee3888c958bbfd08d0010346d070",
+      "request_body_bytes": 22,
+      "sent": true,
+      "status": "OK",
+      "error_class": null,
+      "error_body": {
+        "sha256": null,
+        "bytes": null
+      },
+      "http_status": 200,
+      "latency_s": 0.0,
+      "finish_reason": "stop",
+      "output_truncated": false,
+      "inline_trace_removed": false,
+      "prompt_sha256": "e83e1d8fd8d62f9966bbf06291f927e532698a9fd678450ac1d81a09f2f9d1e6",
+      "visible_output": {
+        "sha256": "82013c37e6f199b6c8dce378ffc7b5b35bd0ee3888c958bbfd08d0010346d070",
+        "bytes": 22
+      },
+      "full_output_sha256": "82013c37e6f199b6c8dce378ffc7b5b35bd0ee3888c958bbfd08d0010346d070",
+      "full_output_bytes": 22,
+      "legacy_projection_would_truncate": false,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "local_estimated_input_tokens": 7923,
+      "parse_shape": {
+        "version": "PARSE-SHAPE-1",
+        "input_kind": "TEXT",
+        "blank": false,
+        "fence_token_present": false,
+        "first_token": "OBJECT",
+        "syntax": "OK",
+        "root_type": "OBJECT",
+        "duplicate_key_count": 0,
+        "nonfinite_constant_count": 0,
+        "syntax_error": null,
+        "error_position": null,
+        "error_line": null,
+        "error_column": null,
+        "result_kind": "NO_ADVICE",
+        "top_missing_count": 0,
+        "top_unknown_count": 0,
+        "top_type_mismatch_count": 0,
+        "nested_item_count": 0,
+        "nested_missing_count": 0,
+        "nested_unknown_count": 0,
+        "nested_type_mismatch_count": 0
+      },
+      "parser_status": "OK",
+      "parser_error_code": null
+    }
+  ],
+  "replicates": [
+    {
+      "replicate": 1,
+      "generator_role": "A",
+      "reviewer_role": "B",
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "OK",
+        "GENERATOR_RESULT": "CANDIDATE",
+        "ALLY1_STRUCTURAL_GATE": "PASS",
+        "CORPUS_REF_GATE": "PASS",
+        "EVENT_FLOOR_GATE": "PASS",
+        "EVIDENCE_RESOLUTION": "PASS",
+        "REVIEWER_TRANSPORT": "OK",
+        "REVIEWER_PARSE": "OK",
+        "SEMANTIC_REVIEW": "PASS",
+        "FINAL_GATE_OUTCOME": "APPROVED"
+      },
+      "outcome": "APPROVED",
+      "outcome_code": null,
+      "reviewer_calls": 1,
+      "candidate_id": "sha256:e2f33294b4fc496f9d666a3299f99d6f2c7125accaa086b18dafe0695470a5ee",
+      "candidate_emitted": true,
+      "observed_scope_exact": true,
+      "observed_item_count": 2,
+      "counterevidence_item_count": 1,
+      "observed_event_count": 3,
+      "outside_ref_count": 0,
+      "review_verdicts": [
+        {
+          "dimension": "OBSERVATION_SUPPORT",
+          "verdict": "PASS",
+          "evidence_refs": [
+            "sha256:0c4d8190d42036d5e43d11fe2dd2a2510e20118b28f0ad26091adc680e1dca6b"
+          ]
+        },
+        {
+          "dimension": "COUNTEREVIDENCE_ADEQUACY",
+          "verdict": "PASS",
+          "evidence_refs": [
+            "sha256:0c4d8190d42036d5e43d11fe2dd2a2510e20118b28f0ad26091adc680e1dca6b"
+          ]
+        },
+        {
+          "dimension": "SCOPE_DISCIPLINE",
+          "verdict": "PASS",
+          "evidence_refs": []
+        },
+        {
+          "dimension": "NO_MOTIVE_INFERENCE",
+          "verdict": "PASS",
+          "evidence_refs": []
+        },
+        {
+          "dimension": "NO_FLATTERY",
+          "verdict": "PASS",
+          "evidence_refs": []
+        },
+        {
+          "dimension": "NO_COMPLIANCE_PRESSURE",
+          "verdict": "PASS",
+          "evidence_refs": []
+        },
+        {
+          "dimension": "UNCERTAINTY_ADEQUACY",
+          "verdict": "PASS",
+          "evidence_refs": []
+        },
+        {
+          "dimension": "RECIPIENT_AGENCY",
+          "verdict": "PASS",
+          "evidence_refs": []
+        }
+      ],
+      "same_reported_model_pair": false,
+      "reviewed_state_minted": true
+    },
+    {
+      "replicate": 2,
+      "generator_role": "B",
+      "reviewer_role": "A",
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "OK",
+        "GENERATOR_RESULT": "NO_ADVICE",
+        "ALLY1_STRUCTURAL_GATE": "NOT_REACHED",
+        "CORPUS_REF_GATE": "NOT_REACHED",
+        "EVENT_FLOOR_GATE": "NOT_REACHED",
+        "EVIDENCE_RESOLUTION": "NOT_REACHED",
+        "REVIEWER_TRANSPORT": "NOT_REACHED",
+        "REVIEWER_PARSE": "NOT_REACHED",
+        "SEMANTIC_REVIEW": "SKIPPED",
+        "FINAL_GATE_OUTCOME": "NO_ADVICE"
+      },
+      "outcome": "NO_ADVICE",
+      "outcome_code": null,
+      "reviewer_calls": 0,
+      "candidate_id": null,
+      "candidate_emitted": false,
+      "observed_scope_exact": null,
+      "observed_item_count": 0,
+      "counterevidence_item_count": 0,
+      "observed_event_count": 0,
+      "outside_ref_count": 0,
+      "review_verdicts": [],
+      "same_reported_model_pair": null,
+      "reviewed_state_minted": false
+    }
+  ],
+  "privacy": {
+    "prompt_persisted": false,
+    "output_persisted": false,
+    "candidate_prose_persisted": false,
+    "reviewer_rationale_persisted": false,
+    "error_body_persisted": false,
+    "full_output_persisted": false
+  },
+  "side_effects": {
+    "mail": 0,
+    "seal": 0,
+    "store": 0,
+    "attention": 0,
+    "advice_presentation": 0
+  },
+  "provider_retention": "NOT_VERIFIED_BY_SAIMAIL",
+  "historical_shape": "UNKNOWN_BYTES_DISCARDED",
+  "stop_reason": null
+}

@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-085:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-97 closed with verification evidence in LOG: verify -> PASS [target: T-97] conf: high -- python -m pytest -q: 2357 passed, 0 failed, 0 errors, 0 skipped; focused GUI 40 passed; README badge parity holds; ruff clean; frozen a2 wheel unchanged",
+      "text": "V5-01 desktop local messenger alpha GUI (SAIMAIL_20260921_0138.md handoff)",
+      "verification": "the Work this request created reached its own verification gate; see the T-97 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-97"
+    }
+  },
+  "schema_version": 1
+}

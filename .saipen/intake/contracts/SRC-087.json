@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-087:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Implement temporary DEV ACCESS overlay from V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260921_0403.md without modifying canonical .saipen state"
+    }
+  },
+  "derived_at": "2026-09-21T02:28:27Z",
+  "derived_from": "SRC-087",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "3d074d5c4da5ef3b563f4d5b73d61bc62f60fda7e185be7c91cb62c21056241e"
+}

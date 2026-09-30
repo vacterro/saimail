@@ -1,0 +1,114 @@
+{
+  "api_map": {
+    "path_exists": true,
+    "release": "0.0.2a2",
+    "release_matches": true,
+    "schema": "SAIMAIL_STABLE_LOCAL_API_1"
+  },
+  "candidate": {
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a2",
+    "wheel_filename": "saimail-0.0.2a2-py3-none-any.whl",
+    "wheel_sha256": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d"
+  },
+  "custody": {
+    "default": "raw",
+    "os_store_requires": "the credentials extra (keyring>=24) and a checked persistent backend",
+    "os_store_selection": "explicit opt-in: init --custody os-store, or custody migrate",
+    "platform_evidence": "Windows only (WinVaultKeyring classification and one disposable installed-wheel acceptance); no second platform is claimed"
+  },
+  "custody_content_proof": {
+    "checks": {
+      "cli_custody_flag": true,
+      "cli_custody_migrate": true,
+      "cli_custody_status": true,
+      "custody_module": true,
+      "first_run_notice": true,
+      "identity_schema_v2": true,
+      "os_store_mode": true,
+      "workspace_module": true
+    },
+    "status": "PASS"
+  },
+  "environment": {
+    "platform": "win32",
+    "python_version": "3.11.9",
+    "verified_utc": "2026-09-20T19:59:13Z",
+    "verifier_version": 1
+  },
+  "failures": [],
+  "fg05": {
+    "network_attempts": 0,
+    "schema": "LOCAL_SCENARIO_RESULT_1",
+    "status": "PASS"
+  },
+  "fg06": {
+    "expected_verdict": "UTILITY_CONDITIONAL",
+    "network_attempts": 0,
+    "outcome_category": "UTILITY_CONDITIONAL",
+    "schema": "FG06_UTILITY_RESULT_1",
+    "verdict_matches": true
+  },
+  "install": {
+    "dependency_source": "HOST_SITE_PACKAGES",
+    "note": "dependency installation is separate from SAIMAIL runtime network activity",
+    "status": "INSTALLED",
+    "wheel": "saimail-0.0.2a2-py3-none-any.whl"
+  },
+  "integrity": {
+    "candidate_version": "0.0.2a2",
+    "failures": [],
+    "manifest_schema": "LOCAL_ALPHA_CANDIDATE_1",
+    "status": "PASS",
+    "wheel_filename": "saimail-0.0.2a2-py3-none-any.whl",
+    "wheel_sha256": "d1f975375dd27aa26fc2b0639987a64ea53c39aa297c628abfddb712ab64e31d"
+  },
+  "limitations": {
+    "acknowledged": true,
+    "identity": "LOCAL_ALPHA_LIMITATIONS_1",
+    "utility_verdict": "UTILITY_CONDITIONAL"
+  },
+  "module_resolution": {
+    "paths": [
+      "V:\\_TEMP_\\saimail-local-alpha-verify-8l1xsw38\\venv\\Lib\\site-packages\\saimail\\__init__.py",
+      "V:\\_TEMP_\\saimail-local-alpha-verify-8l1xsw38\\venv\\Lib\\site-packages\\lab\\__init__.py",
+      "V:\\_TEMP_\\saimail-local-alpha-verify-8l1xsw38\\venv\\Lib\\site-packages\\saimail_local.py"
+    ],
+    "resolved_inside_environment": true
+  },
+  "privacy": {
+    "findings": [],
+    "private_key_material_found": false,
+    "status": "PASS"
+  },
+  "runtime_counters": {
+    "model_calls": 0,
+    "network_attempts": 0,
+    "note": "the local base path has no model or provider surface",
+    "provider_calls": 0
+  },
+  "saimail_local_version": {
+    "expected": "0.0.2a2",
+    "reported": "0.0.2a2",
+    "status": "PASS"
+  },
+  "schema": "LOCAL_ALPHA_VERIFICATION_1",
+  "scope": {
+    "base_candidate_verification": "TESTED_BY_THIS_VERIFIER",
+    "os_store_platform_verification": "NOT_TESTED_HERE platform-specific; independent Windows evidence is recorded in the candidate evidence set"
+  },
+  "status": "PASS",
+  "v201_acceptance": {
+    "network_attempts": 0,
+    "schema": "LOCAL_WORKSPACE_RESULT_1",
+    "status": "PASS"
+  },
+  "v201_direct_command": {
+    "custody_mode": "raw",
+    "first_run_notice": true,
+    "network_attempts": 0,
+    "schema": "LOCAL_WORKSPACE_COMMAND_1",
+    "status": "CREATED"
+  },
+  "version": 1
+}

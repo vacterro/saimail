@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-058:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIMAIL SAIHANDOFF 20260920_0304 (V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260920_0304.md): run the structured-output / completion-budget capability gate \u2014 freeze one registration (fixed routes SAIFREN and goat/MiniMaxAI/MiniMax-M3, three probes each: BUDGET_4096, JSON_OBJECT, JSON_SCHEMA), build a LAB-only capability harness with exact-body and fake-opener tests, perform exactly six synthetic live probes and STOP; synthetic-only, no B-018 corpus, no parser weakening, no fallback/retry, no production saimail/* change; TARGETS A/B/C sequential."
+    }
+  },
+  "derived_at": "2026-09-20T00:21:40Z",
+  "derived_from": "SRC-058",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "da255aa49c49116c4dbcc1ebacf15fdae59aeca862fe8ccacde3ddf96f7e0e98"
+}

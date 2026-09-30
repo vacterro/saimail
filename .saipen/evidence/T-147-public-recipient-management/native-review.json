@@ -1,0 +1,180 @@
+{
+  "started": "2026-09-30T14:28:30.563316+00:00",
+  "ended": "2026-09-30T14:31:30.639364+00:00",
+  "pid": 2340,
+  "exit_code": 1,
+  "timed_out": true,
+  "model_route_requested": "sairoute/SAIFREN",
+  "provider_context": "OPAQUE",
+  "sessions": [
+    "ses_f0d499707ffe15naRiJ1EvcJuR"
+  ],
+  "events": [
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "tool_use",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "tool": "read",
+      "status": "completed"
+    },
+    {
+      "type": "tool_use",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "tool": "read",
+      "status": "completed"
+    },
+    {
+      "type": "step_finish",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "reason": "tool-calls",
+      "tokens": {
+        "total": 7362,
+        "input": 722,
+        "output": 94,
+        "reasoning": 70,
+        "cache": {
+          "write": 0,
+          "read": 6476
+        }
+      },
+      "cost": 0
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "tool_use",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "tool": "read",
+      "status": "completed"
+    },
+    {
+      "type": "tool_use",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "tool": "read",
+      "status": "completed"
+    },
+    {
+      "type": "step_finish",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "reason": "tool-calls",
+      "tokens": {
+        "total": 35680,
+        "input": 33463,
+        "output": 425,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 1792
+        }
+      },
+      "cost": 0
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "tool_use",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "tool": "read",
+      "status": "completed"
+    },
+    {
+      "type": "tool_use",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "tool": "read",
+      "status": "error"
+    },
+    {
+      "type": "step_finish",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "reason": "tool-calls",
+      "tokens": {
+        "total": 49073,
+        "input": 11478,
+        "output": 2011,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 35584
+        }
+      },
+      "cost": 0
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "tool_use",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "tool": "glob",
+      "status": "completed"
+    },
+    {
+      "type": "tool_use",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "tool": "glob",
+      "status": "completed"
+    },
+    {
+      "type": "step_finish",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR",
+      "reason": "tool-calls",
+      "tokens": {
+        "total": 52626,
+        "input": 3474,
+        "output": 128,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 49024
+        }
+      },
+      "cost": 0
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    },
+    {
+      "type": "step_start",
+      "sessionID": "ses_f0d499707ffe15naRiJ1EvcJuR"
+    }
+  ],
+  "raw_reasoning_and_errors_retained": false,
+  "transcript_available": true
+}

@@ -1,0 +1,83 @@
+--- .saipen/evidence/T-122-notify/outbox.before.py	2026-09-24 10:12:27.751949500 +0300
++++ saimail/outbox.py	2026-09-24 10:12:59.870839200 +0300
+@@ -205,12 +205,14 @@
+ 
+ 
+ def _request(workspace, alias: str, *, claim, record_path, subject: str, topic: str,
+-             kind: str, created: str) -> tuple:
++             kind: str, created: str, content_identity=None) -> tuple:
+     """Validate one send request and return its digest and canonical record.
+ 
+     The digest binds the key to what the caller asked for (alias, header fields,
+     content) and not to the current peer registry, so resubmitting a delivered
+-    intent answers from disk even after the alias changed.
++    intent answers from disk even after the alias changed. ``content_identity``
++    replaces the content part when the record carries a volatile field (a
++    citation's CREATED time) that must not make a repeat look like a new request.
+     """
+     if kind not in envelope.KINDS:
+         _reject(_workspace.BAD_INPUT, f"kind must be one of the closed SENV2 set, got {kind!r}")
+@@ -227,15 +229,21 @@
+         content = {"form": "claim", "claim": claim.strip(), "subject": subject}
+     else:
+         content = {"form": "record", "record": _sha256(record.canonical_bytes())}
++    if content_identity is not None:
++        content = {"form": "identity", "identity": content_identity}
+     request = {"alias": alias, "kind": kind, "topic": topic, "content": content}
+     digest = _sha256(json.dumps(request, sort_keys=True, separators=(",", ":"),
+                                 ensure_ascii=False).encode("utf-8"))
+     return digest, record.canonical_bytes().decode("utf-8")
+ 
+ 
++def _can_sign(workspace) -> bool:
++    return getattr(workspace, "sender_private_key", None) is not None
++
++
+ def _seal(workspace, intent: dict, now: str) -> None:
+     """PENDING -> SEALED, or FAILED when the request can no longer be sealed."""
+-    if getattr(workspace, "sender_private_key", None) is None:
++    if not _can_sign(workspace):
+         _reject(SIGNING_KEY_REQUIRED, "sealing a pending intent needs the full workspace load")
+     try:
+         recipient = _workspace._resolve_recipient(workspace, intent["alias"])
+@@ -299,6 +307,8 @@
+              deliver: bool = True) -> None:
+     now = _now(clock)
+     if intent["state"] == PENDING:
++        if not _can_sign(workspace):
++            return  # recorded durably; a later full load seals it (needs_signing_key)
+         _seal(workspace, intent, now)
+     if deliver and intent["state"] == SEALED and (force or _due(intent, now)):
+         _deliver(workspace, intent, now, clock)
+@@ -329,23 +339,29 @@
+ def submit_send(workspace, alias: str, *, key: str, claim=None, record_path=None,
+                 subject: str = _workspace.DEFAULT_SUBJECT,
+                 topic: str = _workspace.DEFAULT_TOPIC, kind: str = _workspace.DEFAULT_KIND,
+-                deliver: bool = True, clock=None) -> dict:
++                deliver: bool = True, content_identity=None, gate=None, clock=None) -> dict:
+     """Record one send under an idempotency key, then seal and deliver it once.
+ 
+     Submitting the same key again with the same request resumes that intent and
+     never creates a second logical message; the same key with a different
+     request is ``IDEMPOTENCY_KEY_CONFLICT`` and changes nothing. ``deliver=False``
+     seals without delivering, leaving the bytes for a later ``resume_outbox``.
++    ``gate(intents)`` runs under the outbox lock only before a NEW intent is
++    written and may refuse it (a flood budget); a resubmission never consumes it.
++    Without a signing key (the header view) the intent is recorded PENDING and a
++    later full load seals it.
+     """
+     intent_key_id = key_id(key)
+     with _lock(workspace):
+         now = _now(clock)
+         digest, record = _request(
+             workspace, alias, claim=claim, record_path=record_path, subject=subject,
+-            topic=topic, kind=kind, created=now)
++            topic=topic, kind=kind, created=now, content_identity=content_identity)
+         intent = _read(workspace, intent_key_id)
+         if intent is None:
+             recipient = _workspace._resolve_recipient(workspace, alias)
++            if gate is not None:
++                gate(_all_intents(workspace))
+             intent = {name: None for name in _FIELDS}
+             intent.update(schema=OUTBOX_INTENT_SCHEMA, version=OUTBOX_INTENT_VERSION,
+                           key=key, key_id=intent_key_id, request_digest=digest,

@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-093:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "E-1338",
+      "text": "Continue existing T-104 / V6-01 GitHub Identity and Presentation Sync to canonical closure per the operator letter: canonical logo sourced from SAIMAIL2, 1280x640 under-1MB social preview, README hero with LOCAL ONLY plus frozen-vs-checkout split and GUI/CLI entry commands, SECURITY.md, FUTURE-GATES-V6 roadmap authority with V6-01 DONE recorded, exact GitHub description and topics, no publication or VERSION bump, full suite green",
+      "verification": "python -m pytest -q on final bytes: 2380 tests, 0 failed, 0 errors, 0 skipped, exit 0; V6-01 deliverable gates independently re-run in REVIEW (E-1341); see E-1338 for the full asset/GitHub/red-control evidence",
+      "work": "T-104"
+    }
+  },
+  "schema_version": 1
+}

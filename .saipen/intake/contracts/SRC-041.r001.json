@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-041:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "T-59 B-012 ALLY_ADVICE REVIEW pass 2 continuation from SAIMAIL limit-recovery handoff"
+    }
+  },
+  "derived_at": "2026-09-19T19:07:12Z",
+  "derived_from": "SRC-041",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "b5ccd1c95dc277d2bf828e242070b11e6ed0b3022d2ac20b337ef7c133a119bb"
+}

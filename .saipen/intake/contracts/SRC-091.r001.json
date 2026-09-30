@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-091:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "CONTINUE T-104 V6-01 GitHub Identity and Presentation Sync to canonical closure per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260922_0230.md"
+    }
+  },
+  "derived_at": "2026-09-21T23:31:25Z",
+  "derived_from": "SRC-091",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "16e40fdccafeae2b5a19a96f8040c4bb08e4f538886375b84a3a5e3f8cbcc23d"
+}

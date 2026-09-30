@@ -1,0 +1,89 @@
+--- .saipen/evidence/T-119-outbox/saimail_local.before.py	2026-09-24 09:25:55.500704300 +0300
++++ saimail_local.py	2026-09-24 09:25:55.556203800 +0300
+@@ -109,6 +109,12 @@
+     return saipen_bridge
+ 
+ 
++def _outbox_engine():
++    from saimail import outbox
++
++    return outbox
++
++
+ def _api_map_path() -> Path:
+     return Path(__file__).resolve().parent / "lab" / "stable_local_api.json"
+ 
+@@ -294,6 +300,29 @@
+     return _dispatch_workspace("reply", action, as_json)
+ 
+ 
++def _cmd_outbox(args, as_json: bool) -> int:
++    """V6-05 durable outbox: idempotent sends that survive crashes and retries."""
++    engine = _workspace_engine()
++    outbox = _outbox_engine()
++
++    def action():
++        if args.outbox_action == "status":
++            # Status is metadata only; the secret-free view is enough (T-117).
++            return outbox.outbox_status(engine.load_workspace_headers(args.workspace))
++        workspace = engine.load_workspace(args.workspace)
++        if args.outbox_action == "send":
++            return outbox.submit_send(workspace, args.to, key=args.key, claim=args.claim,
++                                      record_path=args.record, subject=args.subject,
++                                      topic=args.topic, kind=args.kind,
++                                      deliver=not args.no_deliver)
++        if args.outbox_action == "resume":
++            return outbox.resume_outbox(workspace, budget=args.budget)
++        return outbox.retry_intent(workspace, args.key)
++
++    return _dispatch_workspace(f"outbox-{args.outbox_action}", action, as_json,
++                               outbox.OPERATOR_ACTION_CODES)
++
++
+ #: SAIPEN's project-memory layout. It lives in this operator entrypoint and
+ #: never in the library: ``sailang``/``saimail`` stay unable to name SAIPEN
+ #: memory (the I1 structural test), and the operator's invocation is what points
+@@ -737,6 +766,34 @@
+     custody_migrate_p.add_argument("--workspace", required=True)
+     custody_migrate_p.add_argument("--json", action="store_true", dest="sub_json")
+ 
++    outbox_p = sub.add_parser(
++        "outbox", help="durable idempotent sends that survive crashes and retries (V6-05)")
++    outbox_sub = outbox_p.add_subparsers(dest="outbox_action", required=True)
++    outbox_send_p = outbox_sub.add_parser(
++        "send", help="record one send under an idempotency key, then seal and deliver it once")
++    outbox_send_p.add_argument("--to", required=True, help="registered recipient alias")
++    outbox_send_p.add_argument("--key", required=True,
++                               help="idempotency key: the same key never sends twice")
++    outbox_body = outbox_send_p.add_mutually_exclusive_group(required=True)
++    outbox_body.add_argument("--claim", default=None, help="one line of operator text")
++    outbox_body.add_argument("--record", default=None, help="canonical SAILANG record file")
++    outbox_send_p.add_argument("--subject", default="local-message")
++    outbox_send_p.add_argument("--topic", default="local-message")
++    outbox_send_p.add_argument("--kind", default="PERSONAL_MESSAGE")
++    outbox_send_p.add_argument("--no-deliver", action="store_true",
++                               help="record and seal only; a later resume delivers")
++    outbox_resume_p = outbox_sub.add_parser(
++        "resume", help="advance due pending intents; a replay is never a second message")
++    outbox_resume_p.add_argument("--budget", type=int, default=25)
++    outbox_retry_p = outbox_sub.add_parser(
++        "retry", help="explicitly re-arm one FAILED intent and attempt it once")
++    outbox_retry_p.add_argument("--key", required=True)
++    outbox_status_p = outbox_sub.add_parser(
++        "status", help="keyless, plaintext-free outbox health")
++    for outbox_action_p in (outbox_send_p, outbox_resume_p, outbox_retry_p, outbox_status_p):
++        outbox_action_p.add_argument("--workspace", required=True)
++        outbox_action_p.add_argument("--json", action="store_true", dest="sub_json")
++
+     saipen_p = sub.add_parser(
+         "saipen", help="bind to the enclosing SAIPEN project and cite its LOG (spec/04 S2)")
+     saipen_sub = saipen_p.add_subparsers(dest="saipen_action", required=True)
+@@ -846,6 +903,8 @@
+             return _cmd_custody(args, as_json)
+         if args.subcommand == "saipen":
+             return _cmd_saipen(args, as_json)
++        if args.subcommand == "outbox":
++            return _cmd_outbox(args, as_json)
+         if args.subcommand == "acceptance":
+             return _cmd_acceptance(args, as_json)
+         parser.error(f"unknown subcommand {args.subcommand!r}")

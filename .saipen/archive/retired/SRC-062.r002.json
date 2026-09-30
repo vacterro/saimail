@@ -1,0 +1,19 @@
+{
+  "clauses": {
+    "SRC-062:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "[P1] [CORE-001] sailang/frame.py::Batch.parse + sailang/__init__.py exports + saimail/acceptance.py::receive\nREPAIR: make receiver acceptance a required capability for raw-wire binding rather than a convention. Remove or internalize the public `Batch.parse(text, Profile)` binding route, or require an opaque accepted-profile token/capability minted only by ProfileRegistry.resolve/receive. Producer-side Profile construction may remain public, but possession of a Profile alone must not authorize decoding untrusted external wire into TriageFrame/TriageView. Preserve the existing canonical frame/record ABI and avoid documentation-only enforcement.\nVERIFY: add an exported-API regression that builds an unaccepted hostile Profile plus valid wire and proves every normal public route refuses to produce a bound/decodeable TriageView until the receiver registry accepts that profile. Explicitly cover `sailang.Batch`, package exports, and any compatibility parser retained after repair. Existing profile-acceptance, frame, record, and semantic ABI tests must remain green."
+    },
+    "SRC-062:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "[P1] [CORE-002] saimail/envelope.py::VerifiedEnvelope / verify / open\nREPAIR: make VerifiedEnvelope unforgeable through the normal public API. Use a module-private sentinel/capability checked during construction and minted exclusively by successful verify(), or an equivalent private factory/type-state mechanism. Keep open() accepting only genuinely verification-produced state. Do not silently reclassify invalid signatures as decryptable data, and preserve current wire format unless a separate versioned change requires otherwise.\nVERIFY: add a regression that corrupts a valid signature, confirms verify() fails, then attempts direct/manual VerifiedEnvelope construction and proves open() cannot decrypt through it. Also verify successful parse -> verify -> open still round-trips and the complete tests/test_senv_container.py suite remains green."
+    }
+  },
+  "derived_at": "2026-09-20T13:02:21Z",
+  "derived_from": "SRC-062",
+  "interpretation_revision": 2,
+  "schema_version": 1,
+  "source_sha256": "aacdb343e0b9ae5d21a6783e10e54ddacb6448081d6ec06ca937a6a7990ba028"
+}

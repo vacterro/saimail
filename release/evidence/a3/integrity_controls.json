@@ -1,0 +1,61 @@
+{
+  "candidate": {
+    "publication_status": "NOT_PUBLISHED",
+    "version": "0.0.2a3",
+    "wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+    "wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc"
+  },
+  "created_utc": "2026-09-23T05:01:21Z",
+  "failures": [],
+  "frozen_candidate_untouched": true,
+  "integrity": {
+    "candidate_version": "0.0.2a3",
+    "checks": {
+      "checksums_ok": true,
+      "manifest_ok": true,
+      "version_surface_ok": true,
+      "wheel_content_digest_ok": true,
+      "wheel_hash_ok": true
+    },
+    "failures": [],
+    "schema": "LOCAL_ALPHA_INTEGRITY_1",
+    "status": "PASS",
+    "version": 1,
+    "wheel_filename": "saimail-0.0.2a3-py3-none-any.whl",
+    "wheel_sha256": "6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc"
+  },
+  "red_controls": [
+    {
+      "control": "corrupt_wheel",
+      "expected": "FAIL",
+      "failures": [
+        "wheel sha256 961d0bf2797371e35885bc9b2db852c46116bc4c502ff50cf82811017d89cf9f != manifest 6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc",
+        "checksums mismatch for saimail-0.0.2a3-py3-none-any.whl"
+      ],
+      "observed": "FAIL",
+      "ok": true
+    },
+    {
+      "control": "corrupt_recorded_wheel_hash",
+      "expected": "FAIL",
+      "failures": [
+        "wheel sha256 6427feab24c310184e7fd3ec4bb33dc3f5b1581b00128e2ec08d456fa5aa10cc != manifest 0000000000000000000000000000000000000000000000000000000000000000",
+        "checksums mismatch for local_alpha_candidate.json"
+      ],
+      "observed": "FAIL",
+      "ok": true
+    },
+    {
+      "control": "corrupt_checksum_entry",
+      "expected": "FAIL",
+      "failures": [
+        "checksums mismatch for README-LOCAL-ALPHA.md"
+      ],
+      "observed": "FAIL",
+      "ok": true
+    }
+  ],
+  "schema": "SAIMAIL_D3_RED_CONTROLS_1",
+  "status": "PASS",
+  "version": 1
+}

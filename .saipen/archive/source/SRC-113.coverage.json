@@ -1,0 +1,77 @@
+{
+  "requirements": {
+    "SRC-113:R001": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "VERIFIED",
+      "evidence": ".saipen/evidence/T-147-public-recipient-management/saifren-availability.json",
+      "text": "Do not fabricate participants and do not count:",
+      "verification": ".saipen/evidence/T-147-public-recipient-management/native-review.json",
+      "work": "T-147"
+    },
+    "SRC-113:R002": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "VERIFIED",
+      "evidence": "lab/analysis/public_recipient_management_T147.md",
+      "text": "Do not block the roadmap waiting for participants.",
+      "verification": "E-2188",
+      "work": "T-147"
+    },
+    "SRC-113:R003": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "VERIFIED",
+      "evidence": ".saipen/evidence/T-147-public-recipient-management/oracle-verified.json",
+      "text": "SAIMAIL must work reliably.",
+      "verification": ".saipen/evidence/T-147-public-recipient-management/full.xml",
+      "work": "T-147"
+    },
+    "SRC-113:R004": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "VERIFIED",
+      "evidence": "lab/analysis/public_recipient_management_T147.md",
+      "text": "Never let the experiment block useful product development.",
+      "verification": "E-2188",
+      "work": "T-147"
+    },
+    "SRC-113:R005": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": ".saipen/evidence/T-147-public-recipient-management/saifren-availability.json",
+      "text": "Count no fabricated participants, same-session labels, scripted self-review, duplicated context, routing aliases or synthetic study evidence; use SAIFREN only with actual separate execution/context and independent SAIMAIL behavior.",
+      "verification": ".saipen/evidence/T-147-public-recipient-management/native-review.json",
+      "work": "T-147"
+    },
+    "SRC-113:R006": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "lab/analysis/public_recipient_management_T147.md",
+      "text": "If qualifying SAIFREN study behavior is unavailable, record unavailable or not run and continue normal SAIMAIL product work without waiting for participants.",
+      "verification": "E-2188",
+      "work": "T-147"
+    },
+    "SRC-113:R007": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": ".saipen/evidence/T-147-public-recipient-management/oracle-verified.json",
+      "text": "Prioritize reliable SAIMAIL product functionality, using genuine SAIFREN peers when available and keeping peer-dependent evidence honest.",
+      "verification": ".saipen/evidence/T-147-public-recipient-management/full.xml",
+      "work": "T-147"
+    },
+    "SRC-113:R008": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "lab/analysis/public_recipient_management_T147.md",
+      "text": "Never let the optional real-use experiment block useful product development.",
+      "verification": "E-2188",
+      "work": "T-147"
+    }
+  },
+  "schema_version": 1
+}

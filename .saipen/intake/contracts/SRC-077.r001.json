@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-077:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Execute Roadmap v3 gate V3-01 LOCAL KEY-AT-REST CUSTODY DECISION per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260920_2202.md"
+    }
+  },
+  "derived_at": "2026-09-20T19:22:22Z",
+  "derived_from": "SRC-077",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "3b96d859aa0f228f8280a845499b30d447b2c3d91738e0426e93314429c0a1f7"
+}

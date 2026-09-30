@@ -1,0 +1,557 @@
+{
+  "authority": "EXPERIMENT_DATA",
+  "is_not": [
+    "CONSENSUS",
+    "TRUTH",
+    "PROTOCOL_CHANGE",
+    "USER_INTENT"
+  ],
+  "note": "Live output is experiment data. It is not consensus, not truth, not a protocol change and not user intent. Disagreement between agents is preserved per call. Reasoning traces are dropped before storage.",
+  "pilot_version": "PROJECT-CORPUS-GENERATION-PILOT-1",
+  "status": "COMPLETED",
+  "reason": null,
+  "dry_run": false,
+  "live_registration": {
+    "id": "sha256:5d750a8aaf166a02d7f1bc13c98f7bbde91728dd616083a0d2cde563e1f40b6e",
+    "file": "project_corpus_generation_registration.json",
+    "file_sha256": "sha256:5d750a8aaf166a02d7f1bc13c98f7bbde91728dd616083a0d2cde563e1f40b6e",
+    "registered_under": {
+      "source_receipt": "SRC-052",
+      "ticket": "T-69"
+    }
+  },
+  "b018_input": {
+    "registration_id": "sha256:dfd8b48dded34de8426181f309032da31c86e83f675412add15076fc421a096f",
+    "build_id": "sha256:0e05460aae1645b6bdfeec887f02a978a185026422faf74c90238f0938bd4e35",
+    "corpus_id": "sha256:b009bdf3a8efd28f29be76d0dfd9c2809c0e7dd010af8e92c94a97fbeeec19ac",
+    "project_scope": "project:saimail",
+    "artifact_count": 8,
+    "event_count": 5,
+    "built_from_b018_registration_path": "lab/project_corpus_pilot_registration.json",
+    "completeness": "NOT_PROVEN"
+  },
+  "experiment_class": {
+    "rule": "saifren-experiment-class/1",
+    "experiment_class": "SAIFREN_EXTERNAL_COMPARATOR",
+    "combo": "SAIFREN",
+    "observed_combo_members": [
+      "deepseek/deepseek-v4-flash"
+    ],
+    "participating_combo_members": [
+      "deepseek/deepseek-v4-flash"
+    ],
+    "external_comparators": [
+      "MiniMaxAI/MiniMax-M3"
+    ],
+    "distinct_reported_models": [
+      "MiniMaxAI/MiniMax-M3",
+      "deepseek/deepseek-v4-flash"
+    ],
+    "roster_status": "NOT_OBSERVABLE",
+    "roster_status_basis": "ROSTER_NOT_EXPOSED",
+    "membership_evidence_basis": "CALL_RECORDS",
+    "membership_evidence": {
+      "alias_calls": {
+        "deepseek/deepseek-v4-flash": [
+          "fadd41abba2b",
+          "dca19c06636e"
+        ]
+      },
+      "membership_probes": [
+        "deepseek/deepseek-v4-flash"
+      ],
+      "alias_only_answers": 0
+    },
+    "unattributed_models": [],
+    "cross_member_claim": false,
+    "note": "Membership is sampled through the combo alias, never read from a roster and never inferred from catalog eligibility. OBSERVED_COMBO_MEMBERS is what this run saw, not what SAIFREN contains. EXTERNAL_COMPARATORS are live catalog models answering beside SAIFREN for contrast; nothing in the run shows they are SAIFREN members."
+  },
+  "harness": {
+    "gateway": "9router",
+    "base_url": "http://127.0.0.1:20128",
+    "model_alias": "SAIFREN",
+    "protocol_version": "SAILANG frame v4 / SAIB4",
+    "max_tokens": 2048,
+    "timeout_s": 120,
+    "replicates": [
+      1,
+      2
+    ],
+    "pilot_version": "PROJECT-CORPUS-GENERATION-PILOT-1"
+  },
+  "credential": {
+    "handle": "credential://9router/sairoute",
+    "source": "store",
+    "backend": "keyring.backends.Windows.WinVaultKeyring"
+  },
+  "population": {
+    "combo": "SAIFREN",
+    "membership_observed_at": "2026-09-19T22:06:41Z",
+    "membership_source": "COMBO_ALIAS_SAMPLE",
+    "roster_status": "ROSTER_NOT_EXPOSED",
+    "observed_members": [
+      "deepseek/deepseek-v4-flash"
+    ],
+    "membership_digest": "sha256:6d0dcdfbe2d7fa1891744b4d7cb01c9523959bd052f9866984a7020c6f422f68",
+    "catalog_size": 1584,
+    "catalog_digest": "sha256:ecc32d3c1890526d4e9d24d345575f61768a200be9e0262c8aedfb2a22b5be9a",
+    "discovery": {
+      "surface": "/v1/models",
+      "combos_listed": [
+        "SAIFREN",
+        "SAIOPP"
+      ],
+      "roster_field_present": false,
+      "alias_transport_errors": [
+        {
+          "requested": "SAIFREN",
+          "error_class": "EmptyOutput",
+          "error": "no content; finish_reason=length"
+        }
+      ]
+    },
+    "selection_rule": "saifren-selection/1",
+    "replacement_policy": "saifren-replacement/1",
+    "membership_probes_used": 2,
+    "selection_probes_used": 4,
+    "participants": [
+      {
+        "role": "A",
+        "requested": "SAIFREN",
+        "reported_model": "deepseek/deepseek-v4-flash",
+        "member_status": "OBSERVED_COMBO_MEMBER",
+        "source": "COMBO_ALIAS",
+        "provider": null,
+        "catalog_namespace": null
+      },
+      {
+        "role": "B",
+        "requested": "goat/MiniMaxAI/MiniMax-M3",
+        "reported_model": "MiniMaxAI/MiniMax-M3",
+        "member_status": "NOT_PROVEN_COMBO_MEMBER",
+        "source": "CATALOG_ELIGIBLE",
+        "provider": null,
+        "catalog_namespace": "goat"
+      }
+    ],
+    "rejected_candidates": [
+      {
+        "requested": "ag/gemini-3-flash",
+        "namespace": "ag",
+        "reason": "TRANSPORT",
+        "error_class": "HTTPError",
+        "error": "HTTP 503 {\"error\":{\"message\":\"[antigravity/gemini-3-flash] [429]: {\\n  \\\"error\\\": {\\n    \\\"code\\\": 429,\\n    \\\"message\\\": \\\"Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 80h34m10s.\\\",\\n    \\\"s"
+      },
+      {
+        "requested": "bai/gemini-3-flash",
+        "namespace": "bai",
+        "reason": "TRANSPORT",
+        "error_class": "HTTPError",
+        "error": "HTTP 503 {\"error\":{\"message\":\"[openai-compatible-chat-d628e270-17dc-4f52-b220-9fe83f38dc66/gemini-3-flash] [403]: {\\\"error\\\":{\\\"code\\\":\\\"access_denied\\\",\\\"message\\\":\\\"Access restricted. Deposit required to unlock premium models. (request id"
+      },
+      {
+        "requested": "cl/cline-free/muse-spark-1.3-contributor",
+        "namespace": "cl",
+        "reason": "TRANSPORT",
+        "error_class": "HTTPError",
+        "error": "HTTP 503 {\"error\":{\"message\":\"[cline/cline-free/muse-spark-1.3-contributor] [500]: {\\\"error\\\":\\\"empty response content\\\",\\\"success\\\":false}\\n (reset after 28s)\"}}"
+      }
+    ],
+    "heterogeneous_participants": true,
+    "notes": [
+      "ALIAS_SAMPLE_IS_NOT_A_ROSTER: 2 call(s) to the alias observed 1 distinct member(s); a sample of this size cannot tell a one-member combo from a combo with a deterministic primary"
+    ]
+  },
+  "participants_frozen": [
+    {
+      "role": "A",
+      "requested": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "member_status": "OBSERVED_COMBO_MEMBER",
+      "source": "COMBO_ALIAS",
+      "provider": null
+    },
+    {
+      "role": "B",
+      "requested": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "member_status": "NOT_PROVEN_COMBO_MEMBER",
+      "source": "CATALOG_ELIGIBLE",
+      "provider": null
+    }
+  ],
+  "role_assignment": {
+    "R1": {
+      "generator": "A",
+      "reviewer": "B"
+    },
+    "R2": {
+      "generator": "B",
+      "reviewer": "A"
+    }
+  },
+  "started": "2026-09-19T22:06:41Z",
+  "stopped": null,
+  "call_budget": {
+    "declared_max": 12,
+    "planned_calls_max": 12,
+    "discovery_max": 8,
+    "real_generation_max": 2,
+    "real_review_max": 2,
+    "spent_total": 8,
+    "spent_discovery": 6,
+    "spent_generation": 2,
+    "spent_review": 0,
+    "retries": 0,
+    "repair_calls": 0
+  },
+  "replicates": [
+    {
+      "unit_id": "R1",
+      "replicate": 1,
+      "generator": {
+        "role": "A",
+        "requested_model": "SAIFREN",
+        "reported_model": "deepseek/deepseek-v4-flash",
+        "transport_status": "OK",
+        "parse_status": "SCHEMA_ERROR",
+        "calls": 1
+      },
+      "reviewer": {
+        "role": "B",
+        "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+        "reported_model": null,
+        "transport_status": "NOT_ATTEMPTED",
+        "parse_status": "NOT_ATTEMPTED"
+      },
+      "same_reported_model_pair": false,
+      "same_reported_model_label": null,
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "SCHEMA_ERROR",
+        "GENERATOR_RESULT": "ERROR",
+        "ALLY1_STRUCTURAL_GATE": "NOT_REACHED",
+        "CORPUS_REF_GATE": "NOT_REACHED",
+        "EVENT_FLOOR_GATE": "NOT_REACHED",
+        "EVIDENCE_RESOLUTION": "NOT_REACHED",
+        "REVIEWER_TRANSPORT": "NOT_REACHED",
+        "REVIEWER_PARSE": "NOT_REACHED",
+        "SEMANTIC_REVIEW": "NOT_REACHED",
+        "FINAL_GATE_OUTCOME": "ERROR"
+      },
+      "outcome": {
+        "status": "ERROR",
+        "code": "ALLY_GEN_PROVIDER_ERROR"
+      },
+      "error": "ALLY_LAB_BAD_JSON",
+      "reviewer_calls": 0,
+      "candidate": null,
+      "review": null,
+      "outside_corpus_refs": [],
+      "refs_confined_to_corpus": null,
+      "observed_scope_exact": null
+    },
+    {
+      "unit_id": "R2",
+      "replicate": 2,
+      "generator": {
+        "role": "B",
+        "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+        "reported_model": "MiniMaxAI/MiniMax-M3",
+        "transport_status": "OK",
+        "parse_status": "OK",
+        "calls": 1
+      },
+      "reviewer": {
+        "role": "A",
+        "requested_model": "SAIFREN",
+        "reported_model": null,
+        "transport_status": "NOT_ATTEMPTED",
+        "parse_status": "NOT_ATTEMPTED"
+      },
+      "same_reported_model_pair": false,
+      "same_reported_model_label": null,
+      "stages": {
+        "GENERATOR_TRANSPORT": "OK",
+        "GENERATOR_PARSE": "OK",
+        "GENERATOR_RESULT": "NO_ADVICE",
+        "ALLY1_STRUCTURAL_GATE": "NOT_REACHED",
+        "CORPUS_REF_GATE": "NOT_REACHED",
+        "EVENT_FLOOR_GATE": "NOT_REACHED",
+        "EVIDENCE_RESOLUTION": "NOT_REACHED",
+        "REVIEWER_TRANSPORT": "NOT_REACHED",
+        "REVIEWER_PARSE": "NOT_REACHED",
+        "SEMANTIC_REVIEW": "SKIPPED",
+        "FINAL_GATE_OUTCOME": "NO_ADVICE"
+      },
+      "outcome": {
+        "status": "NO_ADVICE",
+        "code": null
+      },
+      "error": null,
+      "reviewer_calls": 0,
+      "candidate": null,
+      "review": null,
+      "outside_corpus_refs": [],
+      "refs_confined_to_corpus": null,
+      "observed_scope_exact": null
+    }
+  ],
+  "dry_run_proofs": [],
+  "calls": [
+    {
+      "call_id": "fadd41abba2b",
+      "unit_id": "DISCOVERY.probe",
+      "replicate": 0,
+      "role": "DISCOVERY",
+      "function": "DISCOVERY",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "timestamp": "2026-09-19T22:07:05Z",
+      "prompt_sha256": "ef7e7ff96d04cdcdb9a405d5319bdc1b52adabc168eea9179dfc1352aad79231",
+      "visible_output_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "visible_output_bytes": 2,
+      "status": "OK",
+      "error_class": null,
+      "http_status": 200,
+      "latency_s": 2.05,
+      "usage": {
+        "prompt_tokens": 2789,
+        "completion_tokens": 2,
+        "total_tokens": 2791
+      },
+      "local_estimated_input_tokens": 7,
+      "gateway_reported_prompt_tokens": 2789,
+      "prompt_token_delta": null
+    },
+    {
+      "call_id": "62faf316ecb0",
+      "unit_id": "DISCOVERY.probe",
+      "replicate": 0,
+      "role": "DISCOVERY",
+      "function": "DISCOVERY",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "timestamp": "2026-09-19T22:07:07Z",
+      "prompt_sha256": "ef7e7ff96d04cdcdb9a405d5319bdc1b52adabc168eea9179dfc1352aad79231",
+      "visible_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "visible_output_bytes": 0,
+      "status": "ERROR",
+      "error_class": "EmptyOutput",
+      "http_status": 200,
+      "latency_s": 1.63,
+      "usage": {
+        "prompt_tokens": 2789,
+        "completion_tokens": 16,
+        "total_tokens": 2805
+      },
+      "local_estimated_input_tokens": 7,
+      "gateway_reported_prompt_tokens": 2789,
+      "prompt_token_delta": null
+    },
+    {
+      "call_id": "93ab12871a8c",
+      "unit_id": "DISCOVERY.probe",
+      "replicate": 0,
+      "role": "DISCOVERY",
+      "function": "DISCOVERY",
+      "requested_model": "ag/gemini-3-flash",
+      "reported_model": null,
+      "provider": null,
+      "provider_basis": null,
+      "timestamp": "2026-09-19T22:07:24Z",
+      "prompt_sha256": "ef7e7ff96d04cdcdb9a405d5319bdc1b52adabc168eea9179dfc1352aad79231",
+      "visible_output_sha256": null,
+      "visible_output_bytes": null,
+      "status": "ERROR",
+      "error_class": "HTTPError",
+      "http_status": 503,
+      "latency_s": 16.82,
+      "usage": {},
+      "local_estimated_input_tokens": 7,
+      "gateway_reported_prompt_tokens": null,
+      "prompt_token_delta": null
+    },
+    {
+      "call_id": "6885a04d0bbf",
+      "unit_id": "DISCOVERY.probe",
+      "replicate": 0,
+      "role": "DISCOVERY",
+      "function": "DISCOVERY",
+      "requested_model": "bai/gemini-3-flash",
+      "reported_model": null,
+      "provider": null,
+      "provider_basis": null,
+      "timestamp": "2026-09-19T22:07:27Z",
+      "prompt_sha256": "ef7e7ff96d04cdcdb9a405d5319bdc1b52adabc168eea9179dfc1352aad79231",
+      "visible_output_sha256": null,
+      "visible_output_bytes": null,
+      "status": "ERROR",
+      "error_class": "HTTPError",
+      "http_status": 503,
+      "latency_s": 3.58,
+      "usage": {},
+      "local_estimated_input_tokens": 7,
+      "gateway_reported_prompt_tokens": null,
+      "prompt_token_delta": null
+    },
+    {
+      "call_id": "daf4541542a7",
+      "unit_id": "DISCOVERY.probe",
+      "replicate": 0,
+      "role": "DISCOVERY",
+      "function": "DISCOVERY",
+      "requested_model": "cl/cline-free/muse-spark-1.3-contributor",
+      "reported_model": null,
+      "provider": null,
+      "provider_basis": null,
+      "timestamp": "2026-09-19T22:07:31Z",
+      "prompt_sha256": "ef7e7ff96d04cdcdb9a405d5319bdc1b52adabc168eea9179dfc1352aad79231",
+      "visible_output_sha256": null,
+      "visible_output_bytes": null,
+      "status": "ERROR",
+      "error_class": "HTTPError",
+      "http_status": 503,
+      "latency_s": 3.76,
+      "usage": {},
+      "local_estimated_input_tokens": 7,
+      "gateway_reported_prompt_tokens": null,
+      "prompt_token_delta": null
+    },
+    {
+      "call_id": "892ebf2ba5d7",
+      "unit_id": "DISCOVERY.probe",
+      "replicate": 0,
+      "role": "DISCOVERY",
+      "function": "DISCOVERY",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "timestamp": "2026-09-19T22:07:34Z",
+      "prompt_sha256": "ef7e7ff96d04cdcdb9a405d5319bdc1b52adabc168eea9179dfc1352aad79231",
+      "visible_output_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "visible_output_bytes": 2,
+      "status": "OK",
+      "error_class": null,
+      "http_status": 200,
+      "latency_s": 2.62,
+      "usage": {
+        "prompt_tokens": 2896,
+        "completion_tokens": 2,
+        "total_tokens": 2898
+      },
+      "local_estimated_input_tokens": 7,
+      "gateway_reported_prompt_tokens": 2896,
+      "prompt_token_delta": null
+    },
+    {
+      "call_id": "dca19c06636e",
+      "unit_id": "R1",
+      "replicate": 1,
+      "role": "A",
+      "function": "GENERATOR",
+      "requested_model": "SAIFREN",
+      "reported_model": "deepseek/deepseek-v4-flash",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "timestamp": "2026-09-19T22:07:34Z",
+      "prompt_sha256": "e83e1d8fd8d62f9966bbf06291f927e532698a9fd678450ac1d81a09f2f9d1e6",
+      "visible_output_sha256": "68caece7506f0867d65ae9c136dfd866eb962a45be81e8cc25245dd1a707da76",
+      "visible_output_bytes": 3218,
+      "status": "OK",
+      "error_class": null,
+      "http_status": 200,
+      "latency_s": 9.64,
+      "finish_reason": "length",
+      "output_truncated": false,
+      "usage": {
+        "prompt_tokens": 12065,
+        "completion_tokens": 2048,
+        "total_tokens": 14113
+      },
+      "local_estimated_input_tokens": 7923,
+      "gateway_reported_prompt_tokens": 12065,
+      "prompt_token_delta": 4142
+    },
+    {
+      "call_id": "7976a958a3f0",
+      "unit_id": "R2",
+      "replicate": 2,
+      "role": "B",
+      "function": "GENERATOR",
+      "requested_model": "goat/MiniMaxAI/MiniMax-M3",
+      "reported_model": "MiniMaxAI/MiniMax-M3",
+      "provider": null,
+      "provider_basis": "NOT_EXPOSED",
+      "timestamp": "2026-09-19T22:07:43Z",
+      "prompt_sha256": "e83e1d8fd8d62f9966bbf06291f927e532698a9fd678450ac1d81a09f2f9d1e6",
+      "visible_output_sha256": "82013c37e6f199b6c8dce378ffc7b5b35bd0ee3888c958bbfd08d0010346d070",
+      "visible_output_bytes": 22,
+      "status": "OK",
+      "error_class": null,
+      "http_status": 200,
+      "latency_s": 1.21,
+      "finish_reason": "stop",
+      "output_truncated": false,
+      "usage": {
+        "prompt_tokens": 10973,
+        "completion_tokens": 8,
+        "total_tokens": 10981
+      },
+      "local_estimated_input_tokens": 7923,
+      "gateway_reported_prompt_tokens": 10973,
+      "prompt_token_delta": 3050
+    }
+  ],
+  "hidden_context_observation": {
+    "measured_calls": 2,
+    "delta_min": 3050,
+    "delta_max": 4142,
+    "statement": "a positive delta is reported only as opaque/hidden upstream context or accounting not represented in the local prompt; its contents are never inferred and accessible chain-of-thought is never claimed"
+  },
+  "privacy": {
+    "local_raw_generator_output_persistence": false,
+    "local_reviewer_rationale_persistence": false,
+    "local_prompt_persistence": false,
+    "provider_side_retention": "NOT_VERIFIED_BY_SAIMAIL",
+    "provider_side_training_use": "NOT_VERIFIED_BY_SAIMAIL",
+    "external_inference_privacy_equals_local_non_persistence": false,
+    "in_process_ephemeral_equals_cryptographic_memory_erasure": false
+  },
+  "plaintext_retention": {
+    "prompt": false,
+    "generator_output": false,
+    "candidate_prose": false,
+    "reviewer_rationale": false,
+    "provider_error_bodies": false,
+    "discovery_probe_output": false,
+    "only_hashes_lengths_and_metadata": true
+  },
+  "side_effects": {
+    "reviewed_ally_to_human_private_calls": 0,
+    "hlet1_created": 0,
+    "henv1_created": 0,
+    "human_private_store_writes": 0,
+    "attention_admissions": 0,
+    "operator_presentation_of_generated_advice": 0
+  },
+  "limits": [
+    "n=1 generation sample per role assignment is not a model property",
+    "no model ranking and no winner exists in this experiment",
+    "APPROVED means only one actual reviewer invocation returned PASS on all frozen B-016 dimensions for that exact candidate/corpus",
+    "EVENT_REF is caller-declared, not truth; corpus completeness is NOT_PROVEN",
+    "a reviewer PASS is not truth and NO_ADVICE is a successful result"
+  ],
+  "ephemeral_scrub": {
+    "runner_retained_records": 2,
+    "prompt_fields_nulled": true,
+    "output_fields_nulled": true,
+    "error_fields_nulled": true,
+    "raw_text_dropped_after_stage": true
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "clauses": {
+    "SRC-055:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET A: freeze the strict-schema observability contract and exactly one immutable registration over exact B-018 identities and T-69 requested routes; preserve strict acceptance, privacy, comparability and no retry or repair."
+    },
+    "SRC-055:R002": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET B: implement LAB-only parse-shape telemetry, recursive privacy tripwires and offline dry controls; change no B-016/B-017/B-018 semantics or T-70 correction; preserve all historical T-69 hashes."
+    },
+    "SRC-055:R003": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "TARGET C: one bounded live attempt with two role-swapped assignments and fixed T-69 routes, then STOP; no retry, repair, advice presentation, HUMAN_PRIVATE, sealing, storage, attention, T-65/T-34 work, commit/tag/push/publication."
+    },
+    "SRC-055:R004": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Capture exact SCOUT validation baseline; introduce no new validation failure; preserve and disclose DEBT-000066 as CURRENT_FAIL CARRIED_DEBT_UNCHANGED when exact carried failures remain; do not repair debt or rewrite receipts."
+    }
+  },
+  "derived_at": "2026-09-19T23:29:20Z",
+  "derived_from": "SRC-055",
+  "interpretation_revision": 4,
+  "schema_version": 1,
+  "source_sha256": "f1e5d8ab70d60f09430ecd9445e87f102300d63c949beee0bce489a29da7e636"
+}

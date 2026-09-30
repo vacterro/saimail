@@ -1,0 +1,29 @@
+{
+  "all_pass": true,
+  "checks": {
+    "budget_within_ceiling": true,
+    "call_records_carry_no_raw_field": true,
+    "dry_implementation_matches": true,
+    "dry_schema_valid": true,
+    "generator_bodies_carry_4096": true,
+    "implementation_matches": true,
+    "live_and_dry_agree": true,
+    "live_rebuilds_exact_b018": true,
+    "live_registration_bound": true,
+    "live_schema_valid": true,
+    "marker_bound": true,
+    "no_corpus_content": true,
+    "no_full_output_plaintext_field": true,
+    "no_prompt_text": true,
+    "no_retry_repair": true,
+    "per_function_budgets_correct": true,
+    "privacy_all_false": true,
+    "registration_bytes": true,
+    "report_is_deterministic_render": true,
+    "report_matches_render": true,
+    "request_body_evidence_present": true,
+    "response_format_absent": true,
+    "side_effects_zero": true,
+    "token_budgets_exact": true
+  }
+}

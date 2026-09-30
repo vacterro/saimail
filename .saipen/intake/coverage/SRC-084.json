@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-084:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-96 closed with verification evidence in LOG: verify -> PASS [target: T-96] conf: high -- 2307 tests passed, 0 failed, 0 errors, 0 skipped; focused 22; dry controls A-L PASS; live terminal REVIEWER_BAD_JSON plus NO_ADVICE; 5 of 6 calls; retries 0; repairs 0; replacements 0; fallbacks 0; ruff E4 E7 E9 F clean on touched tests; frozen 0.0.2a2 and 0.0.2a1 byte-identical; FG-04B artifacts byte-identical; SAIPEN core inherited 3 problems 21 warnin",
+      "text": "Execute optional research gate V2-03 reviewer output-format bounded experiment per V:\\_TEMP_\\fastprompter_drag\\SAIMAIL_20260921_0111.md",
+      "verification": "the Work this request created reached its own verification gate; see the T-96 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-96"
+    }
+  },
+  "schema_version": 1
+}

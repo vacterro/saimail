@@ -1,0 +1,31 @@
+{
+  "calls": 4,
+  "claim_boundary": "Coordination and continuation in one controlled live example; no model-weight improvement claim.",
+  "delivery": "DELIVERED",
+  "evidence_rechecked": true,
+  "mechanical_validation": "PASS",
+  "observed_models": [
+    "stealth/space-bunny-alpha"
+  ],
+  "receiver_metrics": {
+    "basis": "EXPLICIT_RECEIVER_DECISIONS",
+    "decisions": {
+      "ACCEPTED": 0,
+      "DECLINED": 0,
+      "DEFERRED": 0,
+      "PENDING": 0,
+      "RESOLVED": 1,
+      "STALE": 0
+    },
+    "model_improvement_proven": false,
+    "resolved_fraction": 1.0,
+    "retained": 1,
+    "reviewed": 1
+  },
+  "receiver_model_verdict": "UNVERIFIED",
+  "requested_route": "SAIFREN",
+  "schema": "SAIMAIL_INSTITUTION_EXPERIMENT_1",
+  "status": "LIVE_CYCLE_COMPLETED",
+  "successor_discovered_reserve": true,
+  "transport_failures": 1
+}

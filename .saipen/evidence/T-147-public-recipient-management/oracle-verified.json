@@ -1,0 +1,45 @@
+{
+  "schema": "T147_BOUND_ORACLE_1",
+  "criteria_sha256": {
+    "tests/test_public_recipient_management.py": "fcace0d75efff4ad0e03431fc6a7f8bd2a99acb22c2543bac75b6296050e1bdc",
+    "pyproject.toml": "1c4604335ed3d5e6826c9448fa93205d882eb1fab6977814ed49967c0a69d1db"
+  },
+  "subjects": {
+    ".saipen\\evidence\\T-147-public-recipient-management\\before\\saimail_local.py": "fde32d57108d18a30de8aceda58a43b44d8e828a979ad12290639a0bad05cde1",
+    "saimail_local.py": "d14ab45a844dc480e506647428a75630d4aab1d71869770170bc89ae7eb41794",
+    "saimail\\workspace.py": "93ac851e04fbd6e03c01ed35c321f453d11dc90200cfb58d2d9313a36744fbe6"
+  },
+  "counts": {
+    "restored-before.xml": {
+      "tests": 22,
+      "failures": 20,
+      "errors": 0,
+      "skipped": 0
+    },
+    "focused.xml": {
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "regression-workspace.xml": {
+      "tests": 68,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "regression-integration.xml": {
+      "tests": 203,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "full.xml": {
+      "tests": 2921,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "state": "PASS"
+}
