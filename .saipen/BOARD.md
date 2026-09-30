@@ -1,12 +1,12 @@
 # Board
 
 ## DOING
-- [/] T-149 [P1] commit verified SAIMAIL working tree under explicit user authorization; record SRC receipt; validate CURRENT_PASS; idle | verify: the requested change is present and demonstrated against the user own description of it | user_explicit: true | source_receipts: SRC-114,SRC-115 | owner: saipen-cli | claim_time: 2026-09-30T18:01:21Z
 
 
 ## TODO
 
 ## DONE
+- [x] T-149 [P1] commit verified SAIMAIL working tree under explicit user authorization; record SRC receipt; validate CURRENT_PASS; idle | verify: the requested change is present and demonstrated against the user own description of it | user_explicit: true | source_receipts: SRC-114,SRC-115 | owner: saipen-cli | claim_time: 2026-09-30T18:13:57Z | closure_mode: own_patch
 - [x] T-148 [P1] Serialize public recipient registration so concurrent additions cannot lose mappings or silently replace an alias | regression: required | verify: Controlled concurrent API and fresh-process registrations preserve distinct aliases and produce one winner plus RECIPIENT_CONFLICT for competing identities; locked custody and no foreign/message mutations remain valid; existing regression suites pass. | owner: saipen-cli | claim_time: 2026-09-30T17:35:44Z | closure_mode: own_patch
 - [x] T-147 [P1] Do not wait for or invent peer participants. | verify: the requested change is present and demonstrated against the user own description of it | user_explicit: true | source_receipts: SRC-112,SRC-113 | owner: saipen-cli | claim_time: 2026-09-30T14:42:23Z | closure_mode: own_patch
 - [x] T-145 [P2] Run the existing bounded SAIFREN narrow laboratory sample after T-144 recorder closure; retain dry/live route, handoff and negative results without counting scripted lab roles as T142 independent real-use behavior. | needs: T-144 | verify: python lab/saifren_run.py --sample --dry-run --out lab/out/SAIFREN_T145; then the same preregistered sample live with its own bounded call cap; inspect actual artifacts and report failures/uncertainty honestly. | source_receipts: SRC-111 | owner: saipen-cli | claim_time: 2026-09-30T13:12:36Z | closure_mode: own_patch

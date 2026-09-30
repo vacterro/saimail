@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-114:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-149 closed with verification evidence in LOG: review -> PASS [target: T-149] conf: high -- independent digest review: release/candidates 0.0.2a2+0.0.2a3 all 8 SHA256SUMS entries match CRLF-tolerant recheck (earlier sha256sum -c noise was tool line-ending artifact, files untouched); T-142 pinned evidence digests match SRC-111 pins exactly (registration fec8b990, runtime 451d196); byte-bound sets index==worktree bytes 0 mismatches; unstaged exa",
+      "text": "commit verified SAIMAIL working tree under explicit user authorization; record SRC receipt; validate CURRENT_PASS; idle",
+      "verification": "the Work this request created reached its own verification gate; see the T-149 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-149"
+    }
+  },
+  "schema_version": 1
+}

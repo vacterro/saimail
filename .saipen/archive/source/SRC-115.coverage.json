@@ -1,0 +1,95 @@
+{
+  "requirements": {
+    "SRC-115:R001": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "VERIFIED",
+      "evidence": "E-2219; local-only commit c63a00e; tags only pre-existing v0.0.1; origin/main untouched d2fa09e",
+      "text": "Do not reinterpret it as authorization to:",
+      "verification": "E-2230",
+      "work": "T-149"
+    },
+    "SRC-115:R002": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "VERIFIED",
+      "evidence": "E-2227",
+      "text": "Do not treat the inherited 25 warnings as product blockers. Do not open cleanup Work merely to remove warning counts unless a warning is independently shown to cause an actual SAIMAIL defect.",
+      "verification": "E-2227",
+      "work": "T-149"
+    },
+    "SRC-115:R003": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "VERIFIED",
+      "evidence": "E-2230",
+      "text": "Do not push, tag, or publish.",
+      "verification": "E-2230",
+      "work": "T-149"
+    },
+    "SRC-115:R004": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "VERIFIED",
+      "evidence": "E-2231",
+      "text": "Do not reopen completed tickets just for cosmetic commit structure.",
+      "verification": "E-2232",
+      "work": "T-149"
+    },
+    "SRC-115:R005": {
+      "actionable": false,
+      "class": "context",
+      "disposition": "VERIFIED",
+      "evidence": "E-2232",
+      "text": "Do not invent new Work merely to keep the agent busy.",
+      "verification": "E-2232",
+      "work": "T-149"
+    },
+    "SRC-115:R006": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "SRC-115 receipt (sha256 77771d93eed0b833) + appends/SRC-114.json seq 1 CLARIFICATION projected 5 clauses",
+      "text": "Record the explicit user authorization through the normal SAIPEN source-receipt path.",
+      "verification": "E-2219; E-2220",
+      "work": "T-149"
+    },
+    "SRC-115:R007": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "local commit c63a00e: 1514 SAIMAIL-owned files, +295200/-10601, rename-preserving; origin/main untouched at d2fa09e",
+      "text": "Commit the verified SAIMAIL-owned working-tree changes as a local commit only.",
+      "verification": "E-2223; E-2232 (ship -> local commit only, publish skipped)",
+      "work": "T-149"
+    },
+    "SRC-115:R008": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "RV-000023 PASS_WITH_CARRIED_DEBT via canonical work reverify T-99 before staging",
+      "text": "Run the canonical SAIPEN validation on the verified tree and confirm CURRENT_PASS before committing.",
+      "verification": "saipen validate -> VALID/CURRENT_PASS on the verified tree",
+      "work": "T-149"
+    },
+    "SRC-115:R009": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": ".gitattributes -text byte-bound rules; renormalize 0 mismatches; T-142 digests fec8b990/451d196 verified; SHA256SUMS 8/8 OK",
+      "text": "Preserve historical evidence, rejected candidates, red controls, experiment registrations and T-142/T-146 observations unchanged.",
+      "verification": "E-2225; E-2226 (full python -m pytest -q -> exit 0)",
+      "work": "T-149"
+    },
+    "SRC-115:R010": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": ".saipen/BOARD.md T-146 unchanged: BLOCKED OPTIONAL_STUDY_UNAVAILABLE / UNPROVEN, no participants created",
+      "text": "Keep T-146 blocked as OPTIONAL_STUDY_UNAVAILABLE / UNPROVEN without fabricating participants.",
+      "verification": "E-2229 (review -> PASS, no fabricated participants)",
+      "work": "T-149"
+    }
+  },
+  "schema_version": 1
+}
