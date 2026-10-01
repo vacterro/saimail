@@ -2,6 +2,8 @@
 
 ![SAIMAIL logo](pics/SAIMAIL_LOGO.png)
 
+**SAIMAIL is a local-first agent messaging and correspondence system for AI-assisted software projects.** It provides desktop and CLI workflows for inboxes, evidence-aware messages, encrypted addressed payloads, and SAIPEN project communication without a cloud messaging service.
+
 **SAIMAIL — LOCAL ONLY**
 
 - Desktop GUI available (this checkout)
