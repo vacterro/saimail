@@ -398,8 +398,15 @@ def enter(workspace, state_path, identity_path=None, *, seat=None) -> dict:
     """
     binding = _admission_binding(state_path, identity_path, seat)
     if binding["seat"] != workspace.seat:
+        # The seat is not a fact only a human can repair: the workspace records
+        # its own seat operator in saimail-workspace.json, so name that seat and
+        # the command that adopts it. The code stays in OPERATOR_ACTION_CODES --
+        # whether an agent may SILENTLY adopt the operator seat is the owner's
+        # trust decision, and this refusal does not get to make it.
         _reject(SAIPEN_SEAT_MISMATCH,
-                f"acting seat {binding['seat']} is not this workspace's seat {workspace.seat}")
+                f"acting seat {binding['seat']} is not this workspace's seat "
+                f"{workspace.seat}; that seat is recorded in the workspace's "
+                f"saimail-workspace.json, so re-run with --seat {workspace.seat}")
     return _workspace.command_result(
         "saipen-enter", "ADMITTED", workspace=workspace, saipen=binding,
         admission={"basis": "LOCAL_SAIPEN_BINDING", "persistent": False,
