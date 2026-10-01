@@ -2,6 +2,43 @@
 
 ## Unreleased
 
+- The beacon folder is now swept as a whole (T-155, T-158, T-159, T-160): a new
+  `humbox/**/*.md` that no receipt accounts for fails the suite, identified by its
+  path relative to `humbox/` so a nested file cannot pass on a basename a captured
+  file already bound. No receipt can carry that binding -- the intake grammar has no
+  source-path field -- so captured beacons are bound in `BEACON_BINDINGS` beside
+  the check, and each row is verified against its receipt's own capture digest, so
+  a binding is a fact rather than a claim. Registration is deliberately *not* read
+  out of the BOARD or the journal: those are free text that the protocol is
+  actively pruning, and a sentence naming a file while investigating it used to
+  pass as a capture. The twenty-four pre-intake files that were never captured --
+  ten of which had been passing on nothing but an incidental journal mention --
+  are named in `LEGACY_UNREGISTERED_BEACON` rather than skipped in silence.
+
+- Operator interruption is now a receiver-owned gate, not a sender's prose
+  (T-154, spec/35). One Work produced five letters in 41 minutes -- tentative
+  repair, correction, correction of the correction, retraction, real hard stop --
+  and the existing README and `--help` rule did not stop it, because it was
+  prose. New `saimail/operator_interrupt.py` separates *a message durably
+  exists* from *an operator interruption was presented*. Only
+  `OPERATOR_ACTION_REQUIRED`, `DATA_OR_MONEY_RISK` and
+  `CROSS_PROJECT_CRITICAL_DISCOVERY` may interrupt; a declaration marked
+  unsettled is never admitted; one decision identity gets exactly one
+  interruption, so corrections, retractions, rewordings and split issues
+  supersede rather than add; presentation reuses the existing `human_attention`
+  queue at one per 24h by default with no second scheduler, and `origin` and
+  `presence` are receiver-supplied so a sender can neither declare itself human
+  nor claim presence; active-chat presence keeps an ordinary action request in
+  the chat and an absent signal means `UNKNOWN`, not absent; the visible body is
+  capped at 600 UTF-8 bytes / 4 lines and oversized requests are refused, never
+  truncated. Zero presentations is a successful outcome. Generic human-authored
+  `saimail-local send` is untouched, and the GUI mailbox view is unchanged.
+  Admission also refuses a reclassification of an already-admitted decision
+  (`INTERRUPT_BAD_CLASS`) and a repeated JSON key in the sealed claim, and the
+  pending set is capped at eight waiting decisions: at the cap the next arrival
+  of any class is refused with `PENDING_FULL` and stays durable mail, because
+  evicting one would strand an attention candidate the queue cannot retire.
+
 - Concurrent recipient registration (T-148): an OS lock covers fresh registry
   admission and atomic persistence across API and CLI processes. Distinct
   additions survive and competing identities cannot silently replace an alias.

@@ -114,6 +114,11 @@ def _outbox_engine():
 
     return outbox
 
+def _interrupt_engine():
+    from saimail import operator_interrupt
+
+    return operator_interrupt
+
 
 def _participants_engine():
     from saimail import participants
@@ -420,11 +425,149 @@ def _cmd_send(args, as_json: bool) -> int:
                     engine.BAD_INPUT,
                     "an exact replay takes no new content: drop claim/record")
             return engine.redeliver_message(workspace, args.redeliver)
+        if args.interrupt_class:
+            return _send_operator_interrupt(args, engine, workspace)
+        # Never drop an interruption flag on the floor: a caller who typed
+        # --body means an operator request, and silently sending a plain
+        # message instead would hide a hard stop rather than report it.
+        ignored = [name for name in ("body", "decision_id", "work")
+                   if getattr(args, name, None) is not None]
+        if ignored or args.unsettled:
+            raise SailangError(
+                engine.BAD_INPUT,
+                f"{', '.join(ignored + (['--unsettled'] if args.unsettled else []))} "
+                f"needs --interrupt-class; a plain message carries no interruption")
         return engine.send_message(workspace, args.to, claim=args.claim,
                                    record_path=args.record, subject=args.subject,
                                    topic=args.topic, kind=args.kind)
 
     return _dispatch_workspace("send", action, as_json)
+
+
+def _send_operator_interrupt(args, engine, workspace) -> dict:
+    """One declared operator interruption, sealed as an ordinary observation record.
+
+    The declaration is the message; delivery is unchanged transport. What is new
+    is that the receiver now has validated metadata to gate on, instead of prose
+    to guess from.
+    """
+    interrupts = _interrupt_engine()
+    if args.claim or args.record:
+        raise SailangError(engine.BAD_INPUT,
+                           "an operator interruption carries --body, not --claim/--record")
+    if not args.decision_id or not args.work or args.body is None:
+        raise SailangError(interrupts.INTERRUPT_MALFORMED,
+                           "an operator interruption names --interrupt-class, --decision-id, "
+                           "--work and --body")
+    record = interrupts.declaration_record(
+        seat=workspace.seat, class_name=args.interrupt_class,
+        decision_id=args.decision_id, work=args.work, body=args.body,
+        settled=not args.unsettled)
+    with tempfile.TemporaryDirectory(prefix="saimail-interrupt-") as scratch:
+        path = Path(scratch) / "interruption.sail"
+        path.write_bytes(record.canonical_bytes())
+        result = engine.send_message(workspace, args.to, record_path=path,
+                                     subject=args.work, topic=args.work, kind=args.kind)
+    result["operator_interrupt"] = {
+        "schema": interrupts.FORMAT, "class": args.interrupt_class,
+        "decision_id": args.decision_id, "work": args.work, "settled": not args.unsettled,
+        "body_bytes": len(args.body.encode("utf-8")),
+        "authority": "CANDIDATE_ONLY",
+        "detail": "declared as a candidate for the operator's attention; the receiver's "
+                  "attention budget decides whether it is ever presented, and silence is a "
+                  "successful outcome"}
+    return result
+
+
+def _cmd_interrupt(args, as_json: bool) -> int:
+    """spec/35: the receiver's own operator-interruption admission and budget."""
+    interrupts = _interrupt_engine()
+
+    def action():
+        # A receiver reads its own interruption ledger and its own attention
+        # queue: no private key, so the secret-free workspace view is enough.
+        engine = _workspace_engine()
+        workspace = engine.load_workspace_headers(args.workspace)
+        receiver = interrupts.Receiver(workspace.root, to_human=interrupts.human_id(workspace))
+        if args.interrupt_action == "status":
+            return engine_result("interrupt-status", "OK",
+                                 _status_result(receiver), detail=receiver.status()["detail"])
+        if args.interrupt_action == "present":
+            if args.ack:
+                # Acknowledge the lease the receiver already holds, or the one
+                # named explicitly. A presentation is normally reserved in one
+                # call and acknowledged in the next.
+                held = receiver.outstanding()
+                if args.reservation is not None:
+                    reservation_id = args.reservation
+                elif len(held) == 1:
+                    reservation_id = held[0]
+                elif not held:
+                    raise SailangError(engine.BAD_INPUT,
+                                       "no reservation is held; run present without --ack "
+                                       "first")
+                else:
+                    raise SailangError(engine.BAD_INPUT,
+                                       "several reservations are held; name one with "
+                                       "--reservation")
+                shown = receiver.acknowledge(reservation_id)
+                return engine_result("interrupt-present", shown["status"], shown,
+                                     detail=shown["detail"])
+            reservation = receiver.reserve()
+            return engine_result("interrupt-present", reservation["status"], reservation,
+                                 detail=reservation["detail"])
+        if args.interrupt_action == "release":
+            released = receiver.release(args.reservation)
+            return engine_result("interrupt-release", released.status, released,
+                                 detail="reservation dropped; the decision stays pending "
+                                        "and no attention was spent")
+        declared = interrupts.parse_declaration(
+            engine_read_record(engine, args.declaration))
+        if declared is None:
+            raise SailangError(interrupts.INTERRUPT_MALFORMED,
+                               "that file carries no operator interruption declaration")
+        # An interruption may only point at a message this mailbox actually
+        # holds, so a popup can never cite an envelope that resolves to nothing.
+        row = workspace.office().read_index_row(args.envelope)
+        if row is None:
+            raise SailangError(interrupts.INTERRUPT_BAD_ENVELOPE,
+                               "this mailbox holds no message with that ENVELOPE_ID")
+        admitted = receiver.admit(
+            args.envelope, declared,
+            origin=interrupts.ORIGIN_AGENT if args.origin == "agent" else interrupts.ORIGIN_HUMAN,
+            presence=interrupts.PRESENCE_ACTIVE_CHAT if args.presence == "active-chat"
+            else interrupts.PRESENCE_UNKNOWN)
+        return engine_result("interrupt-admit", admitted["status"], admitted,
+                             detail=admitted["detail"])
+
+    return _dispatch_workspace("interrupt", action, as_json,
+                               operator_codes=interrupts.OPERATOR_ACTION_CODES)
+
+
+def engine_result(command: str, status: str, payload: dict, *, detail: str) -> dict:
+    """One bounded receiver result. `ok` is true for every non-error outcome.
+
+    The receiver view carries its own ``status`` and ``detail``; the explicit
+    pair is the one the command envelope reports, so both win over the echo.
+    """
+    fields = {key: value for key, value in payload.items()
+              if key not in ("status", "detail")}
+    return _workspace_engine().command_result(command, status, detail=detail, **fields)
+
+
+def _status_result(receiver) -> dict:
+    state = receiver.status()
+    return {"operator_interrupts": state,
+            "operator_unread": state["operator_unread"]}
+
+
+def engine_read_record(engine, path):
+    from sailang import parse as parse_record
+
+    try:
+        return parse_record(Path(path).read_bytes())
+    except OSError as exc:
+        raise SailangError(engine.BAD_INPUT, f"declaration file is unreadable: {exc}") from exc
 
 
 _INBOX_QUERY_ARGS = ("from_seat", "topic", "kind", "state", "ref", "since",
@@ -918,7 +1061,59 @@ def _build_parser() -> argparse.ArgumentParser:
     send_p.add_argument("--kind", default="PERSONAL_MESSAGE")
     send_p.add_argument("--redeliver", default=None,
                         help="replay one exact outbox container by ENVELOPE_ID")
+    send_p.add_argument("--interrupt-class", dest="interrupt_class", default=None,
+                        help="declare an OPERATOR_ACTION_REQUIRED, DATA_OR_MONEY_RISK or "
+                             "CROSS_PROJECT_CRITICAL_DISCOVERY interruption (automation only)")
+    send_p.add_argument("--decision-id", dest="decision_id", default=None,
+                        help="stable token for ONE operator decision; a correction or a "
+                             "retraction reuses it, so one decision never interrupts twice")
+    send_p.add_argument("--work", default=None, help="the Work this interruption stops")
+    send_p.add_argument("--body", default=None,
+                        help="compact operator body: what stopped, why you must act, one "
+                             "exact action; at most 600 bytes and 4 lines")
+    send_p.add_argument("--unsettled", action="store_true",
+                        help="mark the diagnosis as NOT settled: durable mail, never a popup")
     send_p.add_argument("--json", action="store_true", dest="sub_json")
+
+    interrupt_p = sub.add_parser(
+        "interrupt",
+        help="receiver-owned operator-interruption admission and attention budget (spec/35)",
+        description=(
+            "The receiver's side of the letter contract. Admission says this message is a "
+            "real candidate for operator attention; presenting it costs the receiver's one "
+            "attention slot per period, and is never the sender's to spend. Zero presented "
+            "interruptions is a successful outcome."
+        ),
+    )
+    interrupt_sub = interrupt_p.add_subparsers(dest="interrupt_action", required=True)
+    interrupt_admit_p = interrupt_sub.add_parser(
+        "admit", help="one explicit receiver decision about one sealed message")
+    interrupt_admit_p.add_argument("--envelope", required=True, help="exact ENVELOPE_ID")
+    interrupt_admit_p.add_argument("--declaration", required=True,
+                                   help="the sealed record file carrying the declaration")
+    interrupt_admit_p.add_argument("--origin", default="agent", choices=["agent", "human"],
+                                   help="receiver's own transport context; a hand-written "
+                                        "letter is ordinary correspondence")
+    interrupt_admit_p.add_argument("--presence", default="unknown",
+                                   choices=["active-chat", "unknown"],
+                                   help="receiver-owned operator presence; unknown never "
+                                        "means absent")
+    interrupt_status_p = interrupt_sub.add_parser(
+        "status", help="pending and presented interruptions plus the rolling budget")
+    interrupt_present_p = interrupt_sub.add_parser(
+        "present", help="reserve the operator's next attention slot, optionally spend it")
+    interrupt_present_p.add_argument("--ack", action="store_true",
+                                     help="spend the reserved slot now (the surface showed it)")
+    interrupt_present_p.add_argument("--reservation", default=None,
+                                     help="exact reservation to acknowledge; default is the "
+                                          "one this receiver already holds")
+    interrupt_release_p = interrupt_sub.add_parser(
+        "release", help="drop one reservation; the decision stays pending")
+    interrupt_release_p.add_argument("--reservation", required=True)
+    for interrupt_p_action in (interrupt_admit_p, interrupt_status_p, interrupt_present_p,
+                               interrupt_release_p):
+        interrupt_p_action.add_argument("--workspace", required=True)
+        interrupt_p_action.add_argument("--json", action="store_true", dest="sub_json")
 
     inbox_p = sub.add_parser(
         "inbox", help="list received messages (metadata only); add filters for a "
@@ -1191,6 +1386,8 @@ def main(argv=None) -> int:
             return _cmd_recipient(args, as_json)
         if args.subcommand == "send":
             return _cmd_send(args, as_json)
+        if args.subcommand == "interrupt":
+            return _cmd_interrupt(args, as_json)
         if args.subcommand == "inbox":
             return _cmd_inbox(args, as_json)
         if args.subcommand == "open":

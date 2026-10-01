@@ -298,6 +298,71 @@ The agent prompt of ZAICODE now says the rule above, and `saimail-local send --h
 The idea behind it is older than the tooling (`idea_letters.md`): an unexpected place is
 allowed, an unexpected interruption is expensive.
 
+### The etiquette above is now also enforced (spec/35)
+
+The rule above was prose, and prose did not hold. On 2026-10-01 one Work produced five
+letters in 41 minutes — tentative repair, correction, correction of the correction,
+retraction, then a real hard stop. So the product now draws the line mechanically, and
+prose remains only the friendly version of it.
+
+**A message existing does NOT imply the operator should be interrupted.** Sending mail and
+interrupting a person are two separate acts with two separate contracts:
+
+* transport stays as it was — agent and Work mail is still sealed, delivered and readable;
+* an *operator interruption* additionally passes a receiver-owned gate.
+
+Only three classes may ever interrupt: `OPERATOR_ACTION_REQUIRED`,
+`DATA_OR_MONEY_RISK`, `CROSS_PROJECT_CRITICAL_DISCOVERY`. Everything on the "never" list
+above is ordinary durable mail and stays that way.
+
+Four properties now hold by construction, not by discipline:
+
+* **Stability.** A letter declared `settled=false` — mid-investigation, tentative, being
+  corrected — is never admitted. Corrections and retractions of one decision never add an
+  interruption; they supersede the pending one. If the investigation has not stabilized
+  enough to identify one final operator action, the correct answer is **zero** letters.
+* **One decision, one interruption.** Identity is `(receiver, work, decision_id)`. Rewording,
+  re-subjecting, a new envelope, retract-and-resend or splitting one decision into three
+  issues all resolve to the same decision and cannot buy a second interruption.
+* **Receiver-owned budget.** Presentation reuses the existing `human_attention` queue, one
+  presentation per 24 h by default. There is no second attention scheduler, and a sender
+  cannot declare a class, a priority or a presence it did not earn — `origin` and `presence`
+  are not declaration fields, so there is nothing to fill.
+* **Compact or refused.** The visible body is ≤ 600 UTF-8 bytes, preferably ≤ 4 lines: what
+  stopped, why an action is needed, one exact action. Oversized is **refused**, never
+  truncated. Evidence lives outside the popup.
+
+When the host knows the operator is in the chat, an ordinary action request simply stays in
+the chat. When no trustworthy presence signal exists, that is `UNKNOWN` — not "definitely
+absent" — and the attention queue applies.
+
+Ordinary human-authored `saimail-local send` is untouched: a person writing to another
+person is not an automated interruption, and their mail never reaches this layer.
+
+```bash
+# sender: declare an interruption (still just mail until the receiver admits it)
+saimail-local send --workspace WS --to operator \
+  --interrupt-class OPERATOR_ACTION_REQUIRED --decision-id sait-001 --work T-154 \
+  --body "SAIMASTER hard stopped."$'\n'"Needed: resolve the SAIT-001 blocker."
+
+# receiver: inspect and admit. Admission spends no attention at all.
+saimail-local interrupt status --workspace WS --json
+saimail-local interrupt admit  --workspace WS --envelope ID --declaration rec.sail --json
+
+# receiver: present. `present` reserves and shows nothing; the surface then acks
+# the lease it actually displayed. A reservation is never a second interruption:
+# only the ack spends the budget.
+saimail-local interrupt present --workspace WS --json
+saimail-local interrupt present --workspace WS --json --ack
+```
+
+The pending set is capped at eight waiting decisions. At the cap the next arrival of
+any class is refused with `PENDING_FULL` and stays ordinary durable mail — nothing is
+evicted, because an evicted decision would leave a queue candidate the queue cannot
+retire, and the queue would then have nothing to show.
+
+Spec: [`spec/35-OPERATOR-INTERRUPT-v1.md`](spec/35-OPERATOR-INTERRUPT-v1.md).
+
 ## The SAIRoute credential
 
 One logical handle, provisioned once by a human, resolved after that by every

@@ -1447,3 +1447,147 @@ def test_current_recovery_recognizes_t113_closure_and_frozen_boundary():
     exported = {(item["module"], item["symbol"]) for item in api["apis"]}
     assert ("saimail.workspace", "open_message") in exported
     assert ("saimail.workspace", "reopen_message") in exported
+
+
+# --------------------------------------------------------------------
+# beacon registration (T-155)
+# --------------------------------------------------------------------
+
+HUMBOX = ROOT / "humbox"
+
+#: humbox/ predates the intake machinery and these twenty-four files were never
+#: captured -- no receipt carries their text. They are NAMED here rather than
+#: skipped: a silent skip lets the next arrival hide behind the old ones, which
+#: is how both humbox/milestoned1.md (closed in T-151) and
+#: humbox/YAZADAYU_born1.md (T-155) went unnoticed. EVOLUTION.md,
+#: EVOLUTION-AUDIT.md and FUTURE-GATES-V5.md joined this set in T-158: they were
+#: registered only by incidental BOARD and LOG mentions, which the hygiene
+#: passes below remove. The remaining ten joined it in T-160, which deleted the
+#: prose corpus as a source of registration altogether -- a mention is not a
+#: capture, and ten of them were passing on nothing but the fact that some
+#: unrelated journal line happened to spell their names. A file that leaves this
+#: set must earn a receipt whose digest matches its bytes.
+LEGACY_UNREGISTERED_BEACON = frozenset({
+    "CURRENT-STATE.md",
+    "EVOLUTION-AUDIT.md",
+    "EVOLUTION.md",
+    "FUTURE-GATES-V2.md",
+    "FUTURE-GATES-V3.md",
+    "FUTURE-GATES-V4.md",
+    "FUTURE-GATES-V5.md",
+    "FUTURE-GATES-V6.md",
+    "FUTURE-GATES.md",
+    "GITHUB-SETTINGS-V6.md",
+    "INSTITUTION.md",
+    "SAIOPP_instructions.md",
+    "SAIOPP_prose.md",
+    "SAI_AGENT_REACTIONS.md",
+    "SAIPEN-WORK-DESK.md",
+    "bee_like_idea1.md",
+    "bee_like_idea1_future_Gate.md",
+    "computer1.md",
+    "future1.md",
+    "iniciative.md",
+    "talking.md",
+    "talking1.md",
+    "tv.md",
+    "what_means_SAI.md",
+})
+
+#: Beacon file -> the receipt that captured it. The Work that closed is noted
+#: beside its row.
+#:
+#: This table exists because no receipt can hold the binding itself: the intake
+#: grammar has no source-path field, so a captured file's basename never reaches
+#: its receipt. It exists -- rather than the journal -- because the journal is
+#: free text: an agent writing a file's name while investigating it used to be
+#: enough to pass the sweep, and in T-160 that is exactly what happened. A
+#: binding here is a claim that the named receipt captured these bytes, and the
+#: check verifies it against the receipt's own digest instead of taking the
+#: word of a sentence. (T-158, hardened T-160)
+BEACON_BINDINGS = {
+    "milestoned1.md": "SRC-117",  # T-151
+    "YAZADAYU_born1.md": "SRC-119",  # T-157
+}
+
+
+def _receipt_capture_digest(receipt_id: str) -> str:
+    """The digest a receipt recorded of the bytes it was minted from.
+
+    ``compared_digest`` is that record; ``source_sha256`` is the digest of the
+    receipt file itself and says nothing about humbox/. Returns "" when the
+    receipt is missing or unreadable so the caller fails the binding rather than
+    the suite -- an absent receipt is the finding, not a crash.
+    """
+    meta = ROOT / ".saipen" / "intake" / "active" / f"{receipt_id}.meta.json"
+    if not meta.is_file():
+        return ""
+    try:
+        return json.loads(read(meta))["request_provenance"]["compared_digest"]
+    except (ValueError, KeyError, TypeError):
+        return ""
+
+
+def _beacon_key(path: pathlib.Path) -> str:
+    """A beacon file's identity: its path relative to humbox/.
+
+    The basename is not an identity. A file in a subdirectory that happens to
+    share a word with a captured file is a different file, and reading it as
+    the same one is the mistake this check exists to catch -- so a top-level
+    file is identified by its bare name and a nested one by its relative path.
+    """
+    return path.relative_to(HUMBOX).as_posix()
+
+
+def test_every_new_operator_beacon_is_registered_before_it_sits_in_the_folder():
+    """An operator file that lands in humbox/ is traceable, or it is named.
+
+    The beacon is fed by a human, so it changes whenever the human has
+    something to say and nothing in the product notices. That is the whole
+    reason the intake path exists: the bytes get hashed into a receipt and
+    projected into Work, so the material is attributable instead of just
+    being present. Checking the folder as a whole -- rather than one named
+    file per ticket -- is the only form of that check that survives the next
+    arrival.
+
+    Registered means one of exactly two things: a BEACON_BINDINGS row whose
+    receipt still hashes to the file's bytes, or an explicit exemption in
+    LEGACY_UNREGISTERED_BEACON. It does not mean "mentioned somewhere" -- the
+    BOARD and the journal are free text that the protocol is actively pruning,
+    and T-160 was written because a sentence about a probe was passing as a
+    capture.
+    """
+    drifted = []
+    for key, receipt in sorted(BEACON_BINDINGS.items()):
+        path = HUMBOX / key
+        if not path.is_file():
+            drifted.append(f"{key} is bound to {receipt} but the file is gone")
+            continue
+        raw = path.read_bytes()
+        live = {
+            hashlib.sha256(raw).hexdigest(),
+            hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest(),
+        }
+        if _receipt_capture_digest(receipt) not in live:
+            drifted.append(f"{key} no longer hashes to what {receipt} captured")
+    assert not drifted, (
+        "a beacon binding the receipt cannot vouch for: "
+        f"{drifted} -- the binding claims these bytes were captured; re-capture "
+        "the file or drop the row"
+    )
+
+    registered = set(BEACON_BINDINGS)
+    unregistered = sorted(
+        key
+        for path in HUMBOX.rglob("*.md")
+        for key in (_beacon_key(path),)
+        if key not in registered
+        and key not in LEGACY_UNREGISTERED_BEACON
+    )
+    assert not unregistered, (
+        "operator material in humbox/ that no receipt accounts for: "
+        f"{unregistered} -- capture it with `saipen start --file humbox/<path>`, "
+        'then add "<key>": "<SRC-id>" to BEACON_BINDINGS (the row is checked '
+        "against that receipt's digest), or add it to "
+        "LEGACY_UNREGISTERED_BEACON if it genuinely needs no Work"
+    )
