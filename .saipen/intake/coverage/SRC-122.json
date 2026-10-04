@@ -1,4 +1,14 @@
 {
-  "requirements": {},
+  "requirements": {
+    "SRC-122:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-163 closed with verification evidence in LOG: verify -> PASS [target: T-163] conf: high -- python -m pytest -q: 3264 passed, 0 failed, 0 errors, 0 skipped at exit 0, run on the exact tree committed as f4efc35. tools/validate.py --gate ship: exit 0, 0 problems, 26 warnings, all inherited. Criterion coverage was audited by hand against the wave text rather than inferred from the suite: 35 acceptance criteria across 7 wave documents, each mapped",
+      "text": "Implement future_gate waves 1-7 end to end, one wave per ticket, methodical, verified by the suite",
+      "verification": "the Work this request created reached its own verification gate; see the T-163 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-163"
+    }
+  },
   "schema_version": 1
 }

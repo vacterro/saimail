@@ -1,4 +1,14 @@
 {
-  "requirements": {},
+  "requirements": {
+    "SRC-121:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-162 closed with verification evidence in LOG: verify -> PASS [target: T-162] conf: high -- python -m pytest -q: 3264 passed, 0 failed, 0 errors, 0 skipped at exit 0 on the tree committed as f4efc35. tools/validate.py --gate ship: exit 0, 0 problems. The four named defects were each re-checked against the tree rather than trusted from the earlier verdict, and each has its own test: tests/test_future_letter.py::test_a_private_bundle_cannot_be_r",
+      "text": "SAIHANDOFF future letters final repair: PRIVATE export unrecoverable, RECOVERY_ENABLED create label is untruthful, stale CIPHER tamper test, delivery/registry crash window with no reconciliation, forgeable registry provenance -- repair each and prove the exact final tree before closing",
+      "verification": "the Work this request created reached its own verification gate; see the T-162 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-162"
+    }
+  },
   "schema_version": 1
 }
