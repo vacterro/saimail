@@ -2,6 +2,304 @@
 
 ## Unreleased
 
+- A workspace now knows *which identity* it is talking to, and *what actually
+  happened* to every letter, in two layers that answer the two questions an
+  operator really has after an incident (`future_gate/` Wave 1 and Wave 2).
+
+  Wave 1, `saimail/trust.py`, removes trust-by-name. `peers.json` binds an alias
+  to a fingerprint but never says why a peer is trusted or refused *right now*,
+  so a peer that rebuilt itself was silently substituted and a matching display
+  name was the only continuity evidence left. Every pin now names a canonical key
+  fingerprint — never a path, never a seat — and resolves to exactly one of
+  `UNKNOWN`, `OBSERVED`, `TRUSTED`, `ROTATION_PENDING`, `REVOKED`, `BLOCKED`,
+  with `IDENTITY_CHANGED` *derived* rather than stored so a changed key can never
+  be silently promoted. Rotation needs two signatures and states its reason;
+  `BLOCKED` survives a rotate-back attempt where `REVOKED` would not; enforcement
+  is advisory by default and refusals persist across restart.
+
+  Wave 2, `saimail/ledger.py`, removes the invisible crash window. The durable
+  outbox is idempotency-keyed and the Post Office indexes on delivery, so a
+  crash between the two left a mail neither side could account for. A hash-chained
+  append-only JSONL record now writes CREATED, SEALED, OUTBOX_COMMITTED,
+  DELIVERY_ATTEMPTED, DELIVERED, RECEIPT_OBSERVED, OPENED, REPLIED, FAILED,
+  QUARANTINED and SUPERSEDED through a closed vocabulary, with the RECEIPT
+  landing *before* the index row on purpose — a crash in that window then leaves
+  a visible receipt and a hole in the projection, which `ledger reconcile` repairs
+  from the authenticated bundle instead of hiding. State is a pure `fold()` over
+  the chain; appends are best-effort so the ledger can never break a send;
+  `ABSENT` is not `UNREADABLE`, so an unreadable record reports
+  `operator_action_required` rather than rendering zero pending mail; and nothing
+  is ever invented — a repair reads the bundle or the sealed container bytes or
+  the message does not come back. `saimail-local ledger health|feed|reconstruct|
+  reconcile` reads the whole thing.
+
+  Wave 3, `saimail/cold_archive.py`, removes delete-before-verify. Bounding a
+  mailbox means deleting old bundles, and that is data loss the moment the copy
+  being deleted from is the only copy, which is exactly when a cold write is
+  most likely to have failed and an operator most likely to be reaching for a
+  delete. So the order is the module: write the cold archive, read it back off
+  disk, hash-check it, reopen it where a key is held, write the archive receipt,
+  and only then prune. Any failure before the receipt leaves the hot copy exactly
+  as it was, and `prune` re-verifies independently, so a record whose cold copy
+  was corrupted keeps its hot body. The cold format is versioned
+  (`SAIMAIL_COLD_1`) and stores the canonical encrypted bytes, the receipt, the
+  index-row provenance and the ledger link: no re-encoding, no lossy summary
+  standing in as the only copy, and no plaintext derivative anywhere, which is
+  why `search` is metadata-only, refuses a semantic query by name, and points
+  every hit back at its canonical source. Pruning removes the body and never the
+  index row, so a pruned message stays findable and restores by id, idempotently.
+  Retention by age, count, size and kind spends every budget on the newest
+  records; Future Letters are pinned by class; the default policy prunes nothing.
+  `saimail-local cold health|verify|archive|prune|restore|search`.
+
+  Wave 4, `saimail/catchup.py`, removes the silent gap between two ticks. A
+  mailbox that was closed -- machine asleep, agent offline, Post Office down --
+  loses every opportunity in the interval, and on restart nothing records that
+  they were owed: the system either does nothing or replays blind. So downtime
+  becomes an explicit, bounded queue under three rules. Nothing is dropped: a
+  send whose recipient vanished parks under `PEER_UNREACHABLE`, deliberately not
+  `DELIVERY_FAILED`, because the whole transient family (offline target, busy
+  lock, IO error) says the far side is the problem and sends an operator
+  somewhere else entirely. Nothing is invented: the cause of an outage stays
+  `UNKNOWN` when no record says otherwise. And the system informs while the
+  agent reasons -- `run` executes only the mechanical DELIVERY and RECONCILE
+  entries, while anything needing judgement (a trust decision, a residue to
+  read) parks with its evidence attached. Work coalesces on `kind:logical_id`,
+  so a month-long downtime is one debt per real obligation rather than one per
+  tick, and re-observation never refreshes `attempts` or `next_attempt_at`, or
+  the queue would spend a bounded backlog on an unbounded retry loop. Owed work
+  and observed fact deliberately keep different shapes: a free stale lock is a
+  fact reported with `remedy: NONE`, never a debt, while an abandoned
+  `.staging` directory is a job. The queue stamps its own schema and version on
+  every write, because the empty default handed back on a first run carries
+  neither -- writing that payload back verbatim produces a file the module then
+  refuses to read. `saimail-local catchup tick|detect|notice|queue|plan|claim|
+  complete|park|run`.
+
+  Wave 5, `saimail/canary.py`, gives the destructive suite somewhere safe to aim.
+  A crash-window proof run against whatever mailbox was closest is not a
+  hypothetical failure mode: the moment a corrupt-container probe lands on
+  somebody's mail, a green suite has demonstrated that it can delete real mail.
+  So test data is a declared identity rather than a fixture -- a reserved seat
+  prefix plus a sidecar `canary.json` stamp naming the seat and both key
+  fingerprints it claims. The two checks fail in *opposite* directions on
+  purpose, because they answer different questions: the seat prefix decides
+  what a production view may see and never grants permission, while a verified
+  stamp is the only thing that may authorise a destroy. A directory named
+  `canary-decoy` carrying a forged, stale or unparseable stamp still reads as
+  canary in a listing and is still refused by `reset`, byte for byte.
+  Classification travels *inside* the sealed container rather than beside it, so
+  an exported bundle arrives labelled somewhere it has never been. Production
+  views exclude test data by default and report the count they hid -- an operator
+  told "0 messages" while looking at a filtered inbox has been told something
+  false -- while a canary's own mailbox always sees its own traffic, because the
+  test lane's whole output is its inbox and hiding it there would blind the very
+  thing the lane exists to exercise. Reset is deterministic, rotates the identity
+  so the next test cannot inherit the keys, and moves failure reports to a
+  sibling `*.chaos-history/` *before* the wipe, because a report living inside
+  the target is deleted by the reset that documents it. The scenarios are real
+  rather than mocked: bytes are overwritten on disk, and the crash proof spawns
+  an actual child killed with `os._exit` after `SEALED`, so nothing unwinds,
+  flushes or shuts down on the way out.
+  `saimail-local canary seed|reset|status|record|reports`.
+
+  Wave 6, `saimail/future_letter.py`, makes a letter able to refuse. The wave
+  started from the obvious gap: a Future Letter can be written for a date, but
+  nothing can wait, and nothing refuses, so the date was a comment in a title
+  field. A capsule now carries `not_before` and `expires_after` *inside* the
+  sealed container, and the lock is decided from those bytes after
+  authentication and before the body is returned -- the only ordering that means
+  anything, since a lock checked against a registry row could be defeated by
+  editing a plain file and one checked after the body is in hand is a comment.
+  Refusals are deterministic: the new `PostOfficeSession.peek_message`
+  authenticates and decrypts without consuming the single unread transition,
+  without spending the open budget and without writing a ledger note, so the
+  first early attempt and the thousandth give the same answer instead of the
+  first burning the transition and the second reporting `ALREADY_READ`. Nothing
+  is armed when a letter becomes eligible -- no queue, no timer, no prompt --
+  because a capsule that fired by itself would be a message nobody could audit,
+  and the reader still has to ask. Three unauthorable capsules are refused by
+  their author: a lock dated before the letter existed, a window that closes
+  before it opens, and a window so long the lock is decoration. Expiry refuses
+  rather than reopening, because a lock that quietly kept giving up its contents
+  forever would not be a lock.
+
+  Co-signing signs a *statement* naming the `letter_id` -- the hash of the
+  canonical container, fixed before anybody signed -- so a body edited afterwards
+  names a different object and the roster no longer matches it. The signature
+  lives in a detached registry rather than inside the container it covers, which
+  would be circular, and never beside a mutable body, which would prove nothing.
+  `PARTIALLY_SIGNED` is reported as itself and never rounded up; zero verifiable
+  signatures is `UNSIGNED` whatever the roster asks for, because "partially
+  signed" over an empty set is a rounding-up of nothing and it is the exact
+  phrase a reader skims past. One damaged signature is reported
+  `verified: false` instead of making the whole roster unreadable, and a second
+  signature from the same identity is refused rather than appended, so a roster
+  cannot be padded into looking busier than it is. Because an import re-seals
+  honestly as `source: IMPORTED` and so gets its own `letter_id`, a signature is
+  matched through the `source_ref` it records -- the one journey a signature is
+  meant to survive is the one an honest import would otherwise break. An import
+  also carries the lock and the roster across, because rewriting provenance is
+  honest while dropping a time lock to make the re-seal simpler would hand the
+  next mailbox an unlocked, unrostered letter claiming to be the locked one.
+
+  An audience (`SEAT`, `SUCCESSOR_OF`, `MAINTAINERS`, `OPERATOR`) records who a
+  letter was *written for*, and every row publishes `audience_enforced: false`,
+  because nothing in this module turns that into a gate and publishing the flag
+  is what stops a successor address from being read as access control. The
+  container schema is versioned, and the version is a `build_container`
+  parameter rather than a constant: a v1 letter is rebuilt under v1 so its hash
+  -- its identity -- does not move, and passing v2 fields to a v1 schema is
+  refused rather than quietly dropped, because a silently dropped time lock opens
+  early and never says why. `saimail-local future-letter cosign|signatures|
+  export-signatures|import-signatures`, plus `--not-before`, `--expires-after`,
+  `--required-signer` and `--audience-scope` on `create`.
+
+  Wave 7, `saimail/surface.py`, makes the mailbox describe itself instead of being
+  described. Waves 1 through 6 added nine verbs to `saimail-local`, and any
+  reader consulting a static list was reading a surface that had not existed for
+  five waves. `saimail-local surface map` now walks the registered argparse tree,
+  so the inventory is wrong the instant a verb is added or removed -- which is
+  the only way it stays right, and which is why the map lists the verb that
+  prints it. The frozen `host_contract` intent map is left frozen: `health` there
+  names an *intent*, not a verb, so cross-comparing it against the parser would
+  report an all-zero advertisement on a build that has everything. It gains a
+  `live_surface` pointer instead, additively, so a host written against v1 still
+  resolves every key it knew. `surface schema` is the versioned capability
+  advertisement, carrying the envelope schemas, the custody modes and one flag
+  per capability family derived from the command that evidences it -- remove the
+  verb and the claim goes with it, because a capability left advertised after its
+  command is gone is how a host learns to send a request nothing can answer.
+
+  Health is three-valued: `HEALTHY`, `UNHEALTHY`, `UNKNOWN`. There is no fourth,
+  because the fourth is the failure this wave exists to remove -- a dashboard
+  that renders unreadable state as `0 unread` has told an operator a mailbox is
+  empty when in fact it could not be read, and has told them in the exact shape
+  that looks like good news. Each section is produced by CALLING its owning
+  subsystem's own function, never by re-deriving it, because a second
+  implementation of somebody else's invariant is a second thing to be wrong; a
+  section is exactly as good as the function that answered it, and every section
+  names that function in `source`. A subsystem that raises or refuses becomes
+  `UNKNOWN` with no numbers published -- an exception inside `trust.list_pins`
+  must not become an empty pin list a reader would act on -- and `UNKNOWN` rolls
+  up to `UNKNOWN`, never to `HEALTHY`, because a mailbox that cannot describe
+  part of itself has not been shown to be fine. Every other section still answers
+  when one breaks: a dashboard that stops at the first failure is the same
+  all-clear with fewer numbers. `ABSENT` is deliberately *not* an UNKNOWN, so a
+  brand new mailbox with no ledger and no archive reads `HEALTHY` rather than
+  training its operator to ignore the word. Quarantined mail and a trust rotation
+  awaiting a human are `UNHEALTHY`, because both are decisions waiting rather
+  than footnotes.
+
+  `surface feed` carries the ledger's continuity verdict upward instead of
+  smoothing it away. A caller following a cursor through trimmed history sees a
+  well-formed page and has no way to know records between its position and the
+  oldest retained event are simply gone, so the page reports `GAP` and says the
+  missing events were not summarised and are not recoverable from this feed; an
+  unreadable ledger is `UNKNOWN` and returns no events at all, because a
+  plausible-looking empty feed from a broken ledger is the false zero one more
+  time. The gap is decided by sequence number, which retention preserves -- a
+  trim that renumbered from 1 would erase the evidence of its own cut. The
+  dashboard is derived on every call and cached nowhere, so a verdict survives a
+  restart because it was about the workspace rather than about a live object.
+  `saimail-local surface map|schema|health|feed`; `map` and `schema` need no
+  mailbox, and a dashboard reporting `UNKNOWN` still exits 0, because failing
+  would train every caller to retry an unfixable read and then ignore the word.
+
+- An agent can now leave a durable note for whoever holds its workspace next
+  (T-161, SRC-120). `saimail-local future-letter create|list|show|open|reopen|
+  export|import` stores the body as a canonical `SAIMAIL_FUTURE_LETTER_1`
+  container sealed by an ordinary SENV2 envelope of kind `FUTURE_LETTER`, so a
+  letter inherits the existing transport unchanged: sender signing, recipient
+  binding, durable outbox, Post Office UNREAD/READ state, receipts and
+  deduplication. It needed no parallel mailbox — the only extension to the
+  existing contracts is a `deliver_payload` route that seals payload bytes
+  instead of a one-line SAILANG record, plus a Post Office built over peers and
+  the workspace's own public key so an agent can address its own successor
+  without registering a peer.
+
+  The hard part of the ticket was not storage, it was authority. A future
+  letter is provenance, never permission: it is not memory, system policy, a
+  developer instruction, a trusted command, hidden prompt content, authority,
+  automatic context or task creation, and its claims are not evidence that they
+  are true. So `list` and `show` read a metadata registry and never decrypt;
+  reading stays an explicit `open`/`reopen` through the same gate as ordinary
+  mail; opening is non-destructive and read state survives restart; and nothing
+  in the module appends a body to a model prompt, a system prompt, an agent
+  startup context or a SAIPEN recovery prompt. Nine hostile-looking bodies —
+  shell commands, fake system prompts, "ignore previous instructions",
+  protocol-shaped JSON, SAIPEN command lines, chat-template markers, credential
+  paths, bidi-overridden text and 40 KB of filler — are stored, returned
+  byte-for-byte and executed by nothing.
+
+  Custody is named rather than implied. A `PRIVATE` export bundles no key beside
+  the ciphertext. `--recovery` produces a `NOT_PRIVATE_RECOVERY_ENABLED` time
+  capsule carrying its own AES-256-GCM key: it survives loss of the workspace
+  identity, and a key shipped with its ciphertext is packaging and recovery,
+  not secrecy. There is no way to relabel a custody on the way in: a stored
+  letter is sealed to the importing workspace identity and is therefore always
+  `PRIVATE`, and the archive it came from keeps its own non-private label in the
+  import result. Containers, the registry and
+  bundles are versioned, and corruption — damaged ciphertext, a hash that
+  disagrees, an unknown schema, ambiguous decryption — fails closed by name
+  instead of decoding into plausible text.
+
+- Five verified defects in future letters are repaired (T-162, SRC-121), all of
+  them cases where the code promised more than it could keep.
+
+  **A private export is now genuinely private, and genuinely recoverable.** It
+  used to mint a fresh random AES-256-GCM key, wrap it to nothing, and ship it
+  nowhere, so the archive implied a workspace-identity recovery that did not
+  exist and importing it back failed `RECOVERY_KEY_REQUIRED` in the very
+  workspace that produced it. A private export is now a
+  `SAIMAIL_FUTURE_LETTER_BUNDLE_3` bundle carrying the canonical sealed SENV2
+  container verbatim, with no key member at all: holding the ZIP reveals
+  nothing, the owning workspace identity reopens it through the unchanged
+  SENV2 path, and any other workspace is refused `BUNDLE_IDENTITY_REQUIRED`.
+  No bespoke crypto, and no key stored beside the ciphertext.
+
+  **Recovery is an export property, not a creation one.** `create` no longer
+  accepts `--custody`: sealing to the workspace identity is the only custody
+  that exists at rest, so a `RECOVERY_ENABLED` label there would have promised
+  survival of that identity's loss while creating no recovery material. A
+  stored letter is always `PRIVATE`; `export --recovery` remains the explicit,
+  deliberately non-private time capsule. `import` loses its `--custody` knob for
+  the same reason: whatever a source archive advertised, the letter it produces
+  here is sealed to this workspace identity, so relabelling it would re-advertise
+  a custody import cannot keep. The archive's own custody and
+  `NOT_PRIVATE_RECOVERY_ENABLED` classification now travel in the import result,
+  so the honest label is preserved instead of being discarded or forged.
+
+  **The tamper test now tampers.** It replaced `CIPHER:`, which does not exist
+  in SENV2, and passed only because text-mode rewriting turned the refusal into
+  a line-ending complaint. It now flips one base64 character of the real
+  `CIPHERTEXT` line, writes bytes rather than text, and asserts
+  `CIPHER_HASH_MISMATCH`.
+
+  **A crash between delivery and the registry row no longer loses a letter.**
+  The canonical mailbox is the source of truth and `future-letters/index.jsonl`
+  is a reconstructable projection: `list` and the new `future-letter
+  reconcile` rebuild a row the crash lost, idempotently, sealing and
+  delivering nothing, so recovery cannot manufacture a duplicate.
+
+  **Forged registry provenance is detected rather than displayed.** Rows are
+  now built from authenticated content in one place, a metadata-only listing
+  labels itself `UNVERIFIED_PROJECTION`, and `open`/`reopen` compare the row
+  against the authenticated container field by field — correcting and reporting
+  the drift rather than presenting an edit as canonical truth. No listing
+  decrypts a body.
+
+  The GPT-5.6 Sol seed letter arrived as a v1 bootstrap archive that encrypted
+  raw prose rather than a container, so it imports through the legacy path
+  only; a damaged current bundle still refuses. It was recovered, hashed and
+  imported through the canonical send/seal route with its body preserved
+  byte-for-byte (`f5f2597a…`), its creation stamp normalized to UTC and nothing
+  else touched. The original archive in `operator_import/future_letters/` is
+  untouched and remains recovery evidence. Cold-start proof: a fresh workspace
+  and a separate process discover the letter by metadata, listing decrypts
+  nothing, an explicit open returns the exact expected plaintext, and a reopen
+  after restart returns the same hash.
+
 - The beacon folder is now swept as a whole (T-155, T-158, T-159, T-160): a new
   `humbox/**/*.md` that no receipt accounts for fails the suite, identified by its
   path relative to `humbox/` so a nested file cannot pass on a basename a captured
@@ -208,6 +506,33 @@
   id, the kind comes from the closed SENV2 set, and the body is a claim or an S2
   citation. `saimail-local saipen telegrams` is the bounded header-only turn-entry
   read. No new wire kind, no importance field. Checkout-only.
+- Two performance gates that were measuring the machine now measure the product
+  (T-164). `test_a_dense_body_scans_in_linear_time` and
+  `test_receiver_alias_decode_scales_linearly_not_quadratically` both timed
+  themselves with `perf_counter` and compared ratios with an additive floor;
+  whenever the small case landed in low milliseconds the floor stopped the ratio
+  binding and the gate became a fixed absolute deadline, and under suite-wide
+  allocator pressure the same code measured 53x-75x growth for 4x the work. Both
+  were red on roughly every other full-suite run and green in every isolated
+  run, which is the signature of a bad instrument rather than a regression.
+
+  They are replaced by counted work. The quarantine scan is fed a `bytes`
+  subclass that tallies every character it decodes — `__getitem__` overridden so
+  slices stay in the subclass, because slicing a `bytes` subclass yields plain
+  `bytes` and would otherwise let the very re-encode under test escape the
+  counter. Measured: linear scanner 80,890 → 162,890 characters for a 2x body
+  (x2.01); deliberately quadratic control 80,362,385 → 324,221,385 (x4.03). The
+  frame gate keeps two halves because no single instrument covers the class:
+  `sys.settrace` line events scoped to `sailang/` catch super-linearity in the
+  receiver's own control flow, and the existing `_ALIAS_MAP_BUILDS` counter
+  catches the per-frame alias rebuild, which is one C-level `dict()` copy per
+  frame and is therefore invisible to a line counter.
+
+  Each gate was proved red against the reintroduced defect and green against the
+  restore, byte-for-byte. `python -m pytest -q`: 3263 tests, 0 failed, twice
+  consecutively, where the same command was red on three consecutive runs
+  before. No tolerance was widened; both `time` imports are gone from those two
+  tests. Test-only: no product behaviour changed.
 
 ## 0.0.2a3
 

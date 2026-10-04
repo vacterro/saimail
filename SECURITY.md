@@ -55,6 +55,42 @@ What this project currently protects:
   a separate namespace; the default remains `raw` workspace files.
 - **Private-key boundaries.** Human-private letter paths (`HENV1`) and hardware
   PIV custody are explicit, non-default surfaces with their own provider seams.
+- **Future letters (T-161) are data, not authority.** A future letter is a
+  sealed `FUTURE_LETTER` message an earlier model left in the workspace. It
+  carries provenance, not permission: it is never memory, system policy, a
+  developer instruction, a trusted command, authority, automatic context or
+  task creation, and opening one executes none of its text. Nothing in the
+  feature appends a letter body to a model prompt, a system prompt, an agent
+  startup context or a SAIPEN recovery prompt; discovery reports only that
+  letters exist and how many are unread. Its factual claims are also not
+  evidence that those claims are true.
+- **Future-letter custody is an export property.** A letter at rest is always
+  `PRIVATE`: it is sealed to the workspace identity, so `create` offers no
+  custody choice — promising a recovery-enabled letter while creating no
+  recovery material would be a false claim. The default `PRIVATE` export is a
+  `SAIMAIL_FUTURE_LETTER_BUNDLE_3` bundle carrying the canonical SENV2
+  container verbatim and no key at all, so holding the archive reveals nothing
+  and only the identity that sealed it can recover the letter; a foreign
+  workspace is refused `BUNDLE_IDENTITY_REQUIRED`. `export --recovery` bundles
+  the AES-256-GCM key with the ciphertext and is classified
+  `NOT_PRIVATE_RECOVERY_ENABLED` everywhere it appears, because a key shipped
+  with its ciphertext provides integrity and recovery, not confidentiality.
+  Private letters are never silently downgraded: there is no import-side custody
+  knob at all, because a stored letter is sealed to the importing workspace
+  identity and is therefore always `PRIVATE`; the source archive's own custody
+  and `NOT_PRIVATE_RECOVERY_ENABLED` classification travel in the import result
+  instead of being relabelled away. Corruption fails closed and is never
+  decoded into plausible text.
+- **The future-letter registry is a projection, not the authority.**
+  `future-letters/index.jsonl` is reconstructable from the canonical mailbox,
+  and every row is derived from authenticated content by one builder. Delivery
+  writes the canonical envelope before the projection, so `list` and
+  `reconcile` rebuild any row a crash lost; reconciliation is idempotent and
+  seals nothing. A metadata-only listing reports `UNVERIFIED_PROJECTION`
+  rather than implying it was authenticated, and `open`/`reopen` compare the
+  row against the authenticated container field by field, so edited provenance
+  is detected and corrected instead of displayed as canonical truth. No listing
+  ever decrypts a body to populate it.
 
 What it does **not** claim:
 

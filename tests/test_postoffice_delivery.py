@@ -36,6 +36,7 @@ Keys are ephemeral and in memory, per D-028/B6.
 
 from __future__ import annotations
 
+import base64
 import json
 import pathlib
 import shutil
@@ -447,3 +448,97 @@ def test_recovery_refuses_a_conflicting_index_row(tmp_path):
     before = (office.mail_root / "index.jsonl").read_bytes()
     assert err(office.recover) == postoffice.INDEX_ROW_CONFLICT
     assert (office.mail_root / "index.jsonl").read_bytes() == before
+
+
+# ------------------------------------------------ peek: authenticate, change nothing
+
+
+def test_peek_authenticates_without_moving_marking_or_spending(tmp_path):
+    """The contract is what peek must NOT do.
+
+    Peek exists so a caller can decide something -- a time lock, a roster -- from
+    authenticated bytes before it is allowed to act. If it consumed the single
+    unread transition the decision could not be taken first; if it spent the open
+    budget the refusal would be indistinguishable from exhaustion.
+    """
+    office, _ = office_at(tmp_path)
+    result = office.deliver(sealed_bytes(payload=PLAINTEXT_MARKER))
+    envelope_id = result.envelope_id
+    index_before = (office.mail_root / "index.jsonl").read_bytes()
+
+    session = postoffice.PostOfficeSession(office, scan_budget=8, open_budget=1)
+    opened = session.peek_message(envelope_id, recipient_private_key=RECIPIENT)
+    assert PLAINTEXT_MARKER.encode("utf-8") in opened.plaintext
+
+    # Still UNREAD, still in inbox/, no index churn: nothing happened.
+    assert office.bundle_state(envelope_id) == postoffice.UNREAD
+    assert office.inbox_bundle(envelope_id).is_dir()
+    assert (office.mail_root / "index.jsonl").read_bytes() == index_before
+
+    # And the budget is untouched, so the one real open still works -- and
+    # exactly one, which is the whole point of peeking first.
+    open_first(office, envelope_id)
+    assert office.bundle_state(envelope_id) == postoffice.READ_STATE
+    session = postoffice.PostOfficeSession(office, scan_budget=8, open_budget=1)
+    assert err(session.open_message, envelope_id,
+               recipient_private_key=RECIPIENT) == postoffice.ALREADY_READ
+
+
+def test_peeking_repeatedly_is_free_and_leaves_no_trace(tmp_path):
+    """Peeking is a question, not an event: the answer may be asked twice."""
+    office, _ = office_at(tmp_path)
+    envelope_id = office.deliver(sealed_bytes()).envelope_id
+    session = postoffice.PostOfficeSession(office, scan_budget=8, open_budget=1)
+    for _ in range(5):
+        session.peek_message(envelope_id, recipient_private_key=RECIPIENT)
+    assert office.bundle_state(envelope_id) == postoffice.UNREAD
+
+
+def test_peek_refuses_what_open_would_refuse(tmp_path):
+    """A peek is not a weaker door: it verifies exactly as much."""
+    office, _ = office_at(tmp_path)
+    envelope_id = office.deliver(sealed_bytes()).envelope_id
+
+    def peek(identifier=envelope_id):
+        session = postoffice.PostOfficeSession(office, scan_budget=8, open_budget=1)
+        return session.peek_message(identifier, recipient_private_key=RECIPIENT)
+
+    peek()
+
+    # Damaged ciphertext still fails closed, with the PRECISE code rather than a
+    # flattened BUNDLE_INVALID: a mailbox being repaired needs to know whether
+    # the seal or the metadata is what broke.
+    #
+    # The damage goes into CIPHERTEXT and nowhere else. Flipping "a byte in the
+    # middle of the file" was wrong twice over: the midpoint of a SENV2
+    # container sits in the CLEAR HEADER, so the test was really corrupting
+    # metadata, and which metadata it hit depended on the container bytes --
+    # one run's hex digit stayed inside the alphabet and reported
+    # CIPHER_HASH_MISMATCH, the next turned `a` into a backtick and reported
+    # BAD_CIPHER_HASH. The container length is constant and the offset is
+    # constant; the OUTCOME was the coin flip, and the test passed ~87% of runs.
+    # Decode, damage one raw byte, re-encode canonically: then the container is
+    # still exactly one canonical rendering, CIPHER_HASH still parses, and the
+    # only thing wrong with it is the body. That makes the assertion true for
+    # every run instead of most of them.
+    bundle = office.inbox_bundle(envelope_id)
+    container = bundle / "envelope.senv"
+    original = container.read_bytes()
+    head, marker, tail = original.partition(b"CIPHERTEXT:")
+    body, sep, rest = tail.partition(b"\n")
+    ciphertext = bytearray(base64.b64decode(body, validate=True))
+    ciphertext[0] ^= 0x01
+    damaged = head + marker + base64.b64encode(bytes(ciphertext)) + sep + rest
+    assert damaged != original, "the mutation changed nothing"
+    # write_bytes, never write_text: text mode would rewrite the LF line ends
+    # and the refusal would be CANONICAL_LF_REQUIRED, which proves nothing.
+    container.write_bytes(damaged)
+    assert err(peek) == "CIPHER_HASH_MISMATCH"
+
+    # An envelope that is nowhere is still nowhere.
+    absent = "sha256:" + "0" * 64
+    def peek_absent():
+        session = postoffice.PostOfficeSession(office, scan_budget=8, open_budget=1)
+        return session.peek_message(absent, recipient_private_key=RECIPIENT)
+    assert err(peek_absent) == postoffice.UNKNOWN_ENVELOPE
+    assert err(peek, "not-an-id") == "BAD_ENVELOPE_ID"

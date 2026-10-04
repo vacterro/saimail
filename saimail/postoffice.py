@@ -186,6 +186,15 @@ def _reject(code: str, detail: str) -> None:
     raise SailangError(code, detail)
 
 
+# FUTURE GATE Wave 2 event names. The closed vocabulary itself lives in
+# `saimail.ledger`, which cannot be imported here at module scope (it builds on
+# this module). These three are the receiving-side subset; a test asserts they
+# stay members of the ledger's event set.
+LEDGER_RECEIPT_OBSERVED = "RECEIPT_OBSERVED"
+LEDGER_OPENED = "OPENED"
+LEDGER_QUARANTINED = "QUARANTINED"
+
+
 def utc_now() -> str:
     """The receiver clock, in the one header format SENV2 already uses."""
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -987,6 +996,35 @@ class PostOffice:
         """The one destructive-lifecycle lock (D-038): LIFECYCLE then INDEX."""
         return _LifecycleLock(self.mail_root / LIFECYCLE_LOCK_NAME)
 
+    # ---- ledger (FUTURE GATE Wave 2) ---------------------------------------
+
+    def _ledger_note(self, event: str, message_id: str, actor, at: str) -> None:
+        """Record one receiving-side fact in this mailbox's append-only ledger.
+
+        Every receiving-side event is keyed by `ENVELOPE_ID`, and the same id is
+        also carried as `envelope_id` so a fold can find the canonical bytes it
+        would have to repair a projection from. Imported lazily because the
+        ledger builds on this module. The note is best-effort: a mailbox that
+        cannot append is still a working mailbox, and the loss is reported by
+        ``ledger health`` instead of failing a delivery that already happened.
+        """
+        from saimail import ledger
+
+        ledger.note(self.root, event, message_id=message_id,
+                    envelope_id=message_id, actor=actor or self.seat, at=at)
+
+    @staticmethod
+    def _ledger_envelope_id(raw: bytes) -> str:
+        """The id the ledger records for a quarantined body.
+
+        A body that failed header parsing has no ``ENVELOPE_ID``; the raw-bytes
+        hash is the same stable handle quarantine already uses for it.
+        """
+        try:
+            return envelope.envelope_id(raw)
+        except SailangError:
+            return "sha256:" + hashlib.sha256(raw).hexdigest()
+
     # ---- index -----------------------------------------------------------
 
     def read_index(self) -> Tuple[dict, ...]:
@@ -1105,6 +1143,13 @@ class PostOffice:
                 self.ensure_index_row(header, envelope_id, stored_at)
                 return DeliveryResult(status=DUPLICATE, envelope_id=envelope_id,
                                       received_at=stored_at)
+            # Wave 2: the body is durable, so the fact is recorded BEFORE the
+            # index row. A crash in the window between them then leaves a
+            # receipt in the record and a hole in the projection -- which is
+            # exactly what `ledger reconcile` repairs from the bundle. The
+            # other order would make the two agree and hide the crash.
+            self._ledger_note(LEDGER_RECEIPT_OBSERVED, envelope_id,
+                              header.get("FROM"), received_at)
             self.ensure_index_row(header, envelope_id, received_at)
             return DeliveryResult(status=ACCEPTED, envelope_id=envelope_id,
                                   received_at=received_at)
@@ -1188,6 +1233,8 @@ class PostOffice:
         _publish_dir(self.mail_root / QUARANTINE, digest,
                      {OBJECT_NAME: raw, REASON_NAME: reason_bytes},
                      conflict_code="QUARANTINE_CONFLICT", identity_name=OBJECT_NAME)
+        self._ledger_note(LEDGER_QUARANTINED, self._ledger_envelope_id(raw), None,
+                          self.clock())
         return DeliveryResult(status=QUARANTINED, quarantine_id=quarantine_id,
                               reason=reason)
 
@@ -1689,6 +1736,60 @@ class PostOfficeSession:
 
     # ---- open ------------------------------------------------------------
 
+    def peek_message(self, envelope_id: str, *, recipient_private_key) -> OpenedEnvelope:
+        """Authenticate and decrypt one message WITHOUT changing any state.
+
+        The third read, and the only one that moves nothing. `open_message`
+        consumes the single unread transition and `reopen_message` spends an open
+        attempt; both mutate or account, so neither can be the *first* step of a
+        decision that might still refuse. Peek is for a caller that must know what
+        a message says before it is allowed to act on it -- a time lock that
+        refuses an early open, or a roster report that must not be a way to read.
+
+        It authenticates exactly what `open_message` authenticates (header parse,
+        sender and recipient verification, envelope hash, receipt) and refuses on
+        the same states, so nothing that `open_message` would reject gets past
+        this. What it deliberately does NOT do: consume `open_budget`, move the
+        bundle, append an LEDGER_OPENED note, or mark anything read. Peeking
+        repeatedly is free and leaves no trace; the caller still owes a real
+        `open_message`/`reopen_message` to consume the transition.
+        """
+        if not isinstance(envelope_id, str) or not _EID_RE.match(envelope_id):
+            _reject("BAD_ENVELOPE_ID", "an envelope id is sha256:<64 lowercase hex>")
+        with self.office._lifecycle_lock():
+            state = self.office.bundle_state(envelope_id)
+            if state in (EXPIRED_STATE, EXPIRY_RECONCILIATION_REQUIRED):
+                _reject(ALREADY_EXPIRED,
+                        f"envelope {envelope_id} is expired; an expired message is never "
+                        "decrypted or resurrected")
+            if state == BOTH:
+                _reject(RECONCILIATION_REQUIRED,
+                        f"envelope {envelope_id} exists as both an inbox and a read bundle; "
+                        "maintenance reconciliation must prove identity first")
+            if state == NEITHER:
+                if self.office.has_index_row(envelope_id):
+                    _reject(INDEX_BODY_MISSING,
+                            f"indexed envelope {envelope_id} has no bundle to open")
+                _reject(UNKNOWN_ENVELOPE, f"no bundle for {envelope_id}")
+
+            # UNREAD authenticates the inbox bundle, READ re-verifies the durable
+            # read/ copy; either way it is the same sealed container and the same
+            # recipient key, so the plaintext is identical to what a real open
+            # would have returned.
+            bundle = (self.office.inbox_bundle(envelope_id)
+                      if state == UNREAD else self.office.read_bundle(envelope_id))
+            # The signature check runs FIRST and unwrapped, because it carries
+            # the precise code for damaged ciphertext. `_verify_bundle` collapses
+            # every verification failure into BUNDLE_INVALID, and a caller
+            # repairing a mailbox needs to know whether the seal or the metadata
+            # is what broke. The bundle-level checks still run after it.
+            header = envelope.parse_header(
+                self.office._read_bundle_container(bundle))
+            verified = envelope.verify(header, self.office.sender_registry)
+            self.office._verify_bundle(bundle, envelope_id)
+            return envelope.open(verified, recipient_private_key,
+                                 self.office.recipient_registry)
+
     def open_message(self, envelope_id: str, *, recipient_private_key) -> OpenedEnvelope:
         """Open one unread message exactly once, under the open budget.
 
@@ -1738,6 +1839,15 @@ class PostOfficeSession:
             opened = envelope.open(verified, recipient_private_key,
                                    self.office.recipient_registry)
             self._transition_to_read(envelope_id)
+            # Wave 2: the move into read/ is the fact, recorded here where it
+            # happens, so "was this ever opened, or is the body just missing?"
+            # does not depend on the index row surviving. The timestamp is the
+            # bundle's own RECEIPT time, not a fresh clock read: the open adds
+            # no new arrival instant, and asking the receiver clock again would
+            # change a contract callers can observe.
+            _, received_at = _read_receipt(self.office.read_bundle(envelope_id))
+            self.office._ledger_note(LEDGER_OPENED, envelope_id,
+                                     header.get("FROM"), received_at)
             return opened
 
     def reopen_message(self, envelope_id: str, *, recipient_private_key) -> OpenedEnvelope:

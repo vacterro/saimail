@@ -78,6 +78,10 @@ SENDER_BINDING_DOMAIN = b"SAIMAIL-SENV2-SENDER-BINDING\x00"
 KINDS = frozenset({
     "DISCOVERY", "EXPERIENCE", "WARNING", "QUESTION", "HYPOTHESIS",
     "MEMORY_FRAGMENT", "PERSONAL_MESSAGE", "PROTOCOL_PROPOSAL",
+    # T-161: an optional note one agent leaves for a FUTURE agent. It rides the
+    # unchanged sealed path and is read only by an explicit open. It is
+    # authored historical material, never memory, policy or instruction.
+    "FUTURE_LETTER",
 })
 
 #: The one canonical header order (D-028). SIG is not here: it is excluded

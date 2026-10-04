@@ -584,11 +584,13 @@ def _cmd_inbox(args, as_json: bool) -> int:
         # Header-only: the secret-free view never reads a private key (T-117).
         workspace = engine.load_workspace_headers(args.workspace)
         if not query_requested:
-            return engine.list_inbox(workspace)
+            return engine.list_inbox(workspace,
+                                     include_test_data=args.include_test_data)
         return engine.query_inbox(
             workspace, sender=args.from_seat, topic=args.topic, kind=args.kind,
             state=args.state, ref=args.ref, since=args.since, before=args.before,
-            scan_budget=args.scan_budget, cursor=args.cursor)
+            scan_budget=args.scan_budget, cursor=args.cursor,
+            include_test_data=args.include_test_data)
 
     return _dispatch_workspace("inbox-query" if query_requested else "inbox",
                                action, as_json)
@@ -611,6 +613,87 @@ def _cmd_reopen(args, as_json: bool) -> int:
     return _dispatch_workspace("reopen", action, as_json)
 
 
+def _future_letter_engine():
+    from saimail import future_letter
+
+
+    return future_letter
+
+
+def _cmd_future_letter(args, as_json: bool) -> int:
+    """One dispatcher for the whole future-letter surface (T-161).
+
+    The happy path is one command with two text fields. Nothing here builds
+    SENV2 bytes, an envelope id, a receipt or an index row by hand: every one of
+    those comes from the same canonical route an ordinary letter uses.
+    """
+    letters = _future_letter_engine()
+    engine = _workspace_engine()
+    action = args.future_action
+
+    if action == "create":
+        def run():
+            body = args.body
+            if args.body_file is not None:
+                try:
+                    body = Path(args.body_file).read_text(encoding="utf-8")
+                except OSError as exc:
+                    raise SailangError("BAD_INPUT",
+                                       f"body file is unreadable: {exc}") from exc
+            if body is None and args.body_file is None:
+                raise SailangError("BAD_INPUT", "provide --body or --body-file")
+            return letters.create(
+                engine.load_workspace(args.workspace), title=args.title, body=body,
+                author=args.author, audience=args.audience, tags=args.tag or (),
+                not_before=args.not_before, expires_after=args.expires_after,
+                audience_scope=args.audience_scope,
+                audience_subject=args.audience_subject,
+                required_signers=args.required_signer or ())
+    elif action == "list":
+        def run():
+            return letters.list_letters(engine.load_workspace(args.workspace))
+    elif action == "show":
+        def run():
+            return letters.show(engine.load_workspace(args.workspace), args.letter)
+    elif action == "open":
+        def run():
+            return letters.open_letter(engine.load_workspace(args.workspace), args.letter)
+    elif action == "reopen":
+        def run():
+            return letters.reopen_letter(engine.load_workspace(args.workspace), args.letter)
+    elif action == "cosign":
+        def run():
+            return letters.cosign(engine.load_workspace(args.workspace), args.letter)
+    elif action == "signatures":
+        def run():
+            return letters.signatures(engine.load_workspace(args.workspace),
+                                      args.letter)
+    elif action == "export-signatures":
+        def run():
+            return letters.export_cosignatures(
+                engine.load_workspace(args.workspace), args.letter, out=args.out)
+    elif action == "import-signatures":
+        def run():
+            return letters.import_cosignatures(
+                engine.load_workspace(args.workspace), args.document)
+    elif action == "reconcile":
+        def run():
+            return letters.reconcile(engine.load_workspace(args.workspace))
+    elif action == "export":
+        def run():
+            return letters.export_bundle(
+                engine.load_workspace(args.workspace), args.letter,
+                out=args.out, recovery=args.recovery)
+    elif action == "import":
+        def run():
+            return letters.import_bundle(
+                engine.load_workspace(args.workspace), args.bundle)
+    else:  # pragma: no cover - argparse makes this unreachable
+        raise SailangError("BAD_INPUT", f"unknown future-letter action {action!r}")
+
+    return _dispatch_workspace(f"future-letter-{action}", run, as_json)
+
+
 def _cmd_reply(args, as_json: bool) -> int:
     engine = _workspace_engine()
 
@@ -621,6 +704,268 @@ def _cmd_reply(args, as_json: bool) -> int:
                                     topic=args.topic, kind=args.kind)
 
     return _dispatch_workspace("reply", action, as_json)
+
+
+def _trust_engine():
+    from saimail import trust
+
+    return trust
+
+
+def _cmd_trust(args, as_json: bool) -> int:
+    """FUTURE GATE Wave 1: fingerprint-pinned peers, rotation receipts, revocation."""
+    engine = _workspace_engine()
+    trust = _trust_engine()
+
+    def action():
+        if args.trust_action == "mode":
+            return trust.set_mode(engine.load_workspace_headers(args.workspace),
+                                  args.mode)
+        if args.trust_action == "list":
+            return trust.list_pins(engine.load_workspace_headers(args.workspace))
+        if args.trust_action == "explain":
+            return trust.explain(engine.load_workspace_headers(args.workspace), args.alias)
+        if args.trust_action == "rotation-receipt":
+            return engine.command_result(
+                "trust-rotation-receipt", "OK",
+                workspace=engine.load_workspace(args.workspace),
+                receipt=trust.build_rotation_receipt(
+                    engine.load_workspace(args.workspace),
+                    engine.load_workspace(args.new_workspace), alias=args.alias),
+                detail="both identities signed; hand this receipt to the trusting side")
+        workspace = engine.load_workspace(args.workspace)
+        if args.trust_action == "observe":
+            return trust.observe(workspace, args.alias)
+        if args.trust_action == "pin":
+            return trust.pin(workspace, args.alias, source=args.source)
+        if args.trust_action == "revoke":
+            return trust.revoke(workspace, args.alias, reason=args.reason)
+        if args.trust_action == "block":
+            return trust.block(workspace, args.alias, reason=args.reason)
+        if args.trust_action == "expect-rotation":
+            card = json.loads(Path(args.card).read_text(encoding="utf-8"))
+            return trust.expect_rotation(workspace, args.alias, card)
+        receipt = json.loads(Path(args.receipt).read_text(encoding="utf-8"))
+        return trust.apply_rotation(workspace, args.alias, receipt)
+
+    return _dispatch_workspace(f"trust-{args.trust_action.replace('-', '_')}", action,
+                               as_json, trust.OPERATOR_ACTION_CODES)
+
+
+def _ledger_engine():
+    from saimail import ledger
+
+    return ledger
+
+
+def _cmd_ledger(args, as_json: bool) -> int:
+    """FUTURE GATE Wave 2: read the append-only delivery record and fold it.
+
+    Every action here is a READ of history. `reconstruct` in particular is what
+    answers "what actually happened to this message" when the projection files
+    and the record disagree, which is the situation the wave exists for.
+    """
+    engine = _workspace_engine()
+    ledger = _ledger_engine()
+
+    def action():
+        workspace = engine.load_workspace_headers(args.workspace)
+        if args.ledger_action == "health":
+            return ledger.health(workspace)
+        if args.ledger_action == "reconcile":
+            return ledger.reconcile(workspace, clock=engine.postoffice.utc_now)
+        if args.ledger_action == "feed":
+            return ledger.feed(workspace, cursor=args.cursor, limit=args.limit)
+        return ledger.reconstruct(workspace)
+
+    return _dispatch_workspace(f"ledger-{args.ledger_action}", action, as_json,
+                               ledger.OPERATOR_ACTION_CODES)
+
+
+def _cold_engine():
+    from saimail import cold_archive
+
+    return cold_archive
+
+
+def _cmd_cold(args, as_json: bool) -> int:
+    """FUTURE GATE Wave 3: hot -> cold archive -> verify -> prune -> restore.
+
+    `archive` and `prune` and `restore` move bytes, so they load the full
+    workspace: the authorized reopen in `verify` needs the recipient key, and a
+    hash-only check that silently stood in for a real one would weaken exactly
+    the gate the wave exists to enforce. `health` and `search` stay on the
+    secret-free view -- a search never decrypts, and must never be able to.
+    """
+    engine = _workspace_engine()
+    cold = _cold_engine()
+
+    def policy():
+        kinds = args.kind or None
+        return cold.retention_policy(
+            older_than_seconds=args.older_than_seconds,
+            max_count=args.max_count, max_bytes=args.max_bytes, kinds=kinds)
+
+    def action():
+        write_actions = ("archive", "prune", "restore")
+        workspace = (engine.load_workspace(args.workspace)
+                     if args.cold_action in write_actions
+                     else engine.load_workspace_headers(args.workspace))
+        if args.cold_action == "health":
+            return cold.health(workspace)
+        if args.cold_action == "search":
+            return cold.search(workspace, text=args.text,
+                               kinds=args.kind or None,
+                               limit=args.limit, semantic=args.semantic)
+        if args.cold_action == "verify":
+            return cold.verify_record(workspace, args.envelope_id)
+        if args.cold_action == "archive":
+            return cold.archive(workspace, args.envelope_id, pin=args.pin,
+                                prune=args.prune_hot)
+        if args.cold_action == "restore":
+            return cold.restore(workspace, args.envelope_id)
+        return cold.prune(workspace, retention=policy(), limit=args.limit,
+                          dry_run=args.dry_run)
+
+    return _dispatch_workspace(f"cold-{args.cold_action}", action, as_json,
+                               cold.OPERATOR_ACTION_CODES)
+
+
+def _catchup_engine():
+    from saimail import catchup
+
+    return catchup
+
+def _canary_engine():
+    from saimail import canary
+
+    return canary
+
+def _surface_engine():
+    from saimail import surface
+
+    return surface
+
+def _cmd_surface(args, as_json: bool) -> int:
+    """FUTURE GATE Wave 7: the surface that describes itself.
+
+    `map` walks the registered parser, so this document is wrong the moment a
+    verb is added or removed -- which is the point. `schema` is the versioned
+    capability advertisement. `health` is the dashboard and `feed` is the event
+    cursor that says GAP out loud when history was trimmed underneath it.
+
+    A dashboard reporting UNKNOWN exits successfully. The reader is owed the
+    truth about which sections could not be asked, and inventing a failure exit
+    here would train callers to treat UNKNOWN as a crash to retry past.
+    """
+    surface = _surface_engine()
+    action = args.surface_action
+
+    def run():
+        if action in ("map", "schema"):
+            # Wrapped into the same envelope every other verb returns, so a
+            # caller can read `surface` output with one code path. Both still run
+            # under the tripwire: describing the surface must not be a way to
+            # reach the network. The parser is handed over rather than discovered
+            # -- the entrypoint owns the verb tree and the package owns walking
+            # it, so nothing in `saimail` ever has to import this file.
+            parser = _build_parser()
+            document = (surface.cli_map(parser=parser) if action == "map"
+                        else surface.capability_schema(parser=parser))
+            return _workspace_engine().command_result(
+                f"surface-{action}", "OK", detail=document["detail"],
+                document=document)
+        # The FULL workspace, not headers: the inbox, letter and quarantine
+        # sections have to reach the bundles themselves, and a headers-only load
+        # would leave three sections permanently UNKNOWN for a reason that has
+        # nothing to do with the mailbox's actual state.
+        workspace = _workspace_engine().load_workspace(args.workspace)
+        # The FULL workspace, not headers: the inbox, letter and quarantine
+        # sections have to reach the bundles themselves, and a headers-only load
+        # would leave three sections permanently UNKNOWN for a reason that has
+        # nothing to do with the mailbox's actual state.
+        workspace = _workspace_engine().load_workspace(args.workspace)
+        if action == "health":
+            return surface.health(workspace)
+        return surface.feed(workspace, cursor=args.cursor, limit=args.limit)
+
+    return _dispatch_workspace(f"surface-{action}", run, as_json)
+
+
+def _cmd_catchup(args, as_json: bool) -> int:
+    """FUTURE GATE Wave 4: recover owed work after downtime without a replay.
+
+    `plan` only writes down what is owed and coalesces it to one entry per
+    logical job; `run` executes the two classes whose correct action is
+    mechanical (an idempotent send, a reconcile from canonical bytes) and parks
+    the rest with evidence. Nothing here drops an entry, and nothing here
+    attributes the outage to a cause.
+    """
+    engine = _workspace_engine()
+    catchup = _catchup_engine()
+
+    def action():
+        workspace = (engine.load_workspace(args.workspace)
+                     if args.catchup_action in ("run", "plan", "claim")
+                     else engine.load_workspace_headers(args.workspace))
+        if args.catchup_action == "tick":
+            return catchup.record_tick(workspace, clock=engine.postoffice.utc_now)
+        if args.catchup_action == "detect":
+            return catchup.detect_gaps(workspace, clock=engine.postoffice.utc_now)
+        if args.catchup_action == "notice":
+            return catchup.notice(workspace, clock=engine.postoffice.utc_now,
+                                  include_test_data=args.include_test_data or None)
+        if args.catchup_action == "queue":
+            return catchup.queue(workspace, clock=engine.postoffice.utc_now,
+                                 include_test_data=args.include_test_data or None)
+        if args.catchup_action == "plan":
+            return catchup.plan(workspace, clock=engine.postoffice.utc_now)
+        if args.catchup_action == "claim":
+            return catchup.claim(workspace, limit=args.limit,
+                                 clock=engine.postoffice.utc_now)
+        if args.catchup_action == "complete":
+            return catchup.complete(workspace, args.entry_id, detail=args.detail or "",
+                                    clock=engine.postoffice.utc_now)
+        if args.catchup_action == "park":
+            return catchup.park(workspace, args.entry_id, args.reason,
+                                detail=args.detail or "",
+                                clock=engine.postoffice.utc_now)
+        return catchup.run(workspace, limit=args.limit,
+                           clock=engine.postoffice.utc_now)
+
+    return _dispatch_workspace(f"catchup-{args.catchup_action}", action, as_json,
+                               catchup.OPERATOR_ACTION_CODES)
+
+def _cmd_canary(args, as_json: bool) -> int:
+    """FUTURE GATE Wave 5: the mailbox that is allowed to be broken.
+
+    `seed` mints the permanent canary identity; `reset` wipes and reseeds it,
+    and refuses any target whose stamp does not prove it is test data;
+    `status` says which one this is; `record` preserves one scenario's outcome
+    outside the mailbox so a failure report can never be read as a message.
+    """
+    engine = _workspace_engine()
+    canary = _canary_engine()
+    action = args.canary_action
+
+    def run():
+        if action == "seed":
+            return canary.seed(args.workspace, seat=args.seat, purpose=args.purpose,
+                               custody=args.custody, clock=engine.postoffice.utc_now)
+        if action == "reset":
+            return canary.reset(args.workspace, purpose=args.purpose,
+                                custody=args.custody,
+                                clock=engine.postoffice.utc_now)
+        workspace = engine.load_workspace_headers(args.workspace)
+        if action == "status":
+            return canary.status(workspace)
+        if action == "record":
+            return canary.record_failure(workspace, scenario=args.scenario,
+                                         outcome=args.outcome,
+                                         detail=args.detail or "")
+        return canary.reports(workspace)
+
+    return _dispatch_workspace(f"canary-{args.canary_action}", run, as_json)
 
 
 def _cmd_outbox(args, as_json: bool) -> int:
@@ -1135,6 +1480,10 @@ def _build_parser() -> argparse.ArgumentParser:
                          help="maximum index rows to examine (bounded query)")
     inbox_p.add_argument("--cursor", type=int, default=None,
                          help="opaque continuation offset from a previous query page")
+    inbox_p.add_argument("--include-test-data", dest="include_test_data",
+                         action="store_true",
+                         help="show canary (TEST DATA) messages, which are hidden "
+                              "by default so a production inbox never mixes them in")
     inbox_p.add_argument("--json", action="store_true", dest="sub_json")
 
     open_p = sub.add_parser("open", help="explicitly open one exact message")
@@ -1200,6 +1549,205 @@ def _build_parser() -> argparse.ArgumentParser:
     for outbox_action_p in (outbox_send_p, outbox_resume_p, outbox_retry_p, outbox_status_p):
         outbox_action_p.add_argument("--workspace", required=True)
         outbox_action_p.add_argument("--json", action="store_true", dest="sub_json")
+
+    trust_p = sub.add_parser(
+        "trust", help="fingerprint-pinned peers, key rotation receipts, revocation "
+                      "(FUTURE GATE Wave 1)")
+    trust_sub = trust_p.add_subparsers(dest="trust_action", required=True)
+    trust_list_p = trust_sub.add_parser("list", help="every pin and its current verdict")
+    trust_explain_p = trust_sub.add_parser(
+        "explain", help="why one peer is trusted or refused right now")
+    trust_explain_p.add_argument("--alias", required=True)
+    trust_observe_p = trust_sub.add_parser(
+        "observe", help="record that an alias resolves, without trusting it")
+    trust_observe_p.add_argument("--alias", required=True)
+    trust_pin_p = trust_sub.add_parser(
+        "pin", help="accept exactly the key this alias resolves to now")
+    trust_pin_p.add_argument("--alias", required=True)
+    trust_pin_p.add_argument("--source", required=True,
+                             help="why this key was accepted; provenance, never authority")
+    trust_revoke_p = trust_sub.add_parser(
+        "revoke", help="refuse this peer now and after every restart")
+    trust_revoke_p.add_argument("--alias", required=True)
+    trust_revoke_p.add_argument("--reason", required=True)
+    trust_block_p = trust_sub.add_parser(
+        "block", help="refuse this peer as compromised; it cannot rotate back in")
+    trust_block_p.add_argument("--alias", required=True)
+    trust_block_p.add_argument("--reason", required=True)
+    trust_mode_p = trust_sub.add_parser(
+        "mode", help="advisory (report only) or enforce (a blocked pin refuses delivery)")
+    trust_mode_p.add_argument("--mode", required=True, choices=["advisory", "enforce"])
+    trust_receipt_p = trust_sub.add_parser(
+        "rotation-receipt", help="mint the two-signature receipt for a legitimate rotation")
+    trust_receipt_p.add_argument("--alias", required=True)
+    trust_receipt_p.add_argument("--new-workspace", required=True,
+                                 help="the peer's rebuilt workspace, holding the new keys")
+    trust_expect_p = trust_sub.add_parser(
+        "expect-rotation", help="mark a trusted peer as presenting an unauthenticated key")
+    trust_expect_p.add_argument("--alias", required=True)
+    trust_expect_p.add_argument("--card", required=True, help="the new identity card JSON")
+    trust_apply_p = trust_sub.add_parser(
+        "apply-rotation", help="complete a rotation; both signatures are required")
+    trust_apply_p.add_argument("--alias", required=True)
+    trust_apply_p.add_argument("--receipt", required=True, help="the receipt JSON")
+    for trust_action_p in (trust_list_p, trust_explain_p, trust_observe_p, trust_pin_p,
+                           trust_revoke_p, trust_block_p, trust_mode_p, trust_receipt_p,
+                           trust_expect_p, trust_apply_p):
+        trust_action_p.add_argument("--workspace", required=True)
+        trust_action_p.add_argument("--json", action="store_true", dest="sub_json")
+
+    ledger_p = sub.add_parser(
+        "ledger", help="the append-only delivery record and the state it folds to "
+                       "(FUTURE GATE Wave 2)")
+    ledger_sub = ledger_p.add_subparsers(dest="ledger_action", required=True)
+    ledger_sub.add_parser(
+        "health", help="HEALTHY, DEGRADED or UNKNOWN -- never a silent zero")
+    ledger_feed_p = ledger_sub.add_parser(
+        "feed", help="bounded, gap-aware history after a cursor")
+    ledger_feed_p.add_argument("--cursor", type=int, default=0)
+    ledger_feed_p.add_argument("--limit", type=int, default=50)
+    ledger_sub.add_parser(
+        "reconstruct", help="what actually happened to every logical message")
+    ledger_sub.add_parser(
+        "reconcile", help="rebuild missing projections from canonical bytes")
+    for ledger_action_p in ledger_sub.choices.values():
+        ledger_action_p.add_argument("--workspace", required=True)
+        ledger_action_p.add_argument("--json", action="store_true", dest="sub_json")
+
+    cold_p = sub.add_parser(
+        "cold", help="hot -> cold archive -> verify -> prune, never delete before "
+                     "verify (FUTURE GATE Wave 3)")
+    cold_sub = cold_p.add_subparsers(dest="cold_action", required=True)
+    cold_sub.add_parser(
+        "health", help="per-record integrity; corruption is named, never hidden")
+    cold_verify_p = cold_sub.add_parser(
+        "verify", help="hash the stored container and reopen it when a key is held")
+    cold_verify_p.add_argument("--envelope-id", required=True)
+    cold_archive_p = cold_sub.add_parser(
+        "archive", help="write, read back and receipt the cold copy; add --prune-hot "
+                        "to run the whole pipeline")
+    cold_archive_p.add_argument("--envelope-id", required=True)
+    cold_archive_p.add_argument("--pin", action="store_true",
+                                help="never-prune this record explicitly")
+    cold_archive_p.add_argument("--prune-hot", action="store_true", dest="prune_hot",
+                                help="remove the hot copy only after a verified cold "
+                                     "copy and the retention policy both allow it")
+    cold_prune_p = cold_sub.add_parser(
+        "prune", help="apply the retention policy across the archive")
+    cold_restore_p = cold_sub.add_parser(
+        "restore", help="put a verified cold record back into hot storage, idempotently")
+    cold_restore_p.add_argument("--envelope-id", required=True)
+    cold_search_p = cold_sub.add_parser(
+        "search", help="metadata search; every hit points back at its canonical source")
+    cold_search_p.add_argument("--text", default=None)
+    cold_search_p.add_argument("--kind", action="append", default=None)
+    cold_search_p.add_argument("--limit", type=int, default=50)
+    cold_search_p.add_argument("--semantic", action="store_true",
+                               help="refused by name: this archive keeps no plaintext "
+                                    "derivative, and building one is a declared policy "
+                                    "decision")
+    for cold_action_p in cold_sub.choices.values():
+        cold_action_p.add_argument("--workspace", required=True)
+        cold_action_p.add_argument("--json", action="store_true", dest="sub_json")
+    for retention_p in (cold_prune_p,):
+        retention_p.add_argument("--older-than-seconds", type=int, default=None)
+        retention_p.add_argument("--max-count", type=int, default=None)
+        retention_p.add_argument("--max-bytes", type=int, default=None)
+        retention_p.add_argument("--kind", action="append", default=None)
+        retention_p.add_argument("--dry-run", action="store_true", dest="dry_run")
+        retention_p.add_argument("--limit", type=int, default=None)
+
+    catchup_p = sub.add_parser(
+        "catchup", help="what is owed after downtime, coalesced to one entry per "
+                        "logical job (FUTURE GATE Wave 4)")
+    catchup_sub = catchup_p.add_subparsers(dest="catchup_action", required=True)
+    catchup_sub.add_parser(
+        "tick", help="record that the service is alive right now; this is what a later "
+                     "gap is measured from")
+    catchup_sub.add_parser(
+        "detect", help="report the downtime window; the cause is never guessed")
+    catchup_notice_p = catchup_sub.add_parser(
+        "notice", help="facts only: gap, owed count, attempts, oldest, parked reasons")
+    catchup_notice_p.add_argument(
+        "--include-test-data", dest="include_test_data", action="store_true",
+        help="count canary (TEST DATA) entries, which a production queue hides")
+    catchup_queue_p = catchup_sub.add_parser(
+        "queue", help="queued / in-flight / parked / completed / attempts / oldest")
+    catchup_queue_p.add_argument(
+        "--include-test-data", dest="include_test_data", action="store_true",
+        help="show canary (TEST DATA) entries, which a production queue hides")
+    catchup_sub.add_parser(
+        "plan", help="enumerate owed work and coalesce it; safe to run repeatedly")
+    catchup_claim_p = catchup_sub.add_parser(
+        "claim", help="take a bounded slice of in-flight work")
+    catchup_claim_p.add_argument("--limit", type=int, default=None)
+    catchup_complete_p = catchup_sub.add_parser(
+        "complete", help="an entry is finished; its evidence is kept")
+    catchup_complete_p.add_argument("--entry-id", required=True)
+    catchup_complete_p.add_argument("--detail", default="")
+    catchup_park_p = catchup_sub.add_parser(
+        "park", help="an entry is blocked, with a named reason. Never a silent drop")
+    catchup_park_p.add_argument("--entry-id", required=True)
+    catchup_park_p.add_argument("--reason", required=True)
+    catchup_park_p.add_argument("--detail", default="")
+    catchup_run_p = catchup_sub.add_parser(
+        "run", help="execute the mechanical entries and park the ones that need a "
+                    "human or a later review")
+    catchup_run_p.add_argument("--limit", type=int, default=None)
+    for catchup_action_p in catchup_sub.choices.values():
+        catchup_action_p.add_argument("--workspace", required=True)
+        catchup_action_p.add_argument("--json", action="store_true", dest="sub_json")
+
+    canary_p = sub.add_parser(
+        "canary", help="the permanent TEST DATA mailbox destructive proofs are "
+                       "allowed to aim at (FUTURE GATE Wave 5)")
+    canary_sub = canary_p.add_subparsers(dest="canary_action", required=True)
+    canary_seed_p = canary_sub.add_parser(
+        "seed", help="create the canary mailbox and stamp it as test data")
+    canary_seed_p.add_argument("--workspace", required=True)
+    canary_seed_p.add_argument("--seat", required=True,
+                               help="must start with 'canary-'")
+    canary_seed_p.add_argument("--purpose", default="destructive proof lane")
+    canary_seed_p.add_argument("--custody", default="raw")
+    canary_status_p = canary_sub.add_parser(
+        "status", help="classify a mailbox and say whether it may be destroyed")
+    canary_status_p.add_argument("--workspace", required=True)
+    canary_reset_p = canary_sub.add_parser(
+        "reset", help="wipe and reseed a canary; refuses any non-canary target")
+    canary_reset_p.add_argument("--workspace", required=True)
+    canary_reset_p.add_argument("--purpose", default="destructive proof lane")
+    canary_reset_p.add_argument("--custody", default="raw")
+    canary_record_p = canary_sub.add_parser(
+        "record", help="preserve one scenario's outcome outside the mailbox")
+    canary_record_p.add_argument("--workspace", required=True)
+    canary_record_p.add_argument("--scenario", required=True)
+    canary_record_p.add_argument("--outcome", required=True)
+    canary_record_p.add_argument("--detail", default="")
+    canary_reports_p = canary_sub.add_parser(
+        "reports", help="list every preserved TEST DATA failure report")
+    canary_reports_p.add_argument("--workspace", required=True)
+    for canary_action_p in canary_sub.choices.values():
+        canary_action_p.add_argument("--json", action="store_true", dest="sub_json")
+
+    surface_p = sub.add_parser(
+        "surface", help="the live self-map, the capability schema, mailbox health "
+                        "and the gap-aware event feed (FUTURE GATE Wave 7)")
+    surface_sub = surface_p.add_subparsers(dest="surface_action", required=True)
+    surface_sub.add_parser(
+        "map", help="the live command inventory, walked from the registered parser")
+    surface_sub.add_parser(
+        "schema", help="versioned machine-readable capability schema")
+    surface_health_p = surface_sub.add_parser(
+        "health", help="one dashboard section per subsystem, three-valued: "
+                       "HEALTHY / UNHEALTHY / UNKNOWN")
+    surface_health_p.add_argument("--workspace", required=True)
+    surface_feed_p = surface_sub.add_parser(
+        "feed", help="event feed that reports GAP when history was trimmed")
+    surface_feed_p.add_argument("--workspace", required=True)
+    surface_feed_p.add_argument("--cursor", type=int, default=0)
+    surface_feed_p.add_argument("--limit", type=int, default=None)
+    for surface_action_p in surface_sub.choices.values():
+        surface_action_p.add_argument("--json", action="store_true", dest="sub_json")
 
     saipen_p = sub.add_parser(
         "saipen", help="bind to the enclosing SAIPEN project and cite its LOG (spec/04 S2)")
@@ -1346,6 +1894,97 @@ def _build_parser() -> argparse.ArgumentParser:
         letter_parsers[name].add_argument("--budget", type=int, default=20)
         letter_parsers[name].add_argument("--continuation", default=None)
 
+    future_p = sub.add_parser(
+        "future-letter",
+        help="optional notes an agent leaves for a FUTURE agent (T-161)",
+        description=(
+            "Leave, discover and explicitly read optional letters for future agents. "
+            "A future letter is durable, provenance-carrying, authored historical "
+            "material and NON-AUTHORITATIVE: it is never memory, policy, a developer "
+            "instruction or authority. Listing shows METADATA ONLY and never decrypts a "
+            "body; reading is always an explicit open or reopen. Letter text is DATA: "
+            "opening it executes nothing."
+        ),
+    )
+
+    future_sub = future_p.add_subparsers(dest="future_action", required=True)
+    future_parsers = {}
+    for name, help_text in (
+        ("create", "leave one future letter (title + body, no crypto knowledge needed)"),
+        ("list", "list future letters by metadata; no plaintext is decrypted"),
+        ("show", "show one future letter's metadata"),
+        ("open", "explicitly open one future letter and return its body as DATA"),
+        ("reopen", "explicitly reopen one already-opened future letter"),
+        ("export", "export one future letter: private by default, recovery with --recovery"),
+        ("cosign", "sign one future letter with this workspace identity"),
+        ("signatures", "report one letter's co-signing roster without opening it"),
+        ("export-signatures", "write the detached signature document for one letter"),
+        ("import-signatures", "adopt signatures made in another workspace, verified"),
+        ("import", "import one bundle through the canonical send/seal route"),
+        ("reconcile", "rebuild registry projections from the canonical mailbox; idempotent"),
+    ):
+        future_parsers[name] = future_sub.add_parser(name, help=help_text)
+    for name in ("create", "list", "show", "open", "reopen", "cosign",
+                 "signatures", "export-signatures", "export", "reconcile"):
+        future_parsers[name].add_argument("--workspace", required=True)
+    for name in ("show", "open", "reopen", "cosign", "signatures",
+                 "export-signatures", "export"):
+        future_parsers[name].add_argument(
+            "--letter", required=True,
+            help="LETTER_ID or ENVELOPE_ID of the exact future letter")
+    future_parsers["create"].add_argument("--title", required=True)
+    for flag in ("--body", "--body-file"):
+        future_parsers["create"].add_argument(flag, default=None, help="letter body text")
+    future_parsers["create"].add_argument("--author", default=None,
+                                          help="who is leaving the letter")
+    future_parsers["create"].add_argument("--audience", default=None,
+                                          help="who the letter is meant for")
+    future_parsers["create"].add_argument("--tag", action="append", default=None,
+                                          help="short topic token; repeatable")
+    # FUTURE GATE Wave 6. A time lock is a REFUSAL carrying a date, not a
+    # schedule the module arms: nothing here will later run, prompt or inject.
+    future_parsers["create"].add_argument(
+        "--not-before", default=None, metavar="UTC",
+        help="refuse to open before this UTC instant; nothing is scheduled and "
+             "the reader still has to ask again after that date")
+    future_parsers["create"].add_argument(
+        "--expires-after", type=int, default=None, metavar="SECONDS",
+        help="refuse to open once this many seconds after creation; an expired "
+             "capsule does not reopen")
+    future_parsers["create"].add_argument(
+        "--required-signer", action="append", default=None, metavar="SEAT",
+        help="seat that must co-sign before the roster reads SIGNED; repeatable")
+    future_parsers["create"].add_argument(
+        "--audience-scope", default=None,
+        choices=["SEAT", "SUCCESSOR_OF", "MAINTAINERS", "OPERATOR"],
+        help="WHO the letter is written for. Metadata only: never access "
+             "control, and no custody mode binds it")
+    future_parsers["create"].add_argument(
+        "--audience-subject", default=None,
+        help="the seat an audience scope names; required for SEAT and SUCCESSOR_OF")
+    future_parsers["export"].add_argument("--out", default=None,
+                                          help="bundle path (default: inside the workspace)")
+    future_parsers["export-signatures"].add_argument(
+        "--out", default=None,
+        help="signature document path (default: beside the letter registry)")
+    future_parsers["export"].add_argument(
+        "--recovery", action="store_true",
+        help="bundle the recovery key too: survives loss of the workspace identity "
+             "and is explicitly NOT private")
+    future_parsers["import"].add_argument("--workspace", required=True)
+    future_parsers["import"].add_argument("--bundle", required=True,
+                                          help="path to one recovery bundle (.zip)")
+    future_parsers["import-signatures"].add_argument("--workspace", required=True)
+    future_parsers["import-signatures"].add_argument(
+        "--document", required=True, help="path to one detached signature document")
+    # No --custody here on purpose: a stored letter is sealed to THIS workspace
+    # identity, so its custody is PRIVATE whatever the source archive recorded.
+    # A knob that could relabel it would re-advertise a claim import cannot keep.
+    for name in ("create", "list", "show", "open", "reopen", "cosign",
+                 "signatures", "export-signatures", "export", "import",
+                 "import-signatures", "reconcile"):
+        future_parsers[name].add_argument("--json", action="store_true", dest="sub_json")
+
     accept_p = sub.add_parser("acceptance", help="run the isolated multi-invocation V2-01 acceptance")
     accept_p.add_argument("--root", default=None, help="fresh root for the two workspaces")
     accept_p.add_argument("--out", default=None, help="write the machine-readable result here")
@@ -1396,14 +2035,28 @@ def main(argv=None) -> int:
             return _cmd_reopen(args, as_json)
         if args.subcommand == "reply":
             return _cmd_reply(args, as_json)
+        if args.subcommand == "future-letter":
+            return _cmd_future_letter(args, as_json)
         if args.subcommand == "custody":
             return _cmd_custody(args, as_json)
         if args.subcommand == "saipen":
             return _cmd_saipen(args, as_json)
         if args.subcommand == "outbox":
             return _cmd_outbox(args, as_json)
+        if args.subcommand == "trust":
+            return _cmd_trust(args, as_json)
+        if args.subcommand == "ledger":
+            return _cmd_ledger(args, as_json)
+        if args.subcommand == "cold":
+            return _cmd_cold(args, as_json)
+        if args.subcommand == "catchup":
+            return _cmd_catchup(args, as_json)
+        if args.subcommand == "canary":
+            return _cmd_canary(args, as_json)
         if args.subcommand == "acceptance":
             return _cmd_acceptance(args, as_json)
+        if args.subcommand == "surface":
+            return _cmd_surface(args, as_json)
         parser.error(f"unknown subcommand {args.subcommand!r}")
 
     mode = "utility" if args.utility else "demo"

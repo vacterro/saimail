@@ -42,6 +42,8 @@ def frozen_root(tmp_path_factory):
             source = Path(__file__).parent / "fixtures/t71/legacy.py.txt"
         elif row["path"] == "saimail/postoffice.py":
             source = Path(__file__).parent / "fixtures/t71/postoffice.py.txt"
+        elif row["path"] == "saimail/envelope.py":
+            source = Path(__file__).parent / "fixtures/t71/envelope.py.txt"
         body = source.read_bytes()
         assert hashlib.sha256(body).hexdigest() == row["sha256"], row["path"]
         target = root / row["path"]

@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-118:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "Enforce receiver-owned operator-attention gate for agent-originated SAIMAIL human interruptions"
+    }
+  },
+  "derived_at": "2026-10-01T17:24:53Z",
+  "derived_from": "SRC-118",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "fd13febe75a622ef8144ee26889af0ee4ddfa67ffcf0a88f84b94a89b1931ed7"
+}

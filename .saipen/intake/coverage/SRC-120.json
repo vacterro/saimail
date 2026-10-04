@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-120:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-161 closed with verification evidence in LOG: SHIP -> PASS [target: T-161] conf: high -- SHIP is the working tree plus .saipen/ state only. Nothing is published: no commit, tag, push or registry, because no publish was authorized, and the seed archive operator_import/future_letters/SAIMAIL_FUTURE_LETTER_GPT56SOL_20261003_1535.zip stays exactly where it was with sha256 1e4476b4fc1bb380a76c20c24fdf6a89b23de5968be9a888ddab306181f3540a. Shipped s",
+      "text": "SAIHANDOFF: durable FUTURE_LETTER capability - canonically import GPT-5.6 Sol seed letter, add create/list/open/reopen/export/import, inert-data tests, cold-start proof",
+      "verification": "the Work this request created reached its own verification gate; see the T-161 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-161"
+    }
+  },
+  "schema_version": 1
+}

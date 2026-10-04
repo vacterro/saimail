@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-116:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "saitranslate"
+    }
+  },
+  "derived_at": "2026-09-30T19:41:03Z",
+  "derived_from": "SRC-116",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "f65242e628cdfb7f7164e610fe6ad7ec744a4d23a107301d4dafe86919894048"
+}

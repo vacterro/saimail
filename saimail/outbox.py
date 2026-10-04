@@ -42,7 +42,7 @@ from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PublicKey
 
 from sailang import SailangError
 from sailang import parse as parse_record
-from saimail import envelope, postoffice
+from saimail import envelope, ledger, postoffice
 from saimail import workspace as _workspace
 
 OUTBOX_INTENT_SCHEMA = "SAIMAIL_OUTBOX_INTENT_1"
@@ -266,6 +266,12 @@ def _seal(workspace, intent: dict, now: str) -> None:
                   envelope_id=envelope.envelope_id(container), sealed_at=now)
     _write(workspace, intent)
     _workspace._store_outbox(workspace, intent["envelope_id"], container)
+    # Wave 2: the seal and the committed container are facts about a logical
+    # message, recorded so a crash here is explainable without the intent file.
+    ledger.note(workspace, ledger.SEALED, message_id=intent["key_id"], actor=workspace.seat,
+                at=now, envelope_id=intent["envelope_id"])
+    ledger.note(workspace, ledger.OUTBOX_COMMITTED, message_id=intent["key_id"],
+                actor=workspace.seat, at=now, envelope_id=intent["envelope_id"])
 
 
 def _deliver(workspace, intent: dict, now: str, clock) -> None:
@@ -274,6 +280,9 @@ def _deliver(workspace, intent: dict, now: str, clock) -> None:
         _workspace._store_outbox(workspace, intent["envelope_id"], intent["container"])
     intent["attempts"] += 1
     intent["last_attempt_at"] = now
+    ledger.note(workspace, ledger.DELIVERY_ATTEMPTED, message_id=intent["key_id"],
+                actor=workspace.seat, at=now, envelope_id=intent["envelope_id"],
+                attempt=intent["attempts"])
     try:
         recipient = _workspace._resolve_recipient(workspace, intent["alias"])
         if recipient["seat"] != intent["recipient_seat"]:
@@ -287,6 +296,9 @@ def _deliver(workspace, intent: dict, now: str, clock) -> None:
                           next_attempt_at=_backoff_until(now, intent["attempts"]))
         else:
             _fail(intent, now, exc.code)
+            ledger.note(workspace, ledger.FAILED, message_id=intent["key_id"],
+                        actor=workspace.seat, at=now, attempt=intent["attempts"],
+                        detail={"code": exc.code})
         _write(workspace, intent)
         return
     except OSError:
@@ -298,8 +310,14 @@ def _deliver(workspace, intent: dict, now: str, clock) -> None:
         intent.update(state=DELIVERED, delivery_status=delivery.status,
                       received_at=delivery.received_at, delivered_at=now,
                       last_error=None, next_attempt_at=None)
+        ledger.note(workspace, ledger.DELIVERED, message_id=intent["key_id"],
+                    actor=workspace.seat, at=now, envelope_id=intent["envelope_id"],
+                    attempt=intent["attempts"], detail={"status": delivery.status})
     else:
         _fail(intent, now, delivery.status, delivery.reason)
+        ledger.note(workspace, ledger.FAILED, message_id=intent["key_id"],
+                    actor=workspace.seat, at=now, attempt=intent["attempts"],
+                    detail={"status": delivery.status})
     _write(workspace, intent)
 
 
@@ -369,6 +387,8 @@ def submit_send(workspace, alias: str, *, key: str, claim=None, record_path=None
                           topic=topic, subject=subject, created=now, state=PENDING,
                           record=record, recorded_at=now, attempts=0)
             _write(workspace, intent)
+            ledger.note(workspace, ledger.CREATED, message_id=intent_key_id,
+                        actor=workspace.seat, at=now, detail={"alias": alias})
             fresh = True
         elif intent["request_digest"] != digest:
             _reject(IDEMPOTENCY_KEY_CONFLICT,

@@ -1,0 +1,17 @@
+{
+  "package": "SAIMAIL_AIPASS_FUTURE_GATES",
+  "created_at": "2026-10-04T05:35:00+03:00",
+  "source_repo": "https://github.com/AIOSAI/AIPass",
+  "files": [
+    "00_INDEX.md",
+    "01_WAVE_1_TRUST_IDENTITY_CONTINUITY.md",
+    "02_WAVE_2_APPEND_ONLY_DELIVERY_LEDGER.md",
+    "03_WAVE_3_COLD_ARCHIVE_VERIFY_PRUNE.md",
+    "04_WAVE_4_RECOVERY_CATCHUP.md",
+    "05_WAVE_5_CANARY_MAILBOX_CHAOS_PROOF.md",
+    "06_WAVE_6_TIME_CAPSULES_AND_COSIGNED_LETTERS.md",
+    "07_WAVE_7_LIVE_SURFACE_HEALTH_AND_GAP_OBSERVABILITY.md",
+    "SOURCES.md"
+  ],
+  "note": "Architectural inspiration only; no source code copied."
+}

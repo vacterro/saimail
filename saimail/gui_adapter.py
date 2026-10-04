@@ -37,6 +37,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from sailang import SailangError
+from saimail import future_letter as _future_letter
 from saimail import workspace as _workspace
 
 #: The closed application state set (V5-01 Milestone 6).
@@ -126,6 +127,39 @@ class Page:
     @property
     def has_more(self) -> bool:
         return self.exhausted and self.cursor is not None
+
+
+def _read_content(workspace, row: dict, action: str) -> dict:
+    """Read one row explicitly, through whichever backend owns its kind.
+
+    Ordinary mail is a SAILANG record. A FUTURE_LETTER payload is a canonical
+    letter container, so it goes through the future-letter reader and comes
+    back shaped the same way for the detail pane, carrying the inert notice so
+    the pane can label it as text an earlier model wrote.
+    """
+    envelope_id = row["envelope_id"]
+    if row.get("kind") == _future_letter.KIND:
+        reader = (_future_letter.open_letter if action == "open"
+                  else _future_letter.reopen_letter)
+        result = reader(workspace, envelope_id)
+        letter = result["letter"]
+        record = {
+            "content_id": letter["letter_id"], "kind": _future_letter.KIND,
+            "claim": result["body"], "subject": letter["title"],
+            "status": "FUTURE_LETTER", "evidence_state": "NON_AUTHORITATIVE",
+            "notice": result["notice"], "author": letter["author"],
+            "classification": result["classification"],
+        }
+    else:
+        result = (_workspace.open_message if action == "open"
+                  else _workspace.reopen_message)(workspace, envelope_id)
+        record = dict(result.get("record") or {})
+    record["envelope_id"] = envelope_id
+    record["from"] = row["from"]
+    record.setdefault("kind", row.get("kind"))
+    record["topic"] = row.get("topic")
+    record["received_at"] = row.get("received_at")
+    return record
 
 
 class GuiAdapter:
@@ -443,17 +477,11 @@ class GuiAdapter:
                                    f"state {row['state']} cannot be opened")
         self.busy = True
         try:
-            result = _workspace.open_message(self.workspace, row["envelope_id"])
+            record = _read_content(self.workspace, row, "open")
         except SailangError as exc:
             return self._fail("open", exc)
         finally:
             self.busy = False
-        record = dict(result.get("record") or {})
-        record["envelope_id"] = row["envelope_id"]
-        record["from"] = row["from"]
-        record["kind"] = row.get("kind")
-        record["topic"] = row.get("topic")
-        record["received_at"] = row.get("received_at")
         self._opened[row["envelope_id"]] = record
         for item in self.page.items:
             if item["envelope_id"] == row["envelope_id"]:
@@ -491,17 +519,11 @@ class GuiAdapter:
                                    f"state {row['state']} cannot be reopened")
         self.busy = True
         try:
-            result = _workspace.reopen_message(self.workspace, row["envelope_id"])
+            record = _read_content(self.workspace, row, "reopen")
         except SailangError as exc:
             return self._fail("reopen", exc)
         finally:
             self.busy = False
-        record = dict(result.get("record") or {})
-        record["envelope_id"] = row["envelope_id"]
-        record["from"] = row["from"]
-        record["kind"] = row.get("kind")
-        record["topic"] = row.get("topic")
-        record["received_at"] = row.get("received_at")
         self._opened[row["envelope_id"]] = record
         self.error_active = False
         return self._ok("reopen", "READ", f"reopened {row['envelope_id']} explicitly",

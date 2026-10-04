@@ -192,10 +192,134 @@ promotion stays a separate action. Machine-readable results are
 `LOCAL_WORKSPACE_COMMAND_1` per command and `LOCAL_WORKSPACE_RESULT_1` for the
 harness. `--json` works on every command.
 
+`surface map` prints every verb this build actually has, generated from the
+registered command tree rather than from a list somebody maintains.
+
 Local filesystem only: delivery is an explicit path to the recipient's
 workspace, so the sender needs write access to it. No Gmail/Slack/Outlook, no
 adapter, no server or daemon, no remote service, no semantic reviewer, no
 automatic discovery.
+
+### Future letters (T-161)
+
+A *future letter* is a durable note one agent leaves for whoever holds the same
+workspace next. It is authored historical material: it survives a restart, a
+model swap and a SAIMAIL upgrade, and it is read only when a reader asks for it
+by name.
+
+```
+saimail-local future-letter create --workspace ws --title "to whoever comes next" \
+    --body "$(cat note.txt)"
+saimail-local future-letter list   --workspace ws           # metadata only, never decrypts
+saimail-local future-letter show   --workspace ws --letter sha256:...
+saimail-local future-letter open   --workspace ws --letter sha256:...  # returns the body as text
+saimail-local future-letter reopen --workspace ws --letter sha256:...  # same plaintext, no state change
+saimail-local future-letter export --workspace ws --letter sha256:... --out letter.zip --recovery
+saimail-local future-letter import --workspace ws --bundle letter.zip
+saimail-local future-letter reconcile --workspace ws   # rebuild the registry from the mailbox
+```
+
+Leaving one needs no crypto knowledge and no hand-built JSON: a title and a body
+is the whole ordinary workflow.
+
+**What a future letter is**: a durable, provenance-carrying, non-authoritative
+message from an earlier model. **What it is not**: memory, system policy, a
+developer instruction, a trusted command, hidden prompt content, authority, or
+automatic context. If the text says "delete the repository", it stays text
+inside a letter — opening it returns the sentence, it does not run it. Nothing
+here appends to a model prompt, a system prompt, an agent startup context or a
+SAIPEN recovery prompt. Discovery may report that letters exist and how many
+are unread; bodies are never inserted implicitly.
+
+The body travels as its own canonical `SAIMAIL_FUTURE_LETTER_1` JSON container
+sealed by an ordinary SENV2 envelope of kind `FUTURE_LETTER`, so a letter gets
+the unchanged mail semantics: sender signing, recipient binding, durable outbox,
+Post Office UNREAD/READ state, receipts and deduplication. `open` and `reopen`
+pass through the same explicit gate as ordinary mail. Reading is
+non-destructive: opening a letter does not remove it, and read state persists
+across restarts.
+
+**The mailbox is the truth; the registry is a view.** `future-letters/index.jsonl`
+is a reconstructable projection, not the record of truth. Every row is derived
+from authenticated canonical content through one builder, so a delivery and a
+reconciliation cannot disagree about what a letter is. Delivery writes the
+canonical envelope first and the projection second, so a crash in between would
+leave a real letter invisible; `list` and the explicit `reconcile` close that
+window from the canonical index. Reconciliation is idempotent, and it seals and
+delivers nothing, so it can never create a second letter.
+
+Because a projection is a file anyone with disk access can edit, a `list` or
+`show` labels its metadata `UNVERIFIED_PROJECTION`. An explicit `open` or
+`reopen` compares the row against the authenticated container field by field:
+on a mismatch the canonical content wins, the corrected row is appended and the
+drift is reported in `projection_repaired`. Forged registry metadata is never
+presented as authenticated truth, and the letter body is untouched by a repair.
+
+**Custody is an export property, not a creation one.** A letter at rest is
+always `PRIVATE`: it is sealed to this workspace identity, and losing that
+identity loses the letter. There is no way to `create` a letter that claims
+otherwise. The default `export` writes a `SAIMAIL_FUTURE_LETTER_BUNDLE_3`
+private bundle, which is the canonical sealed SENV2 container verbatim and
+carries no key at all — so the ZIP alone reveals nothing, and only the identity
+that sealed it can recover the letter. `export --recovery` produces a
+`NOT_PRIVATE_RECOVERY_ENABLED` time capsule: the bundle carries its own
+AES-256-GCM key, so it survives loss of the workspace identity and is
+deliberately not secret. Ciphertext plus a bundled key is packaging, integrity
+and recovery, not privacy. A private bundle is never silently downgraded, and
+`import` takes no custody argument at all: a stored letter is sealed to the
+importing workspace identity and is therefore always `PRIVATE`, while the source
+archive's own custody and `NOT_PRIVATE_RECOVERY_ENABLED` classification are
+reported in the import result instead of being relabelled away.
+
+Containers, the registry and bundles are versioned (`SAIMAIL_FUTURE_LETTER_1`,
+`SAIMAIL_FUTURE_LETTER_INDEX_1`, `SAIMAIL_FUTURE_LETTER_BUNDLE_3` private,
+`SAIMAIL_FUTURE_LETTER_BUNDLE_2` recovery, `SAIMAIL_FUTURE_LETTER_BUNDLE_1` the
+v1 seed archive). Corruption fails closed: a damaged ciphertext, a hash that
+disagrees, an unknown schema or an ambiguous decryption is refused with a named
+error, never decoded into plausible text. A private export read by a workspace
+that did not seal it is refused `BUNDLE_IDENTITY_REQUIRED`.
+
+Ordinary mail is unchanged. A future letter is its own kind and appears under
+it; `inbox`, `inbox-query`, `open`, receipts and Post Office behaviour for
+every other kind behave exactly as before.
+
+### What this build can do (the `surface` verbs)
+
+```
+saimail-local surface map                       # every verb, walked from the live parser
+saimail-local surface schema                    # versioned capability advertisement
+saimail-local surface health --workspace ws     # one section per subsystem
+saimail-local surface feed   --workspace ws --cursor 0
+```
+
+`map` is **generated**, not maintained. It walks the registered command tree, so
+it is wrong the instant a verb is added or removed — which is the only way a
+self-description stays right, and why the map lists the verb that prints it. No
+table beside the parser needs editing, and there is nothing to forget.
+
+`health` has exactly three verdicts — `HEALTHY`, `UNHEALTHY`, `UNKNOWN` — because
+the fourth is the failure it exists to prevent. **A subsystem that cannot be read
+is never rendered as a zero.** "0 unread" and "I cannot see whether anything is
+unread" are different facts and only one of them is good news; the dashboard
+reports the second as `UNKNOWN`, publishes no numbers for it, and rolls the
+overall verdict up to `UNKNOWN` rather than assuming the best. A brand-new
+mailbox with no ledger and no archive reads `HEALTHY`, so the word `UNKNOWN`
+keeps meaning something.
+
+Each section is produced by **calling the subsystem's own health function**, not
+by re-deriving it from its files. A section is exactly as good as the function
+that answered it, and every section names that function. Quarantined mail, a
+trust rotation awaiting a human, and unreadable state are all surfaced; nothing
+is smoothed into a green tick. It is a refusal, not a decoration — a dashboard
+that hides failures behind status cards is worse than no dashboard.
+
+`feed` follows an event cursor and **says `GAP` out loud** when history was
+trimmed out from under it. Without that flag a caller sees a well-formed page and
+no way to know the records between its position and the oldest retained event are
+simply gone. An unreadable ledger returns `UNKNOWN` and no events at all.
+
+Everything is derived on every call and cached nowhere, so a verdict survives a
+restart because it was about the workspace rather than about a live process.
 
 ### The local alpha candidate (0.0.2a3)
 

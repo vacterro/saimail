@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-116:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-150 closed with verification evidence in LOG: verify -> PASS [target: T-150] conf: high -- python .saipen/saitranslate/kitchen/_source_digest.py -> exit 0, reports 'README.ja.md: current' and 'README.uk.md: current'; the helper imports the canonical recipe from <saipen_home>/tools/freshness.py instead of restating it, so the marker it checks is the marker the ship gate reads, and its self-check asserts a numeric bump and a suffix bump leave t",
+      "text": "saitranslate",
+      "verification": "the Work this request created reached its own verification gate; see the T-150 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-150"
+    }
+  },
+  "schema_version": 1
+}

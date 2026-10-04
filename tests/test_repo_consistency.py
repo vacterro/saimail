@@ -1591,3 +1591,50 @@ def test_every_new_operator_beacon_is_registered_before_it_sits_in_the_folder():
         "against that receipt's digest), or add it to "
         "LEGACY_UNREGISTERED_BEACON if it genuinely needs no Work"
     )
+
+
+# --------------------------------------------------------------------
+# future letters (T-161)
+# --------------------------------------------------------------------
+
+def test_t161_future_letters_are_recorded_as_a_stable_non_authoritative_surface():
+    """The API map, the module, the docs and the wire kind agree, and nothing
+    here quietly became an instruction surface."""
+    from saimail import envelope, future_letter
+
+    api = json.loads(read(ROOT / "lab/stable_local_api.json"))
+    exported = {(item["module"], item["symbol"]) for item in api["apis"]}
+    for symbol in ("create", "list_letters", "show", "open_letter", "reopen_letter",
+                   "export_bundle", "import_bundle", "read_bundle"):
+        assert ("saimail.future_letter", symbol) in exported, symbol
+        assert callable(getattr(future_letter, symbol))
+
+    documented = {entry["code"] for entry in api["failure_codes"]
+                  if entry["where"] == "saimail/future_letter.py"}
+    for code in ("BUNDLE_CORRUPT", "BUNDLE_HASH_MISMATCH", "BUNDLE_DECRYPT_FAILED",
+                 "UNSUPPORTED_SCHEMA", "RECOVERY_KEY_REQUIRED", "LETTER_NOT_FOUND",
+                 "LETTER_ALREADY_IMPORTED"):
+        assert code in documented, code
+
+    # The kind rides the existing closed set rather than a parallel mailbox.
+    assert future_letter.KIND in envelope.KINDS
+    assert future_letter.KIND == "FUTURE_LETTER"
+
+    # Nothing in the library names an instruction surface.
+    source = read(ROOT / "saimail/future_letter.py")
+    assert "saimail_local" not in source and "import lab" not in source
+    assert ".saipen" not in source
+    for forbidden in ("system_prompt", "append_to_prompt", "auto_open",
+                      "startup_context"):
+        assert forbidden not in source, forbidden
+
+    # The two custody modes are named, not implied.
+    assert future_letter.classification(future_letter.CUSTODY_PRIVATE) == "PRIVATE"
+    assert (future_letter.classification(future_letter.CUSTODY_RECOVERY_ENABLED)
+            == "NOT_PRIVATE_RECOVERY_ENABLED")
+
+    # An agent entering the repo can learn the feature without tribal knowledge.
+    readme = read(ROOT / "README.md")
+    for phrase in ("Future letters", "future-letter list", "future-letter open",
+                   "NOT_PRIVATE_RECOVERY_ENABLED"):
+        assert phrase in readme, phrase

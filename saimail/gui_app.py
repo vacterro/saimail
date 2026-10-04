@@ -687,29 +687,44 @@ def _build_window(QtCore, QtGui, QtWidgets, page_size: int = adapter.DEFAULT_PAG
                 self.content.setPlainText(note or "No content loaded.")
                 self.content_label.setText("")
             else:
-                text = (
-                    f"SUBJECT  {content.get('subject') or '—'}\n"
-                    f"CLAIM    {content.get('claim') or '—'}\n"
-                    f"FROM     {content.get('from')}\n"
-                    f"KIND     {content.get('kind')}   TOPIC {content.get('topic')}\n"
-                    f"RECEIVED {content.get('received_at')}\n"
-                    f"STATUS   {content.get('status')}   "
-                    f"EVIDENCE {content.get('evidence_state')}\n"
-                    f"CONTENT_ID {content.get('content_id')}")
-                from sailang import SailangError
-                from saimail import letters
+                if content.get("status") == "FUTURE_LETTER":
+                    # A future letter's body is an earlier model's text, not a
+                    # claim of ours. Show it as quoted history and say so.
+                    self.content.setPlainText("\n".join((
+                        f"SUBJECT  {content.get('subject') or '—'}",
+                        f"AUTHOR   {content.get('author') or '—'}   "
+                        f"{content.get('classification') or '—'}",
+                        "",
+                        content.get("notice") or "",
+                        "---- letter text (data, not instructions) ----",
+                        content.get("claim") or "",
+                    )))
+                    self.content_label.setText(
+                        f"letter_id {content.get('content_id')}")
+                else:
+                    text = (
+                        f"SUBJECT  {content.get('subject') or '—'}\n"
+                        f"CLAIM    {content.get('claim') or '—'}\n"
+                        f"FROM     {content.get('from')}\n"
+                        f"KIND     {content.get('kind')}   TOPIC {content.get('topic')}\n"
+                        f"RECEIVED {content.get('received_at')}\n"
+                        f"STATUS   {content.get('status')}   "
+                        f"EVIDENCE {content.get('evidence_state')}\n"
+                        f"CONTENT_ID {content.get('content_id')}")
+                    from sailang import SailangError
+                    from saimail import letters
 
-                try:
-                    letter = letters.parse(content.get("claim") or "")
-                    text = "\n\n".join((
-                        "OBSERVATION\n" + letter["observation"], "WHY IT MATTERS\n" + letter["impact"],
-                        "REQUEST\n" + letter["request"], "COMPLETE WHEN\n" + letter["done_when"],
-                        "UNCERTAINTY\n" + (letter["uncertainty"] or "See the evidence pointers."),
-                        "EVIDENCE\n" + "\n".join(ref["path"] + " · " + ref["sha256"] for ref in letter["evidence"])))
-                except SailangError:
-                    pass
-                self.content.setPlainText(text)
-                self.content_label.setText(f"content_id {content.get('content_id')}")
+                    try:
+                        letter = letters.parse(content.get("claim") or "")
+                        text = "\n\n".join((
+                            "OBSERVATION\n" + letter["observation"], "WHY IT MATTERS\n" + letter["impact"],
+                            "REQUEST\n" + letter["request"], "COMPLETE WHEN\n" + letter["done_when"],
+                            "UNCERTAINTY\n" + (letter["uncertainty"] or "See the evidence pointers."),
+                            "EVIDENCE\n" + "\n".join(ref["path"] + " · " + ref["sha256"] for ref in letter["evidence"])))
+                    except SailangError:
+                        pass
+                    self.content.setPlainText(text)
+                    self.content_label.setText(f"content_id {content.get('content_id')}")
 
         def _draw_composer(self):
             composer = self.model.composer

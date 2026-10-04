@@ -1,0 +1,14 @@
+{
+  "requirements": {
+    "SRC-118:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "disposition": "VERIFIED",
+      "evidence": "T-154 closed with verification evidence in LOG: verify -> PASS [target: T-154] conf: high -- python -m pytest => 2998 collected, 0 FAILED, exit 0; python -m ruff check on the 5 touched files => clean; red control (lab/red_control_t154.py) substitutes a pre-fix pass-through gate and turns 47 of 65 gate tests red, so the assertions are load-bearing; the lab-isolation contract also pins lab/ against naming protocol paths",
+      "text": "Enforce receiver-owned operator-attention gate for agent-originated SAIMAIL human interruptions",
+      "verification": "the Work this request created reached its own verification gate; see the T-154 VERIFY cycle in .saipen/LOG.md",
+      "work": "T-154"
+    }
+  },
+  "schema_version": 1
+}

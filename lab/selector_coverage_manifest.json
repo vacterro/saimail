@@ -56,7 +56,7 @@
     },
     {
       "PATH": "saimail/postoffice.py",
-      "SHA256": "de45fc8448e3a4200ef01b4c687ab1f9492f8f13b5b9c7a60160c5f89b6304b4",
+      "SHA256": "f52ad3295310b7ae35f16c4bacd070bc558e8377e57d432c6bee4d3ee081139e",
       "ROLE": "PARSER"
     },
     {

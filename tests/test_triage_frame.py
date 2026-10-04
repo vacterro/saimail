@@ -9,11 +9,13 @@ import ast
 import dataclasses
 import json
 import pathlib
+import sys
 
 import pytest
 
 from saimail.acceptance import ProfileRegistry
 from sailang import Record, SailangError
+import sailang.frame as frame_module
 from sailang.frame import (
     ABSENT,
     OPEN_RECORD,
@@ -594,20 +596,102 @@ def test_receiver_parse_does_not_rebuild_or_recopy_the_alias_table(profile):
         "the receiver's parse must neither rebuild nor re-copy the alias table"
 
 
+#: Python files whose executed lines count as receiver work (PERF-001).
+_RECEIVER_FILES = frozenset(
+    str(pathlib.Path(frame_module.__file__).parent / name)
+    for name in ("frame.py", "line.py", "record.py"))
+
+
+def _receiver_work(fn):
+    """Count the interpreter lines `fn` executes inside sailang.
+
+    Exact, repeatable, and immune to machine load, which is the whole point: the
+    gate this replaced timed itself with ``time.perf_counter`` and was red on
+    three consecutive full-suite runs (small=0.005s large=0.267s against a
+    ``small*6 + 0.1`` budget) while passing every isolated run. ``sys.settrace``
+    is used rather than ``sys.setprofile`` because on this interpreter
+    ``setprofile`` yields exactly zero line events; that was measured, not
+    assumed.
+
+    Scoped to this package on purpose. Counting every line the test executes
+    would also count the test's own loop, and counting other packages would tie
+    a sailang growth claim to edits nobody made here.
+    """
+    counter = [0]
+
+    def local(frame, event, arg):
+        if event == "line" and frame.f_code.co_filename in _RECEIVER_FILES:
+            counter[0] += 1
+        return local
+
+    def tracer(frame, event, arg):
+        return local if event == "call" else None
+
+    saved = sys.gettrace()
+    sys.settrace(tracer)
+    try:
+        fn()
+    finally:
+        sys.settrace(saved)
+    return counter[0]
+
+
 def test_receiver_alias_decode_scales_linearly_not_quadratically(profile):
-    import time
+    """PERF-001: four times the frames must not cost sixteen times the work.
+
+    Two deterministic halves, because the regression class has two halves and no
+    single instrument covers both:
+
+    * executed interpreter lines inside sailang, which catch super-linearity in
+      the receiver's own control flow;
+    * ``_ALIAS_MAP_BUILDS``, the count of materialized alias lookups, which is
+      the only thing that sees the pre-repair shape -- one ``dict(self.aliases)``
+      copy retained per frame. That copy is a single C-level call per frame, so
+      it is linear by call count and emits no Python line event at all: the line
+      counter alone reports the quadratic receiver as perfectly linear.
+
+    Neither half is trusted on the strength of this comment. Each is proved
+    against the subject it must reject, below.
+    """
+    import sailang.frame as frame_module
 
     def receive_and_decode(frames_count):
         batch = _alias_heavy_batch(profile, frames=frames_count,
                                    per_frame_aliases=frames_count)
-        started = time.perf_counter()
-        parsed = Batch.parse(batch.render(), accepted(profile))
-        for bound in parsed.frames:
-            decode(bound)
-        return time.perf_counter() - started
+        wire = batch.render()
 
-    small = receive_and_decode(200)
-    large = receive_and_decode(800)
-    # linear growth is ~4x for 4x the frames; the pre-repair per-frame
-    # dict() copies made it worse. Loose bound: catch the class, not the machine
-    assert large < small * 6.0 + 0.1, f"small={small:.3f}s large={large:.3f}s"
+        def run():
+            parsed = Batch.parse(wire, accepted(profile))
+            for bound in parsed.frames:
+                decode(bound)
+
+        builds_before = frame_module._ALIAS_MAP_BUILDS
+        lines = _receiver_work(run)
+        return lines, frame_module._ALIAS_MAP_BUILDS - builds_before
+
+    small_lines, small_builds = receive_and_decode(200)
+    large_lines, large_builds = receive_and_decode(800)
+
+    # 4x the frames is 4x the work when the growth is linear and 16x when it is
+    # quadratic; 6 separates the two with room for either on integer counts.
+    assert large_lines < small_lines * 6, (
+        f"receiver lines grew {small_lines} -> {large_lines} "
+        f"(x{large_lines / small_lines:.2f} for 4x the frames)")
+    # One batch declares its aliases once. Zero builds at both sizes is the
+    # exact, integer statement that this work is O(1) in frames, not O(n).
+    assert (small_builds, large_builds) == (0, 0), (
+        f"the batch rebuilt its alias lookup per frame: "
+        f"{small_builds} builds for 200 frames, {large_builds} for 800")
+
+    # Red control for the build half, in this test, against the pre-repair
+    # shape: strip the shared lookup so every frame must build -- and retain --
+    # its own copy. The counter must then track the frame count.
+    batch = _alias_heavy_batch(profile, frames=20, per_frame_aliases=20)
+    parsed = Batch.parse(batch.render(), accepted(profile))
+    for bound in parsed.frames:
+        object.__setattr__(bound, "_alias_map", None)
+    before = frame_module._ALIAS_MAP_BUILDS
+    for bound in parsed.frames:
+        decode(bound)
+    assert frame_module._ALIAS_MAP_BUILDS - before == len(parsed.frames), (
+        "the instrument cannot see the regression it exists to catch")

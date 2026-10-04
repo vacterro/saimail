@@ -64,6 +64,7 @@ def main() -> None:
         "spec/DECISIONS-D063.md",
         "spec/DECISIONS-D064.md",
         "spec/DECISIONS-D065.md",
+        "spec/DECISIONS-D066.md",
         "spec/00-PRINCIPLES.md",
         "spec/01-SAILANG-v0.md",
         "spec/02-SAIENVELOPE-v0.md",
@@ -84,16 +85,23 @@ def main() -> None:
         "spec/30-SAIPEN-CAPABILITIES-v0.md",
         "spec/31-SAITELEMES-NOTIFY-v0.md",
         "spec/32-INTER-AGENT-WORKSHOP-POLICY-v0.md",
+        "spec/33-USEFUL-CORRESPONDENCE-v1.md",
+        "spec/34-MASTER-KEY-VAULT-v1.md",
         "saimail/ally_advice.py",
         "saimail/acceptance.py",
+        "saimail/agent_cycle.py",
         "saimail/capabilities.py",
+        "saimail/correspondence.py",
         "saimail/credentials.py",
         "saimail/custody.py",
         "saimail/envelope.py",
         "saimail/hardware_piv.py",
+        "saimail/host_contract.py",
         "saimail/human_attention.py",
         "saimail/inbox_query.py",
+        "saimail/keyvault.py",
         "saimail/legacy.py",
+        "saimail/letters.py",
         "saimail/notify.py",
         "saimail/outbox.py",
         "saimail/participants.py",
@@ -108,6 +116,14 @@ def main() -> None:
         "saimail/selector.py",
         "saimail/workspace.py",
         "saimail_local.py",
+        "saimail_host.py",
+        "saimail_project.py",
+        "UI.md",
+        "humbox/INSTITUTION.md",
+        "humbox/EVOLUTION.md",
+        "humbox/SAIPEN-WORK-DESK.md",
+        "lab/analysis/institution_20260930.md",
+        "lab/analysis/saifren_sample_T145.md",
         "lab/LATEST.md",
         "lab/stability_registration.json",
         "bench/ANALYSIS.md",
@@ -127,10 +143,11 @@ def main() -> None:
         base_source_tree_fingerprint=identity.source_tree_fingerprint,
         base_discovery_model=identity.discovery_model,
         scope=(
-            "wiki-0.0.2a3-current-source-triple: SAIMAIL 0.0.2a3 wiki rebuilt "
-            "from the current tree (README, spec D-001..D-065, modules "
-            "B-001..B-013 plus S2/SAITELEME/outbox/participants/capabilities/"
-            "notify checkout surface) by the adopted saiwiki producer"
+            "wiki-0.0.2a3-checkout-D066: SAIMAIL wiki rebuilt from the current "
+            "tree (README, spec D-001..D-066, modules B-001..B-019 plus the "
+            "S2/SAITELEME/outbox/participants/capabilities/notify checkout "
+            "surface and the D-066 correspondence, keyvault, host-contract and "
+            "agent-cycle surface) by the adopted saiwiki producer"
         ),
         read_set=producer_api.read_set_from(ROOT, read_paths),
         write_set=producer_api.write_set_before(ROOT, write_paths),

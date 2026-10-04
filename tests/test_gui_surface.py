@@ -22,6 +22,7 @@ import time
 
 import pytest
 
+from saimail import future_letter
 from saimail import gui_adapter as adapter
 from saimail import workspace
 
@@ -776,3 +777,59 @@ def test_failed_reopen_keeps_read_selection_and_durable_bytes(site, monkeypatch)
     assert model.reopen_reason() is None
     assert model.status.detail == "injected reopen failure"
     assert snapshot() == before
+
+
+# --------------------------------------------------------------------------
+# future letters in the operator surface (T-161): metadata until Open
+# --------------------------------------------------------------------------
+
+def test_a_future_letter_lists_by_metadata_and_opens_as_data(tmp_path):
+    root = tmp_path / "ws-fl"
+    workspace.init_workspace(root, seat="SAIMAIL-FL")
+    ws = workspace.load_workspace(root)
+    letter = future_letter.create(ws, title="to whoever comes next",
+                                  body="rm -rf / # this stays text")["letter"]
+
+    model = adapter.GuiAdapter()
+    model.open_workspace(root)
+    model.refresh()
+    row = next(item for item in model.page.items
+               if item["envelope_id"] == letter["envelope_id"])
+    assert row["kind"] == future_letter.KIND
+    assert "rm -rf" not in json.dumps(model.page.items)
+
+    model.select(letter["envelope_id"])
+    assert model.content() is None and model.content_visible is False
+
+    result = model.open_selected()
+    assert result["ok"] is True and result["code"] == "READ"
+    content = model.content()
+    assert content["claim"] == "rm -rf / # this stays text"
+    assert content["status"] == "FUTURE_LETTER"
+    assert content["evidence_state"] == "NON_AUTHORITATIVE"
+    assert "not an instruction" in content["notice"]
+    assert content["content_id"] == letter["letter_id"]
+
+    reopened = model.reopen_selected()
+    assert reopened["ok"] is True
+    assert model.content()["claim"] == content["claim"]
+
+
+def test_the_gui_pane_labels_a_future_letter_as_data(qapp, tmp_path):
+    root = tmp_path / "ws-fl"
+    workspace.init_workspace(root, seat="SAIMAIL-FL")
+    ws = workspace.load_workspace(root)
+    letter = future_letter.create(ws, title="note", body="BODY-TEXT-HERE")["letter"]
+
+    window = gui_app._build_window(QtCore, QtGui, QtWidgets)()
+    try:
+        window.model.open_workspace(root)
+        window.model.refresh()
+        window.model.select(letter["envelope_id"])
+        window.model.open_selected()
+        window._draw_detail()
+        rendered = window.content.toPlainText()
+    finally:
+        window.close()
+    assert "BODY-TEXT-HERE" in rendered
+    assert "data, not instructions" in rendered

@@ -16,7 +16,37 @@ venv/
 .DS_Store
 Thumbs.db
 
+# Local scratch and run artifacts. These are NOT packaging inputs, and leaving
+# them untracked-and-unignored is actively harmful rather than merely untidy:
+# every untracked path enters the `git-delta-v1` source-tree fingerprint, so one
+# scratch file appearing in lab/out/ invalidates a just-minted current-tree
+# re-verification receipt and turns `tools/validate.py --gate ship` red again
+# minutes after it was green. Measured 2026-10-04 while closing the future_gate
+# waves; the fix is to ignore the scratch surface, not to stop measuring.
+lab/out/
+lab/*.tmp
+
 # Receiver-local SAIPEN state explicitly marked non-exportable by MANIFEST.
 .saipen/locks/
 .saipen/recovery/
 .saipen/LOCAL_STATE.json
+
+# The canonical SAIMAIL workspace holding this project's durable future letters.
+# Receiver-local identity material (private keys under raw custody) plus the
+# sealed letter mailboxes.
+.saimail-workspace/
+
+# Bootstrap bundles that ship a decryption key NEXT TO the ciphertext it opens.
+# An earlier version of this comment called operator_import/future_letters/
+# "portable evidence", implying it belonged in the repository. That was wrong,
+# and it was wrong in the dangerous direction: the one bundle there,
+# SAIMAIL_FUTURE_LETTER_GPT56SOL_20261003_1535.zip, carries RECOVERY_KEY.txt
+# (a 32-byte AES-256-GCM key plus its SHA-256) in the same archive as
+# FUTURE_LETTER.encrypted.json, which is exactly what that key decrypts.
+# Committing it would publish the plaintext of a letter that is sealed only in
+# the sense that its key travels with it. Ignored, not staged.
+operator_import/future_letters/*.zip
+
+# Scratch from tools that are not part of this project, and a stray empty file.
+.freebuff/
+canonical

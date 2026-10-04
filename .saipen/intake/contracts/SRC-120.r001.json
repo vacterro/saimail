@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "SRC-120:R001": {
+      "actionable": true,
+      "class": "requirement",
+      "text": "SAIHANDOFF: durable FUTURE_LETTER capability - canonically import GPT-5.6 Sol seed letter, add create/list/open/reopen/export/import, inert-data tests, cold-start proof"
+    }
+  },
+  "derived_at": "2026-10-03T15:02:04Z",
+  "derived_from": "SRC-120",
+  "interpretation_revision": 1,
+  "schema_version": 1,
+  "source_sha256": "5c1a43fee03bc438101c3cd4410d5fa99975b66ee3c7c1a1152be42e3c30c4e9"
+}

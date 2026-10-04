@@ -1,16 +1,16 @@
 ---
 phase: DONE
 task: none
-next_action: "WAIT: blocked -- W-003 ready; saipen collect saiwiki is Core's action"
+next_action: "WAIT: blocked -- W-004 is ready and current, and collecting it is Core's named saiwiki path, not this producer's"
 blocker: none
 agent: saiwiki
 saipen_version: 7
 schema_version: 3
-style_contract: ded-4ae736e4
+style_contract: ded-6b950e75
 saipen_home: "V:\\___VAC\\__K\\__CODE\\_AI_STUFF_AGENTIC\\_SAIPEN"
 mode: read-only
 transition_from: DONE
-updated: "2026-09-24T14:47:00Z"
+updated: "2026-09-30T19:40:00Z"
 role_revision: "sha256:54a42475a124ab0f27e83d600a284a9cc54d9668029c4828cfc48512b031df13"
 ---
 

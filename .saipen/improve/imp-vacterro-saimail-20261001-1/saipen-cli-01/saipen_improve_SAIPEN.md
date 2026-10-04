@@ -1,0 +1,28 @@
+agent: saipen-cli-01
+role: core
+model_or_runtime: unknown
+project: vacterro-saimail
+saipen_version: 8.0.1
+protocol_fingerprint: sha256:d0aa6e1aff9cb53524fbeaf9da41086ded2049f79202d07b68e7140152e1477d
+source_head: 02506e0d3c8f34126fd121bd840a9e8613cb79dc
+source_tree_fingerprint: git-delta-v1:a924dcce45cb1e0146be0ba4eb4edd2b8fca74167f2091b9b78d2890b4cecdf9
+discovery_model: git-delta-v1
+context_scope: SAIPEN audit, phase DONE
+context_available: partial
+report_status: complete
+
+## RUN 1
+
+Bounded delta audit of the cycle-4 window (T-149 ship commit c63a00e+02506e0, T-150 saitranslate closure SRC-116, saiwiki W-004 rebuild, idle-window drift), run as Core seat saipen-cli-01 on 02506e0d3c8f34126fd121bd840a9e8613cb79dc / git-delta-v1:f11d1102a4af0505c2a80a3123d79be5c4e892825368bca7cf4c30dea78a8b0c. Positive verification first: python .saipen/saitranslate/kitchen/_source_digest.py -> exit 0 with 'README.ja.md: current' and 'README.uk.md: current' (reproduced this run); saipen validate -> VALID / CURRENT_PASS receipt-dedf5a43efd1 after work reverify T-99 RV-000026 PASS_WITH_CARRIED_DEBT (0 problems, 23 non-blocking warnings); BOARD/STATE/LOG consistent (T-150 DONE, phase DONE, last_event 2245 equals the final LOG line E-2245); SRC-116 chain intact (contract+coverage exist, R001 VERIFIED against T-150, supersedes SRC-110 whose single requirement is already VERIFIED under T-124); saitranslate SAIT-007 stays draft by rule and saiui UI-003 stays stale-package, both honest machine-reported states, not findings.
+
+IMP-001 [P3] [PROJECT_VIOLATION] [reproduced] [ticket]
+expected: operator-authored material that lands in the humbox beacon gets captured through the intake machinery (saipen authority capture --file PATH -> SRC receipt -> projection or archive), so every actionable user text is hashed, registered and traceable
+actual: humbox/milestoned1.md is an untracked 9306-byte operator Q&A transcript ('О круто. Скажи во что теперь превратился saimail и учтены ли некоторые хотелки из humbox?' plus a long answer mapping humbox ideas onto SAIMAIL features), mtime 2026-09-30 21:56:38 +0300 (18:56Z, the idle window between T-149 finish E-2233 18:25Z and SRC-116 projection E-2234 19:27Z), with zero references anywhere in the repository (repo-wide grep for 'milestoned1' returns only the file itself), no SRC receipt, no journal event, and no LOG line. The tree therefore carries uncaptured operator source material the protocol's own intake path was built for; nothing blocks on it today, but the next tree-fingerprint or beacon sweep sees an unexplained mutation.
+evidence: ls -la humbox/milestoned1.md (9306 bytes, mtime as above); grep -rl milestoned1 across *.md/*.json returns only the file; .saipen/LOG.md last event E-2245 at 19:42Z predates nothing that mentions it; .saipen/intake/ has no receipt for it.
+
+IMP-002 [P3] [PROTOCOL_VIOLATION] [reproduced] [note]
+expected: work executed under a Core ticket window is visible in the Core journal ('LOG line after every run'), so a reader of .saipen/LOG.md can learn what ran without opening every producer namespace
+actual: the saiwiki producer ran a full prepare cycle to W-004 (full 11-page wiki rebuild, strict READY sha256:cb49fc1a891427af634d1959dd6784f1fedb1a84971646214828ef6bba810698 at epoch 4, freshness triple bound to 02506e0d/git-delta-v1:f11d1102) finishing 19:40:00Z -- inside the T-150 ticket window (19:27-19:42Z) -- but the Core LOG records only the saitranslate role adoption (E-2237 checkpoint 19:40 'adopted the saitranslate role and ran its full cycle'); the last Core LOG mention of saiwiki is T-126 on 25.09. The rebuild is journaled only in the saiwiki sub LOG (W-004 line). The producer namespace record is complete and truthful, so this is a Core journal completeness gap, not lost evidence; the LOG is append-only, so the remedy is a corrective append plus discipline in future scout checkpoints that run multiple roles.
+evidence: tail of .saipen/extensions/subs/saiwiki/LOG.md (W-004 line, 30.09.26 19:40); .saipen/extensions/subs/saiwiki/STATE.md updated 2026-09-30T19:40:00Z; grep -n saiwiki .saipen/LOG.md -> newest hit is E-1731..E-1738 (T-126, 25.09); .saipen/LOG.md E-2237 names only saitranslate.
+
+VERDICT: two P3 findings, both reproduced this run, neither duplicating archived cycles (cycle -3 was NO_FINDINGS on the T-148 delta; the 20260925-2 findings were T-129/T-130/T-131 machinery defects). All gates the delta touched re-verified green: pinned freshness recipe, canonical validator, BOARD/STATE/LOG consistency, SRC-116 intake chain. saiwiki W-004 collection remains a named pending Core action (producer STATE next_action) and is routed by the engine, not by this audit. Bounded verdict only: this cycle's delta, not a whole-protocol clean claim; T-146 stays BLOCKED OPTIONAL_STUDY_UNAVAILABLE on real independent peers.

@@ -30,6 +30,18 @@ def contract():
         "compatibility": {"unknown_fields": "IGNORE", "unknown_major_schema": "DEGRADED",
                           "unknown_status": "DEGRADED", "missing_feature": "DEGRADED",
                           "legacy_commands": "PRESERVED", "shell_execution": False},
+        # The block above is a FROZEN intent map: `health` names what a host is
+        # trying to do, not which verb does it, so it cannot be derived from the
+        # parser and must not try to be. The live inventory is a separate,
+        # generated document and lives behind this pointer -- additive, so a host
+        # written against the frozen map keeps working and simply ignores it.
+        "live_surface": {
+            "schema": "SAIMAIL_CLI_MAP_1",
+            "generated_by": "saimail.surface.cli_map",
+            "authority": "INFORMATION_ONLY",
+            "note": "walked from the registered argparse tree; adding or removing a "
+                    "verb changes this document with no second edit",
+        },
         "authority": "INFORMATION_ONLY",
         "attention": "RECEIVER_OWNED",
         "execution": "EXPLICIT_HOST_DECISION",

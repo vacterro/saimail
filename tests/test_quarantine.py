@@ -36,6 +36,39 @@ ORIGINAL_ABSENT = ("the quarantined original is not in this distribution; checks
 #: Assembled at run time so no credential-shaped literal sits in this file.
 LABEL = "to" + "ken"
 
+#: Characters the scanner materialized by decoding, for PERF-003. Reset per
+#: measurement; never read outside one.
+_DECODED = [0]
+
+
+class _CountingBody(bytes):
+    """A receipt body that reports how much text the scanner decoded out of it.
+
+    That count is the oracle for PERF-003, and it is deliberately a count of
+    MATERIALIZED CHARACTERS rather than of calls or of elapsed time. Both of the
+    obvious alternatives were measured and both are blind to this regression:
+    the pre-repair scanner re-encoded the prefix once per finding, which is one
+    extra call per finding (linear when counted by call) and one C-level
+    slice-and-decode per finding (no Python line event at all), so a call counter
+    and a ``sys.settrace`` line counter each reported the quadratic scanner as
+    perfectly linear. Counting the characters the scanner actually decoded
+    separates the two by the growth class itself.
+
+    ``__getitem__`` is overridden as well, and that is load-bearing rather than
+    tidy: slicing a ``bytes`` subclass yields plain ``bytes``, so the very
+    re-encode this instrument exists to catch would escape the counter and the
+    oracle would call the quadratic scanner linear. Slices must stay in the
+    subclass.
+    """
+
+    def decode(self, *a, **k):
+        out = super().decode(*a, **k)
+        _DECODED[0] += len(out)
+        return out
+
+    def __getitem__(self, item):
+        return _CountingBody(super().__getitem__(item))
+
 
 def err(fn, *a, **k):
     with pytest.raises(SailangError) as e:
@@ -688,19 +721,52 @@ def _dense_body(lines):
     return ("\n".join(parts) + "\n").encode("utf-8")
 
 
+def _decoded_characters(body, scan):
+    """Characters `scan` materialized by decoding, measured not timed."""
+    _DECODED[0] = 0
+    scan(_CountingBody(body))
+    return _DECODED[0]
+
+
 def test_a_dense_body_scans_in_linear_time():
-    """PERF-003: doubling a finding-dense body must not quadruple the scan."""
-    import time
-    small = time.perf_counter()
+    """PERF-003: doubling a finding-dense body must not quadruple the scan.
+
+    The growth class is measured in decoded characters, not in seconds. The
+    stopwatch version of this gate was `large < small * 3.0 + 0.05` and it was
+    red about every other full-suite run while passing in isolation: whenever
+    `small` landed in the low milliseconds the additive floor stopped the ratio
+    binding and the gate became a fixed absolute deadline, and under suite-wide
+    allocator pressure the 4x-work case measured several times the 1x-work case
+    for reasons that have nothing to do with this scanner. A gate that reports
+    the machine cannot guard the product.
+
+    The count is exact, repeatable, and -- checked below, not assumed -- it does
+    separate a linear scanner from the quadratic one this regression was.
+    """
     first = q.scan(_dense_body(2000))
-    small = time.perf_counter() - small
-    large = time.perf_counter()
     second = q.scan(_dense_body(4000))
-    large = time.perf_counter() - large
     assert len(second) > len(first) > 1000, "the bodies are finding-dense"
-    # linear growth is ~2x; the pre-repair prefix re-encode made it ~4x and
-    # worse. The bound is loose on purpose: catch the class, not the machine.
-    assert large < small * 3.0 + 0.05, f"small={small:.3f}s large={large:.3f}s"
+
+    small_body, large_body = _dense_body(2000), _dense_body(4000)
+    small = _decoded_characters(small_body, q.scan)
+    large = _decoded_characters(large_body, q.scan)
+    # linear growth is ~2x; the pre-repair per-finding prefix re-encode made it
+    # ~4x. Integer arithmetic on an exact count: no machine, no tolerance.
+    assert large < small * 3, (
+        f"decoded characters grew {small} -> {large} "
+        f"(x{large / small:.2f} for 2x the body)")
+
+    # The instrument proves itself in the same test rather than in a comment.
+    # This is the pre-repair shape: re-decode the prefix once per finding.
+    def quadratic_scan(body):
+        return [body[:finding.start].decode("utf-8", "ignore")
+                for finding in q.scan(body)]
+
+    control_small = _decoded_characters(small_body, quadratic_scan)
+    control_large = _decoded_characters(large_body, quadratic_scan)
+    assert control_large > control_small * 3, (
+        "the oracle cannot see the regression it exists to catch: "
+        f"{control_small} -> {control_large}")
 
 
 def test_multibyte_offsets_stay_exact_after_the_linear_scan():

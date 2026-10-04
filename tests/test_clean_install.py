@@ -55,7 +55,7 @@ def test_wheel_contains_the_local_surface(wheel: Path):
                      "lab/utility_friction.py", "lab/stable_local_api.json",
                      "saimail/workspace.py", "saimail_host.py", "saimail_project.py",
                      "saimail/letters.py", "saimail/correspondence.py", "saimail/keyvault.py",
-                     "saimail/host_contract.py"):
+                     "saimail/host_contract.py", "saimail/future_letter.py"):
         assert required in names, f"wheel is missing {required}"
     assert any(name.endswith("entry_points.txt") for name in names)
     # History/out/analysis artifacts are not package data and must not ship.
