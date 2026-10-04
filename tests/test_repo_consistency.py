@@ -952,12 +952,25 @@ def test_v203_reviewer_structured_output_experiment_is_recorded():
 def test_readme_mirrors_match_the_canonical_version_authority():
     """D1 / T-90: the locale README mirrors are release metadata, not a second
     version authority. Expected version is derived from VERSION so this cannot
-    silently drift again."""
+    silently drift again.
+
+    The mirror set is DISCOVERED, never hardcoded: ship.md 6b.2 requires the
+    release gate to discover locale mirrors from the translation kitchen and
+    not maintain a second list of them. A previous version of this test named
+    README.ee.md, README.ded.md and README.ja.md outright, so when the operator
+    removed the placeholder mirrors the test raised FileNotFoundError instead of
+    checking anything. A mirror that exists must still agree; a mirror that does
+    not exist is not a version surface and must not fail the gate."""
     version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
     canonical = read(ROOT / "README.md")
     assert f"**v{version}" in canonical, (
         f"README.md does not carry the canonical version {version!r}")
-    for name in ("README.ee.md", "README.ded.md", "README.ja.md"):
+    locale_re = re.compile(r"^README\.[A-Za-z0-9_-]+\.md$")
+    mirrors = sorted(
+        path.name for path in ROOT.iterdir()
+        if path.is_file() and locale_re.match(path.name)
+    )
+    for name in mirrors:
         text = read(ROOT / name)
         match = re.search(r"^\*\*v([^*]+)\*\*$", text, flags=re.MULTILINE)
         assert match, f"{name} carries no version mirror line"

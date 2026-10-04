@@ -42,6 +42,7 @@ def _load(name: str, path: Path):
 
 lar = _load("local_alpha_release", TOOLS / "local_alpha_release.py")
 d3 = _load("d3_release_evidence", TOOLS / "d3_release_evidence.py")
+rd = _load("release_decision", TOOLS / "release_decision.py")
 
 
 def _json(path: Path) -> dict:
@@ -190,7 +191,11 @@ def test_current_a3_version_surfaces():
     assert (ROOT / "VERSION").read_text(encoding="utf-8").strip() == "0.0.2a3"
     assert _json(ROOT / "lab" / "stable_local_api.json")["release"] == "0.0.2a3"
     assert 'version = "0.0.2a3"' in (ROOT / "pyproject.toml").read_text(encoding="utf-8")
-    for name in ("README.md", "README.ee.md", "README.ded.md", "README.ja.md"):
+    # Discovered, not hardcoded: ship.md 6b.2 requires the release gate to
+    # discover locale mirrors rather than keep a second list of them. Naming
+    # them here made this test raise FileNotFoundError when the operator removed
+    # the placeholder mirrors, which is a crash, not a version check.
+    for name in rd.readme_mirrors(ROOT):
         text = (ROOT / name).read_text(encoding="utf-8")
         assert "0.0.2a3" in text, name
     assert "## 0.0.2a3" in (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")

@@ -57,8 +57,56 @@ def test_version_surfaces_agree_with_the_canonical_authority(inputs):
     assert version["surfaces"]["pyproject.toml"] == version["canonical"]
     assert version["surfaces"]["saimail_local.py._VERSION_FALLBACK"] == version["canonical"]
     assert version["surfaces"]["lab/stable_local_api.json.release"] == version["canonical"]
-    for name in ("README.md", "README.ee.md", "README.ded.md", "README.ja.md"):
+    for name in rd.readme_mirrors(ROOT):
         assert version["surfaces"][name] == version["canonical"], name
+
+
+def _clone_version_surfaces(root: Path, dest: Path) -> None:
+    """Copy exactly the inputs version_surfaces() reads into a scratch root."""
+    for name in ("VERSION", "pyproject.toml", "saimail_local.py", "README.md"):
+        (dest / name).write_bytes((root / name).read_bytes())
+    (dest / "lab").mkdir(exist_ok=True)
+    (dest / "lab" / "stable_local_api.json").write_bytes(
+        (root / "lab" / "stable_local_api.json").read_bytes())
+
+
+def test_discovered_locale_mirror_still_gates_and_absent_one_is_not_invented(tmp_path):
+    """The discovery rule must not have disarmed the gate.
+
+    A gate that cannot fail is not a gate (VERIFY-ORACLE-01). This runs the REAL
+    rd.version_surfaces against a scratch root three times, so every assertion is
+    a fact about the implementation and not arithmetic inside the test:
+      * no locale mirror -> no locale surface, and agreement stays True;
+      * a locale mirror carrying the canonical badge -> discovered, agrees;
+      * a locale mirror carrying a DRIFTED badge -> discovered, agreement False.
+    The third is the red control. It is required precisely because the live
+    checkout has no locale mirrors at all, so nothing in the repo tree can
+    exercise the failing path on its own.
+    """
+    canonical = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+    _clone_version_surfaces(ROOT, tmp_path)
+
+    # A mirror that does not exist is not a version surface, not a crash and
+    # not a None that would read as disagreement.
+    assert rd.readme_mirrors(tmp_path) == ("README.md",)
+    assert "README.xx.md" not in rd.version_surfaces(tmp_path)["surfaces"]
+    assert rd.version_surfaces(tmp_path)["agreement"] is True
+
+    # A mirror that exists and agrees is discovered and compared.
+    (tmp_path / "README.xx.md").write_text(
+        f"# SAIMAIL\n\n**v{canonical}**\n\nMirror.\n", encoding="utf-8")
+    assert rd.readme_mirrors(tmp_path) == ("README.md", "README.xx.md")
+    agreeing = rd.version_surfaces(tmp_path)
+    assert agreeing["surfaces"]["README.xx.md"] == canonical
+    assert agreeing["agreement"] is True
+
+    # RED CONTROL: same implementation, one line of fixture data changed.
+    (tmp_path / "README.xx.md").write_text(
+        "# SAIMAIL\n\n**v99.99.99**\n\nMirror.\n", encoding="utf-8")
+    drifted = rd.version_surfaces(tmp_path)
+    assert rd.readme_mirrors(tmp_path) == ("README.md", "README.xx.md")
+    assert drifted["surfaces"]["README.xx.md"] == "99.99.99"
+    assert drifted["agreement"] is False, drifted["surfaces"]
 
 
 def test_frozen_candidate_remains_immutable_and_hash_exact():

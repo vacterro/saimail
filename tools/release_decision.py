@@ -78,7 +78,8 @@ PUBLICATION_STAGES = (
     "PACKAGE_INDEX_UPLOAD",
 )
 GATE_IDS = tuple(f"G{index}" for index in range(1, 18))
-README_MIRRORS = ("README.md", "README.ee.md", "README.ded.md", "README.ja.md")
+CANONICAL_README = "README.md"
+LOCALE_README_RE = re.compile(r"^README\.[A-Za-z0-9_-]+\.md$")
 
 VERSION_RE = re.compile(r"[0-9]+(?:\.[0-9]+)*(?:[ab][0-9]+)?")
 LOCALE_VERSION_RE = re.compile(r"^\*\*v([^*]+)\*\*$", flags=re.MULTILINE)
@@ -144,6 +145,25 @@ def wheel_facts(wheel: Path) -> dict:
     }
 
 
+def readme_mirrors(root: Path) -> tuple[str, ...]:
+    """The canonical README plus every locale mirror that is actually present.
+
+    ship.md 6b.2 requires the release gate to DISCOVER locale mirrors rather
+    than maintain a second hardcoded list of them, and that is what this does.
+    The previous constant named README.ee.md and README.ded.md, which the
+    translation kitchen has never produced -- it emits README.ja.md and
+    README.uk.md -- so the list was wrong before the mirrors were deleted, and
+    deleting them turned a stale name into a hard FileNotFoundError inside the
+    release gate.
+    """
+    names = [CANONICAL_README]
+    names += sorted(
+        path.name for path in root.iterdir()
+        if path.is_file() and LOCALE_README_RE.match(path.name)
+    )
+    return tuple(names)
+
+
 def version_surfaces(root: Path) -> dict:
     """Every version-bearing surface, as observed; canonical authority is VERSION."""
     import tomllib
@@ -159,9 +179,9 @@ def version_surfaces(root: Path) -> dict:
         "saimail_local.py._VERSION_FALLBACK": fallback.group(1) if fallback else None,
         "lab/stable_local_api.json.release": api_map.get("release"),
     }
-    for name in README_MIRRORS:
+    for name in readme_mirrors(root):
         text = (root / name).read_text(encoding="utf-8")
-        match = (CANONICAL_VERSION_RE if name == "README.md"
+        match = (CANONICAL_VERSION_RE if name == CANONICAL_README
                  else LOCALE_VERSION_RE).search(text)
         surfaces[name] = match.group(1).strip() if match else None
     return {
