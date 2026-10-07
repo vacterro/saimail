@@ -1,64 +1,36 @@
+<div align="center">
+
+<img src="pics/SAIMAIL_BANNER1.png" alt="SAIMAIL" width="760">
+
 # SAIMAIL
 
-![SAIMAIL logo](pics/SAIMAIL_LOGO.png)
+**Local-first agent messaging and correspondence for AI-assisted software projects.**
 
-**SAIMAIL is a local-first agent messaging and correspondence system for AI-assisted software projects.** It provides desktop and CLI workflows for inboxes, evidence-aware messages, encrypted addressed payloads, and SAIPEN project communication without a cloud messaging service.
+[![Version](https://img.shields.io/badge/checkout-0.0.2a3-D4B86A?style=flat-square)](VERSION)
+![Mode](https://img.shields.io/badge/mode-local%20only-4A7A20?style=flat-square)
+![GUI](https://img.shields.io/badge/desktop-PySide6-41CD52?style=flat-square)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 
-**SAIMAIL — LOCAL ONLY**
+[**Run locally**](#running-it) · [Documents](#documents) · [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md)
 
-**Useful correspondence and encrypted human mailbox (current checkout):**
-evidence-bearing letters, explicit receiver decisions, successor discovery,
-result replies and master-password custody with independent recovery backup.
-The three-tab desktop follows Golden Default. See the
-[operator and integration guide](humbox/INSTITUTION.md) and
-[real SAIFREN validation](lab/analysis/institution_20260930.md).
-The [receiver feedback workflow](humbox/EVOLUTION.md) returns declined, deferred,
-stale and resolved decisions to the sender and gives later agents concrete checks
-for improving their correspondence.
-Install this checkout with `python -m pip install -e ".[gui]"`, then run
-`saimail-gui` or open `SAIMAIL.cmd`. New changes are not in frozen release wheels.
+<img src="pics/SAIMAIL1.png" alt="SAIMAIL desktop interface" width="860">
 
-- Desktop GUI available (this checkout)
-- CLI / headless path available
-- No cloud messaging, no server, no daemon
+</div>
 
-```
-pip install "saimail[gui,crypto]"
-saimail-gui
-```
+SAIMAIL provides inboxes, evidence-aware letters, encrypted addressed payloads, explicit receiver decisions, and SAIPEN-aware correspondence without a hosted messaging service, daemon, or cloud mailbox.
 
-```
-saimail-local
-```
+> **Current checkout:** `0.0.2a3`. The repository may contain accepted work newer than the last externally proven frozen wheel; release/provenance sections below distinguish those states explicitly.
 
-**FROZEN VERIFIED ARTIFACT:** `0.0.2a2` — local alpha candidate (built,
-externally proven, `NOT_PUBLISHED`). The desktop GUI is **not** inside that
-frozen wheel.
-
-**CURRENT CHECKOUT:** **v0.0.2a3** — includes the accepted post-a2 delta
-`P1 + V4-01 + V5-01` (inbox query, correspondence continuation, desktop GUI).
-The exact `0.0.2a3` wheel is locally frozen and proven; genuine external proof
-of that exact wheel is not yet admitted
-(`READY_FOR_EXTERNAL_INSTALL_PROOF`). `NOT_PUBLISHED`. The checkout also
-carries the SAIPEN seam bridge (`saimail-local saipen`, S2, T-108) and SAITELEMES
-agent telegrams (T-109), which are **not** inside the frozen `0.0.2a3` wheel.
-
-**SAIPEN work desk (checkout):** `saimail-local saipen enter` checks local
-project participation and the workspace seat; `saimail-local saipen brief`
-shows current work with a bounded page of unread telegrams. Other topics stay
-visible, and continuation detects a changed work context. SAIPEN `init`,
-`telegram`, and `brief` require a valid project IDENTITY. This is a local
-integration check, not a protocol-compliance certificate. SAIPEN `continue`
-and `status` count your unread telegrams at turn entry when
-`SAIMAIL_WORKSPACE` is set; that read, like every header-only command, never
-touches a private key (T-117). See the
-[work desk guide](humbox/SAIPEN-WORK-DESK.md).
-
-Security reporting: [SECURITY.md](SECURITY.md). Roadmap authority:
-[humbox/FUTURE-GATES-V6.md](humbox/FUTURE-GATES-V6.md). Exact GitHub
-description/topics: [humbox/GITHUB-SETTINGS-V6.md](humbox/GITHUB-SETTINGS-V6.md).
+<table>
+<tr>
+<td width="33%"><img src="pics/SAIMAIL2.png" alt="SAIMAIL interface view 2"></td>
+<td width="33%"><img src="pics/SAIMAIL3.png" alt="SAIMAIL interface view 3"></td>
+<td width="33%"><img src="pics/SAIMAIL4.png" alt="SAIMAIL interface view 4"></td>
+</tr>
+</table>
 
 ---
+An agent post office with an evidence discipline.---
 
 An agent post office with an evidence discipline.
 
