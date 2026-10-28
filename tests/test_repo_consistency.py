@@ -196,23 +196,46 @@ def test_dependency_surface_is_declared():
     )
 
 
+def _published_files():
+    """What a push would publish: tracked plus untracked-but-not-ignored."""
+    import subprocess
+
+    proc = subprocess.run(
+        ["git", "-C", str(ROOT), "ls-files", "-z", "--cached", "--others",
+         "--exclude-standard"],
+        capture_output=True, check=True,
+    )
+    for raw in proc.stdout.decode("utf-8", "surrogateescape").split("\0"):
+        if raw:
+            yield ROOT / raw
+
+
 def test_no_tokenizer_data_or_model_weights_are_vendored():
-    declared_media = _validate_intentional_media_asset()
-    for path in ROOT.rglob("*"):
-        if not path.is_file() or ".saipen" in path.parts or ".git" in path.parts:
-            continue
+    # Ask Git, not the filesystem. The operator's own local audio is
+    # deliberately kept in this folder and deliberately never published, so a
+    # disk walk would fail on a file no clone can ever contain.
+    for path in _published_files():
         assert path.suffix not in {".bin", ".safetensors", ".gguf", ".pt", ".onnx"}, (
             f"{path} looks like vendored model data"
         )
-        if path.stat().st_size > 2_000_000 and path.resolve() != declared_media.resolve():
+        if path.stat().st_size > 2_000_000:
             raise AssertionError(f"{path} is unexpectedly large for this repository")
 
 
 def _validate_intentional_media_asset():
+    """The operator's own audio pick: local-only, never redistributed.
+
+    SRC-102 authorized *keeping* this file, not licensing it. It is a
+    commercial recording, so it does not belong in a public repository either.
+    The policy stays exact about the bytes -- the local copy must still match
+    the approved hash -- but the asset is gitignored and untracked, so the
+    check asserts the file is either absent or byte-identical, never shipped.
+    """
     policy = json.loads(read(MEDIA_POLICY))
     expected = {
         "schema": "SAIMAIL_INTENTIONAL_MEDIA_ASSETS_1",
         "source_receipt": "SRC-102",
+        "distribution": "local-only",
         "assets": [{
             "path": "humbox/SAIGIMN.mp3",
             "media_type": "audio/mpeg",
@@ -221,11 +244,10 @@ def _validate_intentional_media_asset():
         }],
     }
     assert policy == expected, "intentional media policy must stay exact and source-bound"
-    assert SAIGIMN_PATH.is_file()
-    assert SAIGIMN_PATH.suffix.lower() == ".mp3"
-    assert SAIGIMN_PATH.stat().st_size == SAIGIMN_SIZE
-    digest = hashlib.sha256(SAIGIMN_PATH.read_bytes()).hexdigest()
-    assert digest == SAIGIMN_SHA256, "the approved media bytes changed"
+    assert not SAIGIMN_PATH.is_file() or (
+        SAIGIMN_PATH.stat().st_size == SAIGIMN_SIZE
+        and hashlib.sha256(SAIGIMN_PATH.read_bytes()).hexdigest() == SAIGIMN_SHA256
+    ), "the approved media bytes changed"
     return SAIGIMN_PATH
 
 

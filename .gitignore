@@ -50,3 +50,8 @@ operator_import/future_letters/*.zip
 # Scratch from tools that are not part of this project, and a stray empty file.
 .freebuff/
 canonical
+
+# SRC-102 authorized keeping this audio asset; it is a commercial recording and
+# must never be published. The file stays on this machine, gitignored, and the
+# consistency test pins its hash so a swap cannot pass unnoticed.
+humbox/SAIGIMN.mp3
