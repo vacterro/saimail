@@ -9,20 +9,22 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from lab.selector_coverage import render_report, run_experiment  # noqa: E402
+from lab.selector_coverage import MANIFEST, render_report, run_experiment  # noqa: E402
 from saimail_local import no_network  # noqa: E402
 
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--manifest", default=MANIFEST,
+                        help="explicit registered manifest; the frozen historical default refuses drift")
     args = parser.parse_args(argv)
     if args.out.exists():
         parser.error("output path already exists; preserve prior evidence and choose a new path")
     probe = {"blocked": 0}
     with tempfile.TemporaryDirectory(prefix="saimail-v202-") as temp:
         with no_network(probe):
-            result = run_experiment(Path(temp), probe=probe)
+            result = run_experiment(Path(temp), probe=probe, manifest_path=args.manifest)
     args.out.mkdir(parents=True, exist_ok=False)
     (args.out / "result.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n",
                                           encoding="utf-8")

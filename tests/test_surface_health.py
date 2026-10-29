@@ -647,5 +647,119 @@ def test_health_on_a_directory_that_is_not_a_workspace_is_refused(tmp_path):
     assert _code(workspace.load_workspace, bogus) != "NO_ERROR"
 
 
+# --------------------------------------------------------------------------
+# the owners whose numbers the dashboard was dropping
+# --------------------------------------------------------------------------
+
+def test_the_archive_section_publishes_the_owners_own_counts(tmp_path):
+    """Wave 3's archive answers with `cold={"records": N, ...}`.
+
+    A reader that stopped one level into that answer got `counts: None` -- which
+    is not a missing cosmetic, it is the false zero this module exists to kill,
+    arriving through the exact shape that looks like good news.
+    """
+    from saimail import cold_archive
+
+    ws = _one(tmp_path)
+    base = cold_archive.items_root(ws)
+    base.mkdir(parents=True, exist_ok=True)
+    (base / ("sha256:" + "a" * 64)).write_bytes(b"not a real record")
+
+    row = _section(surface.health(ws), "archive")
+    counts = row["counts"]
+    assert counts is not None, "a present archive rendered no numbers at all"
+    assert counts["records"] == 1
+    assert counts["cold_corrupt"] == 1, "the corrupt record was not counted"
+
+
+def test_an_unreadable_archive_is_unknown_not_unhealthy(tmp_path):
+    """An archive that cannot be listed was asked a question it could not answer.
+
+    It is not a broken mailbox, so rendering it UNHEALTHY with tidy numbers would
+    tell an operator their archive is damaged. It is UNKNOWN.
+    """
+    from saimail import cold_archive
+
+    ws = _one(tmp_path)
+    base = cold_archive.items_root(ws)
+    base.parent.mkdir(parents=True, exist_ok=True)
+    base.write_bytes(b"a regular file where a directory belongs")
+
+    row = _section(surface.health(ws), "archive")
+    assert row["state"] == surface.UNKNOWN, "an unreadable archive is not a verdict"
+    assert row["counts"] is None, "an unknown section published numbers"
+    assert cold_archive.COLD_UNREADABLE in surface.CANNOT_TELL
+
+
+def test_an_unreadable_catchup_queue_is_unknown_not_unhealthy(tmp_path):
+    """Same promise, same shape: an unreadable queue is not an empty one."""
+    from saimail import catchup
+
+    ws = _one(tmp_path)
+    path = catchup._queue_path(ws)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("{ not the queue", encoding="utf-8")
+
+    row = _section(surface.health(ws), "catchup")
+    assert row["state"] == surface.UNKNOWN
+    assert row["counts"] is None, "an unknown section published numbers"
+    assert catchup.QUEUE_UNREADABLE in surface.CANNOT_TELL
+
+
+def test_the_catchup_section_publishes_the_queue_totals(tmp_path):
+    """The queue's headline numbers live two levels down, in `totals`."""
+    from saimail import catchup
+
+    A, _B = _pair(tmp_path)
+    catchup.plan(A, clock=_clock(T0))
+    catchup.claim(A, limit=5, clock=_clock(T0))
+
+    counts = _section(surface.health(A), "catchup")["counts"]
+    assert counts is not None, "the queue rendered no numbers at all"
+    assert f"totals_{catchup.QUEUED}" in counts, counts
+    assert f"totals_{catchup.PARKED}" in counts, counts
+
+
+def test_an_expired_future_letter_makes_the_letters_section_unhealthy(tmp_path):
+    """The letters section used to hardcode `ok: True`.
+
+    A section that can never be UNHEALTHY is a section that reports nothing, and
+    an expired capsule nobody opened is exactly what an operator is meant to
+    notice. Deciding it needs no decryption: `expires_after` is metadata.
+    """
+    from saimail import future_letter
+
+    ws = _one(tmp_path)
+    future_letter.create(ws, title="old news", body="still here",
+                         expires_after=3600,
+                         clock=_clock("2026-01-01T00:00:00Z"))
+
+    row = _section(surface.health(ws), "letters")
+    assert row["state"] == surface.UNHEALTHY, "an expired letter reads as fine"
+    assert row["counts"]["expired"] == 1
+    assert row["operator_action_required"] is True
+
+
+def test_a_live_letter_counts_as_time_locked_without_decrypting(tmp_path):
+    """`time_locked` means CARRYING a not_before, not locked right now.
+
+    Deciding the latter needs the sealed container, and a health card must not
+    decrypt mail to render. What it must not do is pretend the distinction it
+    cannot make is one it made.
+    """
+    from saimail import future_letter
+
+    ws = _one(tmp_path)
+    future_letter.create(ws, title="later", body="not yet",
+                         not_before="2030-01-01T00:00:00Z",
+                         clock=_clock("2026-01-01T00:00:00Z"))
+
+    row = _section(surface.health(ws), "letters")
+    assert row["counts"]["letters"] == 1
+    assert row["counts"]["time_locked"] == 1
+    assert row["counts"]["expired"] == 0
+    assert row["state"] == surface.HEALTHY, "a sealed future letter is not a fault"
+
+
 if __name__ == "__main__":  # pragma: no cover
     raise SystemExit(pytest.main([__file__, "-q"]))

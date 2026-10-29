@@ -135,7 +135,7 @@ def test_corrupt_stores_are_named_and_the_document_still_arrives(tmp_path):
     A, _B = _pair(tmp_path)
     participants.admit_participant(A, LINEAGE, "astra")
     outbox.submit_send(A, "astra", key="k:1", claim="c", topic="T-7", kind="DISCOVERY")
-    intent = next((A.root / "outbox" / "intents").glob("*.json"))
+    intent = outbox._intent_path(A, outbox.key_id("k:1"))
     intent.write_text("{broken", encoding="utf-8")
     (A.root / participants.PARTICIPANTS_NAME).write_text("[]", encoding="utf-8")
     doc = _doc(A.root, acting_seat="builder", lineage=LINEAGE)

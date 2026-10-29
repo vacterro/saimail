@@ -30,8 +30,8 @@ def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def preflight(root: Path = ROOT) -> dict:
-    manifest = em.load(root / MANIFEST)
+def preflight(root: Path = ROOT, *, manifest_path: str = MANIFEST) -> dict:
+    manifest = em.load(root / manifest_path)
     current = em.verify_current(manifest, root=root)
     history = em.verify_historical(manifest, fixture_root=root)
     if current["verdict"] != em.CURRENT_MATCH:
@@ -151,14 +151,21 @@ def r1_control() -> dict:
             "changed_by_treatment": False}
 
 
-def run_experiment(base: Path, *, root: Path = ROOT, probe: dict | None = None) -> dict:
-    admission = preflight(root)
+def run_experiment(base: Path, *, root: Path = ROOT, probe: dict | None = None,
+                   manifest_path: str = MANIFEST) -> dict:
+    admission = preflight(root, manifest_path=manifest_path)
     base = Path(base)
     if base.exists() and any(base.iterdir()):
         raise ValueError("V202_NONEMPTY_WORKSPACE")
     base.mkdir(parents=True, exist_ok=True)
-    fixture = json.loads((root / FIXTURES).read_text(encoding="utf-8"))
-    registration = json.loads((root / REGISTRATION).read_text(encoding="utf-8"))
+    # A replay uses its own explicit registration and implementation binding.
+    # The historical default still refuses drift; nothing rehashes it on load.
+    manifest = em.load(root / manifest_path)
+    sources = {item["INPUT_ID"]: item["SOURCE_PATH"] for item in manifest["inputs"]}
+    fixture_path = root / sources["V202_FIXTURES"]
+    registration_path = root / sources["V202_REGISTRATION"]
+    fixture = json.loads(fixture_path.read_text(encoding="utf-8"))
+    registration = json.loads(registration_path.read_text(encoding="utf-8"))
     if registration["friction_weights"] != uf.FRICTION_WEIGHTS:
         raise ValueError("V202_FRICTION_DRIFT")
     pairs = []
@@ -195,8 +202,8 @@ def run_experiment(base: Path, *, root: Path = ROOT, probe: dict | None = None) 
                "CANDIDATE_SUPPORTED_ON_FIXTURES" if reduction > 0 else "NO_REDUCTION")
     return {
         "schema": RESULT_SCHEMA, "version": 1, "status": "PASS", "outcome": outcome,
-        "admission": admission, "fixture_sha256": sha256((root / FIXTURES).read_bytes()),
-        "registration_sha256": sha256((root / REGISTRATION).read_bytes()),
+        "admission": admission, "fixture_sha256": sha256(fixture_path.read_bytes()),
+        "registration_sha256": sha256(registration_path.read_bytes()),
         "pairs": pairs, "r1_control": r1_control(),
         "friction_model": {"identity": uf.FRICTION_MODEL_ID, "weights": uf.FRICTION_WEIGHTS,
                            "token_ratios_source": "unchanged FG-06/T-9B; modeled, not remeasured"},

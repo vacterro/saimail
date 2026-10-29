@@ -526,6 +526,107 @@ def test_restore_refuses_a_corrupted_cold_copy(tmp_path):
         "unverifiable bytes never repopulate hot storage"
 
 
+def test_a_time_locked_letter_is_pinned_by_class_and_survives_every_bound(tmp_path):
+    """Wave 3: a time capsule is never aged out by a retention count.
+
+    The pin set is a list of KINDS, and the class check happens before any
+    count/byte/age bound. A capsule that were merely an old letter would be
+    pruned the moment a policy had a bound and the letter was past it; the
+    assertion here is that the class alone retains it.
+    """
+    B = workspace.load_workspace(_pair(tmp_path)[1].root)
+    envelope_id = _letter(B, claim="read me in 2030")
+    archived = cold.archive(B, envelope_id, clock=_clock(T1))
+    assert archived["cold"]["pinned"] is True
+    assert archived["cold"]["pinned_reason"] == "KIND_FUTURE_LETTER"
+    assert "FUTURE_LETTER" in cold.PINNED_KINDS
+
+    every_bound = cold.retention_policy(older_than_seconds=-1, max_count=0,
+                                         max_bytes=0)
+    decision = cold.select_for_prune((cold.read_record(B, envelope_id),),
+                                     every_bound, now=T3)
+    assert decision["prunable"] == []
+    assert decision["retained"][envelope_id] == "KIND_FUTURE_LETTER"
+    # The pin is checked BEFORE the kind scope, so narrowing kinds cannot
+    # accidentally retain-forever something the class already retains, nor
+    # accidentally prune it by excluding its kind from scope.
+    narrowed = cold.retention_policy(kinds=["DISCOVERY"], max_count=0)
+    again = cold.select_for_prune((cold.read_record(B, envelope_id),),
+                                  narrowed, now=T3)
+    assert again["prunable"] == []
+    assert again["retained"][envelope_id] == "KIND_FUTURE_LETTER"
+
+
+def test_the_archive_receipt_is_written_only_after_the_read_back_succeeds(tmp_path):
+    """Wave 3: `verified` in the manifest means verified on DISK.
+
+    The manifest is written twice: once with the facts of the write, then again
+    carrying the read-back result. A record whose receipt already claims
+    `hash: true` while the container on disk was never re-read would let prune
+    delete a hot copy against a promise nobody checked.
+    """
+    A, B = _pair(tmp_path)
+    envelope_id = _send(A)["intent"]["envelope_id"]
+    refused = cold.archive(B, envelope_id, opener=lambda raw: (_ for _ in ()).throw(
+        SailangError("NOT_VERIFIED", "read-back refused")), clock=_clock(T1))
+    assert refused["status"] == cold.COLD_VERIFY_FAILED
+    record = cold.read_record(B, envelope_id)
+    assert record is not None, "the bytes are on disk; the receipt is not a promise"
+    assert record["verified"]["hash"] is False
+    assert record["verified"]["manifest_consistent"] is False
+
+    # Re-verifying off disk really does read the stored bytes, and the receipt
+    # on disk still says UNVERIFIED: verify_record reports, it does not bless.
+    # Only archive, which owns the write, may move that flag.
+    verified = cold.verify_record(B, envelope_id, clock=_clock(T2))
+    assert verified["status"] == cold.VERIFIED
+    assert verified["verified"]["hash"] is True
+    assert cold.read_record(B, envelope_id)["verified"]["hash"] is False
+    redone = cold.archive(B, envelope_id, clock=_clock(T2))
+    assert redone["status"] == cold.ALREADY_COLD, "the bytes are already cold"
+    assert cold.read_record(B, envelope_id)["verified"]["hash"] is False, (
+        "a converged archive rewrites nothing, so the receipt keeps saying what "
+        "the last real write proved")
+
+
+def test_a_pruned_letter_still_lists_and_opens_through_cold_storage(tmp_path):
+    """Wave 3 acceptance: discoverability after the hot copy is gone.
+
+    The pin keeps a letter hot under the DEFAULT policy, so this drives the one
+    path that removes it anyway -- an explicit out-of-scope kind policy -- and
+    then proves the letter is still listed and still openable from cold. The
+    alternative was a test that only ever exercised the pinned branch and never
+    the pruned one it was written to describe.
+    """
+    B = workspace.load_workspace(_pair(tmp_path)[1].root)
+    envelope_id = _letter(B, claim="the capsule body")
+    cold.archive(B, envelope_id, clock=_clock(T1))
+
+    # An operator who un-pins the record by hand removes the stored flag; the
+    # class pin is then overridden by an empty policy set. This is the only
+    # path by which a letter loses its hot copy, and it is exactly the path the
+    # acceptance line is about.
+    manifest = cold.read_record(B, envelope_id)
+    manifest.update(pinned=False, pinned_reason=None)
+    cold._write_manifest(B, manifest)
+    override = cold.RetentionPolicy(max_count=0, pin_kinds=frozenset())
+    removed = cold.prune(B, retention=override, clock=_clock(T2))
+    assert removed["pruned"]["removed"] == [envelope_id]
+    assert B.office(clock=_clock(T3)).bundle_state(envelope_id) == "NEITHER"
+
+    # DISCOVERABLE is the acceptance word, not OPENABLE: listing is metadata,
+    # so it answers with the hot copy already gone.
+    listed = future_letter.list_letters(B, clock=_clock(T3))
+    assert [item["envelope_id"] for item in listed["items"]] == [envelope_id]
+    hit = cold.search(B, kinds=["FUTURE_LETTER"])["hits"]
+    assert [(h["envelope_id"], h["hot_removed"], h["restorable"]) for h in hit] ==         [(envelope_id, True, True)]
+
+    # Opening needs the bytes back, and cold storage is where they are.
+    assert _code(future_letter.open_letter, B, envelope_id, clock=_clock(T3)) ==         "INDEX_BODY_MISSING"
+    assert cold.restore(B, envelope_id, clock=_clock(T3))["status"] == cold.RESTORED
+    assert future_letter.open_letter(B, envelope_id, clock=_clock(T3))["body"] ==         "the capsule body"
+
+
 def test_the_whole_cold_surface_is_reachable_from_the_cli(tmp_path):
     A, B = _pair(tmp_path)
     envelope_id = _send(A)["intent"]["envelope_id"]

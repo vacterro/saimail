@@ -693,58 +693,132 @@ def test_an_unknown_custody_mode_is_refused(tmp_path, ws):
         fl.import_bundle(ws, bundle, custody="SOMEDAY")
 
 
-# --- cases 18, 19, 20: the GPT-5.6 Sol seed letter ----------------------------
+# --- cases 18, 19, 20: the v1 bootstrap shape (synthetic fixture) -------------
+#
+# The mandatory proof used to run against
+# operator_import/future_letters/SAIMAIL_FUTURE_LETTER_GPT56SOL_20261003_1535.zip,
+# which is deliberately NOT in source control: it carries a 32-byte recovery key
+# inside the same archive as the ciphertext that key opens. A clean checkout
+# therefore failed 4-8 tests over an artifact it must never contain. These cases
+# now build the same v1 SHAPE out of a published test key and prose that is
+# explicitly synthetic. The operator archive gets its own opt-in test below.
 
-def test_the_bootstrap_archive_is_present_and_complete():
-    assert SEED_BUNDLE.is_file(), "the bootstrap archive is recovery evidence"
-    with zipfile.ZipFile(SEED_BUNDLE) as archive:
+SYNTHETIC = json.loads((ROOT / "tests/fixtures/future_letter_bootstrap.json").read_text("utf-8"))
+SYNTHETIC_BODY = SYNTHETIC["body"]
+SYNTHETIC_KEY = bytes.fromhex(SYNTHETIC["key_hex"])  # published test material
+SYNTHETIC_TITLE = SYNTHETIC["title"]
+SYNTHETIC_AUTHOR = SYNTHETIC["author"]
+SYNTHETIC_CREATED = SYNTHETIC["created_at"]
+SYNTHETIC_MARKER = "TO FUTURE MODELS AND AGENTS"
+
+
+def _synthetic_legacy_bundle(path: Path) -> dict:
+    """Build one v1 bootstrap bundle from public test material."""
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+    nonce = bytes.fromhex(SYNTHETIC["nonce_hex"])
+    plaintext = SYNTHETIC_BODY.encode("utf-8")
+    sealed = AESGCM(SYNTHETIC_KEY).encrypt(nonce, plaintext, fl.LEGACY_BOOTSTRAP_AAD)
+    document = {
+        "nonce_b64": base64.b64encode(nonce).decode("ascii"),
+        "ciphertext_b64": base64.b64encode(sealed).decode("ascii"),
+        "key_b64": base64.b64encode(SYNTHETIC_KEY).decode("ascii"),
+    }
+    digest = hashlib.sha256(plaintext).hexdigest()
+    manifest = {
+        "schema": fl.LEGACY_BUNDLE_SCHEMA,
+        "title": SYNTHETIC_TITLE,
+        "author": SYNTHETIC_AUTHOR,
+        "created_at": SYNTHETIC_CREATED,
+        "purpose": "synthetic reproduction of the v1 bootstrap shape",
+        "plaintext_sha256": digest,
+    }
+    key_text = ("SYNTHETIC TEST FIXTURE -- this key is public and ships with the "
+                "test that writes it.\nKey (base64): "
+                + base64.b64encode(SYNTHETIC_KEY).decode("ascii") + "\n")
+    with zipfile.ZipFile(path, "w") as archive:
+        archive.writestr(fl.PAYLOAD_MEMBER, json.dumps(document))
+        archive.writestr(fl.KEY_MEMBER, key_text)
+        archive.writestr(fl.MANIFEST_MEMBER, json.dumps(manifest))
+        archive.writestr(fl.INSTRUCTIONS_MEMBER, "synthetic test fixture; no operator data")
+    return {"path": path, "sha256": digest, "marker": SYNTHETIC_MARKER,
+            "author": SYNTHETIC_AUTHOR, "created_at": "2026-01-01T00:00:00Z"}
+
+
+@pytest.fixture
+def seed(tmp_path):
+    return _synthetic_legacy_bundle(tmp_path / "synthetic_seed.zip")
+
+
+def test_the_synthetic_bootstrap_fixture_is_complete_and_not_secret(seed):
+    with zipfile.ZipFile(seed["path"]) as archive:
         assert set(archive.namelist()) == {
             fl.PAYLOAD_MEMBER, fl.KEY_MEMBER, fl.MANIFEST_MEMBER,
             fl.INSTRUCTIONS_MEMBER}
+        key_text = archive.read(fl.KEY_MEMBER).decode("utf-8")
+    # The key is the published constant, not an operator secret that leaked in.
+    assert base64.b64encode(SYNTHETIC_KEY).decode("ascii") in key_text
+    assert "operator" not in key_text.lower()
 
 
-def test_the_bootstrap_archive_decrypts_to_the_expected_plaintext():
+def test_the_bootstrap_archive_decrypts_to_the_expected_plaintext(seed):
+    recovered = fl.read_bundle(seed["path"])
+    assert recovered["schema"] == fl.LEGACY_BUNDLE_SCHEMA
+    assert recovered["plaintext_sha256"] == seed["sha256"]
+    assert recovered["container"]["author"] == seed["author"]
+    assert recovered["container"]["created_at"] == seed["created_at"]
+    assert seed["marker"] in recovered["container"]["body"]
+
+
+def test_the_seed_letter_imports_and_preserves_its_bytes_exactly(seed, tmp_path):
+    target = make_workspace(tmp_path / "ws-b", "agent-b")
+    imported = fl.import_bundle(target, seed["path"])
+    assert imported["status"] == "ACCEPTED"
+    assert imported["letter"]["author"] == seed["author"]
+    assert imported["letter"]["source"] == fl.SOURCE_IMPORTED
+    assert imported["letter"]["created_at"] == seed["created_at"]
+    assert imported["bundle"]["plaintext_sha256"] == seed["sha256"]
+    opened = fl.open_letter(target, imported["letter"]["letter_id"])
+    assert hashlib.sha256(opened["body"].encode("utf-8")).hexdigest() == seed["sha256"]
+
+
+def test_importing_the_seed_twice_is_deduplicated(seed, tmp_path):
+    target = make_workspace(tmp_path / "ws-b", "agent-b")
+    fl.import_bundle(target, seed["path"])
+    assert fl.import_bundle(target, seed["path"])["status"] == "DUPLICATE"
+    assert fl.list_letters(target)["count"] == 1
+
+
+def test_the_seed_import_rides_the_canonical_route(seed, tmp_path):
+    target = make_workspace(tmp_path / "ws-b", "agent-b")
+    envelope_id = fl.import_bundle(target, seed["path"])["letter"]["envelope_id"]
+    # A real signed SENV2 container in the outbox, not hand-written internals.
+    assert "SIG:" in outbox_container(target, envelope_id).read_text("utf-8")
+    assert target.self_office().read_index_row(envelope_id)["kind"] == fl.KIND
+
+
+OPERATOR_ONLY = pytest.mark.skipif(
+    not SEED_BUNDLE.is_file(),
+    reason="operator bootstrap archive is deliberately not in source control")
+
+
+@OPERATOR_ONLY
+def test_the_operator_bootstrap_archive_decrypts_to_its_recorded_plaintext():
+    """Opt-in: only runs where the operator artifact is present locally."""
     recovered = fl.read_bundle(SEED_BUNDLE)
     assert recovered["schema"] == fl.LEGACY_BUNDLE_SCHEMA
     assert recovered["plaintext_sha256"] == SEED_SHA256
     assert recovered["container"]["author"] == "GPT-5.6 Sol"
-    assert recovered["container"]["created_at"] == "2026-10-03T12:35:00Z"
     assert SEED_MARKER in recovered["container"]["body"]
 
 
-def test_the_seed_letter_imports_and_preserves_its_bytes_exactly(tmp_path):
-    target = make_workspace(tmp_path / "ws-b", "agent-b")
-    imported = fl.import_bundle(target, SEED_BUNDLE)
-    assert imported["status"] == "ACCEPTED"
-    assert imported["letter"]["author"] == "GPT-5.6 Sol"
-    assert imported["letter"]["source"] == fl.SOURCE_IMPORTED
-    assert imported["letter"]["created_at"] == "2026-10-03T12:35:00Z"
-    assert imported["bundle"]["plaintext_sha256"] == SEED_SHA256
-    opened = fl.open_letter(target, imported["letter"]["letter_id"])
-    assert hashlib.sha256(opened["body"].encode("utf-8")).hexdigest() == SEED_SHA256
-
-
-def test_importing_the_seed_twice_is_deduplicated(tmp_path):
-    target = make_workspace(tmp_path / "ws-b", "agent-b")
-    fl.import_bundle(target, SEED_BUNDLE)
-    assert fl.import_bundle(target, SEED_BUNDLE)["status"] == "DUPLICATE"
-    assert fl.list_letters(target)["count"] == 1
-
-
+@OPERATOR_ONLY
 def test_the_original_bootstrap_archive_survives_import(tmp_path):
     before = SEED_BUNDLE.read_bytes()
     target = make_workspace(tmp_path / "ws-b", "agent-b")
     fl.import_bundle(target, SEED_BUNDLE)
     assert SEED_BUNDLE.is_file()
     assert SEED_BUNDLE.read_bytes() == before
-
-
-def test_the_seed_import_rides_the_canonical_route(tmp_path):
-    target = make_workspace(tmp_path / "ws-b", "agent-b")
-    envelope_id = fl.import_bundle(target, SEED_BUNDLE)["letter"]["envelope_id"]
-    # A real signed SENV2 container in the outbox, not hand-written internals.
-    assert "SIG:" in outbox_container(target, envelope_id).read_text("utf-8")
-    assert target.self_office().read_index_row(envelope_id)["kind"] == fl.KIND
 
 
 # --- case 21: ordinary mail is unchanged --------------------------------------
@@ -774,33 +848,33 @@ def test_future_letters_do_not_leak_into_ordinary_kinds(ws):
 
 # --- case 22: cold-start successor proof --------------------------------------
 
-def test_cold_start_discovers_opens_and_reopens_the_seed(tmp_path):
+def test_cold_start_discovers_opens_and_reopens_the_seed(seed, tmp_path):
     # A successor workspace that never held the plaintext in memory.
     successor = make_workspace(tmp_path / "successor", "successor-agent")
-    fl.import_bundle(successor, SEED_BUNDLE)
+    fl.import_bundle(successor, seed["path"])
 
     # Discovery is metadata-first and finds the letter by provenance.
     listing = fl.list_letters(successor)
     assert listing["count"] == 1
     item = listing["items"][0]
-    assert item["author"] == "GPT-5.6 Sol"
-    assert item["source_ref"] == f"sha256:{SEED_SHA256}"
+    assert item["author"] == seed["author"]
+    assert item["source_ref"] == f"sha256:{seed['sha256']}"
 
     # Listing decrypted nothing and changed nothing.
-    assert SEED_MARKER not in json.dumps(listing)
+    assert seed["marker"] not in json.dumps(listing)
     assert fl.list_letters(successor)["items"][0]["state"] == fl.READ_UNREAD
 
     # Explicit open recovers the exact expected plaintext.
     opened = fl.open_letter(successor, item["letter_id"])
-    assert hashlib.sha256(opened["body"].encode("utf-8")).hexdigest() == SEED_SHA256
-    assert SEED_MARKER in opened["body"]
+    assert hashlib.sha256(opened["body"].encode("utf-8")).hexdigest() == seed["sha256"]
+    assert seed["marker"] in opened["body"]
 
     # Restart, then reopen recovers the same plaintext and hash again.
     del successor
     cold = ws_module.load_workspace(tmp_path / "successor")
     assert fl.list_letters(cold)["items"][0]["state"] == "READ"
     reopened = fl.reopen_letter(cold, item["letter_id"])
-    assert hashlib.sha256(reopened["body"].encode("utf-8")).hexdigest() == SEED_SHA256
+    assert hashlib.sha256(reopened["body"].encode("utf-8")).hexdigest() == seed["sha256"]
     assert reopened["letter"]["letter_id"] == item["letter_id"]
 
 
@@ -813,33 +887,33 @@ def _cli(workspace: Path, *args) -> str:
     return proc.stdout
 
 
-def test_cold_start_through_the_real_cli_across_four_processes(tmp_path):
+def test_cold_start_through_the_real_cli_across_four_processes(seed, tmp_path):
     """The same proof with no in-process shortcut."""
     workspace = tmp_path / "cli-ws"
     _cli(workspace, "init", "--workspace", str(workspace), "--seat", "successor")
     imported = json.loads(_cli(
         workspace, "future-letter", "import", "--workspace", str(workspace),
-        "--bundle", str(SEED_BUNDLE), "--json"))
+        "--bundle", str(seed["path"]), "--json"))
     identifier = imported["letter"]["letter_id"]
 
     # Process two: discovery, still metadata-only.
     listed = json.loads(_cli(workspace, "future-letter", "list",
                              "--workspace", str(workspace), "--json"))
-    assert listed["items"][0]["author"] == "GPT-5.6 Sol"
-    assert SEED_MARKER not in json.dumps(listed)
+    assert listed["items"][0]["author"] == seed["author"]
+    assert seed["marker"] not in json.dumps(listed)
     assert listed["unread"] == 1
 
     # Process three: explicit open, exact plaintext.
     opened = json.loads(_cli(workspace, "future-letter", "open",
                              "--workspace", str(workspace), "--letter", identifier,
                              "--json"))
-    assert hashlib.sha256(opened["body"].encode("utf-8")).hexdigest() == SEED_SHA256
+    assert hashlib.sha256(opened["body"].encode("utf-8")).hexdigest() == seed["sha256"]
 
     # Process four: reopen after the restart.
     reopened = json.loads(_cli(workspace, "future-letter", "reopen",
                                "--workspace", str(workspace), "--letter", identifier,
                                "--json"))
-    assert hashlib.sha256(reopened["body"].encode("utf-8")).hexdigest() == SEED_SHA256
+    assert hashlib.sha256(reopened["body"].encode("utf-8")).hexdigest() == seed["sha256"]
 
 
 def test_the_cli_creates_and_reports_without_opening(tmp_path):
@@ -1204,3 +1278,74 @@ def test_a_registry_row_of_a_foreign_schema_is_refused(ws):
     with pytest.raises(SailangError) as excinfo:
         fl.list_letters(ws)
     assert excinfo.value.code == fl.BUNDLE_CORRUPT
+
+
+def test_a_declared_hash_never_dedups_an_unauthenticated_private_bundle(tmp_path):
+    """A manifest hash is a claim until the identity opens the envelope.
+
+    The private import checked content-dedup against `manifest["plaintext_sha256"]`
+    BEFORE opening the container, so a foreign letter stamped with a hash this
+    mailbox already knew was answered "DUPLICATE" -- a false statement about both
+    letters, and a way to make an unreadable archive look already imported.
+    """
+    ws = make_workspace(tmp_path / "ws-a", "agent-a")
+    local = leave(ws, title="local", body="LOCAL BODY")["letter"]
+    local_row = next(row for row in fl._read_registry(ws)
+                     if row["letter_id"] == local["letter_id"])
+    local_hash = local_row["plaintext_sha256"]
+
+    other = leave(ws, title="other", body="OTHER BODY")["letter"]
+    clean = tmp_path / "clean.zip"
+    fl.export_bundle(ws, other["letter_id"], out=clean)
+    with zipfile.ZipFile(clean) as archive:
+        members = {name: archive.read(name) for name in archive.namelist()}
+    manifest = json.loads(members[fl.MANIFEST_MEMBER])
+    assert manifest["plaintext_sha256"] != local_hash
+
+    manifest["plaintext_sha256"] = local_hash
+    members[fl.MANIFEST_MEMBER] = json.dumps(manifest).encode("utf-8")
+    tampered = tmp_path / "tampered.zip"
+    with zipfile.ZipFile(tampered, "w") as archive:
+        for name, data in members.items():
+            archive.writestr(name, data)
+
+    with pytest.raises(SailangError) as excinfo:
+        fl.import_bundle(ws, tampered)
+    assert excinfo.value.code == fl.BUNDLE_HASH_MISMATCH, (
+        "an unauthenticated declared hash was trusted enough to answer DUPLICATE")
+    # The genuine article is still idempotent, and no extra letter appeared.
+    assert fl.import_bundle(ws, clean)["status"] == "DUPLICATE"
+    assert fl.list_letters(ws)["count"] == 2
+
+
+def test_listing_builds_one_office_for_all_rows(tmp_path, monkeypatch):
+    """Listing is O(1) office builds, not O(rows).
+
+    `_state` built a Post Office per row, and building one re-reads the peer
+    registry and re-derives both key sets. Listing 100 letters therefore made
+    101 peer-registry reads to answer a metadata question that decrypts nothing.
+    The counter is a real call count, not a timing.
+    """
+    ws = make_workspace(tmp_path / "ws-a", "agent-a")
+    for index in range(25):
+        leave(ws, title=f"letter {index}", body=f"body {index}")
+
+    calls = {"builds": 0}
+    original = ws_module._self_post_office
+
+    def counted(*args, **kwargs):
+        calls["builds"] += 1
+        return original(*args, **kwargs)
+
+    # Warm call: it may also rebuild a missing projection, which legitimately
+    # builds its own office once.
+    fl.list_letters(ws)
+    monkeypatch.setattr(ws_module, "_self_post_office", counted)
+    listing = fl.list_letters(ws)
+    assert listing["count"] == 25
+    assert calls["builds"] == 1, f"listing built {calls['builds']} offices for 25 rows"
+
+    # The same metadata still reads correctly, and one extra call still cannot
+    # see a body.
+    assert all(item["state"] in (fl.READ_UNREAD, fl.READ_READ) for item in listing["items"])
+    assert "body 3" not in json.dumps(listing)

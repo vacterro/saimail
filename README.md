@@ -30,7 +30,21 @@ SAIMAIL provides inboxes, evidence-aware letters, encrypted addressed payloads, 
 </table>
 
 ---
-An agent post office with an evidence discipline.---
+**SAIMAIL — LOCAL ONLY**
+
+**CURRENT CHECKOUT:** **v0.0.2a3** includes `P1 + V4-01 + V5-01`.
+**FROZEN VERIFIED ARTIFACT:** `0.0.2a2`, locally built and externally proven,
+`NOT_PUBLISHED`; the desktop GUI is **not** inside that frozen wheel.
+The frozen `0.0.2a3` wheel remains `READY_FOR_EXTERNAL_INSTALL_PROOF`,
+`NOT_PUBLISHED`. The SAIPEN seam bridge and SAITELEMES are **not** inside the frozen
+`0.0.2a3` wheel. Current source acceptance does not certify a packaged release.
+
+For this checkout, install with `python -m pip install -e ".[gui]"`, then run
+`saimail-gui` or `saimail-local`. The installed-package command form is
+`pip install "saimail[gui,crypto]"`; use the checkout while no published artifact
+has been independently accepted. Canonical artwork: [logo](pics/SAIMAIL_LOGO.png).
+See the [work desk guide](humbox/SAIPEN-WORK-DESK.md) for the SAIPEN seam bridge,
+SAITELEMES, explicit project participation and secret-free header reads.
 
 An agent post office with an evidence discipline.
 
@@ -86,6 +100,24 @@ simplification live in [bench/ANALYSIS.md](bench/ANALYSIS.md). Read it before
 building anything downstream.
 
 ## Running it
+
+The canonical Future Letter tests build their bootstrap archive from
+`tests/fixtures/future_letter_bootstrap.json`, which contains public synthetic
+text and test-only recovery material. They run from a clean source archive
+without `operator_import/`. Checks of the private operator bootstrap archive
+run only when that local artifact is deliberately present; it remains ignored
+and must not be included in a distribution.
+
+The full historical acceptance suite also verifies private protocol receipts,
+registered corpus inputs and frozen local alpha wheels. Public source snapshots
+exclude those inputs. Maintainers run that suite in an isolated checkout with
+the exact hash-bound originals supplied separately; a public clone alone cannot
+establish the historical acceptance result. Portable runtime checks can run
+without that private fixture overlay:
+
+```powershell
+python -m pytest -q tests/test_catchup.py tests/test_outbox.py tests/test_trust.py tests/test_postoffice_delivery.py
+```
 
 ```
 pip install -e ".[test]"
@@ -286,6 +318,23 @@ that answered it, and every section names that function. Quarantined mail, a
 trust rotation awaiting a human, and unreadable state are all surfaced; nothing
 is smoothed into a green tick. It is a refusal, not a decoration — a dashboard
 that hides failures behind status cards is worse than no dashboard.
+
+Trust registry version 2 preserves the original sender/recipient fingerprints
+and each complete, publicly signed rotation receipt. Every read checks both
+signatures and the whole chain against that origin and the current pin. Version 1
+pins with no rotations migrate in memory and are saved by the next successful
+trust command. A legacy rotation chain without its original proof, or a pending
+rotation without a recorded target, refuses as `TRUST_REGISTRY_CORRUPT`. Preserve
+that file and restore a verified backup; the reader never invents missing history.
+
+Mailbox recovery saves the exact uncommitted index tail and its hash in
+`mail/recovery/index-tails/` before truncating it. If that evidence cannot be
+committed or conflicts with an existing repair, the original index stays intact.
+
+On Windows, the runtime and test extras include `pywin32` for file-generation
+metadata used by journal caches. Without that API, readers validate canonical
+files again on each call; they never assume that restored modification times
+prove unchanged bytes. The core package remains dependency free.
 
 `feed` follows an event cursor and **says `GAP` out loud** when history was
 trimmed out from under it. Without that flag a caller sees a well-formed page and
@@ -606,3 +655,9 @@ For reproducible bugs and durable feature requests, use [this repository's GitHu
 ---
 <sub>If this project is useful to you, optional support: [Buy Me a Coffee](https://buymeacoffee.com/vacuum34) · [Boosty](https://boosty.to/vacuum34/donate) · [PayPal](https://paypal.me/AlexNelin) · [other ways](https://github.com/vacterro/vacterro/blob/main/SUPPORT.md)</sub>
 <!-- VACTERRO_SUPPORT:END -->
+
+Private operator-source acceptance is a separate read-only command:
+`python -B tools/verify_operator_sources.py --root /explicit/operator/checkout`.
+The public suite exercises its unchanged provenance assertions with synthetic
+retirement, beacon and recovery fixtures. It never needs a private `.saipen/`
+corpus or unpublished operator conversations to pass.

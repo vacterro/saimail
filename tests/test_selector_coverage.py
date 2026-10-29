@@ -27,6 +27,7 @@ from saimail.postoffice import HeaderInterest, HeaderView
 from saimail_local import no_network
 
 ROOT = Path(__file__).resolve().parent.parent
+REPLAY_MANIFEST = "lab/selector_coverage_replay_20261029_r2_manifest.json"
 FIXTURE_SHA = "a8fa4095ea4bbd1361a40c4c0d6be8968584e562a3cde3f47183a3cfccf9631e"
 REGISTRATION_SHA = "9be09310122a3638155745b3955f769a8aad20a618a8c795a37eb78b1f6324fa"
 HISTORY = ROOT / "lab" / "history" / "v202-selector-coverage"
@@ -83,7 +84,7 @@ def experiment(tmp_path_factory):
     sc._arm = recording
     try:
         with no_network(probe):
-            result = sc.run_experiment(base, probe=probe)
+            result = sc.run_experiment(base, probe=probe, manifest_path=REPLAY_MANIFEST)
     finally:
         sc._arm = original
     return {"result": result, "records": records, "probe": probe}
@@ -92,9 +93,9 @@ def experiment(tmp_path_factory):
 def temp_checkout(tmp_path) -> Path:
     """A throwaway checkout that can be mutated without touching the repo."""
     root = tmp_path / "checkout"
-    document = em.load(ROOT / sc.MANIFEST)
+    document = em.load(ROOT / REPLAY_MANIFEST)
     rels = {component["PATH"] for component in document["implementation"]}
-    rels.add(sc.MANIFEST)
+    rels.add(REPLAY_MANIFEST)
     for record in document["inputs"]:
         rels.add(record["ARCHIVED_FIXTURE"])
         if "SOURCE_PATH" in record:
@@ -164,9 +165,17 @@ def test_historical_and_current_verify_independently():
     historical = em.verify_historical(document, fixture_root=ROOT)
     current = em.verify_current(document, root=ROOT)
     assert historical["verdict"] == em.HISTORICAL_VERIFIED
-    assert current["verdict"] == em.CURRENT_MATCH
+    assert current["verdict"] == em.CURRENT_IMPLEMENTATION_DRIFT
     assert historical["current_source_read"] is False
     assert all(row["status"] == em.CURRENT_MATCH for row in current["inputs"])
+    # Changed source does not rewrite the original registration or its evidence.
+    with pytest.raises(SailangError, match="V202_INPUT_DRIFT"):
+        sc.preflight(ROOT)
+    replay = em.load(ROOT / REPLAY_MANIFEST)
+    assert replay["experiment_id"] != document["experiment_id"]
+    assert replay["authority"] == "HISTORICAL_ONLY"
+    assert em.verify_current(replay, root=ROOT)["verdict"] == em.CURRENT_MATCH
+    assert em.verify_historical(replay, fixture_root=ROOT)["verdict"] == em.HISTORICAL_VERIFIED
 
 
 def test_no_live_authority_is_granted():
@@ -185,32 +194,32 @@ def test_no_live_authority_is_granted():
 def test_preflight_refuses_current_implementation_drift(tmp_path):
     root = temp_checkout(tmp_path)
     (root / "lab" / "selector_coverage.py").write_bytes(b"# drifted implementation\n")
-    current = em.verify_current(em.load(root / sc.MANIFEST), root=root)
+    current = em.verify_current(em.load(root / REPLAY_MANIFEST), root=root)
     assert current["verdict"] == em.CURRENT_IMPLEMENTATION_DRIFT
     with pytest.raises(SailangError, match="V202_INPUT_DRIFT"):
-        sc.preflight(root)
+        sc.preflight(root, manifest_path=REPLAY_MANIFEST)
 
 
 def test_preflight_refuses_current_input_drift(tmp_path):
     root = temp_checkout(tmp_path)
     fixture = root / "lab" / "selector_coverage_fixtures.json"
     fixture.write_bytes(fixture.read_bytes() + b"\n")
-    current = em.verify_current(em.load(root / sc.MANIFEST), root=root)
+    current = em.verify_current(em.load(root / REPLAY_MANIFEST), root=root)
     assert current["verdict"] == em.CURRENT_INPUT_DRIFT
     with pytest.raises(SailangError, match="V202_INPUT_DRIFT"):
-        sc.preflight(root)
+        sc.preflight(root, manifest_path=REPLAY_MANIFEST)
 
 
 def test_preflight_refuses_historical_fixture_mismatch(tmp_path):
     root = temp_checkout(tmp_path)
     archived = root / "lab/history/v202-selector-coverage/selector_coverage_fixtures.json"
     archived.write_bytes(archived.read_bytes() + b"\n")
-    document = em.load(root / sc.MANIFEST)
+    document = em.load(root / REPLAY_MANIFEST)
     assert em.verify_current(document, root=root)["verdict"] == em.CURRENT_MATCH
     historical = em.verify_historical(document, fixture_root=root)
     assert historical["verdict"] == em.HISTORICAL_MISMATCH
     with pytest.raises(SailangError, match="V202_HISTORY_MISMATCH"):
-        sc.preflight(root)
+        sc.preflight(root, manifest_path=REPLAY_MANIFEST)
 
 
 def test_output_directory_must_be_new_and_empty(tmp_path):
@@ -218,7 +227,7 @@ def test_output_directory_must_be_new_and_empty(tmp_path):
     occupied.mkdir()
     (occupied / "result.json").write_text("{}\n", encoding="utf-8")
     with pytest.raises(ValueError, match="V202_NONEMPTY_WORKSPACE"):
-        sc.run_experiment(occupied, root=ROOT)
+        sc.run_experiment(occupied, root=ROOT, manifest_path=REPLAY_MANIFEST)
 
 
 # ---------------------------------------------------------------------------
@@ -379,7 +388,7 @@ def test_rerun_from_frozen_inputs_is_deterministic(experiment, tmp_path_factory)
     base = tmp_path_factory.mktemp("v202-repeat")
     probe = {"blocked": 0}
     with no_network(probe):
-        second = sc.run_experiment(base, probe=probe)
+        second = sc.run_experiment(base, probe=probe, manifest_path=REPLAY_MANIFEST)
     assert second == experiment["result"]
 
 

@@ -52,7 +52,7 @@ def _received(B, topic=TOPIC) -> int:
 
 
 def _intent_file(A, key) -> Path:
-    return A.root / "outbox" / "intents" / (outbox.key_id(key).split(":", 1)[1] + ".json")
+    return outbox._intent_path(A, outbox.key_id(key))
 
 
 def _send(A, key="k:1", claim="the finding", clock=None, **kwargs):
@@ -344,18 +344,24 @@ def test_a_pending_intent_waits_for_the_signing_key_instead_of_failing(tmp_path)
     lambda intent: intent.update(envelope_id="sha256:" + "0" * 64),
     lambda intent: intent.update(stray=True),
 ])
-def test_a_tampered_intent_fails_closed(tmp_path, damage):
+@pytest.mark.parametrize("delivered", [False, True])
+def test_a_tampered_intent_fails_closed(tmp_path, damage, delivered):
     A, B = _pair(tmp_path)
-    _send(A)
+    _send(A, deliver=delivered)
     path = _intent_file(A, "k:1")
     intent = json.loads(path.read_text(encoding="utf-8"))
     damage(intent)
     path.write_text(json.dumps(intent), encoding="utf-8")
     view = workspace.load_workspace_headers(A.root)
     assert _code(outbox.outbox_status, view) == outbox.OUTBOX_INTENT_CORRUPT
-    assert _code(outbox.resume_outbox, A) == outbox.OUTBOX_INTENT_CORRUPT
+    if delivered:
+        # Resume visits only the active queue. Full history validation belongs
+        # to status and direct idempotency reads, which still refuse corruption.
+        assert outbox.resume_outbox(A)["counts"]["examined"] == 0
+    else:
+        assert _code(outbox.resume_outbox, A) == outbox.OUTBOX_INTENT_CORRUPT
     assert _code(_send, A) == outbox.OUTBOX_INTENT_CORRUPT
-    assert _received(B) == 1
+    assert _received(B) == int(delivered)
 
 
 def test_cli_send_status_resume_and_retry(tmp_path, capsys):
@@ -382,4 +388,200 @@ def test_cli_send_status_resume_and_retry(tmp_path, capsys):
     assert code == 0 and resumed["counts"]["examined"] == 0
     code, refused = cli("retry", "--key", "cli:1")
     assert code == 1 and refused["status"] == outbox.INTENT_NOT_FAILED
+    assert _received(B) == 1
+
+
+@pytest.mark.parametrize("field,value", [
+    ("next_attempt_at", 123),
+    ("recorded_at", 42),
+    ("attempts", True),
+    ("delivered_at", "yesterday"),
+    ("sealed_at", "2026-09-24T07:00:00+03:00"),
+    ("alias", None),
+    ("kind", "NOT_A_KIND"),
+    ("kind", []),
+    ("kind", {}),
+    ("version", 1.0),
+    ("subject", "\ud800"),
+    ("container", "\ud800"),
+    ("failure_reason", "\ud800"),
+    ("failure", 7),
+    ("envelope_id", "sha256:" + "0" * 64),
+    ("state", "PENDING"),
+    ("state", "DELIVERED"),
+    ("request_digest", "sha256:bad"),
+    ("key_id", "sha256:bad"),
+    ("key", None),
+    ("key", "bad key"),
+    ("alias", "bad alias"),
+    ("recipient_seat", "bad seat"),
+    ("created", "yesterday"),
+    ("topic", "different"),
+    ("failure_reason", "unrecorded failure"),
+    ("last_attempt_at", T0),
+    ("delivery_status", "ACCEPTED"),
+])
+def test_a_malformed_durable_intent_is_refused_before_anything_uses_it(
+        tmp_path, field, value):
+    """Every persisted field is validated, not just the ones the writer sets.
+
+    `_check_intent` typed the state and the attempt count and left the timestamps
+    to luck: `next_attempt_at=123` passed validation, so `outbox_status` answered
+    OK about the intent and `resume_outbox` died with `TypeError` comparing 123
+    to a timestamp string -- a crash where a refusal was owed, and a healthy
+    report about an object nobody could read. Corrupt is refused HERE, before any
+    sort, comparison or status answer, under one code.
+    """
+    A, B = _pair(tmp_path)
+    _send(A, deliver=False)
+    path = _intent_file(A, "k:1")
+    intent = json.loads(path.read_text(encoding="utf-8"))
+    intent[field] = value
+    path.write_text(json.dumps(intent), encoding="utf-8")
+
+    assert _code(outbox.outbox_status, A) == outbox.OUTBOX_INTENT_CORRUPT
+    assert _code(outbox.resume_outbox, A) == outbox.OUTBOX_INTENT_CORRUPT
+    assert _code(outbox.retry_intent, A, "k:1") == outbox.OUTBOX_INTENT_CORRUPT
+    assert _received(B) == 0, "a corrupt intent must not be advanced"
+
+
+@pytest.mark.parametrize("history", [40, 80])
+def test_resume_reads_only_active_intents_even_after_cold_restart(tmp_path, monkeypatch, history):
+    A, B = _pair(tmp_path)
+    for number in range(history):
+        _send(A, key=f"history:{number}")
+    _send(A, key="active", deliver=False)
+    checks = []
+    original = outbox._check_intent
+
+    def counted(intent, *, path):
+        checks.append(path)
+        return original(intent, path=path)
+
+    monkeypatch.setattr(outbox, "_check_intent", counted)
+    restarted = workspace.load_workspace_headers(A.root)
+    script = r"""
+import json, sys
+sys.path.insert(0, sys.argv[1])
+from saimail import outbox, workspace
+checks = []
+original = outbox._check_intent
+def counted(intent, *, path):
+    checks.append(str(path))
+    return original(intent, path=path)
+outbox._check_intent = counted
+result = outbox.resume_outbox(workspace.load_workspace_headers(sys.argv[2]), budget=1)
+print(json.dumps({"result": result, "checks": checks}))
+"""
+    child = subprocess.run([sys.executable, "-c", script, str(ROOT), str(A.root)],
+                           capture_output=True, text=True, timeout=120)
+    assert child.returncode == 0, child.stderr
+    observed = json.loads(child.stdout)
+    assert observed["result"]["counts"][outbox.DELIVERED] == 1
+    assert len(observed["checks"]) == 1, "a cold process must not parse terminal history"
+    checks.clear()
+    assert outbox.resume_outbox(restarted, budget=1)["counts"]["examined"] == 0
+    assert not checks
+    assert _received(B) == history + 1
+    # History remains authoritative and directly queryable after leaving the queue.
+    assert len(outbox._all_intents(restarted)) == history + 1
+    assert _send(A, key="history:0")["intent"]["attempts"] == 1
+
+
+PARTITION_CRASH = r"""
+import os, sys
+from pathlib import Path
+sys.path.insert(0, sys.argv[1])
+from saimail import outbox, postoffice, workspace
+A = workspace.load_workspace(sys.argv[2])
+point = sys.argv[3]
+original = os.replace
+def replace(source, target):
+    retirement = Path(target).parent.name == outbox.TERMINAL_DIR
+    rearm = Path(source).parent.name == outbox.TERMINAL_DIR
+    if (retirement and point == "before_retire") or (rearm and point == "before_rearm"):
+        os._exit(77)
+    original(source, target)
+    if (retirement and point == "after_retire") or (rearm and point == "after_rearm"):
+        os._exit(77)
+os.replace = replace
+if "rearm" in point or point == "after_retry_commit":
+    if point == "after_retry_commit":
+        postoffice.PostOffice.deliver = lambda *args: os._exit(77)
+    outbox.retry_intent(A, "k:1")
+else:
+    outbox.submit_send(A, "beta", key="k:1", claim="the finding", topic="T-119", kind="DISCOVERY")
+raise SystemExit(0)
+"""
+
+
+@pytest.mark.parametrize("point", ["before_retire", "after_retire", "before_rearm",
+                                   "after_rearm", "after_retry_commit"])
+def test_process_death_during_queue_history_moves_never_loses_a_committed_retry(tmp_path, point):
+    retry = "rearm" in point or point == "after_retry_commit"
+    A, B = _pair(tmp_path, register_back=not retry)
+    if retry:
+        failed = _send(A)
+        assert failed["status"] == outbox.FAILED
+        workspace.add_recipient(B, "alpha", workspace.identity_card(A), A.root)
+    killed = subprocess.run([sys.executable, "-c", PARTITION_CRASH, str(ROOT),
+                             str(A.root), point], capture_output=True, text=True, timeout=120)
+    assert killed.returncode == 77, killed.stderr
+    before = outbox._read(A, outbox.key_id("k:1"))
+    envelope_id = before["envelope_id"]
+    resumed = outbox.resume_outbox(workspace.load_workspace_headers(A.root))
+    if retry and point != "after_retry_commit":
+        # No active state was committed. Failed work remains operator controlled.
+        assert resumed["counts"]["examined"] == 0 and _received(B) == 0
+        assert outbox.retry_intent(A, "k:1")["status"] == outbox.DELIVERED
+    else:
+        assert resumed["counts"]["examined"] == int(point == "after_retry_commit")
+    assert _received(B) == 1
+    final = _send(A)
+    assert final["intent"]["state"] == outbox.DELIVERED
+    assert final["intent"]["envelope_id"] == envelope_id
+    assert _received(B) == 1
+
+
+def test_legacy_flat_terminal_history_migrates_once_and_duplicates_refuse(tmp_path):
+    A, B = _pair(tmp_path)
+    _send(A)
+    terminal = _intent_file(A, "k:1")
+    active = A.root / "outbox" / "intents" / terminal.name
+    assert terminal.parent.name == "terminal"
+    terminal.replace(active)  # the legacy flat layout
+    assert outbox.resume_outbox(A)["counts"]["examined"] == 0
+    assert not active.exists() and terminal.is_file() and _received(B) == 1
+    active.write_bytes(terminal.read_bytes())
+    assert _code(outbox.resume_outbox, A) == outbox.OUTBOX_INTENT_CORRUPT
+    assert _code(outbox.outbox_status, A) == outbox.OUTBOX_INTENT_CORRUPT
+    assert _code(_send, A) == outbox.OUTBOX_INTENT_CORRUPT
+    assert _received(B) == 1
+
+
+def test_corruption_beyond_the_resume_budget_prevents_all_delivery(tmp_path):
+    A, B = _pair(tmp_path)
+    _send(A, key="first", deliver=False, clock=lambda: T0)
+    _send(A, key="second", deliver=False, clock=lambda: "2026-09-24T07:00:01Z")
+    path = _intent_file(A, "second")
+    broken = json.loads(path.read_text(encoding="utf-8"))
+    broken["next_attempt_at"] = []
+    path.write_text(json.dumps(broken), encoding="utf-8")
+    assert _code(outbox.resume_outbox, A, budget=1) == outbox.OUTBOX_INTENT_CORRUPT
+    assert _received(B) == 0
+
+
+def test_unsealed_failed_intent_retains_a_valid_record_and_can_be_rearmed(tmp_path):
+    A, B = _pair(tmp_path)
+    view = workspace.load_workspace_headers(A.root)
+    assert _send(view)["intent"]["state"] == outbox.PENDING
+    # The registered alias disappears after recording, before a signer resumes.
+    workspace._write_peers(A.root, {})
+    restarted = workspace.load_workspace(A.root)
+    assert outbox.resume_outbox(restarted)["counts"][outbox.FAILED] == 1
+    failed = outbox._read(restarted, outbox.key_id("k:1"))
+    assert failed["container"] is None and failed["record"] is not None
+    assert outbox.outbox_status(restarted)["outbox"]["counts"][outbox.FAILED] == 1
+    workspace.add_recipient(restarted, "beta", workspace.identity_card(B), B.root)
+    assert outbox.retry_intent(restarted, "k:1")["status"] == outbox.DELIVERED
     assert _received(B) == 1

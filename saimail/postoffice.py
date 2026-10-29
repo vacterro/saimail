@@ -42,12 +42,14 @@ plus `mail/index.jsonl`. `expired/<seat>/` holds immutable TTL tombstones
 from __future__ import annotations
 
 import hashlib
+import copy
 import json
 import os
 import re
 import shutil
 import time
 import uuid
+from contextlib import suppress
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -55,7 +57,7 @@ from typing import Callable, FrozenSet, Mapping, Optional, Tuple
 
 from sailang.errors import SailangError
 
-from saimail import envelope, publish
+from saimail import _journal_cache, envelope, publish
 from saimail.envelope import Header, OpenedEnvelope
 from saimail.selector import DEFER, IGNORE, OPEN_R2, OPEN_R3, VERDICTS, Decision, depth
 
@@ -341,6 +343,11 @@ class DeliveryResult:
 class RecoveryResult:
     bundles_scanned: int
     rows_appended: int
+    #: Bounded evidence for the one index repair recovery is allowed to make:
+    #: an unterminated final append (a torn tail) that was truncated. None when
+    #: there was nothing to repair. Malformed newline-terminated rows are never
+    #: reported here -- they still fail closed.
+    torn_index_tail: Optional[dict] = None
 
 
 @dataclass(frozen=True)
@@ -453,16 +460,24 @@ class _OsFileLock:
     def __enter__(self) -> "_OsFileLock":
         self._path.parent.mkdir(parents=True, exist_ok=True)
         self._fd = os.open(self._path, os.O_RDWR | os.O_CREAT, 0o600)
-        if os.fstat(self._fd).st_size == 0:
-            try:
-                os.write(self._fd, b"\0")
-            except PermissionError:
-                # Another process created the file first and already holds byte
-                # 0; Windows refuses a write into a locked region. That is the
-                # contended case, so wait for the lock instead of failing (T-123).
-                pass
-        os.lseek(self._fd, 0, os.SEEK_SET)
-        self._acquire(self._fd, self._busy_code)
+        try:
+            if os.fstat(self._fd).st_size == 0:
+                try:
+                    os.write(self._fd, b"\0")
+                except PermissionError:
+                    # Another process created the file first and already holds byte
+                    # 0; Windows refuses a write into a locked region. That is the
+                    # contended case, so wait for the lock instead of failing (T-123).
+                    pass
+            os.lseek(self._fd, 0, os.SEEK_SET)
+            self._acquire(self._fd, self._busy_code)
+        except BaseException:
+            # __exit__ is not called when __enter__ fails, including a timeout.
+            # Keep the permanent lock inode, but release this attempt's handle.
+            with suppress(OSError):
+                os.close(self._fd)
+            self._fd = None
+            raise
         return self
 
     def __exit__(self, *exc_info) -> None:
@@ -612,20 +627,8 @@ def _parse_index_line(raw: bytes) -> dict:
     return row
 
 
-def _read_index_file(path: Path) -> Tuple[dict, ...]:
-    """Every canonical index row, fail-closed on the first malformed one.
-
-    Uniqueness is part of the contract: exactly one row per `ENVELOPE_ID`, so
-    a repeated id — identical bytes or not — is corruption, never silently
-    deduplicated evidence (`INDEX_DUPLICATE_ENVELOPE_ID`).
-    """
-    if not path.exists():
-        return ()
-    data = path.read_bytes()
-    if not data:
-        return ()
-    if not data.endswith(b"\n"):
-        _reject(INDEX_CORRUPT, "index.jsonl is not newline terminated")
+def _parse_index_bytes(data: bytes) -> Tuple[dict, ...]:
+    """Parse complete, newline-terminated index rows. No tail tolerance."""
     rows = []
     seen = set()
     for number, raw in enumerate(data.split(b"\n")[:-1], start=1):
@@ -639,6 +642,35 @@ def _read_index_file(path: Path) -> Tuple[dict, ...]:
         seen.add(row["envelope_id"])
         rows.append(row)
     return tuple(rows)
+
+
+def _read_index_file(path: Path) -> Tuple[dict, ...]:
+    """Every canonical index row, fail-closed on the first malformed one.
+
+    Uniqueness is part of the contract: exactly one row per `ENVELOPE_ID`, so
+    a repeated id — identical bytes or not — is corruption, never silently
+    deduplicated evidence (`INDEX_DUPLICATE_ENVELOPE_ID`).
+
+    Ordinary reads stay strict about a non-newline tail: a row is committed by
+    its terminating newline, and a reader that quietly accepted the rest would
+    be reading an append nobody can prove finished. The one caller allowed to
+    interpret such a tail is `recover()`, which does it explicitly and only
+    after the committed prefix has been validated.
+    """
+    if not path.exists():
+        return ()
+    data = path.read_bytes()
+    if not data:
+        return ()
+    if not data.endswith(b"\n"):
+        _reject(INDEX_CORRUPT, "index.jsonl is not newline terminated")
+    return _parse_index_bytes(data)
+
+
+def _load_index_map(path):
+    # Parsing remains canonical and fail-closed. The private map is never
+    # returned to callers; external file changes invalidate it before use.
+    return {row["envelope_id"]: row for row in _read_index_file(path)}
 
 
 def _checked_cursor_offset(path: Path, offset: int) -> int:
@@ -1029,7 +1061,13 @@ class PostOffice:
 
     def read_index(self) -> Tuple[dict, ...]:
         """Every canonical index row, fail-closed on the first malformed one."""
-        return _read_index_file(self.mail_root / INDEX_NAME)
+        path = self.mail_root / INDEX_NAME
+        cache = _journal_cache.for_path(path)
+        with cache.lock:
+            rows = cache.load(path, _load_index_map)
+            result = tuple(copy.deepcopy(row) for row in rows.values())
+            cache.check(path)
+            return result
 
     def read_index_row(self, envelope_id: str) -> Optional[dict]:
         """The exactly-one index row for `envelope_id`, or None.
@@ -1037,13 +1075,16 @@ class PostOffice:
         A duplicate row fails closed through `read_index`; uniqueness is part
         of the contract, so "the row" is well-defined whenever it exists.
         """
-        for row in self.read_index():
-            if row["envelope_id"] == envelope_id:
-                return row
-        return None
+        path = self.mail_root / INDEX_NAME
+        cache = _journal_cache.for_path(path)
+        with cache.lock:
+            rows = cache.load(path, _load_index_map)
+            row = copy.deepcopy(rows.get(envelope_id))
+            cache.check(path)
+            return row
 
     def has_index_row(self, envelope_id: str) -> bool:
-        return any(row["envelope_id"] == envelope_id for row in self.read_index())
+        return self.read_index_row(envelope_id) is not None
 
     def ensure_index_row(self, header: Header, envelope_id: str,
                          received_at: str) -> bool:
@@ -1058,21 +1099,19 @@ class PostOffice:
         """
         expected = _index_row(header, envelope_id, received_at)
         line = _row_line_bytes(expected)
-        with _MailboxLock(self.mail_root / "index.lock"):
-            existing = self.read_index()
-            for row in existing:
-                if row["envelope_id"] != envelope_id:
-                    continue
+        _parse_index_line(line.rstrip(b"\n"))
+        path = self.mail_root / INDEX_NAME
+        cache = _journal_cache.for_path(path)
+        with _MailboxLock(self.mail_root / "index.lock"), cache.lock:
+            existing = cache.load(path, _load_index_map)
+            row = existing.get(envelope_id)
+            if row is not None:
                 if row != expected:
                     _reject(INDEX_ROW_CONFLICT,
                             f"index already carries a different row for {envelope_id}; "
                             "append-only evidence is never rewritten")
                 return False
-            path = self.mail_root / INDEX_NAME
-            with path.open("ab") as handle:
-                handle.write(line)
-                handle.flush()
-                os.fsync(handle.fileno())
+            cache.append(path, line, lambda value, offset: value.__setitem__(envelope_id, expected))
             _fsync_directory(path.parent)
             return True
 
@@ -1260,6 +1299,12 @@ class PostOffice:
         pair is `EXPIRY_STATE_CONFLICT` and nothing is guessed.
         """
         with self._lifecycle_lock():
+            # A recovery interrupted mid-append leaves an unterminated tail, and
+            # every later index read in this very method used to refuse it -- so
+            # recovery could not repair its own crash. The tail is the ONE shape
+            # handled here: bytes after the last committed newline, dropped under
+            # the index lock after the committed prefix has been parse-checked.
+            torn = self._repair_torn_index_tail(self.mail_root / INDEX_NAME)
             inbox_bundles = self._state_bundles(INBOX)
             read_bundles = self._state_bundles(READ)
             scanned = 0
@@ -1284,7 +1329,54 @@ class PostOffice:
                 scanned += 1
                 if self.ensure_index_row(header, envelope_id, stored_at):
                     appended += 1
-            return RecoveryResult(bundles_scanned=scanned, rows_appended=appended)
+            return RecoveryResult(bundles_scanned=scanned, rows_appended=appended,
+                                  torn_index_tail=torn)
+
+    def _repair_torn_index_tail(self, path: Path) -> Optional[dict]:
+        """Drop an unterminated final append. Everything else stays a hard failure.
+
+        Returns bounded evidence, or None when the file is absent, empty, or
+        properly terminated. A complete row that is merely malformed still has
+        its newline and is therefore NOT a torn tail: it keeps failing closed in
+        `_parse_index_bytes`, as do duplicate and mid-file rows. The committed
+        prefix is validated BEFORE the truncate so a damaged index is never
+        rewritten on the way to reporting that it is damaged.
+        """
+        with _MailboxLock(self.mail_root / "index.lock"):
+            if not path.exists():
+                return None
+            data = path.read_bytes()
+            if not data or data.endswith(b"\n"):
+                return None
+            committed = data.rfind(b"\n") + 1
+            _parse_index_bytes(data[:committed])
+            tail = data[committed:]
+            # Evidence commits before the destructive truncate. A crash or
+            # failed publication leaves either the original tail or its exact
+            # immutable copy, and retrying the same repair converges on it.
+            repair_id = hashlib.sha256(data).hexdigest()
+            evidence_ref = f"recovery/index-tails/{repair_id}/evidence.json"
+            evidence = {
+                "schema": "SAIMAIL_INDEX_TAIL_REPAIR_1", "version": 1,
+                "offset": committed, "truncated_bytes": len(tail),
+                "prefix_sha256": "sha256:" + hashlib.sha256(data[:committed]).hexdigest(),
+                "tail_sha256": "sha256:" + hashlib.sha256(tail).hexdigest(),
+                "tail_preview": tail[:120].decode("utf-8", "backslashreplace"),
+                "evidence_ref": evidence_ref,
+            }
+            _publish_dir(self.mail_root / "recovery" / "index-tails", repair_id,
+                         {"evidence.json": _canonical_json_line(evidence), "tail.bin": tail},
+                         conflict_code=INDEX_CORRUPT, identity_name="evidence.json")
+            if (self.mail_root / evidence_ref).with_name("tail.bin").read_bytes() != tail:
+                _reject(INDEX_CORRUPT, "committed index-tail evidence contains different bytes")
+            _fsync_directory(self.mail_root / "recovery")
+            _fsync_directory(self.mail_root)
+            with path.open("r+b") as handle:
+                handle.truncate(committed)
+                handle.flush()
+                os.fsync(handle.fileno())
+            _fsync_directory(path.parent)
+        return evidence
 
     def _finish_expiry(self, name: str, inbox: Optional[Path], read: Optional[Path],
                        envelope_id: str) -> bool:

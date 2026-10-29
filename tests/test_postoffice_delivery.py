@@ -542,3 +542,72 @@ def test_peek_refuses_what_open_would_refuse(tmp_path):
         return session.peek_message(absent, recipient_private_key=RECIPIENT)
     assert err(peek_absent) == postoffice.UNKNOWN_ENVELOPE
     assert err(peek, "not-an-id") == "BAD_ENVELOPE_ID"
+
+
+# ------------------------------------------------ torn index tail (recovery only)
+
+
+def _index_path(office):
+    return office.mail_root / postoffice.INDEX_NAME
+
+
+@pytest.mark.parametrize("tail", [
+    b'{"schema": 1, "envelope_id": "sha256:',
+    b'{"schema": 1, "envelope_id": "sha256:' + b"a" * 60,
+    b'{"schema": 1,',
+    b"\x00\x00\x00\x00",
+])
+def test_recovery_repairs_only_an_unterminated_final_append(tmp_path, tail):
+    """Recovery must be able to finish its own interrupted append.
+
+    The strict reader refuses a non-newline tail, and `recover()` called the
+    strict reader first -- so the one operation whose job is to close a crash
+    window bricked on the crash it was meant to close, and every later
+    `read_index()` raised with it. Dropping the UNCOMMITTED tail (bytes after
+    the last newline) is safe because a row is committed by its newline, not by
+    its presence.
+    """
+    office, _ = office_at(tmp_path)
+    delivered = office.deliver(sealed_bytes())
+    assert delivered.status == postoffice.ACCEPTED
+    before = _index_path(office).read_bytes()
+    assert before.endswith(b"\n")
+
+    _index_path(office).write_bytes(before + tail)
+    assert err(office.read_index) == postoffice.INDEX_CORRUPT, "ordinary reads stay strict"
+
+    recovery = office.recover()
+    assert recovery.bundles_scanned == 1 and recovery.rows_appended == 0
+    evidence = recovery.torn_index_tail
+    assert evidence["offset"] == len(before)
+    assert evidence["truncated_bytes"] == len(tail)
+    assert evidence["tail_sha256"].startswith("sha256:")
+    assert len(evidence["tail_preview"]) <= 120
+    assert _index_path(office).read_bytes() == before, "a committed row was lost or rewritten"
+    assert [row["envelope_id"] for row in office.read_index()] == [delivered.envelope_id]
+
+    # Second recovery is idempotent and finds nothing to repair.
+    assert office.recover().torn_index_tail is None
+    assert office.deliver(sealed_bytes()).status == postoffice.ACCEPTED
+    assert len(office.read_index()) == 2
+
+
+def test_recovery_never_repairs_a_newline_terminated_invalid_row(tmp_path):
+    office, _ = office_at(tmp_path)
+    delivered = office.deliver(sealed_bytes())
+    path = _index_path(office)
+    good = path.read_bytes()
+
+    path.write_bytes(good + b"{not json}\n")
+    assert err(office.recover) == postoffice.INDEX_CORRUPT
+    assert path.read_bytes() == good + b"{not json}\n", "recovery rewrote committed evidence"
+
+    path.write_bytes(b'{"broken": tru' + b"\n")
+    assert err(office.recover) == postoffice.INDEX_CORRUPT
+
+    # a duplicated committed row is corruption too, not a tail to trim
+    path.write_bytes(good + good)
+    assert err(office.recover) == postoffice.INDEX_DUPLICATE_ENVELOPE_ID
+
+    path.write_bytes(good)
+    assert office.read_index()[0]["envelope_id"] == delivered.envelope_id

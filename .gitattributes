@@ -27,3 +27,9 @@ bench/out/*.md -whitespace
 release/** -text
 lab/out/** -text
 provenance/quarantine/** -text
+
+# Frozen corpus source and archived public fixtures are digest-bound bytes.
+spec/DECISIONS.md -text
+tests/fixtures/t71/*.txt -text
+lab/project_corpus_pilot.py -text
+saimail/promotion.py -text

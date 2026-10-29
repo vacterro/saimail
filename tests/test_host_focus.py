@@ -5,7 +5,7 @@ import json
 import sys
 
 import pytest
-from test_correspondence import CLOCK, decide, review, send
+from test_correspondence import CLOCK, cli_prefix, decide, review, send
 from test_correspondence import setup as _setup
 
 from saimail import agent_cycle, correspondence, letters, workspace
@@ -16,7 +16,7 @@ setup = _setup  # pytest fixture registration, shared without changing its oracl
 
 def host(pair):
     _, receiver, project, _ = pair
-    return HostClient([sys.executable, "-m", "saimail_local"], workspace=receiver.root,
+    return HostClient(cli_prefix(), workspace=receiver.root,
                       project_root=project, seat="reviewer")
 
 

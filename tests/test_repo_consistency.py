@@ -29,6 +29,42 @@ def read(path: pathlib.Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+
+@pytest.fixture
+def operator_source_corpus(tmp_path):
+    from tools.verify_operator_sources import BEACON_BINDINGS
+    root = tmp_path / "synthetic-operator-corpus"
+    active = root / ".saipen/intake/active"
+    retired = root / ".saipen/archive/retired"
+    tombstones = root / ".saipen/intake/tombstones"
+    for folder in (active, retired, tombstones, root / "humbox", root / ".saipen/kitchen"):
+        folder.mkdir(parents=True, exist_ok=True)
+    for receipt, origin, successor, event in (
+        ("SRC-001", "idea.md", "SRC-003", "E-1294"),
+        ("SRC-002", "idea_continue1.md", "SRC-004", "E-1295"),
+    ):
+        raw = f"Synthetic test-only original for {receipt}.\n".encode()
+        digest = hashlib.sha256(raw).hexdigest()
+        (root / origin).write_bytes(raw)
+        (retired / f"{receipt}.md").write_bytes(raw)
+        (retired / f"{receipt}.meta.json").write_text(json.dumps({"source_sha256": digest}))
+        (tombstones / f"{receipt}.json").write_text(json.dumps({
+            "source_sha256": digest,
+            "archive_ref": f".saipen/archive/retired/{receipt}.md",
+            "retirement": {"reason": "SUPERSEDED_SOURCE", "successor": successor,
+                           "retirement_event": event},
+        }))
+        (active / f"{successor}.md").write_text(f"Synthetic successor {successor}.\n")
+    for name, receipt in BEACON_BINDINGS.items():
+        raw = f"Synthetic source fixture for {name}.\n".encode()
+        (root / "humbox" / name).write_bytes(raw)
+        (active / f"{receipt}.meta.json").write_text(json.dumps({
+            "request_provenance": {"compared_digest": hashlib.sha256(raw).hexdigest()},
+        }))
+    (root / ".saipen/kitchen/T-113-reread-continuation.md").write_text(
+        "Historical T-113 checkpoint; current ownership is resolved from canonical state.\n")
+    return root
+
 # --------------------------------------------------------------------
 # source continuity
 # --------------------------------------------------------------------
@@ -50,48 +86,14 @@ def read(path: pathlib.Path) -> str:
                          [("SRC-001", "idea.md", "SRC-003", "E-1294"),
                           ("SRC-002", "idea_continue1.md", "SRC-004", "E-1295")])
 def test_every_source_document_has_an_immutable_receipt(
-        receipt, origin, successor, event):
-    import hashlib
-    import json
-
-    body = RETIRED / f"{receipt}.md"
-    meta = RETIRED / f"{receipt}.meta.json"
-    assert body.is_file(), f"{receipt} retired body missing"
-    assert meta.is_file(), f"{receipt} retired sidecar missing"
-    assert (ROOT / origin).is_file(), f"{origin} missing"
-    digest = hashlib.sha256(body.read_bytes()).hexdigest()
-    assert digest == json.loads(read(meta))["source_sha256"], (
-        f"{receipt} body does not match its recorded digest"
-    )
-    tomb = json.loads(read(TOMBSTONES / f"{receipt}.json"))
-    assert tomb["source_sha256"] == digest
-    assert tomb["archive_ref"] == f".saipen/archive/retired/{receipt}.md"
-    assert tomb["retirement"]["reason"] == "SUPERSEDED_SOURCE"
-    assert tomb["retirement"]["successor"] == successor
-    assert tomb["retirement"]["retirement_event"] == event
-    assert (INTAKE / f"{successor}.md").is_file(), (
-        f"{successor} is the live carrier of the lineage"
-    )
+        receipt, origin, successor, event, operator_source_corpus):
+    from tools.verify_operator_sources import check_retired_receipt
+    check_retired_receipt(operator_source_corpus, receipt, origin, successor, event)
 
 
-def test_the_two_sources_are_separate_receipts_not_a_merge():
-    import hashlib
-    import json
-
-    digests = {}
-    for receipt in ("SRC-001", "SRC-002"):
-        meta = json.loads(read(RETIRED / f"{receipt}.meta.json"))
-        body = (RETIRED / f"{receipt}.md").read_bytes()
-        digests[receipt] = meta["source_sha256"]
-        assert hashlib.sha256(body).hexdigest() == meta["source_sha256"], (
-            f"{receipt} body does not match its recorded digest"
-        )
-    assert digests["SRC-001"] != digests["SRC-002"]
-    # The amendment lineage is two SEPARATE receipts, never a merge: each
-    # successor carries its own body, both live, neither rewritten.
-    successor_bodies = {(INTAKE / f"SRC-00{n}.md").read_bytes()
-                        for n in (3, 4)}
-    assert len(successor_bodies) == 2
+def test_the_two_sources_are_separate_receipts_not_a_merge(operator_source_corpus):
+    from tools.verify_operator_sources import check_separate_receipts
+    check_separate_receipts(operator_source_corpus)
 
 
 def test_backlog_cites_the_receipt_it_came_from():
@@ -166,6 +168,13 @@ def test_every_document_readme_links_to_exists():
     readme = read(ROOT / "README.md")
     for target in re.findall(r"\]\(([^)]+)\)", readme):
         if target.startswith("http"):
+            continue
+        if target.startswith("#"):
+            headings = {
+                re.sub(r"[^\w\s-]", "", text.strip().lower()).replace(" ", "-")
+                for text in re.findall(r"^#{1,6} (.+)$", readme, re.MULTILINE)
+            }
+            assert target[1:] in headings, f"README links to a missing heading: {target}"
             continue
         assert (ROOT / target).exists(), f"README links to a missing file: {target}"
 
@@ -1376,8 +1385,7 @@ def test_gui_read_capability_language_matches_explicit_reopen():
 
 
 RECOVERY_DOCS = ("humbox/CURRENT-STATE.md", "humbox/FUTURE-GATES-V6.md",
-                 "humbox/SAIPEN-WORK-DESK.md",
-                 ".saipen/kitchen/T-113-reread-continuation.md")
+                 "humbox/SAIPEN-WORK-DESK.md")
 
 # Ephemeral lifecycle ownership (active Work, its phase, pending acceptance)
 # belongs to .saipen/STATE.md, BOARD and LOG. Durable recovery prose that pins
@@ -1488,144 +1496,9 @@ def test_current_recovery_recognizes_t113_closure_and_frozen_boundary():
 # beacon registration (T-155)
 # --------------------------------------------------------------------
 
-HUMBOX = ROOT / "humbox"
-
-#: humbox/ predates the intake machinery and these twenty-four files were never
-#: captured -- no receipt carries their text. They are NAMED here rather than
-#: skipped: a silent skip lets the next arrival hide behind the old ones, which
-#: is how both humbox/milestoned1.md (closed in T-151) and
-#: humbox/YAZADAYU_born1.md (T-155) went unnoticed. EVOLUTION.md,
-#: EVOLUTION-AUDIT.md and FUTURE-GATES-V5.md joined this set in T-158: they were
-#: registered only by incidental BOARD and LOG mentions, which the hygiene
-#: passes below remove. The remaining ten joined it in T-160, which deleted the
-#: prose corpus as a source of registration altogether -- a mention is not a
-#: capture, and ten of them were passing on nothing but the fact that some
-#: unrelated journal line happened to spell their names. A file that leaves this
-#: set must earn a receipt whose digest matches its bytes.
-LEGACY_UNREGISTERED_BEACON = frozenset({
-    "CURRENT-STATE.md",
-    "EVOLUTION-AUDIT.md",
-    "EVOLUTION.md",
-    "FUTURE-GATES-V2.md",
-    "FUTURE-GATES-V3.md",
-    "FUTURE-GATES-V4.md",
-    "FUTURE-GATES-V5.md",
-    "FUTURE-GATES-V6.md",
-    "FUTURE-GATES.md",
-    "GITHUB-SETTINGS-V6.md",
-    "INSTITUTION.md",
-    "SAIOPP_instructions.md",
-    "SAIOPP_prose.md",
-    "SAI_AGENT_REACTIONS.md",
-    "SAIPEN-WORK-DESK.md",
-    "bee_like_idea1.md",
-    "bee_like_idea1_future_Gate.md",
-    "computer1.md",
-    "future1.md",
-    "iniciative.md",
-    "talking.md",
-    "talking1.md",
-    "tv.md",
-    "what_means_SAI.md",
-})
-
-#: Beacon file -> the receipt that captured it. The Work that closed is noted
-#: beside its row.
-#:
-#: This table exists because no receipt can hold the binding itself: the intake
-#: grammar has no source-path field, so a captured file's basename never reaches
-#: its receipt. It exists -- rather than the journal -- because the journal is
-#: free text: an agent writing a file's name while investigating it used to be
-#: enough to pass the sweep, and in T-160 that is exactly what happened. A
-#: binding here is a claim that the named receipt captured these bytes, and the
-#: check verifies it against the receipt's own digest instead of taking the
-#: word of a sentence. (T-158, hardened T-160)
-BEACON_BINDINGS = {
-    "milestoned1.md": "SRC-117",  # T-151
-    "YAZADAYU_born1.md": "SRC-119",  # T-157
-}
-
-
-def _receipt_capture_digest(receipt_id: str) -> str:
-    """The digest a receipt recorded of the bytes it was minted from.
-
-    ``compared_digest`` is that record; ``source_sha256`` is the digest of the
-    receipt file itself and says nothing about humbox/. Returns "" when the
-    receipt is missing or unreadable so the caller fails the binding rather than
-    the suite -- an absent receipt is the finding, not a crash.
-    """
-    meta = ROOT / ".saipen" / "intake" / "active" / f"{receipt_id}.meta.json"
-    if not meta.is_file():
-        return ""
-    try:
-        return json.loads(read(meta))["request_provenance"]["compared_digest"]
-    except (ValueError, KeyError, TypeError):
-        return ""
-
-
-def _beacon_key(path: pathlib.Path) -> str:
-    """A beacon file's identity: its path relative to humbox/.
-
-    The basename is not an identity. A file in a subdirectory that happens to
-    share a word with a captured file is a different file, and reading it as
-    the same one is the mistake this check exists to catch -- so a top-level
-    file is identified by its bare name and a nested one by its relative path.
-    """
-    return path.relative_to(HUMBOX).as_posix()
-
-
-def test_every_new_operator_beacon_is_registered_before_it_sits_in_the_folder():
-    """An operator file that lands in humbox/ is traceable, or it is named.
-
-    The beacon is fed by a human, so it changes whenever the human has
-    something to say and nothing in the product notices. That is the whole
-    reason the intake path exists: the bytes get hashed into a receipt and
-    projected into Work, so the material is attributable instead of just
-    being present. Checking the folder as a whole -- rather than one named
-    file per ticket -- is the only form of that check that survives the next
-    arrival.
-
-    Registered means one of exactly two things: a BEACON_BINDINGS row whose
-    receipt still hashes to the file's bytes, or an explicit exemption in
-    LEGACY_UNREGISTERED_BEACON. It does not mean "mentioned somewhere" -- the
-    BOARD and the journal are free text that the protocol is actively pruning,
-    and T-160 was written because a sentence about a probe was passing as a
-    capture.
-    """
-    drifted = []
-    for key, receipt in sorted(BEACON_BINDINGS.items()):
-        path = HUMBOX / key
-        if not path.is_file():
-            drifted.append(f"{key} is bound to {receipt} but the file is gone")
-            continue
-        raw = path.read_bytes()
-        live = {
-            hashlib.sha256(raw).hexdigest(),
-            hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest(),
-        }
-        if _receipt_capture_digest(receipt) not in live:
-            drifted.append(f"{key} no longer hashes to what {receipt} captured")
-    assert not drifted, (
-        "a beacon binding the receipt cannot vouch for: "
-        f"{drifted} -- the binding claims these bytes were captured; re-capture "
-        "the file or drop the row"
-    )
-
-    registered = set(BEACON_BINDINGS)
-    unregistered = sorted(
-        key
-        for path in HUMBOX.rglob("*.md")
-        for key in (_beacon_key(path),)
-        if key not in registered
-        and key not in LEGACY_UNREGISTERED_BEACON
-    )
-    assert not unregistered, (
-        "operator material in humbox/ that no receipt accounts for: "
-        f"{unregistered} -- capture it with `saipen start --file humbox/<path>`, "
-        'then add "<key>": "<SRC-id>" to BEACON_BINDINGS (the row is checked '
-        "against that receipt's digest), or add it to "
-        "LEGACY_UNREGISTERED_BEACON if it genuinely needs no Work"
-    )
+def test_every_new_operator_beacon_is_registered_before_it_sits_in_the_folder(operator_source_corpus):
+    from tools.verify_operator_sources import check_beacon_registration
+    check_beacon_registration(operator_source_corpus)
 
 
 # --------------------------------------------------------------------
@@ -1673,3 +1546,52 @@ def test_t161_future_letters_are_recorded_as_a_stable_non_authoritative_surface(
     for phrase in ("Future letters", "future-letter list", "future-letter open",
                    "NOT_PRIVATE_RECOVERY_ENABLED"):
         assert phrase in readme, phrase
+
+
+@pytest.mark.parametrize("damage", [
+    "retired_body", "retirement_successor", "merged_successors",
+    "beacon_digest", "unregistered_nested_beacon", "private_recovery_owner",
+])
+def test_operator_source_verifier_refuses_corrupted_evidence(operator_source_corpus, damage):
+    from tools import verify_operator_sources as verifier
+    root = operator_source_corpus
+    if damage == "retired_body":
+        (root / ".saipen/archive/retired/SRC-001.md").write_text("tampered")
+    elif damage == "retirement_successor":
+        path = root / ".saipen/intake/tombstones/SRC-001.json"
+        value = json.loads(path.read_text())
+        value["retirement"]["successor"] = "SRC-999"
+        path.write_text(json.dumps(value))
+    elif damage == "merged_successors":
+        active = root / ".saipen/intake/active"
+        (active / "SRC-004.md").write_bytes((active / "SRC-003.md").read_bytes())
+    elif damage == "beacon_digest":
+        (root / "humbox/autonomy.md").write_text("modified after capture")
+    elif damage == "unregistered_nested_beacon":
+        path = root / "humbox/nested/autonomy.md"
+        path.parent.mkdir()
+        path.write_text("same basename does not inherit a source binding")
+    else:
+        (root / ".saipen/kitchen/T-113-reread-continuation.md").write_text(
+            "T-113 is still the current repair owner.")
+    with pytest.raises(AssertionError):
+        verifier.verify(root)
+
+
+def test_operator_source_verifier_requires_explicit_complete_corpus(tmp_path):
+    import subprocess
+    import sys
+    command = [sys.executable, "-B", str(ROOT / "tools/verify_operator_sources.py")]
+    missing = subprocess.run(command, capture_output=True, text=True)
+    assert missing.returncode == 2
+    assert "--root" in missing.stderr
+    empty = tmp_path / "empty-operator-root"
+    empty.mkdir()
+    refused = subprocess.run(command + ["--root", str(empty)], capture_output=True, text=True)
+    assert refused.returncode == 1 and "FAIL:" in refused.stdout
+    assert list(empty.iterdir()) == []
+
+
+def test_operator_source_verifier_validates_private_recovery_fixture(operator_source_corpus):
+    from tools.verify_operator_sources import verify
+    verify(operator_source_corpus)

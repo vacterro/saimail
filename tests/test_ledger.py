@@ -75,6 +75,37 @@ def _events(ws):
     return ledger.read_events(ws)[0]
 
 
+@pytest.mark.parametrize("count", [3, 6])
+def test_reconcile_validates_intents_once_for_all_missing_outbox_copies(
+        tmp_path, monkeypatch, count):
+    sender, _ = _pair(tmp_path)
+    sealed = {}
+    for index in range(count):
+        sent = _send(sender, key=f"recover-{index}")
+        identifier = sent["intent"]["envelope_id"]
+        path = workspace._outbox_path(sender, identifier)
+        sealed[identifier] = path.read_bytes()
+        path.unlink()
+    original = outbox._check_intent
+    validations = []
+
+    def counted(intent, *, path):
+        validations.append(path)
+        return original(intent, path=path)
+
+    monkeypatch.setattr(outbox, "_check_intent", counted)
+    repaired = ledger.reconcile(sender, clock=_clock(T0))
+    assert set(repaired["restored"]["outbox"]) == set(sealed)
+    assert repaired["unrepairable"] == []
+    assert len(validations) == count, "recovery reparsed intents once per message"
+    for identifier, expected in sealed.items():
+        assert workspace._outbox_path(sender, identifier).read_bytes() == expected
+    # A second pass needs no intent snapshot when all canonical copies exist.
+    validations.clear()
+    assert ledger.reconcile(sender, clock=_clock(T0))["restored"]["outbox"] == []
+    assert validations == []
+
+
 def _states(ws):
     return {item["message_id"]: item["state"] for item in ledger.fold(_events(ws))["messages"].values()}
 
@@ -280,10 +311,14 @@ def test_a_quarantined_body_is_recorded_with_a_raw_digest(tmp_path):
         b"not a container at all")
     assert quarantined[0]["message_id"].startswith("sha256:")
     assert quarantined[0]["actor"] == "beta", "the receiver records its own action"
-    # the good delivery is untouched
-    assert B.office().bundle_state(
-        ledger.fold(_events(B))["messages"][quarantined[0]["message_id"]]["message_id"]
-    ) == "NEITHER" if False else True
+    # the quarantine is folded as the message's own terminal state: the ledger
+    # records that the bytes arrived and could not be parsed, and never loses
+    # that fact by omitting the message from the fold
+    folded = ledger.fold(_events(B))["messages"][quarantined[0]["message_id"]]
+    assert folded["state"] == ledger.QUARANTINED
+    assert folded["actor"] == "beta"
+    assert not ledger.fold(_events(B))["invalid"], (
+        "a quarantine is a legal transition, not a rejected one")
     assert _states(B), "the earlier good delivery is still recorded"
 
 
@@ -532,3 +567,39 @@ def test_the_cli_exposes_the_whole_ledger_surface(tmp_path):
     assert broken["ok"] is False
     assert broken["operator_action_required"] is True
     assert broken["status"] == ledger.UNKNOWN
+
+def _raw_ledger(ws, seqs):
+    """A self-consistent chain over the hand-picked sequence numbers."""
+    ledger.ledger_path(ws).unlink(missing_ok=True)
+    prev = None
+    for seq in seqs:
+        prev = _append_raw(ws, ledger.CREATED, seq=seq, prev=prev,
+                           message_id=f"m{seq}")["hash"]
+
+
+def test_a_trimmed_history_starts_anywhere_but_never_skips_or_repeats(tmp_path):
+    """Hash chaining alone let `[9, 8, 9]` read as a valid ledger.
+
+    `prev`/`hash` prove each row follows the bytes before it; they say nothing
+    about its NUMBER. A repeated seq made `feed(cursor=9)` hand the same event
+    out twice and a skipped one made the cursor jump over records that exist, so
+    the cursor feed could silently omit committed history. A trimmed ledger is
+    still legitimate: only the START is free.
+    """
+    A, _ = _pair(tmp_path / "valid")
+    _raw_ledger(A, [9, 10])
+    assert [event["seq"] for event in ledger.read_events(A)[0]] == [9, 10]
+    appended = ledger.append(A, ledger.SEALED, message_id="m9", actor="alpha", at=T0)
+    assert appended["seq"] == 11, "append must continue from the retained tail"
+    assert [event["seq"] for event in ledger.feed(A, cursor=10)["events"]] == [11]
+
+    for index, seqs in enumerate(([9, 8], [9, 9], [9, 11], [9, 12, 13])):
+        broken, _ = _pair(tmp_path / f"bad{index}")
+        _raw_ledger(broken, seqs)
+        assert _code(ledger.read_events, broken) == ledger.LEDGER_CHAIN_BROKEN, seqs
+        # Corruption is never rendered as absence or as a healthy empty log.
+        health = ledger.health(workspace.load_workspace_headers(broken.root))
+        assert health["ok"] is False and health["operator_action_required"] is True
+        assert health["ledger"]["read_state"] == ledger.STATE_UNREADABLE
+        assert health["ledger"]["reason"] == ledger.LEDGER_CHAIN_BROKEN
+        assert ledger.feed(workspace.load_workspace_headers(broken.root))["events"] == []

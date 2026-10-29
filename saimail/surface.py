@@ -41,9 +41,11 @@ never existed.
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from sailang import SailangError
+from saimail import catchup as _catchup
 from saimail import cold_archive, future_letter, ledger, postoffice
 from saimail import workspace as _workspace
 
@@ -67,16 +69,20 @@ VERDICTS = (HEALTHY, UNHEALTHY, UNKNOWN)
 #: and an operator stops reading the word.
 CANNOT_TELL = frozenset({
     ledger.UNKNOWN,
-    "UNREADABLE",
-    "UNREADABLE_STATE",
-    "STATE_UNREADABLE",
-    "CANNOT_DETERMINE",
+    ledger.STATE_UNREADABLE,
+    cold_archive.COLD_UNREADABLE,
+    _catchup.QUEUE_UNREADABLE,
 })
 
 #: Envelope and custody vocabularies, reported so a reader can tell which era a
 #: workspace came from without opening a file.
 ENVELOPE_SCHEMAS = ("SAIMAIL_ENVELOPE_2", "SENV2")
 CUSTODY_MODES = ("raw", "os-store")
+
+
+def _utc(text: str) -> datetime:
+    """One instant out of the ISO form every owner already publishes."""
+    return datetime.fromisoformat(text.replace("Z", "+00:00")).astimezone(timezone.utc)
 
 
 # --------------------------------------------------------------------------
@@ -266,14 +272,22 @@ def _section(name: str, source: str, probe) -> dict:
                 "counts": None,
                 "note": "the owning subsystem raised; this section reports UNKNOWN "
                         "and no numbers"}
+    state = _verdict(answer)
     return {
         "section": name, "source": source,
-        "state": _verdict(answer),
+        "state": state,
         "status": answer.get("status"),
         "reason": (answer.get("ledger", {}) or {}).get("reason")
         or answer.get("reason"),
         "detail": answer.get("detail", ""),
-        "counts": _counts(answer),
+        # An UNKNOWN section publishes no numbers, whoever wrote them. The
+        # cold archive answers an unreadable listing with `records: 0` -- an
+        # honest placeholder inside its own vocabulary -- and lifting that
+        # placeholder onto the dashboard is how a mailbox that could not be
+        # listed comes to read as a mailbox that was measured and found
+        # empty. So the promise is enforced here, once, rather than asked of
+        # every owner.
+        "counts": None if state == UNKNOWN else _counts(answer),
         "operator_action_required": bool(answer.get("operator_action_required")),
     }
 
@@ -363,12 +377,13 @@ def _receipts_section(ws) -> dict:
     ledger is the record of what was claimed, and an outbox scan would report a
     send that was never made.
     """
-    result = ledger.feed(ws)
-    if result.get("ledger", {}).get("state") == ledger.STATE_UNREADABLE:
+    try:
+        events, _ = ledger.read_events(ws)
+    except SailangError as exc:
         return {"status": ledger.UNKNOWN, "ok": False,
                 "operator_action_required": True,
-                "detail": result["detail"], "counts": None}
-    events, _ = ledger.read_events(ws)
+                "detail": f"ledger is {ledger.UNKNOWN} ({exc.code}); history was NOT reported as empty",
+                "counts": None}
     delivered = {}
     observed = set()
     for event in events:
@@ -400,16 +415,42 @@ def _archive_section(ws) -> dict:
 
 
 def _letters_section(ws) -> dict:
+    """Future Letters, from metadata only -- which is all `list_letters` gives.
+
+    `time_locked` therefore counts letters that CARRY a `not_before`, not letters
+    that are locked right now: deciding the latter needs the sealed container, and
+    a dashboard must not decrypt mail to render a health card. A letter whose
+    window has closed is the one fact metadata alone CAN settle -- `expires_after`
+    is a duration counted from `created_at`, both published in the row -- so that
+    is the one this section refuses to hide. An expired capsule nobody opened is
+    dead weight the operator is meant to notice, and `ok` is derived from it
+    rather than hardcoded, because a section that can never be UNHEALTHY is a
+    section that reports nothing.
+    """
     listed = future_letter.list_letters(ws)
     items = listed.get("items") or []
-    locked = sum(1 for item in items if item.get("lock_state") == "LOCKED"
-                 or item.get("not_before"))
+    now = _utc(postoffice.utc_now())
+    locked = 0
+    expired = 0
+    for item in items:
+        if item.get("not_before"):
+            locked += 1
+        closes = item.get("expires_after")
+        created = item.get("created_at")
+        if closes is not None and created:
+            if now >= _utc(created) + timedelta(seconds=closes):
+                expired += 1
     unread = listed.get("unread")
-    return {"status": listed.get("status", "OK"), "ok": True,
-            "detail": (f"{len(items)} future letter(s), {locked} time-locked, "
-                       f"{unread} unread; metadata only"),
+    status = listed.get("status", "OK")
+    if status == "OK" and expired:
+        status = future_letter.LETTER_EXPIRED
+    return {"status": status, "ok": status == "OK",
+            "operator_action_required": bool(expired),
+            "detail": (f"{len(items)} future letter(s), {locked} carrying a "
+                       f"not_before, {expired} expired, {unread} unread; "
+                       "metadata only"),
             "counts": {"letters": len(items), "time_locked": locked,
-                       "unread": unread}}
+                       "expired": expired, "unread": unread}}
 
 
 def _quarantine_section(ws) -> dict:
@@ -466,17 +507,34 @@ def _numbers(answer: dict):
     Nested blocks are read one level deep so `pending`/`failed` surface, and the
     envelope's own bookkeeping keys are dropped so a count is never confused with
     a format version. An owner that published no numbers yields ``None`` rather
-    than ``{}``, because an empty mapping reads as "measured, found zero" and
-    this module exists to stop that reading.
+    than ``{}``, because an empty mapping reads as
+    "measured, found zero" and this module exists to stop that reading.
+
+    The descent has to reach past one level, because the owners that report the
+    most interesting numbers put them two deep: the cold archive answers with
+    `cold={"records": N, "corrupt": [...]}` and the catch-up queue with
+    `queue={"totals": {"QUEUED": N}}`. A reader that stops at one level gets
+    `counts: None` from both, which is the false zero this module exists to kill
+    -- not a missing cosmetic, a broken promise. Named lists become counts, and
+    named integer maps are flattened one more level so every state is legible.
     """
     picked = {name: value for name, value in answer.items()
               if name not in _ENVELOPE_KEYS
               and isinstance(value, int) and not isinstance(value, bool)}
-    for block in ("outbox", "queue", "ledger", "trust"):
+    for block in ("outbox", "queue", "ledger", "trust", "cold"):
         nested = answer.get(block)
-        if isinstance(nested, dict):
-            picked.update({name: value for name, value in nested.items()
-                           if isinstance(value, int) and not isinstance(value, bool)})
+        if not isinstance(nested, dict):
+            continue
+        for name, value in nested.items():
+            if isinstance(value, bool):
+                continue
+            if isinstance(value, int):
+                picked[name] = value
+            elif isinstance(value, (list, tuple)):
+                picked[f"{block}_{name}"] = len(value)
+            elif isinstance(value, dict):
+                picked.update({f"{name}_{key}": inner for key, inner in value.items()
+                               if isinstance(inner, int) and not isinstance(inner, bool)})
     return picked or None
 
 
@@ -520,18 +578,6 @@ SECTIONS = (
     ("quarantine", "saimail.postoffice.QUARANTINE", _quarantine_section),
     ("canary", "saimail.canary.classify", _canary_section),
 )
-
-
-def _outbox(ws) -> dict:
-    from saimail import outbox
-
-    return outbox.outbox_status(ws)
-
-
-def _catchup(ws) -> dict:
-    from saimail import catchup
-
-    return catchup.queue(ws)
 
 
 def health(ws, *, sections=None) -> dict:
@@ -622,5 +668,6 @@ def feed(ws, *, cursor: int = 0, limit: int | None = None) -> dict:
 __all__ = [
     "SURFACE_SCHEMA", "SURFACE_VERSION", "MAP_SCHEMA", "MAP_VERSION",
     "HEALTHY", "UNHEALTHY", "UNKNOWN", "VERDICTS", "SECTIONS",
+    "CANNOT_TELL", "ENVELOPE_SCHEMAS", "CUSTODY_MODES", "GAP",
     "cli_map", "capability_schema", "health", "feed",
 ]

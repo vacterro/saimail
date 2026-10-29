@@ -82,8 +82,11 @@ import hashlib
 import json
 import os
 import re
+import threading
 import zipfile
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
+from functools import wraps
 from pathlib import Path
 
 from cryptography.exceptions import InvalidSignature, InvalidTag
@@ -93,6 +96,7 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
 
 from sailang import SailangError
 
+from saimail import canary as _canary
 from saimail import postoffice, workspace as _workspace
 
 #: The SENV2 transport kind. Additive in the closed kind set (spec/02 s3).
@@ -576,10 +580,46 @@ def parse_container(raw) -> dict:
 # durable metadata registry (metadata-first, never decrypts)
 # --------------------------------------------------------------------------
 
+_registry_held = threading.local()
+
+
+@contextmanager
+def _registry_lock(ws):
+    """Serialize logical dedup, delivery and projection across processes.
+
+    Lock order: Future Letter registry -> mailbox lifecycle -> mailbox index.
+    Same-thread nesting reuses ownership; another thread or process must take
+    the OS lock. The permanent inode is never removed when releasing it.
+    """
+    root = Path(ws.root).resolve()
+    held = getattr(_registry_held, "roots", None)
+    if held is None:
+        held = _registry_held.roots = set()
+    if root in held:
+        yield
+        return
+    with postoffice._OsFileLock(root / DIRECTORY / "registry.lock",
+                                busy_code="LETTER_REGISTRY_LOCK_TIMEOUT"):
+        held.add(root)
+        try:
+            yield
+        finally:
+            held.remove(root)
+
+
+def _registry_operation(function):
+    @wraps(function)
+    def locked(ws, *args, **kwargs):
+        with _registry_lock(ws):
+            return function(ws, *args, **kwargs)
+    return locked
+
+
 def _registry_path(ws) -> Path:
     return Path(ws.root) / DIRECTORY / INDEX_NAME
 
 
+@_registry_operation
 def _read_registry(ws) -> list[dict]:
     path = _registry_path(ws)
     if not path.is_file():
@@ -602,6 +642,7 @@ def _read_registry(ws) -> list[dict]:
     return rows
 
 
+@_registry_operation
 def _append_registry(ws, row: dict) -> None:
     path = _registry_path(ws)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -741,6 +782,7 @@ def _dedup_key(container: dict) -> str:
     return letter_id(container)
 
 
+@_registry_operation
 def _deliver(ws, container: dict, *, clock) -> tuple[str, str, dict]:
     """Seal and deliver one letter, then register it. Canonical path only.
 
@@ -753,6 +795,9 @@ def _deliver(ws, container: dict, *, clock) -> tuple[str, str, dict]:
     payload = container_bytes(container)
     identifier = letter_id(container)
     key = _dedup_key(container)
+    # A previous creator may have delivered successfully and died before its
+    # projection append. Recover that canonical letter before deciding absence.
+    _rebuild_missing_projection(ws, clock=clock)
     for row in _read_registry(ws):
         if row["dedup_key"] == key:
             _reject(LETTER_ALREADY_IMPORTED,
@@ -833,7 +878,7 @@ def create(ws, *, title: str, body: str, author=None, audience=None, tags=(),
         detail=detail)
 
 
-def list_letters(ws, *, clock=None) -> dict:
+def list_letters(ws, *, clock=None, include_test_data=None) -> dict:
     """List every future letter by METADATA. Never decrypts a body.
 
     This is the discovery answer to "are there letters from previous agents?"
@@ -841,21 +886,40 @@ def list_letters(ws, *, clock=None) -> dict:
     Office carries durable read state. The canonical index is consulted for
     UNREGISTERED envelopes only, which is a header read; when there is nothing
     to rebuild, no letter is decrypted.
+
+    Canary traffic is hidden from a production mailbox and visible to the canary,
+    on the same rule the inbox and the catch-up queue already use. Listing is a
+    discovery surface like any other: the destructive lane's letters appearing in
+    an operator's own letter list is test data posing as correspondence, and a
+    future capsule is precisely the sort of thing an operator must not mistake
+    for real.
     """
     clock = clock or postoffice.utc_now
-    rebuilt = _rebuild_missing_projection(ws, clock=clock)
-    items = [_public_row(row, state=_state(ws, row["envelope_id"], clock=clock))
+    # One office for the whole listing: identity and peer registries are the
+    # same for every row, and re-deriving them per row is quadratic work for a
+    # metadata answer that never decrypts anything. It is built BEFORE the
+    # rebuild scan so the canonical-index read shares it too.
+    office = ws.self_office(clock=clock)
+    rebuilt = _rebuild_missing_projection(ws, clock=clock, office=office)
+    items = [_public_row(row, state=_state(ws, row["envelope_id"], clock=clock,
+                                          office=office))
              for row in _effective_rows(_read_registry(ws))]
+    items, excluded = _canary.filter_rows(
+        items, include_test_data=_canary.visible_to(ws, include_test_data))
     items.sort(key=lambda item: (item["created_at"], item["letter_id"]))
     unread = sum(1 for item in items if item["state"] == READ_UNREAD)
     detail = (f"{len(items)} future letter(s), {unread} unread; metadata only, "
               "no plaintext was decrypted")
+    if excluded:
+        detail += (f"; {excluded} canary letter(s) hidden as test data (pass "
+                   "--include-test-data to see them)")
     if rebuilt:
         detail += (f"; rebuilt {len(rebuilt)} registry projection(s) from the "
                    "canonical mailbox after an interrupted delivery")
     return _workspace.command_result(
         "future-letter-list", "OK", workspace=ws,
         items=items, count=len(items), unread=unread,
+        excluded_test_data=excluded,
         rebuilt_from_canonical=rebuilt, detail=detail)
 
 
@@ -911,9 +975,9 @@ def _open_container_bytes(ws, raw: bytes, *, clock) -> dict:
     return parse_container(opened.plaintext)
 
 
-def _canonical_envelopes(ws, *, clock) -> list[dict]:
+def _canonical_envelopes(ws, *, clock, office=None) -> list[dict]:
     """Every FUTURE_LETTER row of the canonical index. Header-only, no decrypt."""
-    office = ws.self_office(clock=clock)
+    office = office or ws.self_office(clock=clock)
     rows = []
     for row in office.read_index():
         if row.get("kind") == KIND:
@@ -929,7 +993,8 @@ def _effective_rows(rows: list[dict]) -> list[dict]:
     return list(latest.values())
 
 
-def _rebuild_missing_projection(ws, *, clock) -> list[dict]:
+@_registry_operation
+def _rebuild_missing_projection(ws, *, clock, office=None) -> list[dict]:
     """Rebuild registry rows for canonical letters the projection does not have.
 
     Delivery writes the canonical envelope first and the projection second, so a
@@ -941,7 +1006,7 @@ def _rebuild_missing_projection(ws, *, clock) -> list[dict]:
     """
     known = {row["envelope_id"] for row in _read_registry(ws)}
     rebuilt = []
-    for canonical in _canonical_envelopes(ws, clock=clock):
+    for canonical in _canonical_envelopes(ws, clock=clock, office=office):
         envelope_id = canonical["envelope_id"]
         if envelope_id in known:
             continue
@@ -1089,6 +1154,7 @@ def _projection_drift(row: dict, container: dict) -> set[str]:
             if row.get(field) != truth[field]}
 
 
+@_registry_operation
 def _repair_projection(ws, row: dict, container: dict, *, clock) -> set[str]:
     """Correct a drifted projection from authenticated canonical content.
 
@@ -1467,9 +1533,16 @@ INERT_NOTICE = (
 )
 
 
-def _state(ws, envelope_id: str, *, clock) -> str:
+def _state(ws, envelope_id: str, *, clock, office=None) -> str:
+    """Read state from an office the caller may already have built.
+
+    Building a Post Office re-reads the peer registry and re-derives both key
+    sets, so one office per row made a listing cost one peer parse per row: 100
+    letters produced 101 reads to answer a metadata question. The caller that
+    loops passes the office it built; every other caller keeps the old shape.
+    """
     try:
-        return ws.self_office(clock=clock).bundle_state(envelope_id)
+        return (office or ws.self_office(clock=clock)).bundle_state(envelope_id)
     except Exception:  # noqa: BLE001 - a missing bundle is NEITHER, never UNREAD
         return postoffice.NEITHER
 
@@ -1962,21 +2035,17 @@ def _import_private(ws, recovered: dict, *, clock) -> dict:
     The recovered container keeps its ORIGINAL provenance: a private export is a
     copy of a letter, not a new letter authored by the importer, so nothing is
     rewritten around it.
+
+    Authentication happens BEFORE dedup. The manifest's `plaintext_sha256` is
+    attacker-controlled text until this workspace opens the envelope and hashes
+    what it actually holds; a duplicate check against the declared value alone
+    let a foreign letter be stamped with a hash this mailbox already knew and be
+    reported as "already registered", which is a false answer about both
+    letters. So: open under this identity, hash the recovered container, then
+    compare, then dedup. A wrong declared hash is BUNDLE_HASH_MISMATCH and never
+    DUPLICATE.
     """
     envelope_id = recovered["envelope_id"]
-    known = _effective_rows(_read_registry(ws))
-    for row in known:
-        if (row["envelope_id"] == envelope_id
-                or row["plaintext_sha256"] == recovered["plaintext_sha256"]):
-            return _workspace.command_result(
-                "future-letter-import", "DUPLICATE", workspace=ws,
-                letter=_public_row(row, state=_state(ws, row["envelope_id"], clock=clock)),
-                classification=row["classification"],
-                bundle={"path": recovered["path"], "schema": recovered["schema"],
-                        "plaintext_sha256": recovered["plaintext_sha256"]},
-                detail=(f"this exact letter is already registered as "
-                        f"{row['envelope_id']} (letter_id {row['letter_id']}); "
-                        "no second copy was written"))
     try:
         container = _open_container_bytes(ws, recovered["envelope_bytes"], clock=clock)
     except SailangError as exc:
@@ -1990,6 +2059,18 @@ def _import_private(ws, recovered: dict, *, clock) -> dict:
         _reject(BUNDLE_HASH_MISMATCH,
                 f"recovered letter hashes to {actual}, manifest declares "
                 f"{recovered['plaintext_sha256']}")
+    known = _effective_rows(_read_registry(ws))
+    for row in known:
+        if row["envelope_id"] == envelope_id or row["plaintext_sha256"] == actual:
+            return _workspace.command_result(
+                "future-letter-import", "DUPLICATE", workspace=ws,
+                letter=_public_row(row, state=_state(ws, row["envelope_id"], clock=clock)),
+                classification=row["classification"],
+                bundle={"path": recovered["path"], "schema": recovered["schema"],
+                        "plaintext_sha256": actual},
+                detail=(f"this exact letter is already registered as "
+                        f"{row['envelope_id']} (letter_id {row['letter_id']}); "
+                        "no second copy was written"))
     rebuilt = _rebuild_missing_projection(ws, clock=clock)
     for row in rebuilt:
         if row["envelope_id"] == envelope_id:
@@ -2017,6 +2098,7 @@ def _import_private(ws, recovered: dict, *, clock) -> dict:
                 "canonical send path; the source archive is untouched"))
 
 
+@_registry_operation
 def import_bundle(ws, path, *, clock=None) -> dict:
     """Import one bundle through the canonical send/seal route.
 

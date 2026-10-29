@@ -772,6 +772,19 @@ def claim(workspace, *, limit: int = DEFAULT_CLAIM_LIMIT, clock=None) -> dict:
     An entry is claimable when it is QUEUED, or PARKED with its cooldown
     elapsed. A crashed claim is reaped after `IN_FLIGHT_TIMEOUT_SECONDS` and
     counted, so a catch-up interrupted by a restart resumes instead of sticking.
+
+    The bound is on the queue, not on this call. `limit` used to cap only what
+    one invocation handed out, so claiming twice accumulated past it -- eight then
+    eight gave sixteen in flight -- and "bounded catch-up work" was true of each
+    call and false of the queue. Entries already IN_FLIGHT are counted first, so
+    the limit means what the detail line says it means.
+
+    Reaping happens BEFORE the bound is applied, and as its own pass. The
+    ordering is load-bearing rather than tidiness: a process that died with the
+    queue at its in-flight limit leaves nothing but stale claims, and a bound
+    tested first breaks on the first of them without examining any. Recovery
+    then answers "nothing claimed, nothing reaped, still full" forever -- the
+    limit enforcing itself against the only entries able to free it.
     """
     if not isinstance(limit, int) or isinstance(limit, bool) or limit < 1:
         _reject(BAD_INPUT, "limit is a positive integer")
@@ -781,19 +794,30 @@ def claim(workspace, *, limit: int = DEFAULT_CLAIM_LIMIT, clock=None) -> dict:
         payload = read_queue(workspace)
         entries = payload["entries"]
         claimed, reaped = [], []
+        # 1. Reap. The surviving in-flight count falls out of this pass, so the
+        #    bound below is applied to the population that actually still holds
+        #    a slot. Nothing here increments `attempts`: a crashed attempt is
+        #    released, not spent twice.
+        in_flight = 0
         for entry in sorted(entries.values(),
                             key=lambda item: (item["first_owed_at"],
                                               item["entry_id"])):
-            if len(claimed) >= limit:
+            if entry["state"] != IN_FLIGHT:
+                continue
+            age = _seconds_since(entry["claimed_at"], now)
+            if age is None or age < IN_FLIGHT_TIMEOUT_SECONDS:
+                in_flight += 1
+                continue
+            entry["state"] = QUEUED
+            entry["parked_reason"] = STALE_CLAIM_REAPED
+            entry["claimed_at"] = None
+            reaped.append(entry["entry_id"])
+        # 2. Claim, oldest debt first, up to the queue-wide bound.
+        for entry in sorted(entries.values(),
+                            key=lambda item: (item["first_owed_at"],
+                                              item["entry_id"])):
+            if len(claimed) + in_flight >= limit:
                 break
-            if entry["state"] == IN_FLIGHT:
-                age = _seconds_since(entry["claimed_at"], now)
-                if age is None or age < IN_FLIGHT_TIMEOUT_SECONDS:
-                    continue
-                entry["state"] = QUEUED
-                entry["parked_reason"] = STALE_CLAIM_REAPED
-                entry["claimed_at"] = None
-                reaped.append(entry["entry_id"])
             if entry["state"] not in (QUEUED, PARKED):
                 continue
             if entry["next_attempt_at"] and \
@@ -810,7 +834,7 @@ def claim(workspace, *, limit: int = DEFAULT_CLAIM_LIMIT, clock=None) -> dict:
         "catchup-claim", "OK", workspace=workspace,
         claimed=[_public(entry) for entry in claimed],
         counts={"claimed": len(claimed), "reaped": len(reaped),
-                "limit": limit},
+                "limit": limit, "in_flight": in_flight + len(claimed)},
         detail=f"{len(claimed)} entry/entries in flight (limit {limit}); "
                f"{len(reaped)} stale claim(s) reaped after "
                f"{IN_FLIGHT_TIMEOUT_SECONDS}s")
@@ -892,6 +916,7 @@ def run(workspace, *, limit: int = DEFAULT_CLAIM_LIMIT, clock=None) -> dict:
     now = _now(clock)
     outcomes, parked = [], []
     reconcile_ran = False
+    delivery_ran = False
     for entry in claimed["claimed"]:
         if entry["kind"] not in EXECUTABLE:
             park(workspace, entry["entry_id"],
@@ -904,6 +929,19 @@ def run(workspace, *, limit: int = DEFAULT_CLAIM_LIMIT, clock=None) -> dict:
         if entry["kind"] == RECONCILE and not reconcile_ran:
             reconcile_ran = True
             _ledger.reconcile(workspace, clock=clock)
+        if entry["kind"] == DELIVERY and not delivery_ran:
+            # One resume for the whole run, not one per entry: the outbox walks
+            # its intents oldest-first under its own lock and is idempotency-
+            # keyed, so a per-entry resume would rescan the same container list
+            # N times to do the one thing it was always going to do.
+            #
+            # This line is the class. Without it DELIVERY was claimed as
+            # EXECUTABLE and executed nothing, so every owed delivery reached the
+            # PARKED branch and stayed owed through every catch-up that was
+            # supposed to clear it -- a docstring promising an outbox call that
+            # no code path made.
+            delivery_ran = True
+            _outbox.resume_outbox(workspace, clock=clock)
         verdict = _still_owed(workspace, entry)
         if verdict is None:
             complete(workspace, entry["entry_id"],
@@ -917,7 +955,8 @@ def run(workspace, *, limit: int = DEFAULT_CLAIM_LIMIT, clock=None) -> dict:
         "catchup-run", "OK", workspace=workspace,
         ran={"claimed": claimed["counts"]["claimed"],
              "reaped": claimed["counts"]["reaped"],
-             "completed": len(outcomes), "parked": len(parked)},
+             "completed": len(outcomes), "parked": len(parked),
+             "deliveries_resumed": delivery_ran},
         outcomes=outcomes, parked=parked, observed_at=now,
         detail=f"{len(outcomes)} job(s) completed, {len(parked)} parked with a "
                "named reason; nothing was dropped and nothing was replayed")
@@ -932,6 +971,12 @@ def _still_owed(workspace, entry: dict) -> Optional[str]:
             reason = _delivery_verdict(intent, workspace.peers)
             if reason is not None:
                 return reason
+            # DELIVERED is settled, and settled has to be said as itself. Falling
+            # through to NOT_DUE here made a DELIVERY that the resume had just
+            # completed park anyway -- the queue refused to believe the outbox it
+            # had been told to consult one line earlier.
+            if intent["state"] == _outbox.DELIVERED:
+                return None
             if getattr(workspace, "sender_private_key", None) is None:
                 return NEEDS_SIGNING_KEY
             return NOT_DUE
@@ -999,7 +1044,7 @@ def notice(workspace, *, clock=None, include_test_data=None) -> dict:
         },
         detail=f"after {gap['gap']['downtime_seconds']}s of downtime, {owed} "
                f"logical job(s) are owed across {len(view['by_kind'])} kind(s); "
-               f"{view['totals'][PARKED]} parked, oldest {view['attempts']} "
+               f"{view['totals'][PARKED]} parked, {view['attempts']} "
                f"attempt(s) total; the cause is {UNKNOWN_CAUSE}")
 
 

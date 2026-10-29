@@ -101,8 +101,11 @@ def test_fresh_process_negotiates_an_older_peer_and_never_invokes_its_missing_co
     contract["features"].pop("cli_focus")
     contract["commands"].pop("focus")
     marker, script = tmp_path / "commands.json", tmp_path / "older_peer.py"
+    (tmp_path / "saimail_local.py").write_text(
+        "raise RuntimeError('unrelated ambient module was imported')\n", encoding="utf-8")
     script.write_text(
         "import json,runpy,sys\nfrom pathlib import Path\n"
+        f"sys.path.insert(0, str(Path({saimail_local.__file__!r}).resolve().parent))\n"
         f"contract = {contract!r}\nmarker = Path({str(marker)!r})\n"
         "if '--contract' in sys.argv:\n    print(json.dumps(contract))\n"
         "else:\n    marker.write_text(json.dumps(sys.argv[1:]))\n"

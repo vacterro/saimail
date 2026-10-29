@@ -133,7 +133,7 @@ def test_the_receiver_attention_budget_suppresses_without_writing(mail):
     over = _send(A, claim="one fact too many", clock=clock)
     assert over["status"] == notify.NOTIFY_SUPPRESSED and over["ok"] is True
     assert over["operator_action_required"] is False
-    intents = list((A.root / "outbox" / "intents").glob("*.json"))
+    intents = outbox._all_intents(A)
     assert len(intents) == notify.BUDGET_PER_RECIPIENT_WORK
     assert _send(A, claim="fact 0", clock=clock)["status"] == outbox.DELIVERED, (
         "a repeat of a recorded fact is never counted against the budget")

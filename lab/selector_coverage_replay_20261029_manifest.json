@@ -1,0 +1,73 @@
+{
+  "manifest_version": "EXPERIMENT-MANIFEST-1",
+  "experiment_id": "V202-SELECTOR-COVERAGE-REPLAY-20261029",
+  "authority": "HISTORICAL_ONLY",
+  "inputs": [
+    {
+      "INPUT_ID": "V202_FIXTURES",
+      "SENSITIVITY": "PUBLIC_ARCHIVABLE",
+      "SOURCE_KIND": "TEXT_FILE",
+      "EXTRACTION_KIND": "WHOLE_FILE",
+      "EXTRACTOR_VERSION": "WHOLE-FILE-1",
+      "EXTRACTED_SHA256": "a8fa4095ea4bbd1361a40c4c0d6be8968584e562a3cde3f47183a3cfccf9631e",
+      "REQUIRED_FOR_LIVE": true,
+      "SOURCE_PATH": "lab/selector_coverage_fixtures.json",
+      "ARCHIVED_FIXTURE": "lab/history/v202-selector-coverage/selector_coverage_fixtures.json",
+      "CONTAINER_SHA256_AT_REGISTRATION": "a8fa4095ea4bbd1361a40c4c0d6be8968584e562a3cde3f47183a3cfccf9631e"
+    },
+    {
+      "INPUT_ID": "V202_REGISTRATION",
+      "SENSITIVITY": "PUBLIC_ARCHIVABLE",
+      "SOURCE_KIND": "TEXT_FILE",
+      "EXTRACTION_KIND": "WHOLE_FILE",
+      "EXTRACTOR_VERSION": "WHOLE-FILE-1",
+      "EXTRACTED_SHA256": "3f5d78070856aacf8a3d4ee0607c67c88516d3d616a0d236eb0cd7103ce408b9",
+      "REQUIRED_FOR_LIVE": true,
+      "SOURCE_PATH": "lab/selector_coverage_replay_20261029_registration.json",
+      "ARCHIVED_FIXTURE": "lab/history/v202-selector-coverage-replay-20261029/selector_coverage_registration.json",
+      "CONTAINER_SHA256_AT_REGISTRATION": "3f5d78070856aacf8a3d4ee0607c67c88516d3d616a0d236eb0cd7103ce408b9"
+    }
+  ],
+  "implementation": [
+    {
+      "PATH": "lab/selector_coverage.py",
+      "SHA256": "5ccf3f58d5287168e62ab69581e9557c832be9c50ed77cb3922702a085c6e1da",
+      "ROLE": "RUNNER"
+    },
+    {
+      "PATH": "lab/experiment_manifest.py",
+      "SHA256": "fce731a27f8d316d18c569245ba21bd685dc8671b260c3188a7d3b58bfd76cf2",
+      "ROLE": "RUNNER"
+    },
+    {
+      "PATH": "lab/local_scenario.py",
+      "SHA256": "61b14610225f107427a3f81d4d05aeafa2254d7c98cb9cce4f96e632167cacf4",
+      "ROLE": "EXTRACTOR"
+    },
+    {
+      "PATH": "lab/utility_friction.py",
+      "SHA256": "80b7e4fc5f2966cbfc15e3e59b8a283f6e23b7c39a490e6a44981fc2c51db967",
+      "ROLE": "GRADER"
+    },
+    {
+      "PATH": "tools/selector_coverage_experiment.py",
+      "SHA256": "7bed2068a07006d14ed11b64677421c656d9b4983d10d8517515b41ddf346fec",
+      "ROLE": "RUNNER"
+    },
+    {
+      "PATH": "saimail/postoffice.py",
+      "SHA256": "165ca67036580a85076ae55bea53b03646582ec25d8e307061e81dbea8af0573",
+      "ROLE": "PARSER"
+    },
+    {
+      "PATH": "saimail/selector.py",
+      "SHA256": "2d06e994a2abfba80d24597f601a608bf337ed4e2450f73dce9d05f765d41cd0",
+      "ROLE": "PARSER"
+    },
+    {
+      "PATH": "saimail/_journal_cache.py",
+      "SHA256": "9a0c089eec52a2f15e1b7974a140b1a4fa6852e706afe2497c62622fd3e28103",
+      "ROLE": "PARSER"
+    }
+  ]
+}

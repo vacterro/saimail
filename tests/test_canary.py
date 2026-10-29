@@ -89,12 +89,20 @@ def _canary(root, seat=SEAT, *, purpose="destructive proof lane"):
 
 
 def _pair(tmp_path):
-    """Two canaries wired to each other. Nothing here is a real mailbox."""
+    """Two canaries wired to each other. Nothing here is a real mailbox.
+
+    The registry is put in ENFORCE mode on purpose. Advisory is the safe default
+    for a real mailbox, but it means a blocked pin only records a verdict and
+    still delivers -- so a destructive lane that never flips the switch cannot
+    prove the refusal it exists to prove, and would settle for asserting a state
+    string instead of watching mail fail to arrive.
+    """
     A = _canary(tmp_path / "probe", SEAT)
     B = _canary(tmp_path / "mirror", PEER_SEAT)
     workspace.add_recipient(A, PEER_SEAT, workspace.identity_card(B), B.root)
     workspace.add_recipient(B, SEAT, workspace.identity_card(A), A.root)
     trust.pin(A, PEER_SEAT, source="canary fixture", clock=_clock(T0))
+    trust.set_mode(A, trust.MODE_ENFORCE, clock=_clock(T0))
     return A, B
 
 
@@ -392,6 +400,17 @@ def test_rotation_and_revocation_both_stop_delivery_to_the_old_identity(tmp_path
     assert trust.decide(workspace.load_workspace(tmp_path / "probe"),
                         PEER_SEAT)["state"] == trust.REVOKED
 
+    # The point of the whole scenario is not the verdict string -- it is that mail
+    # stops moving. Under ENFORCE the revoked peer is refused at the gate, so this
+    # asserts the refusal AND the empty recipient inbox, because a registry that
+    # says REVOKED while the delivery still lands has told a comforting lie.
+    reloaded = workspace.load_workspace(tmp_path / "probe")
+    inbox_before = len(workspace.list_inbox(B)["items"])
+    blocked = _code(_send, reloaded, key="post-revoke", claim="still owes a fact")
+    assert blocked == trust.TRUST_ALREADY_REFUSED, blocked
+    assert len(workspace.list_inbox(B)["items"]) == inbox_before, \
+        "a revoked peer received mail anyway"
+
 
 def test_a_duplicate_delivery_is_idempotent_not_a_second_message(tmp_path):
     """Replaying the same request must not double the recipient's mail."""
@@ -528,10 +547,33 @@ def test_canary_classification_survives_export_and_import(tmp_path):
 
     imported = future_letter.import_bundle(stranger, bundle, clock=_clock(T2))
     assert imported["status"] == postoffice.ACCEPTED
-    assert canary.TAG in imported["letter"]["tags"]
+    assert canary.TAG in imported["letter"]["tags"], "the stamp travelled with it"
+
+    # Classification surviving the trip is necessary and NOT sufficient. Listing
+    # is a discovery surface like the inbox, so a production mailbox must hide the
+    # canary letter even though the registry knows perfectly well what it is --
+    # otherwise the destructive lane's output poses as correspondence, and this
+    # assertion used to require exactly that.
     listed = future_letter.list_letters(
         workspace.load_workspace(tmp_path / "stranger"), clock=_clock(T3))
-    assert [canary.TAG in item["tags"] for item in listed["items"]] == [True]
+    assert [item["letter_id"] for item in listed["items"]] == [], \
+        "a production letter list showed test data"
+    assert listed["excluded_test_data"] == 1
+    assert listed["count"] == 0
+
+    # The canary still sees its own traffic: a blind filter that blinds the lane
+    # is the exact false negative the lane exists to avoid.
+    own = future_letter.list_letters(A, clock=_clock(T3))
+    assert [canary.TAG in item["tags"] for item in own["items"]] == [True]
+
+    # An explicit override beats both defaults, in both directions.
+    forced = future_letter.list_letters(
+        workspace.load_workspace(tmp_path / "stranger"), clock=_clock(T3),
+        include_test_data=True)
+    assert [canary.TAG in item["tags"] for item in forced["items"]] == [True]
+    blanked = future_letter.list_letters(A, clock=_clock(T3),
+                                         include_test_data=False)
+    assert blanked["items"] == [], "the canary hid its own mail from itself"
 
 
 def test_a_production_letter_is_not_labelled_by_proximity(tmp_path):
@@ -670,6 +712,74 @@ def test_the_destructive_suite_touches_no_real_mailbox(tmp_path):
     assert reseeded.sender_kid != A.sender_kid
     assert not canary.is_canary(A), "a pre-reset handle must not keep its grant"
     assert not canary.is_canary(workspace.load_workspace(tmp_path / "prod"))
+
+
+def test_the_duplicate_delivery_scenario_is_proved_delivery_side(tmp_path):
+    """Wave 5 scenario: duplicate delivery, watched on the RECEIVING mailbox.
+
+    The scenario was only ever recorded as a report on the sender. A report
+    nobody observed is an assertion; this drives the real replay -- the same
+    sealed bytes delivered twice to a real recipient -- and proves the second
+    delivery is refused as a duplicate rather than landing twice.
+    """
+    A, B, envelope_id = _delivered(tmp_path, key="dup")
+    container = _container(B, envelope_id).read_bytes()
+    before = sorted(p.name for p in _container(B, envelope_id).parent.iterdir())
+
+    replay = B.office().deliver(container)
+    assert replay.status == postoffice.DUPLICATE, (
+        "the same bytes twice is one message, not two")
+    assert replay.envelope_id == envelope_id, "and it is the message that existed"
+    after = sorted(p.name for p in _container(B, envelope_id).parent.iterdir())
+    assert after == before, "a replayed delivery adds nothing to the mailbox"
+    assert len(B.office().read_index()) == 1, "one row, not two"
+
+    canary.record_failure(
+        B, scenario="duplicate-delivery", outcome="PASS",
+        detail="the sealed container was delivered twice and landed once",
+        evidence={"first": envelope_id, "replay_status": replay.status,
+                  "index_rows": 1})
+    assert len(canary.read_reports(B)) == 1
+
+
+def test_the_ledger_loss_scenario_is_proved_against_the_real_ledger(tmp_path):
+    """Wave 5 scenario: ledger/index loss, watched on the surviving bytes.
+
+    Losing the record must not lose the mail, and must not silently report an
+    empty mailbox: that is the same false zero the surface forbids. So the
+    ledger file is deleted outright -- not corrupted, DELETED -- and the
+    canonical bundles are then checked to still be there and to still open.
+    """
+    A, B, envelope_id = _delivered(tmp_path, key="lost")
+    ledger_path = ledger.ledger_path(B)
+    assert ledger_path.is_file(), "there is a record to lose"
+    ledger_path.unlink()
+
+    health = ledger.health(B)
+    assert health["ledger"]["read_state"] == ledger.STATE_ABSENT, (
+        "a deleted ledger is ABSENT -- no history -- and never UNREADABLE")
+    assert health["ledger"]["state"] == ledger.HEALTHY
+    assert health["ledger"]["reason"] == "NO_HISTORY", (
+        "a missing record must say it is missing, not report zero messages")
+    assert health["ledger"]["counts"] == {}
+
+    # The mail is untouched, and still readable.
+    assert _container(B, envelope_id).is_file()
+    assert B.office().read_index(), "the Post Office index is a separate record"
+    assert len(B.office().read_index()) == 1
+
+    # And the absence is stated in words, not as a count of zero messages while
+    # a message sits in the mailbox.
+    assert health["ledger"]["messages"] == 0, "the record has no messages..."
+    assert len(B.office().read_index()) == 1, "...but the mailbox has one"
+
+    canary.record_failure(
+        B, scenario="ledger-loss", outcome="PASS",
+        detail="the ledger file was deleted; the canonical bundle and the index "
+               "survived and the state was reported ABSENT rather than zero-mail",
+        evidence={"envelope_id": envelope_id, "ledger_state": health["ledger"]["state"],
+                  "index_rows": len(B.office().read_index())})
+    assert len(canary.read_reports(B)) == 1
 
 
 def test_the_destructive_lane_runs_on_this_platform(tmp_path):

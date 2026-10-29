@@ -154,6 +154,36 @@ def filter_items(items, *, include_test_data: bool = False, key: str = "from"):
     return kept, dropped
 
 
+def row_is_test_data(item) -> bool:
+    """Whether a registry row is canary traffic, by stamp OR by seat.
+
+    The seat alone is not enough and was the reason a canary letter imported into
+    a production mailbox stayed visible: import rewrites the row to the importing
+    workspace's own seat, so the row stops looking canary while the stamp
+    travelling on the envelope says otherwise. Checking both means neither route
+    can be laundered by moving the mail.
+    """
+    if not isinstance(item, dict):
+        return False
+    tags = item.get("tags") or ()
+    if isinstance(tags, str):
+        tags = (tags,)
+    return TAG in tags or is_test_data(item.get("from_seat"))
+
+
+def filter_rows(rows, *, include_test_data: bool = False):
+    """``(kept, excluded_count)`` for registry rows, which carry a stamp."""
+    if include_test_data:
+        return list(rows), 0
+    kept, dropped = [], 0
+    for item in rows:
+        if row_is_test_data(item):
+            dropped += 1
+        else:
+            kept.append(item)
+    return kept, dropped
+
+
 def stamp_tags(tags):
     """``tags`` with the canary tag on it, exactly once."""
     values = tuple(tags or ())

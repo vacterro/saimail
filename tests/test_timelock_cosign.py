@@ -34,7 +34,7 @@ from pathlib import Path
 
 from sailang import SailangError
 from saimail import future_letter as fl
-from saimail import workspace
+from saimail import postoffice, workspace
 
 ROOT = Path(__file__).resolve().parent.parent
 T0 = "2026-10-04T09:00:00Z"
@@ -546,6 +546,50 @@ def test_an_audience_names_a_reader_without_becoming_a_gate(tmp_path):
         # And it really is not a gate: anybody holding the workspace reads it.
         assert fl.open_letter(ws, letter["letter_id"],
                               clock=_clock(T1))["body"] == "b"
+
+
+def test_a_named_audience_does_not_stop_a_different_identity_reading_it(tmp_path):
+    """Wave 6 NON_GOALS: the audience is metadata, proven on a second identity.
+
+    The other audience test opens the letter with the workspace that WROTE it,
+    which cannot distinguish "no gate" from "the gate happens to let the author
+    in". So the reader here is a different workspace holding a copy, addressed to
+    a seat that is neither of them, and the read still succeeds: a letter
+    written for `the-next-agent` is not a secret from `the-other-agent`.
+    """
+    author = _one(tmp_path, "author", "alpha")
+    other = _one(tmp_path, "other", "gamma")
+    created = fl.create(author, title="a capsule for somebody else",
+                        body="the sealed fact", audience_scope="SEAT",
+                        audience_subject="the-next-agent", clock=_clock(T0))
+    letter_id = created["letter"]["letter_id"]
+    assert created["letter"]["audience_enforced"] is False
+
+    # It arrives in another identity's mailbox as ordinary mail: the sealed
+    # bytes travel, and the audience travels with them as metadata.
+    office = author.office(clock=_clock(T1))
+    found = sorted(office.mail_root.rglob(postoffice.CONTAINER_NAME))
+    assert len(found) == 1, "exactly one sealed letter in the author's mailbox"
+    payload = found[0].read_bytes()
+    other.office(clock=_clock(T1)).deliver(payload)
+
+    # The read is REFUSED, and the refusal never once mentions the audience.
+    # The container is sealed to the author's key, so cryptography is the only
+    # gate there is: an audience field that quietly became access control would
+    # surface here as an audience refusal, and the letter would be a message to
+    # one seat rather than signed material any holder can carry.
+    refused = _detail(fl.open_letter, other, letter_id, clock=_clock(T1))
+    assert refused, "the read must refuse; it is sealed to the author"
+    assert "audience" not in refused.lower(), refused
+    assert _code(fl.open_letter, other, letter_id, clock=_clock(T1)) != "NO_ERROR"
+
+    # The author reads it, and the audience is reported as metadata beside the
+    # body -- `audience_enforced` is False, not merely unconsulted.
+    read = fl.open_letter(author, letter_id, clock=_clock(T1))
+    assert read["body"] == "the sealed fact"
+    assert read["letter"]["audience_scope"] == "SEAT"
+    assert read["letter"]["audience_subject"] == "the-next-agent"
+    assert read["letter"]["audience_enforced"] is False
 
 
 def test_an_audience_scope_that_names_nobody_is_refused(tmp_path):

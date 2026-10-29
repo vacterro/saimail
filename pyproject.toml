@@ -20,18 +20,18 @@ dependencies = []
 # different BPE table would silently change every published ratio. It ships BPE
 # data files, not model weights, and fetches them on first use of an encoding.
 # Nothing is vendored.
-test = ["pytest>=8,<9", "tiktoken>=0.12,<0.13", "cryptography>=41,<47"]
+test = ["pytest>=8,<9", "tiktoken>=0.12,<0.13", "cryptography>=41,<47", "pywin32>=311; sys_platform == 'win32'"]
 # Kept as an alias so older instructions keep working. Same set, deliberately.
-bench = ["pytest>=8,<9", "tiktoken>=0.12,<0.13", "cryptography>=41,<47"]
+bench = ["pytest>=8,<9", "tiktoken>=0.12,<0.13", "cryptography>=41,<47", "pywin32>=311; sys_platform == 'win32'"]
 credentials = ["keyring>=24"]
-crypto = ["cryptography>=41,<47"]
+crypto = ["cryptography>=41,<47", "pywin32>=311; sys_platform == 'win32'"]
 lab = ["keyring>=24"]
 # V5-01: the desktop client is a presentation layer over the same public API.
 # Qt stays OUT of `dependencies` on purpose: the core install and the canonical
 # zero-dependency suite must never need it, and `saimail-local` keeps working
 # without it. `saimail-gui` exits with one actionable line when this extra is
 # absent instead of raising a traceback.
-gui = ["PySide6>=6.7,<7", "cryptography>=41,<47"]
+gui = ["PySide6>=6.7,<7", "cryptography>=41,<47", "pywin32>=311; sys_platform == 'win32'"]
 # Hardware custody (D-043) is optional and lazy; the distribution that ships
 # the supported `yubikit` API is yubikey-manager. The core install and the
 # canonical suite never need it, and nothing installs at runtime.

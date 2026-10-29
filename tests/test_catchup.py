@@ -27,7 +27,7 @@ import shutil
 import subprocess
 import sys
 import time
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pytest
@@ -85,8 +85,9 @@ def _pair(tmp_path, *, mode=custody.CUSTODY_RAW, settle=True):
     return A, B
 
 
-def _send(A, *, key, claim="one fact", to="beta", clock=None):
-    return outbox.submit_send(A, to, key=key, claim=claim, clock=clock or _clock(T1))
+def _send(A, *, key, claim="one fact", to="beta", clock=None, deliver=True):
+    return outbox.submit_send(A, to, key=key, claim=claim, deliver=deliver,
+                              clock=clock or _clock(T1))
 
 
 def _view(A, *, now=T3):
@@ -114,15 +115,23 @@ def _env_id(key: str) -> str:
     return "sha256:" + hashlib.sha256(key.encode("utf-8")).hexdigest()
 
 
-def _aged(path: Path, seconds: int) -> None:
-    """Backdate a path's mtime so it reads as stale residue."""
+def _aged(path: Path, seconds: int, *, now: str = T3) -> None:
+    """Backdate a path's mtime so it reads as stale residue AT THE TEST CLOCK.
+
+    `time.time() - seconds` stamped files relative to the day the suite ran, so
+    on any date later than the simulated clock (T3) the "aged" fixture landed in
+    the FUTURE and `_age_seconds` measured a negative age. Three residue tests
+    failed for a year-dependent fixture, not for a product defect. The mtime is
+    therefore anchored to the same instant the production code is handed.
+    """
     path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
         if path.suffix == ".staging":
             path.mkdir()
         else:
             path.write_bytes(b"")
-    old = time.time() - seconds
+    anchor = datetime.strptime(now, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    old = anchor.timestamp() - seconds
     os.utime(path, (old, old))
 
 
@@ -231,10 +240,17 @@ def test_catchup_work_is_bounded_and_never_duplicated(tmp_path):
     assert all(entry["state"] == catchup.IN_FLIGHT for entry in first["claimed"])
     assert all(entry["attempts"] == 1 for entry in first["claimed"])
 
-    # A second claim must not touch what is already in flight.
+    # A second claim must not touch what is already in flight, and -- the point
+    # the wave names -- the limit is a bound on the QUEUE, not on one call. It
+    # used to cap only what a single invocation handed out, so eight then eight
+    # left sixteen in flight and "bounded catch-up work" was true of every call
+    # and false of the thing being bounded.
     second = catchup.claim(A, limit=8, clock=_clock(T2))
     assert held.isdisjoint({entry["entry_id"] for entry in second["claimed"]})
-    assert len(second["claimed"]) <= catchup.MAX_CLAIM_LIMIT
+    assert len(second["claimed"]) == 5, "8 total minus the 3 already held"
+    assert second["counts"]["in_flight"] == 8, "the queue exceeded its own bound"
+    again = catchup.claim(A, limit=8, clock=_clock(T2))
+    assert again["claimed"] == [], "the bound did not hold across three calls"
 
     # The in-flight slice stays in flight until it completes or goes stale.
     assert all(_entries(A)[entry_id]["state"] == catchup.IN_FLIGHT
@@ -242,14 +258,13 @@ def test_catchup_work_is_bounded_and_never_duplicated(tmp_path):
 
     # Asking again is a no-op, not a second copy.
     before = json.dumps(_entries(A)[sorted(held)[0]], sort_keys=True)
-    catchup.claim(A, limit=8, clock=_clock(T2))
     assert json.dumps(_entries(A)[sorted(held)[0]], sort_keys=True) == before
 
     # The limit is a hard ceiling even when far more work is due.
     for index in range(10, 30):
         _crash_after_commit(A, (f"job-{index}",))
     catchup.plan(A, clock=_clock(T2))
-    assert len(catchup.claim(A, limit=5, clock=_clock(T2))["claimed"]) == 5
+    assert catchup.claim(A, limit=5, clock=_clock(T2))["claimed"] == []
 
 
 def test_restart_during_catchup_is_idempotent(tmp_path):
@@ -317,10 +332,12 @@ def test_unreachable_peer_parks_visibly(tmp_path):
 def test_a_deregistered_peer_is_also_unreachable(tmp_path):
     """Losing the peer registration is its own park reason, not a send failure."""
     A, B = _pair(tmp_path)
-    _send(A, key="job-0", clock=_clock(T1))
+    _send(A, key="job-0", clock=_clock(T1), deliver=False)
     intent = outbox._all_intents(A)[0]
-    intent["state"] = outbox.FAILED
-    intent["failure"] = "SOMETHING_ELSE"
+    # Use the module's own terminal transition instead of hand-editing two
+    # fields: a FAILED intent the module never writes (no failed_at) is exactly
+    # the shape the validator now refuses, and a fixture must be reachable.
+    outbox._fail(intent, T1, "SOMETHING_ELSE")
     outbox._write(A, intent)
 
     (A.root / "peers.json").unlink()
@@ -511,12 +528,19 @@ def test_a_live_lock_is_not_observed_as_residue(tmp_path):
     lock = postoffice._OsFileLock(held, busy_code=catchup.QUEUE_LOCK_TIMEOUT)
     lock.__enter__()
     try:
+        # Acquiring writes the first byte and re-stamps the mtime at the wall
+        # clock, so age it again AFTER the lock is held: the claim under test is
+        # "old AND held is not residue", not "a just-touched file is young".
+        _aged(held, catchup.STALE_RESIDUE_SECONDS + 600)
         catchup.plan(A, clock=_clock(T3))
         assert not any(item["path"].endswith(postoffice.INDEX_LOCK_NAME)
                        for item in _view(A)["residue"]), "a held lock is not residue"
     finally:
         lock.__exit__(None, None, None)
     # Once released it becomes an observation again -- and still owes nothing.
+    # Re-aged because the observation is about an idle lock, not about the
+    # instant this test happened to touch it.
+    _aged(held, catchup.STALE_RESIDUE_SECONDS + 600)
     catchup.plan(A, clock=_clock(T3))
     assert any(item["path"].endswith(postoffice.INDEX_LOCK_NAME)
                for item in _view(A)["residue"])
@@ -667,3 +691,118 @@ def test_cli_surface(tmp_path):
 def test_claim_rejects_a_bad_limit(tmp_path, limit):
     A, B = _pair(tmp_path)
     assert _code(catchup.claim, A, limit=limit) == catchup.BAD_INPUT
+
+
+def test_an_owed_delivery_is_executed_and_completes_through_run(tmp_path):
+    """DELIVERY was in EXECUTABLE and no code path ever executed it.
+
+    `run` walked straight from the class check to the "still owed?" check, and
+    that check only ever answered NOT_DUE or a park reason -- so an owed delivery
+    reached the PARKED branch every time and stayed owed through every catch-up
+    that was supposed to clear it. The docstring promised an outbox call that
+    nothing made, which is the exact shape of a green test over dead behaviour.
+    """
+    A, B = _pair(tmp_path)
+    sealed = _send(A, key="owed", clock=_clock(T1), deliver=False)
+    assert sealed["intent"]["state"] == outbox.SEALED, "nothing was left owed"
+
+    catchup.plan(A, clock=_clock(T2))
+    owed = _entries(A, kind=catchup.DELIVERY)
+    assert owed, "an undelivered intent produced no owed DELIVERY entry"
+
+    ran = catchup.run(A, clock=_clock(T3))
+    assert ran["ran"]["deliveries_resumed"] is True, \
+        "run claimed DELIVERY was executable and never touched the outbox"
+    assert ran["ran"]["completed"] >= 1, ran["detail"]
+    assert outbox.outbox_status(A)["outbox"]["pending"] == 0, \
+        "the delivery is still sitting in the outbox"
+    assert workspace.list_inbox(B)["items"], "the peer never received the mail"
+
+
+def test_run_is_idempotent_after_it_has_executed_a_delivery(tmp_path):
+    """Running twice must not deliver a second copy.
+
+    The outbox is keyed by idempotency key, so this is a property the code already
+    had; it is pinned here because the resume is new, and a resume that ran once
+    per claimed entry would have delivered the same letter N times.
+    """
+    A, B = _pair(tmp_path)
+    _send(A, key="twice", clock=_clock(T1), deliver=False)
+    catchup.plan(A, clock=_clock(T2))
+    catchup.run(A, clock=_clock(T3))
+    delivered = len(workspace.list_inbox(B)["items"])
+
+    catchup.run(A, clock=_clock(T3))
+    assert len(workspace.list_inbox(B)["items"]) == delivered, \
+        "a second catch-up delivered the same mail again"
+
+def test_a_saturated_queue_reaps_stale_claims_before_it_applies_its_bound(tmp_path):
+    """The bound must not be reached before the stale-claim branch.
+
+    A crash that died with the queue at its in-flight limit used to wedge
+    recovery permanently: `claim` compared `len(claimed) + in_flight >= limit`
+    on the FIRST entry, so a queue whose entire in-flight slice was stale broke
+    out before it examined the very claims it exists to reclaim. `in_flight`
+    stayed at the limit, `reaped` stayed 0, and every later catch-up answered
+    "nothing to do" about work that was never going to move again.
+    """
+    A, B = _pair(tmp_path)
+    _crash_after_commit(A, ("stale-0", "stale-1"))
+    catchup.plan(A, clock=_clock(T1))
+    first = catchup.claim(A, limit=2, clock=_clock(T1))
+    assert first["counts"] == {"claimed": 2, "reaped": 0, "limit": 2, "in_flight": 2}
+
+    # 21 hours later both claims are long past IN_FLIGHT_TIMEOUT_SECONDS.
+    later = catchup.claim(A, limit=2, clock=_clock(T3))
+    assert later["counts"]["reaped"] == 2, "a saturated stale queue never reaped"
+    assert later["counts"]["claimed"] == 2, "reclaimed work was not handed back out"
+    assert later["counts"]["in_flight"] == 2, "reclaiming overflowed the bound"
+    assert {entry["entry_id"] for entry in later["claimed"]} == {
+        entry["entry_id"] for entry in first["claimed"]}
+    # Reaping does not count as an attempt; the reclaim does.
+    assert all(entry["attempts"] == 2 for entry in later["claimed"])
+
+    # And the queue is now genuinely at its bound, not merely "claimed twice".
+    assert catchup.claim(A, limit=2, clock=_clock(T3))["claimed"] == []
+
+
+def test_a_mixed_queue_reaps_only_what_is_actually_stale(tmp_path):
+    """A fresh claim is not residue and must not be recycled with the stale one."""
+    A, B = _pair(tmp_path)
+    _crash_after_commit(A, ("old", "new"))
+    catchup.plan(A, clock=_clock(T1))
+    old = catchup.claim(A, limit=1,
+                        clock=_clock("2026-10-05T08:42:00Z"))["claimed"][0]
+    fresh = catchup.claim(A, limit=2,
+                          clock=_clock("2026-10-05T08:52:00Z"))["claimed"][0]
+    assert old["entry_id"] != fresh["entry_id"]
+
+    later = catchup.claim(A, limit=2, clock=_clock(T3))
+    assert later["counts"]["reaped"] == 1
+    assert later["counts"]["claimed"] == 1
+    assert later["counts"]["in_flight"] == 2
+    assert later["claimed"][0]["entry_id"] == old["entry_id"]
+    assert later["claimed"][0]["attempts"] == 2
+    # The fresh claim was not touched, and is still the one holding its slot.
+    stored = _entries(A)
+    assert stored[fresh["entry_id"]]["state"] == catchup.IN_FLIGHT
+    assert stored[fresh["entry_id"]]["attempts"] == 1
+
+
+def test_reclaiming_stale_work_cannot_exceed_the_bound_when_more_is_queued(tmp_path):
+    """Reap, then bound: the queue-wide ceiling holds after capacity returns."""
+    A, B = _pair(tmp_path)
+    _crash_after_commit(A, ("a", "b"))
+    catchup.plan(A, clock=_clock(T1))
+    catchup.claim(A, limit=2, clock=_clock(T1))
+
+    # Two more debts appear while the two stale claims sit there.
+    _crash_after_commit(A, ("c", "d"))
+    catchup.plan(A, clock=_clock(T3))
+    later = catchup.claim(A, limit=2, clock=_clock(T3))
+    assert later["counts"]["reaped"] == 2
+    assert later["counts"]["claimed"] == 2, "more than the bound was handed out"
+    assert later["counts"]["in_flight"] == 2
+    owed = [entry for entry in catchup.read_queue(A)["entries"].values()
+            if entry["state"] == catchup.IN_FLIGHT]
+    assert len(owed) == 2

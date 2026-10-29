@@ -1,0 +1,8 @@
+{
+  "title": "Synthetic Seed Letter",
+  "author": "Synthetic Test Author",
+  "created_at": "2026-01-01T00:00:00+00:00",
+  "body": "TO FUTURE MODELS AND AGENTS\n\nThis capsule is a SYNTHETIC test fixture. It exists so the bootstrap import path can be proved without a private operator letter travelling with the source tree. Nothing here is real correspondence, and the key below is published on purpose.\n",
+  "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+  "nonce_hex": "000102030405060708090a0b"
+}

@@ -646,17 +646,32 @@ def init_workspace(root, *, seat: str, custody: str = _custody.CUSTODY_RAW,
     carries handles only; requires the credentials extra; spec/20).
     """
     clock = clock or postoffice.utc_now
-    root = Path(root)
+    root = Path(root).resolve()
     _check_seat("seat", seat)
     if custody not in _custody.CUSTODY_MODES:
         _reject(BAD_INPUT,
                 f"unknown custody mode {custody!r}; expected one of {_custody.CUSTODY_MODES}")
+    # Keep one permanent lock inode outside the payload directory: the lock
+    # must neither look like a foreign workspace nor be unlinked by a waiter.
+    # Canonicalize before choosing the lock so path aliases share ownership.
+    with postoffice._OsFileLock(root.parent / f".{root.name}.saimail-init.lock",
+                                busy_code="WORKSPACE_INIT_LOCK_TIMEOUT"):
+        return _init_workspace_locked(root, seat=seat, custody=custody,
+                                      store=store, clock=clock, password=password)
+
+
+def _init_workspace_locked(root, *, seat, custody, store, clock, password):
+    """Decide, provision and validate while holding the initialization lock."""
     marker = root / MARKER_NAME
     identity_path = root / IDENTITY_DIR / IDENTITY_NAME
     if marker.is_file():
         existing = _validate_marker(
             _read_json(marker, code=INVALID_WORKSPACE, what="workspace marker"),
             root=root)
+        if existing["seat"] != seat:
+            _reject(WORKSPACE_CONFLICT,
+                    f"workspace already initialized for seat {existing['seat']}; "
+                    f"refusing to initialize it as {seat}")
         loaded = load_workspace(root, store=store, password=password)
         return command_result(
             "init", ALREADY_EXISTS, workspace=loaded,

@@ -56,7 +56,7 @@ from saimail import envelope, postoffice
 from saimail import workspace as _workspace
 
 TRUST_SCHEMA = "SAIMAIL_TRUST_PINS_1"
-TRUST_VERSION = 1
+TRUST_VERSION = 2
 TRUST_NAME = "trust.json"
 LOCK_NAME = "trust.lock"
 
@@ -77,14 +77,19 @@ MODE_ENFORCE = "enforce"
 MODES = (MODE_ADVISORY, MODE_ENFORCE)
 
 #: The policy that decides which states refuse. Hashed into every pin, so a
-#: pin accepted under an older rule set says so.
+#: pin accepted under an older rule set says so. Everything in here is READ by
+#: the decision path -- a policy that is only hashed governs nothing, which is
+#: how the previous `require_proof_of_possession` flag managed to look like a
+#: control while switching off nothing. Proof of possession is not a knob: the
+#: wave's own invariant, "no silent key substitution", leaves no room for a
+#: rotation whose new key never presented a private half, so it is enforced in
+#: `apply_rotation` and deliberately absent here.
 POLICY_SCHEMA = "SAIMAIL_TRUST_POLICY_1"
 POLICY_VERSION = 1
 POLICY = {
     "schema": POLICY_SCHEMA,
     "version": POLICY_VERSION,
     "blocking_states": [BLOCKED, REVOKED, ROTATION_PENDING],
-    "require_proof_of_possession": True,
 }
 
 #: The rotation receipt: the old identity authenticates the transition and the
@@ -119,10 +124,16 @@ _RECORD_FIELDS = frozenset({
     "alias", "seat", "state", "sender_kid", "recipient_kid", "first_seen",
     "accepted_at", "trust_source", "revoked_at", "revocation_reason",
     "policy_version", "policy_hash", "rotations",
+    # The exact pair the operator was shown when the rotation was announced.
+    # Without it, ROTATION_PENDING only says "something changed" and any signed
+    # receipt for the alias completes the rotation -- including one for a key
+    # the operator never saw.
+    "pending_sender_kid", "pending_recipient_kid",
+    "origin_sender_kid", "origin_recipient_kid",
 })
 _ROTATION_FIELDS = frozenset({
     "receipt_id", "at", "from_sender_kid", "from_recipient_kid",
-    "to_sender_kid", "to_recipient_kid", "receipt_hash",
+    "to_sender_kid", "to_recipient_kid", "receipt_hash", "receipt",
 })
 _RECEIPT_BODY_FIELDS = frozenset({
     "schema", "version", "seat", "at", "old_sender_public_key",
@@ -165,17 +176,19 @@ def _empty_registry() -> dict:
 
 
 def _check_record(alias, record) -> dict:
-    if (not _workspace.SEAT_RE.match(alias) or not isinstance(record, dict)
+    if (not isinstance(alias, str) or not _workspace.SEAT_RE.fullmatch(alias)
+            or not isinstance(record, dict)
             or set(record) != _RECORD_FIELDS):
         _reject(TRUST_REGISTRY_CORRUPT,
                 f"trust pin {alias!r} has an unexpected field set")
     if record["state"] not in STATES or record["state"] == UNKNOWN:
         _reject(TRUST_REGISTRY_CORRUPT,
                 f"trust pin {alias!r} has unknown state {record['state']!r}")
-    if not _workspace.SEAT_RE.match(record["seat"] or ""):
+    if (record["alias"] != alias or not isinstance(record["seat"], str)
+            or not _workspace.SEAT_RE.fullmatch(record["seat"])):
         _reject(TRUST_REGISTRY_CORRUPT, f"trust pin {alias!r} carries no seat")
-    for field in ("sender_kid", "recipient_kid"):
-        if not isinstance(record[field], str) or not record[field].startswith("sha256:"):
+    for field in ("sender_kid", "recipient_kid", "origin_sender_kid", "origin_recipient_kid"):
+        if not _is_kid(record[field]):
             _reject(TRUST_REGISTRY_CORRUPT,
                     f"trust pin {alias!r} {field} is not a canonical key fingerprint")
     if not isinstance(record["rotations"], list):
@@ -184,7 +197,99 @@ def _check_record(alias, record) -> dict:
         if not isinstance(entry, dict) or set(entry) != _ROTATION_FIELDS:
             _reject(TRUST_REGISTRY_CORRUPT,
                     f"trust pin {alias!r} has a malformed rotation receipt")
+        for field in ("from_sender_kid", "from_recipient_kid",
+                      "to_sender_kid", "to_recipient_kid"):
+            if not _is_kid(entry[field]):
+                _reject(TRUST_REGISTRY_CORRUPT,
+                        f"trust pin {alias!r} rotation receipt carries a "
+                        f"{field} that is not a canonical key fingerprint")
+    for field in ("pending_sender_kid", "pending_recipient_kid"):
+        value = record[field]
+        if value is not None and not _is_kid(value):
+            _reject(TRUST_REGISTRY_CORRUPT,
+                    f"trust pin {alias!r} {field} is not a canonical key fingerprint")
+    pending = (record["pending_sender_kid"], record["pending_recipient_kid"])
+    if record["state"] == ROTATION_PENDING:
+        if None in pending:
+            _reject(TRUST_REGISTRY_CORRUPT,
+                    f"trust pin {alias!r} is ROTATION_PENDING with no recorded target: "
+                    "the card the operator was shown was never persisted, so a receipt "
+                    "cannot be checked against it. Preserve this registry and restore "
+                    "a verified backup before announcing a rotation again")
+        if pending == (record["sender_kid"], record["recipient_kid"]):
+            _reject(TRUST_REGISTRY_CORRUPT,
+                    f"trust pin {alias!r} is ROTATION_PENDING toward its own pinned keys")
+    elif pending != (None, None):
+        _reject(TRUST_REGISTRY_CORRUPT,
+                f"trust pin {alias!r} is {record['state']} but still carries a pending "
+                "rotation target; the state machine and the target disagree")
+    # Start at the original accepted pair, verify each signed transition, then
+    # end at the current pin. Public hashes alone cannot authenticate a rewrite.
+    rotations = record["rotations"]
+    current = (record["origin_sender_kid"], record["origin_recipient_kid"])
+    for entry in rotations:
+        if (entry["from_sender_kid"], entry["from_recipient_kid"]) != current:
+            _reject(TRUST_REGISTRY_CORRUPT,
+                    f"trust pin {alias!r} rotation chain is not anchored or continuous")
+        if (entry["from_sender_kid"], entry["from_recipient_kid"]) == (
+                entry["to_sender_kid"], entry["to_recipient_kid"]):
+            _reject(TRUST_REGISTRY_CORRUPT,
+                    f"trust pin {alias!r} has a rotation receipt that changes nothing")
+        try:
+            receipt = _check_receipt(entry["receipt"])
+        except SailangError as exc:
+            _reject(TRUST_REGISTRY_CORRUPT,
+                    f"trust pin {alias!r} has an invalid stored receipt: {exc}")
+        old_sender = Ed25519PublicKey.from_public_bytes(
+            bytes.fromhex(receipt["old_sender_public_key"]))
+        new_sender = Ed25519PublicKey.from_public_bytes(
+            bytes.fromhex(receipt["new_sender_public_key"]))
+        body = _receipt_body(receipt)
+        outgoing = (envelope.fingerprint(old_sender),
+                    _key_fingerprint(receipt["old_recipient_public_key"]))
+        incoming = (envelope.fingerprint(new_sender),
+                    _key_fingerprint(receipt["new_recipient_public_key"]))
+        if (receipt["alias"] != alias or receipt["seat"] != record["seat"]
+                or entry["at"] != receipt["at"]
+                or outgoing != current
+                or incoming != (entry["to_sender_kid"], entry["to_recipient_kid"])
+                or entry["receipt_id"] != _sha256(_canonical_bytes(body))
+                or entry["receipt_hash"] != _sha256(_canonical_bytes(receipt))
+                or not _verify(old_sender, receipt["old_signature"], body)
+                or not _verify(new_sender, receipt["new_signature"], body)):
+            _reject(TRUST_REGISTRY_CORRUPT,
+                    f"trust pin {alias!r} stored rotation proof does not authenticate its link")
+        current = incoming
+    if current != (record["sender_kid"], record["recipient_kid"]):
+        _reject(TRUST_REGISTRY_CORRUPT,
+                f"trust pin {alias!r} rotation chain does not end at the pinned pair")
     return record
+
+
+def _is_kid(value) -> bool:
+    return (isinstance(value, str) and value.startswith("sha256:")
+            and len(value) == 71 and _workspace._HEX32_RE.fullmatch(value[7:]) is not None)
+
+
+def _migrate_v1(payload: dict) -> None:
+    """Anchor unrotated legacy pins; never manufacture missing historical proof.
+
+    Migration lives in memory until a successful command writes the registry.
+    Failed reads and writes preserve the original operator evidence verbatim.
+    """
+    legacy_fields = _RECORD_FIELDS - {"origin_sender_kid", "origin_recipient_kid"}
+    original_fields = legacy_fields - {"pending_sender_kid", "pending_recipient_kid"}
+    for alias, record in payload["peers"].items():
+        if (not isinstance(record, dict) or set(record) not in (legacy_fields, original_fields)
+                or record["rotations"] != []):
+            _reject(TRUST_REGISTRY_CORRUPT,
+                    f"legacy trust pin {alias!r} cannot be migrated without anchored "
+                    "signed rotation receipts; preserve the registry and restore a verified backup")
+        record.setdefault("pending_sender_kid", None)
+        record.setdefault("pending_recipient_kid", None)
+        record.update(origin_sender_kid=record["sender_kid"],
+                      origin_recipient_kid=record["recipient_kid"])
+    payload["version"] = TRUST_VERSION
 
 
 def _read(root: Path) -> dict:
@@ -203,11 +308,13 @@ def _read(root: Path) -> dict:
         _reject(TRUST_REGISTRY_CORRUPT, f"trust registry is unreadable: {exc}")
     if (not isinstance(payload, dict) or set(payload) != _REGISTRY_FIELDS
             or payload["schema"] != TRUST_SCHEMA
-            or payload["version"] != TRUST_VERSION
+            or type(payload["version"]) is not int or payload["version"] not in (1, TRUST_VERSION)
             or payload["mode"] not in MODES
             or not isinstance(payload["peers"], dict)
             or not isinstance(payload["policy_hash"], str)):
         _reject(TRUST_REGISTRY_CORRUPT, "trust registry declares an unknown shape")
+    if payload["version"] == 1:
+        _migrate_v1(payload)
     for alias, record in payload["peers"].items():
         _check_record(alias, record)
     return payload
@@ -249,7 +356,13 @@ def _verdict(record, registry_mode: str, current: tuple | None) -> dict:
         return {"state": UNKNOWN, "reason": "NO_PIN", "blocking": False,
                 "allowed": registry_mode == MODE_ADVISORY}
     state = record["state"]
-    if state in (REVOKED, BLOCKED):
+    # The blocking set is read from POLICY, not restated here. It used to be
+    # written as a literal in this function while POLICY carried a second copy,
+    # so policy_hash() faithfully hashed a document that changed no decision
+    # anywhere -- a versioned policy that governed no policy. Reading it here
+    # makes the hash and the verdict move together, which is the reason a policy
+    # gets hashed in the first place.
+    if state in POLICY["blocking_states"]:
         return {"state": state, "reason": f"{state}_PIN", "blocking": True,
                 "allowed": False}
     if state == ROTATION_PENDING:
@@ -262,8 +375,13 @@ def _verdict(record, registry_mode: str, current: tuple | None) -> dict:
     if state == TRUSTED:
         return {"state": TRUSTED, "reason": "PINNED_FINGERPRINT_MATCHES",
                 "blocking": False, "allowed": True}
-    return {"state": OBSERVED, "reason": "OBSERVED_NOT_ACCEPTED", "blocking": False,
-            "allowed": registry_mode == MODE_ADVISORY}
+    # Whatever is left is reported under its OWN state. Collapsing a non-blocking
+    # record to OBSERVED made a REVOKED pin read as "seen, not yet accepted" the
+    # moment a policy stopped listing REVOKED as blocking -- a demotion dressed
+    # up as a first sighting, and the operator's evidence gone.
+    return {"state": state,
+            "reason": "OBSERVED_NOT_ACCEPTED" if state == OBSERVED else "NOT_ACCEPTED",
+            "blocking": False, "allowed": registry_mode == MODE_ADVISORY}
 
 
 def decide(workspace, alias: str) -> dict:
@@ -314,6 +432,7 @@ def observe(workspace, alias: str, *, clock=None) -> dict:
         record = {name: None for name in _RECORD_FIELDS}
         record.update(alias=alias, seat=peer["seat"], state=OBSERVED,
                       sender_kid=kids[0], recipient_kid=kids[1], first_seen=now,
+                      origin_sender_kid=kids[0], origin_recipient_kid=kids[1],
                       policy_version=POLICY_VERSION, policy_hash=policy_hash(),
                       rotations=[])
         registry["peers"][alias] = record
@@ -332,14 +451,22 @@ def pin(workspace, alias: str, *, source: str, clock=None) -> dict:
         kids = _registered_kids(workspace, alias)
         registry = _read(workspace.root)
         existing = registry["peers"].get(alias)
-        if existing is not None and existing["state"] in (TRUSTED, REVOKED, BLOCKED):
+        if existing is not None and existing["state"] in (TRUSTED, REVOKED, BLOCKED,
+                                                        ROTATION_PENDING):
             _reject(TRUST_ALREADY_PINNED,
                     f"alias {alias} is {existing['state']}; revoke it explicitly "
                     "before pinning again")
         peer = workspace.peers[alias]
         record = {name: None for name in _RECORD_FIELDS}
         record.update(alias=alias, seat=peer["seat"], state=TRUSTED,
-                      sender_kid=kids[0], recipient_kid=kids[1], first_seen=now,
+                      sender_kid=kids[0], recipient_kid=kids[1],
+                      origin_sender_kid=kids[0], origin_recipient_kid=kids[1],
+                      # first_seen is the moment the alias became KNOWN, which is
+                      # observe(), not the moment it was accepted. Overwriting it
+                      # with `now` here silently collapsed "how long was this peer
+                      # sitting here before somebody trusted it" into zero, and
+                      # nobody noticed because no test read the field.
+                      first_seen=(existing or {}).get("first_seen") or now,
                       accepted_at=now, trust_source=source.strip(),
                       policy_version=POLICY_VERSION, policy_hash=policy_hash(),
                       rotations=list(existing["rotations"]) if existing else [])
@@ -362,13 +489,16 @@ def _refuse_pin(workspace, alias: str, state: str, reason: str, *, clock=None) -
             record = {name: None for name in _RECORD_FIELDS}
             record.update(alias=alias, seat=peer["seat"], state=state,
                           sender_kid=kids[0], recipient_kid=kids[1], first_seen=now,
+                          origin_sender_kid=kids[0], origin_recipient_kid=kids[1],
+                          policy_version=POLICY_VERSION, policy_hash=policy_hash(),
                           rotations=[])
         else:
             record = dict(existing)
         if record["state"] == state and record["revoked_at"]:
             _reject(TRUST_ALREADY_REFUSED, f"alias {alias} is already {state}")
         record.update(state=state, revoked_at=now, revocation_reason=reason,
-                      accepted_at=None)
+                      accepted_at=None, pending_sender_kid=None,
+                      pending_recipient_kid=None)
         registry["peers"][alias] = record
         _write(workspace.root, registry)
     return _result("trust-refuse", state, workspace, record,
@@ -383,8 +513,11 @@ def revoke(workspace, alias: str, *, reason: str, clock=None) -> dict:
 def block(workspace, alias: str, *, reason: str, clock=None) -> dict:
     """Refuse this peer as compromised.
 
-    Distinct from REVOKED so the reason is legible later: a revoked peer may
-    re-pin after an operator looks at it, a blocked one must not.
+    Distinct from REVOKED so the reason stays legible later: BLOCKED records that
+    the key itself is considered burned, REVOKED that this particular acceptance
+    was withdrawn. Both are equally final today -- neither can be re-pinned
+    without an explicit operator step that does not exist yet -- so the two
+    states differ in the evidence they leave, not in the doors they open.
     """
     return _refuse_pin(workspace, alias, BLOCKED, reason, clock=clock)
 
@@ -434,9 +567,11 @@ def _check_receipt(payload) -> dict:
                 f"rotation receipt declares {payload['schema']!r} "
                 f"v{payload['version']!r}; this build reads {ROTATION_SCHEMA} "
                 f"v{ROTATION_VERSION}")
-    if not _workspace.SEAT_RE.match(payload["alias"] or ""):
+    if (not isinstance(payload["alias"], str)
+            or not _workspace.SEAT_RE.fullmatch(payload["alias"])):
         _reject(TRUST_ROTATION_INVALID, "a rotation receipt names one alias")
-    if not _workspace.SEAT_RE.match(payload["seat"] or ""):
+    if (not isinstance(payload["seat"], str)
+            or not _workspace.SEAT_RE.fullmatch(payload["seat"])):
         _reject(TRUST_ROTATION_INVALID, "a rotation receipt names one seat")
     for field in ("old_sender_public_key", "old_recipient_public_key",
                   "new_sender_public_key", "new_recipient_public_key"):
@@ -448,6 +583,9 @@ def _check_receipt(payload) -> dict:
     for field in ("old_signature", "new_signature"):
         if not isinstance(payload[field], str) or not payload[field]:
             _reject(TRUST_ROTATION_INVALID, f"rotation receipt {field} is required")
+    postoffice._parse_utc(payload["at"], code=TRUST_ROTATION_INVALID)
+    if payload["note"] is not None and not isinstance(payload["note"], str):
+        _reject(TRUST_ROTATION_INVALID, "rotation receipt note must be text or null")
     return payload
 
 
@@ -512,11 +650,16 @@ def expect_rotation(workspace, alias: str, card, *, clock=None) -> dict:
         record = registry["peers"].get(alias)
         if record is None:
             _reject(TRUST_ROTATION_INVALID, f"alias {alias!r} has no pin to rotate")
+        if record["state"] in (REVOKED, BLOCKED):
+            _reject(TRUST_ROTATION_SUPERSEDED,
+                    f"alias {alias} is {record['state']}; a refused peer cannot announce a rotation")
         if (record["sender_kid"], record["recipient_kid"]) == (parsed["sender_kid"],
                                                                parsed["recipient_kid"]):
             _reject(TRUST_ROTATION_NOTHING_CHANGED,
                     f"the presented card carries the pinned fingerprints; nothing rotates")
-        record.update(state=ROTATION_PENDING, accepted_at=None)
+        record.update(state=ROTATION_PENDING, accepted_at=None,
+                      pending_sender_kid=parsed["sender_kid"],
+                      pending_recipient_kid=parsed["recipient_kid"])
         registry["peers"][alias] = record
         _write(workspace.root, registry)
     return _result("trust-rotation-pending", ROTATION_PENDING, workspace, record,
@@ -566,6 +709,19 @@ def apply_rotation(workspace, alias: str, receipt, *, clock=None) -> dict:
             _reject(TRUST_ROTATION_SIGNATURE_INVALID,
                     "the receipt's outgoing fingerprints are not the pinned ones; "
                     "this is not a rotation of the trusted identity")
+        if parsed["seat"] != record["seat"]:
+            _reject(TRUST_ROTATION_INVALID, "rotation receipt names a different seat than the pin")
+        # A pending rotation is a promise about a SPECIFIC pair. The receipt
+        # proves possession of some new key, not the one the operator was shown,
+        # so it is refused rather than accepted on the strength of being valid.
+        if record["state"] == ROTATION_PENDING and (
+                record["pending_sender_kid"],
+                record["pending_recipient_kid"]) != new_kids:
+            _reject(TRUST_ROTATION_SUPERSEDED,
+                    f"alias {alias} was pending rotation to "
+                    f"{record['pending_sender_kid'][:19]} but this receipt proves "
+                    f"{new_kids[0][:19]}; confirm the presented card again before "
+                    "accepting it")
         if not _verify(old_sender, parsed["old_signature"], body):
             _reject(TRUST_ROTATION_SIGNATURE_INVALID,
                     "the pinned identity did not authenticate this transition")
@@ -573,13 +729,15 @@ def apply_rotation(workspace, alias: str, receipt, *, clock=None) -> dict:
             _reject(TRUST_ROTATION_SIGNATURE_INVALID,
                     "the new key did not prove possession of its own private half")
         entry = {"receipt_id": _sha256(_canonical_bytes(body)),
-                 "at": parsed["at"] or now,
+                 "at": parsed["at"],
                  "from_sender_kid": old_kids[0], "from_recipient_kid": old_kids[1],
                  "to_sender_kid": new_kids[0], "to_recipient_kid": new_kids[1],
                  "receipt_hash": _sha256(_canonical_bytes(
-                     {name: parsed[name] for name in _RECEIPT_FIELDS}))}
+                     {name: parsed[name] for name in _RECEIPT_FIELDS})),
+                 "receipt": dict(parsed)}
         record.update(state=TRUSTED, sender_kid=new_kids[0], recipient_kid=new_kids[1],
                       accepted_at=now, revoked_at=None, revocation_reason=None,
+                      pending_sender_kid=None, pending_recipient_kid=None,
                       policy_version=POLICY_VERSION, policy_hash=policy_hash(),
                       rotations=list(record["rotations"]) + [entry])
         registry["peers"][alias] = record

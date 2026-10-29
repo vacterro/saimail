@@ -28,12 +28,19 @@ One OS-backed outbox lock serializes intent transitions. The OS releases it
 when a process dies, so an abandoned lease cannot wedge the outbox. Temporary
 delivery failures back off deterministically; delivering an already sealed
 intent needs no private key, so a secret-free header view can drive it.
+
+Canonical active intents live directly in ``outbox/intents``; terminal records
+live in its ``terminal`` directory. Resume validates the entire active queue
+before advancing its budget, without scanning terminal history. Status, direct
+idempotency lookup and reconciliation still validate the history they read.
+Legacy flat terminal entries are validated and retired on the first resume.
 """
 
 from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 from datetime import timedelta
 from pathlib import Path
@@ -48,6 +55,7 @@ from saimail import workspace as _workspace
 OUTBOX_INTENT_SCHEMA = "SAIMAIL_OUTBOX_INTENT_1"
 OUTBOX_INTENT_VERSION = 1
 INTENTS_DIR = "intents"
+TERMINAL_DIR = "terminal"
 LOCK_NAME = "intents.lock"
 
 PENDING = "PENDING"
@@ -108,7 +116,7 @@ def _sha256(data: bytes) -> str:
 
 def key_id(key: str) -> str:
     """The on-disk identity of one idempotency key."""
-    if not isinstance(key, str) or not _KEY_RE.match(key):
+    if not isinstance(key, str) or not _KEY_RE.fullmatch(key):
         _reject(IDEMPOTENCY_KEY_INVALID,
                 "an idempotency key is 1-256 printable ASCII characters without spaces")
     return _sha256(key.encode("ascii"))
@@ -119,6 +127,14 @@ def _outbox_root(workspace) -> Path:
 
 
 def _intent_path(workspace, intent_key_id: str) -> Path:
+    active = _active_path(workspace, intent_key_id)
+    terminal = active.parent / TERMINAL_DIR / active.name
+    if active.exists() and terminal.exists():
+        _reject(OUTBOX_INTENT_CORRUPT, f"outbox intent {active.name} exists in both queue and history")
+    return terminal if terminal.exists() else active
+
+
+def _active_path(workspace, intent_key_id: str) -> Path:
     return _outbox_root(workspace) / INTENTS_DIR / (intent_key_id.split(":", 1)[1] + ".json")
 
 
@@ -128,34 +144,166 @@ def _lock(workspace) -> postoffice._OsFileLock:
 
 
 def _write(workspace, intent: dict) -> None:
-    _workspace._atomic_write_bytes(_intent_path(workspace, intent["key_id"]),
-                                   _workspace._canonical_json_bytes(intent))
+    """Publish state before retiring it; expose a re-arm before changing state.
+
+    Both paths are canonical, never a derived candidate index. A process killed
+    after a terminal write leaves that completed intent in the queue, where the
+    next resume retires it without delivery. A retry first moves the unchanged
+    FAILED file into the queue and only then commits the active state, so a
+    committed retry can never be stranded in terminal history.
+
+    Caller holds the outbox lock across this transition and any delivery.
+    """
+    active = _active_path(workspace, intent["key_id"])
+    path = _intent_path(workspace, intent["key_id"])
+    if intent["state"] in (PENDING, SEALED) and path != active:
+        os.replace(path, active)
+        path = active
+    _workspace._atomic_write_bytes(path, _workspace._canonical_json_bytes(intent))
+    if intent["state"] in (DELIVERED, FAILED) and path == active:
+        _retire(workspace, intent)
+
+
+def _retire(workspace, intent: dict) -> None:
+    active = _active_path(workspace, intent["key_id"])
+    path = _intent_path(workspace, intent["key_id"])
+    if path == active:
+        terminal = active.parent / TERMINAL_DIR / active.name
+        terminal.parent.mkdir(parents=True, exist_ok=True)
+        os.replace(active, terminal)
 
 
 def _check_intent(intent, *, path: Path) -> dict:
-    """Fail closed on any intent that is not exactly what this module writes."""
+    """Fail closed on any intent that is not exactly what this module writes.
+
+    Type discipline is the point of this function, not decoration. `_due`
+    compares `next_attempt_at` to a timestamp string and `_all_intents` sorts on
+    `recorded_at`; a persisted number in either field reached that comparison
+    and raised TypeError, and `outbox_status` rendered the same object as healthy
+    before touching it. Every optional timestamp is therefore parsed here, in
+    the canonical form this module writes, and refused as
+    OUTBOX_INTENT_CORRUPT before any sort, comparison or status answer.
+    """
     def corrupt(why: str) -> None:
         _reject(OUTBOX_INTENT_CORRUPT, f"outbox intent {path.name} {why}")
 
+    def canonical_utc(value) -> bool:
+        if not isinstance(value, str):
+            return False
+        try:
+            parsed = postoffice._parse_utc(value, code=OUTBOX_INTENT_CORRUPT)
+        except SailangError:
+            return False
+        return postoffice._format_utc(parsed) == value
+
+    def hash_id(value) -> bool:
+        return isinstance(value, str) and re.fullmatch(r"sha256:[0-9a-f]{64}", value) is not None
+
     if not isinstance(intent, dict) or set(intent) != _FIELDS:
         corrupt("has an unexpected field set")
+    for field, value in intent.items():
+        if isinstance(value, str):
+            try:
+                value.encode("utf-8")
+            except UnicodeError:
+                corrupt(f"has invalid Unicode in {field}")
     if (intent["schema"] != OUTBOX_INTENT_SCHEMA
-            or intent["version"] != OUTBOX_INTENT_VERSION):
+            or intent["version"] != OUTBOX_INTENT_VERSION
+            or type(intent["version"]) is not int):
         corrupt("declares an unknown schema or version")
     if intent["state"] not in STATES:
         corrupt(f"has unknown state {intent['state']!r}")
-    if key_id(intent["key"]) != intent["key_id"] or not path.name.startswith(
-            intent["key_id"].split(":", 1)[1]):
+    if not isinstance(intent["key"], str) or not _KEY_RE.fullmatch(intent["key"]):
+        corrupt("has a malformed idempotency key")
+    if not hash_id(intent["key_id"]) or key_id(intent["key"]) != intent["key_id"] or path.name != (
+            intent["key_id"].split(":", 1)[1] + ".json"):
         corrupt("does not belong to its idempotency key")
-    if not isinstance(intent["attempts"], int) or intent["attempts"] < 0:
+    for field in ("alias", "recipient_seat", "topic", "subject", "created"):
+        if not isinstance(intent[field], str) or not intent[field]:
+            corrupt(f"has a non-string {field}")
+    if not isinstance(intent["kind"], str) or intent["kind"] not in envelope.KINDS:
+        corrupt(f"names unknown kind {intent['kind']!r}")
+    for field in ("alias", "recipient_seat"):
+        if not _workspace.SEAT_RE.fullmatch(intent[field]):
+            corrupt(f"has a malformed {field}")
+    if not envelope._TOPIC_RE.fullmatch(intent["topic"]):
+        corrupt("has a malformed topic")
+    if not hash_id(intent["request_digest"]):
+        corrupt("has a malformed request digest")
+    if not isinstance(intent["attempts"], int) or isinstance(intent["attempts"], bool) \
+            or intent["attempts"] < 0:
         corrupt("has a bad attempt count")
+    for field in ("created", "recorded_at"):
+        if not canonical_utc(intent[field]):
+            corrupt(f"has a non-canonical {field}")
+    for field in ("sealed_at", "last_attempt_at", "next_attempt_at", "received_at",
+                  "delivered_at", "failed_at"):
+        if intent[field] is not None and not canonical_utc(intent[field]):
+            corrupt(f"has a non-canonical {field}")
+    for field in ("last_error", "delivery_status", "failure", "failure_reason"):
+        if intent[field] is not None and not isinstance(intent[field], str):
+            corrupt(f"has a non-string {field}")
     sealed = intent["container"] is not None
+    if sealed and not isinstance(intent["container"], str):
+        corrupt("carries a container that is not a SENV2 document")
+    if sealed:
+        try:
+            header = envelope.parse_header(intent["container"])
+            actual_id = envelope.envelope_id(intent["container"])
+        except SailangError:
+            corrupt("stores a malformed SENV2 container")
+        if not hash_id(intent["envelope_id"]) or actual_id != intent["envelope_id"]:
+            corrupt("stores a container that does not hash to its ENVELOPE_ID")
+        if (header.get("TO") != intent["recipient_seat"] or header.get("K") != intent["kind"]
+                or header.get("TOPIC") != intent["topic"] or header.get("CREATED") != intent["created"]):
+            corrupt("carries metadata that disagrees with its sealed header")
+        if not canonical_utc(intent["sealed_at"]):
+            corrupt("carries a container with no sealed_at")
+        if intent["record"] is not None:
+            corrupt("retains plaintext alongside sealed material")
+    elif intent["envelope_id"] is not None or intent["sealed_at"] is not None:
+        corrupt("names sealed material it does not carry")
+    else:
+        if not isinstance(intent["record"], str):
+            corrupt("carries no unsealed record")
+        try:
+            parsed = parse_record(intent["record"].encode("utf-8"))
+            if parsed.canonical_bytes().decode("utf-8") != intent["record"]:
+                corrupt("has a non-canonical unsealed record")
+        except (SailangError, UnicodeError):
+            corrupt("has a malformed unsealed record")
     if intent["state"] == PENDING and (sealed or not isinstance(intent["record"], str)):
         corrupt("is PENDING without exactly one unsealed record")
     if intent["state"] in (SEALED, DELIVERED) and (not sealed or intent["record"] is not None):
         corrupt("is sealed but carries plaintext or no container")
-    if sealed and envelope.envelope_id(intent["container"]) != intent["envelope_id"]:
-        corrupt("stores a container that does not hash to its ENVELOPE_ID")
+    if intent["state"] in (PENDING, SEALED):
+        if intent["delivered_at"] is not None or intent["received_at"] is not None \
+                or intent["delivery_status"] is not None:
+            corrupt("is active but records a delivery")
+        if any(intent[field] is not None for field in ("failure", "failure_reason", "failed_at")):
+            corrupt("is active but records a terminal failure")
+    if intent["state"] == PENDING and (intent["attempts"] != 0 or any(
+            intent[field] is not None for field in ("last_attempt_at", "next_attempt_at", "last_error"))):
+        corrupt("is PENDING but records a delivery attempt")
+    if intent["state"] == DELIVERED:
+        if not canonical_utc(intent["delivered_at"]):
+            corrupt("is DELIVERED with no delivered_at")
+        if intent["delivery_status"] not in (postoffice.ACCEPTED, postoffice.DUPLICATE):
+            corrupt("is DELIVERED with an unknown delivery status")
+        if any(intent[field] is not None for field in (
+                "failure", "failure_reason", "failed_at", "next_attempt_at", "last_error")):
+            corrupt("is DELIVERED but records a failure")
+    if intent["state"] == FAILED:
+        if not isinstance(intent["failure"], str) or not intent["failure"]:
+            corrupt("is FAILED with no failure code")
+        if not canonical_utc(intent["failed_at"]):
+            corrupt("is FAILED with no failed_at")
+        if any(intent[field] is not None for field in ("delivered_at", "received_at", "delivery_status")):
+            corrupt("is FAILED but records a delivery")
+        if intent["next_attempt_at"] is not None:
+            corrupt("is FAILED but still schedules a retry; use retry_intent")
+    if (intent["attempts"] == 0) != (intent["last_attempt_at"] is None):
+        corrupt("has an attempt count that disagrees with its last attempt time")
     return intent
 
 
@@ -170,8 +318,7 @@ def _read(workspace, intent_key_id: str):
     return _check_intent(intent, path=path)
 
 
-def _all_intents(workspace) -> list:
-    folder = _outbox_root(workspace) / INTENTS_DIR
+def _read_intents(folder: Path) -> list:
     if not folder.is_dir():
         return []
     intents = []
@@ -183,6 +330,43 @@ def _all_intents(workspace) -> list:
         intents.append(_check_intent(intent, path=path))
     intents.sort(key=lambda item: (item["recorded_at"], item["key_id"]))
     return intents
+
+
+def _all_intents_locked(workspace) -> list:
+    folder = _outbox_root(workspace) / INTENTS_DIR
+    intents = _read_intents(folder) + _read_intents(folder / TERMINAL_DIR)
+    seen = set()
+    for intent in intents:
+        if intent["key_id"] in seen:
+            _reject(OUTBOX_INTENT_CORRUPT, "an outbox intent exists in both queue and history")
+        seen.add(intent["key_id"])
+        path = _intent_path(workspace, intent["key_id"])
+        if path.parent.name == TERMINAL_DIR and intent["state"] not in (DELIVERED, FAILED):
+            _reject(OUTBOX_INTENT_CORRUPT, f"active outbox intent {path.name} is in terminal history")
+    return sorted(intents, key=lambda item: (item["recorded_at"], item["key_id"]))
+
+
+def _all_intents(workspace) -> list:
+    # Readers share the writer lock so moving between queue and history cannot
+    # make a status/reconciliation snapshot omit or double-count a record.
+    with _lock(workspace):
+        return _all_intents_locked(workspace)
+
+
+def _active_intents(workspace) -> list:
+    """Read canonical queue entries without visiting terminal history.
+
+    Legacy flat registries and interrupted retirements converge on first use;
+    subsequent cold processes enumerate only remaining active work. Every queue
+    record is validated before any delivery, including ones beyond the budget.
+    """
+    intents = _read_intents(_outbox_root(workspace) / INTENTS_DIR)
+    for intent in intents:
+        _intent_path(workspace, intent["key_id"])  # refuse duplicate canonical owners
+    for intent in intents:
+        if intent["state"] in (DELIVERED, FAILED):
+            _retire(workspace, intent)
+    return [intent for intent in intents if intent["state"] in (PENDING, SEALED)]
 
 
 def _now(clock) -> str:
@@ -214,7 +398,7 @@ def _request(workspace, alias: str, *, claim, record_path, subject: str, topic: 
     replaces the content part when the record carries a volatile field (a
     citation's CREATED time) that must not make a repeat look like a new request.
     """
-    if kind not in envelope.KINDS:
+    if not isinstance(kind, str) or kind not in envelope.KINDS:
         _reject(_workspace.BAD_INPUT, f"kind must be one of the closed SENV2 set, got {kind!r}")
     if not isinstance(topic, str) or not envelope._TOPIC_RE.match(topic):
         _reject(_workspace.BAD_INPUT, "topic is one token of letters, digits, dot, dash "
@@ -379,7 +563,7 @@ def submit_send(workspace, alias: str, *, key: str, claim=None, record_path=None
         if intent is None:
             recipient = _workspace._resolve_recipient(workspace, alias)
             if gate is not None:
-                gate(_all_intents(workspace))
+                gate(_all_intents_locked(workspace))
             intent = {name: None for name in _FIELDS}
             intent.update(schema=OUTBOX_INTENT_SCHEMA, version=OUTBOX_INTENT_VERSION,
                           key=key, key_id=intent_key_id, request_digest=digest,
@@ -415,7 +599,7 @@ def resume_outbox(workspace, *, budget: int = DEFAULT_RESUME_BUDGET, clock=None)
     touched = []
     with _lock(workspace):
         now = _now(clock)
-        for intent in _all_intents(workspace):
+        for intent in _active_intents(workspace):
             if counts["examined"] >= budget:
                 break
             if intent["state"] in (DELIVERED, FAILED):

@@ -5,6 +5,7 @@ from __future__ import annotations
 import copy
 import json
 import sqlite3
+import sys
 
 import pytest
 
@@ -17,6 +18,20 @@ from saimail_host import HostClient
 LINEAGE = "lineage-" + "ab" * 16
 NOW = "2026-09-30T10:00:00Z"
 CLOCK = lambda: NOW
+
+
+def cli_prefix():
+    """Run the real CLI in a fresh process at the fixture's explicit time.
+
+    Parent operations use CLOCK; a wall-clock child eventually expires their
+    synthetic September letters and ages feedback out of its seven-day window.
+    Patch the clock only in this test process, keeping production CLI dispatch
+    and its expiry/feedback policy intact.
+    """
+    script = ("from saimail import postoffice; "
+              f"postoffice.utc_now = lambda: {CLOCK()!r}; "
+              "import saimail_local; raise SystemExit(saimail_local.main())")
+    return [sys.executable, "-c", script]
 
 
 @pytest.fixture
@@ -358,7 +373,7 @@ def test_independent_host_adapter_runs_the_new_real_cli_cycle(setup):
     _, b, root, letter = setup
     before = {p.name: p.read_bytes() for p in (root / ".saipen").iterdir()}
     eid = send(setup)["intent"]["envelope_id"]
-    peer = HostClient([sys.executable, "-m", "saimail_local"], workspace=b.root,
+    peer = HostClient(cli_prefix(), workspace=b.root,
                       project_root=root, seat="reviewer")
     assert peer.negotiate()["data"]["letter_schema"] == letters.SCHEMA
     found = peer.request("awareness", ["--work", "T-9"])

@@ -24,10 +24,13 @@ Three properties are load-bearing:
 * **Folding is pure.** :func:`fold` takes events and returns current state plus
   the transitions it rejected, so state after a crash is computed from the
   record rather than trusted from a file that may have been half-written.
-* **The projection is rebuildable.** The outbox intent, the Post Office index
-  row and the Future Letter registry row are all derived. :func:`reconcile`
-  compares them against the fold and repairs from the CANONICAL source -- the
-  sealed container or the authenticated index -- never by inventing mail.
+* **The projection is rebuildable.** The outbox intent and the Post Office index
+  row are both derived, and those are the two :func:`reconcile` repairs. (The
+  Future Letter registry row is derived too, but nothing rebuilds it from here,
+  so ``reconcile`` returns it as empty rather than claiming a repair it does not
+  perform.) :func:`reconcile` compares them against the fold and repairs from
+  the CANONICAL source -- the sealed container or the authenticated index --
+  never by inventing mail.
 
 Appends are best-effort by design and say so: mail that has already been
 delivered must not be reported as undelivered because a bookkeeping append hit a
@@ -40,10 +43,12 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+from dataclasses import dataclass, field
 from pathlib import Path, PurePath
 
 from sailang import SailangError
 from saimail import envelope
+from saimail import _journal_cache
 from saimail import postoffice
 from saimail import workspace as _workspace
 
@@ -202,6 +207,65 @@ def _parse_line(raw: bytes, lineno: int) -> dict:
     return event
 
 
+@dataclass
+class _LedgerSnapshot:
+    state: str = STATE_ABSENT
+    positions: list = field(default_factory=list)
+    first_seq: int = 0
+    last_hash: str | None = None
+    lines: int = 0
+    terminated: bool = True
+
+
+def _load_ledger(path):
+    snapshot = _LedgerSnapshot()
+    try:
+        handle = path.open("rb")
+    except FileNotFoundError:
+        return snapshot
+    snapshot.state = STATE_OK
+    with handle:
+        while True:
+            offset = handle.tell()
+            raw = handle.readline(MAX_LINE_BYTES + 3)
+            if not raw:
+                break
+            snapshot.lines += 1
+            snapshot.terminated = raw.endswith(b"\n")
+            raw = raw.rstrip(b"\r\n")
+            if len(raw) > MAX_LINE_BYTES:
+                _reject(LEDGER_UNREADABLE,
+                        f"ledger line {snapshot.lines} exceeds {MAX_LINE_BYTES} bytes")
+            if not raw.strip():
+                continue
+            event = _parse_line(raw, snapshot.lines)
+            if event["prev"] != snapshot.last_hash:
+                _reject(LEDGER_CHAIN_BROKEN,
+                        f"ledger seq {event['seq']} does not chain to the previous record")
+            expected = snapshot.first_seq + len(snapshot.positions)
+            if snapshot.positions and event["seq"] != expected:
+                _reject(LEDGER_CHAIN_BROKEN,
+                        f"ledger sequence is not contiguous: expected {expected}, "
+                        f"found {event['seq']}")
+            if not snapshot.positions:
+                snapshot.first_seq = event["seq"]
+            snapshot.positions.append((offset, snapshot.lines))
+            snapshot.last_hash = event["hash"]
+    return snapshot
+
+
+def _window(path, cache, snapshot, start=0, limit=None):
+    positions = snapshot.positions[start:] if limit is None else snapshot.positions[start:start + limit]
+    events = []
+    if positions:
+        with path.open("rb") as handle:
+            for offset, lineno in positions:
+                handle.seek(offset)
+                events.append(_parse_line(handle.readline(MAX_LINE_BYTES + 3).rstrip(b"\r\n"), lineno))
+    cache.check(path)
+    return events
+
+
 def read_events(target) -> tuple:
     """``(events, state)``. ABSENT is empty; UNREADABLE is not empty.
 
@@ -211,26 +275,13 @@ def read_events(target) -> tuple:
     history.
     """
     path = ledger_path(target)
-    if not path.is_file():
-        return [], STATE_ABSENT
+    cache = _journal_cache.for_path(path)
     try:
-        raw_lines = path.read_bytes().splitlines()
+        with cache.lock:
+            snapshot = cache.load(path, _load_ledger)
+            return _window(path, cache, snapshot), snapshot.state
     except OSError as exc:
         _reject(LEDGER_UNREADABLE, f"ledger cannot be read: {exc}")
-    events = []
-    for lineno, raw in enumerate(raw_lines, start=1):
-        if not raw.strip():
-            continue
-        if len(raw) > MAX_LINE_BYTES:
-            _reject(LEDGER_UNREADABLE, f"ledger line {lineno} exceeds {MAX_LINE_BYTES} bytes")
-        events.append(_parse_line(raw, lineno))
-    previous = None
-    for event in events:
-        if event["prev"] != previous:
-            _reject(LEDGER_CHAIN_BROKEN,
-                    f"ledger seq {event['seq']} does not chain to the previous record")
-        previous = event["hash"]
-    return events, STATE_OK
 
 
 def append(target, event: str, *, message_id: str, actor: str, at: str,
@@ -248,23 +299,32 @@ def append(target, event: str, *, message_id: str, actor: str, at: str,
     if event not in EVENTS:
         _reject(BAD_EVENT, f"unknown ledger event {event!r}; the set is closed")
     payload = _bounded_detail(detail)
+    path = ledger_path(target)
+    cache = _journal_cache.for_path(path)
     try:
-        with _lock(target):
-            events, _ = read_events(target)
-            previous = events[-1]["hash"] if events else None
-            seq = (events[-1]["seq"] + 1) if events else 1
+        with _lock(target), cache.lock:
+            snapshot = cache.load(path, _load_ledger)
+            if not snapshot.terminated:
+                _reject(LEDGER_UNREADABLE, "ledger has an unterminated final row; refusing append")
+            previous = snapshot.last_hash
+            seq = snapshot.first_seq + len(snapshot.positions) if snapshot.positions else 1
             record = {"schema": LEDGER_SCHEMA, "seq": seq, "event": event,
                       "message_id": message_id, "envelope_id": envelope_id,
                       "actor": actor, "at": at, "attempt": int(attempt),
                       "causal": causal, "prev": previous, "detail": payload}
             record["hash"] = _sha256(_event_bytes(record))
-            path = ledger_path(target)
             path.parent.mkdir(parents=True, exist_ok=True)
             line = _canonical_bytes(record) + b"\n"
-            with open(path, "ab") as handle:
-                handle.write(line)
-                handle.flush()
-                os.fsync(handle.fileno())
+
+            def advance(value, offset):
+                value.lines += 1
+                if not value.positions:
+                    value.first_seq = seq
+                value.positions.append((offset, value.lines))
+                value.last_hash = record["hash"]
+                value.state = STATE_OK
+
+            cache.append(path, line, advance)
         return record
     except SailangError:
         return None
@@ -318,6 +378,8 @@ def fold(events) -> dict:
                             "from": previous["state"], "to": event["event"],
                             "reason": "ILLEGAL_TRANSITION"})
             continue
+        history = previous["history"] if previous else []
+        history.append(event["event"])
         state[message_id] = {
             "message_id": message_id,
             "state": event["event"],
@@ -327,7 +389,7 @@ def fold(events) -> dict:
             "seq": event["seq"],
             "attempts": (previous or {}).get("attempts", 0) + (
                 1 if event["event"] == DELIVERY_ATTEMPTED else 0),
-            "history": (previous or {}).get("history", []) + [event["event"]],
+            "history": history,
         }
     return {"messages": state, "invalid": invalid}
 
@@ -344,23 +406,31 @@ def feed(workspace, *, cursor: int = 0, limit: int = DEFAULT_FEED_LIMIT) -> dict
     if not isinstance(limit, int) or isinstance(limit, bool) or limit < 1:
         _reject(BAD_EVENT, "limit is a positive integer")
     try:
-        events, state = read_events(workspace)
-    except SailangError as exc:
+        path = ledger_path(workspace)
+        cache = _journal_cache.for_path(path)
+        with cache.lock:
+            snapshot = cache.load(path, _load_ledger)
+            state = snapshot.state
+            oldest = snapshot.first_seq
+            count = len(snapshot.positions)
+            last_seq = oldest + count - 1 if count else 0
+            start = max(0, cursor + 1 - oldest) if count else 0
+            window = _window(path, cache, snapshot, start, limit)
+    except (SailangError, OSError) as exc:
+        code = exc.code if isinstance(exc, SailangError) else LEDGER_UNREADABLE
         return _operator_action(_workspace.command_result(
             "ledger-feed", UNKNOWN, workspace=workspace,
             ledger={"schema": LEDGER_SCHEMA, "state": STATE_UNREADABLE,
-                    "reason": exc.code},
+                    "reason": code},
             events=[], gap=False, cursor=cursor,
-            detail=f"ledger is {UNKNOWN} ({exc.code}); history was NOT reported as empty"))
-    oldest = events[0]["seq"] if events else 0
-    gap = bool(events) and cursor + 1 < oldest
-    window = [event for event in events if event["seq"] > cursor][:limit]
+            detail=f"ledger is {UNKNOWN} ({code}); history was NOT reported as empty"))
+    gap = bool(count) and cursor + 1 < oldest
     return _workspace.command_result(
         "ledger-feed", state, workspace=workspace,
-        ledger={"schema": LEDGER_SCHEMA, "state": state, "count": len(events),
-                "first_seq": oldest, "last_seq": events[-1]["seq"] if events else 0},
+        ledger={"schema": LEDGER_SCHEMA, "state": state, "count": count,
+                "first_seq": oldest, "last_seq": last_seq},
         events=window, gap=gap, truncated=bool(window) and window[-1]["seq"] < (
-            events[-1]["seq"] if events else 0),
+            last_seq),
         cursor=window[-1]["seq"] if window else cursor,
         detail=("continuity GAP: the requested cursor predates the oldest retained "
                 "record" if gap else f"{len(window)} event(s) after seq {cursor}"))
@@ -371,6 +441,7 @@ def health(workspace) -> dict:
     state = HEALTHY
     reason = None
     counts: dict = {}
+    folded = {"messages": {}, "invalid": []}
     try:
         events, read_state = read_events(workspace)
     except SailangError as exc:
@@ -391,7 +462,7 @@ def health(workspace) -> dict:
         ledger={"schema": LEDGER_SCHEMA, "version": LEDGER_VERSION,
                 "state": state, "read_state": read_state, "reason": reason,
                 "counts": counts,
-                "messages": len(fold(events)["messages"]) if events else 0},
+                "messages": len(folded["messages"])},
         detail=f"ledger {state}"
                + (f" ({reason})" if reason else "; a missing ledger is no history, "
                   "an unreadable one is UNKNOWN"))
@@ -434,6 +505,7 @@ def reconcile(workspace, *, clock=None) -> dict:
     restored_outbox: list = []
     unrepairable: list = []
     considered = 0
+    intent_containers = None
     for message in folded["messages"].values():
         envelope_id = message.get("envelope_id")
         if not envelope_id:
@@ -467,7 +539,9 @@ def reconcile(workspace, *, clock=None) -> dict:
         path = _workspace._outbox_path(workspace, envelope_id)
         if path.is_file():
             continue
-        recovered = _container_from_intents(workspace, envelope_id)
+        if intent_containers is None:
+            intent_containers = _containers_from_intents(workspace)
+        recovered = intent_containers.get(envelope_id)
         if recovered is None:
             unrepairable.append(envelope_id)
             continue
@@ -486,8 +560,8 @@ def reconcile(workspace, *, clock=None) -> dict:
                 f"invented"))
 
 
-def _container_from_intents(workspace, envelope_id: str) -> str | None:
-    """The sealed container for `envelope_id`, from the intent that wrote it.
+def _containers_from_intents(workspace) -> dict[str, str]:
+    """One verified envelope-to-container snapshot for a reconciliation pass.
 
     The intent is a projection too, but it is the one that still holds the
     sealed bytes; recovering a container from them proves the recovery rather
@@ -498,17 +572,19 @@ def _container_from_intents(workspace, envelope_id: str) -> str | None:
     try:
         intents = outbox._all_intents(workspace)
     except SailangError:
-        return None
+        return {}
+    containers = {}
     for intent in intents:
-        if intent.get("envelope_id") == envelope_id and isinstance(
+        envelope_id = intent.get("envelope_id")
+        if envelope_id and isinstance(
                 intent.get("container"), str) and intent["container"]:
             try:
                 if envelope.envelope_id(intent["container"]) != envelope_id:
                     continue
             except SailangError:
                 continue
-            return intent["container"]
-    return None
+            containers.setdefault(envelope_id, intent["container"])
+    return containers
 
 
 def reconstruct(workspace, *, clock=None) -> dict:
